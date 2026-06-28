@@ -1,5 +1,5 @@
 name: Deal Detector
-"on":
+on:
   schedule:
     - cron: '0 15 * * *'
   workflow_dispatch: {}

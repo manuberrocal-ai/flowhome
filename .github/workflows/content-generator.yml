@@ -1,5 +1,5 @@
 name: Conservative Content Generator
-"on":
+on:
   workflow_dispatch:
     inputs:
       product_slug:

@@ -1,5 +1,5 @@
 name: Batched Deploy
-"on":
+on:
   schedule:
     - cron: '0 17 * * 1,4'
   workflow_dispatch: {}

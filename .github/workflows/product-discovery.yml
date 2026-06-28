@@ -1,5 +1,5 @@
 name: Product Discovery
-"on":
+on:
   schedule:
     - cron: '0 13 * * 1,4'
   workflow_dispatch: {}
