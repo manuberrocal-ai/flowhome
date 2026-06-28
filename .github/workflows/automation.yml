@@ -27,6 +27,9 @@ jobs:
           SYNDICATION_DRY_RUN: 'true'
       - run: npm run maintenance:weekly
       - run: npm run build
+      - run: npm run websub:publish
+        env:
+          WEBSUB_SOFT_FAIL: 'true'
       - run: npm run indexnow:submit
         env:
           INDEXNOW_SOFT_FAIL: 'true'

@@ -26,3 +26,12 @@ npm run indexnow:submit -- --dry-run
 
 - Google does not support IndexNow and deprecated unauthenticated sitemap pings. Google discovery still depends on `robots.txt`, Search Console, or the Search Console API with a verified property.
 - Keep the key file in `public/`; removing or changing it requires a fresh deployment before the next successful submission.
+## WebSub / PubSubHubbub
+
+FlowHome also publishes RSS update notifications to Google's public WebSub hub.
+
+```bash
+npm run websub:publish
+```
+
+For CI, WebSub is best-effort and must not block deploys.
