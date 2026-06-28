@@ -32,4 +32,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: flowhome-automation-reports
-          path: data/*.json
+          path: |
+            data/deal-report.json
+            data/quality-report.json
+            data/syndication-queue.json
