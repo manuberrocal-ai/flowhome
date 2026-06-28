@@ -9,25 +9,6 @@ on:
   schedule:
     - cron: '0 13 * * 1,4'
   workflow_dispatch:
-    inputs:
-      task:
-        description: Automation task to run
-        required: true
-        default: maintenance
-        type: choice
-        options:
-          - maintenance
-          - product-discovery
-          - deals
-          - syndicate
-          - generate-review
-      product_slug:
-        description: Product slug for generate-review
-        required: false
-        type: string
-
-permissions:
-  contents: write
 
 jobs:
   automation:
@@ -39,44 +20,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Run selected automation
-        shell: bash
+      - run: npm run discover:products
+      - run: npm run deals:detect
+      - run: npm run syndicate
         env:
-          TASK: ${{ github.event.inputs.task || 'scheduled' }}
-          PRODUCT_SLUG: ${{ github.event.inputs.product_slug }}
           SYNDICATION_DRY_RUN: 'true'
-        run: |
-          set -euo pipefail
-          case "$TASK" in
-            scheduled|maintenance)
-              npm run discover:products
-              npm run deals:detect
-              npm run syndicate
-              npm run maintenance:weekly
-              ;;
-            product-discovery)
-              npm run discover:products
-              ;;
-            deals)
-              npm run deals:detect
-              ;;
-            syndicate)
-              npm run syndicate
-              ;;
-            generate-review)
-              if [ -z "${PRODUCT_SLUG:-}" ]; then
-                echo "product_slug is required for generate-review" >&2
-                exit 1
-              fi
-              npm run content:generate -- "$PRODUCT_SLUG"
-              npm run quality:check || true
-              ;;
-            *)
-              echo "Unknown task: $TASK" >&2
-              exit 1
-              ;;
-          esac
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - run: npm run maintenance:weekly
+      - name: Upload automation reports
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: chore: update FlowHome automation outputs
-          file_pattern: data/*.json src/content/reviews/*.md
+          name: flowhome-automation-reports
+          path: data/*.json
