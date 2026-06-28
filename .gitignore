@@ -33,3 +33,6 @@ data/syndication-log.json
 
 # AI generated temp
 tmp/
+
+# packaged artifacts
+artifacts/
