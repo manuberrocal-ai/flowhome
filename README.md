@@ -1,4 +1,7 @@
-﻿# FlowHome
+# FlowHome
+
+Production: https://flowhome.dev
+
 
 Automated smart-home affiliate site for `flowhome.dev`.
 
@@ -31,3 +34,7 @@ npm run maintenance:weekly
 ## Notes
 
 Affiliate links use Amazon Associates tag `flowhome-20`. Keep platform credentials in GitHub/Cloudflare/n8n secrets only.
+
+## Launch report
+
+See docs/LAUNCH_REPORT.md for production status, verification, and operating cadence.
