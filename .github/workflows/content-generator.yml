@@ -1,15 +1,18 @@
 ﻿name: Conservative Content Generator
-on:
+"on":
   workflow_dispatch:
     inputs:
       product_slug:
         description: Product slug to draft
         required: true
+        type: string
+
+permissions:
+  contents: write
+
 jobs:
   draft:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

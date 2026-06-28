@@ -1,13 +1,15 @@
 ﻿name: Syndication Queue
-on:
+"on":
   schedule:
     - cron: '30 16 * * 2,5'
-  workflow_dispatch:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
 jobs:
   syndicate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     env:
       SYNDICATION_DRY_RUN: 'true'
     steps:
