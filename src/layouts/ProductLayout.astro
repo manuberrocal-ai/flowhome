@@ -1,0 +1,68 @@
+﻿---
+import BaseLayout from './BaseLayout.astro';
+import { generateProductSchema, generateBreadcrumbSchema } from '../lib/seo';
+
+interface Props {
+  product: any;
+}
+
+const { product } = Astro.props;
+const productSchema = generateProductSchema(product);
+const breadcrumbs = [
+  { name: 'Home', url: 'https://flowhome.dev' },
+  { name: 'Products', url: 'https://flowhome.dev/products' },
+  { name: product.name, url: `https://flowhome.dev/product/${product.slug}` },
+];
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+---
+
+<BaseLayout
+  title={`${product.name} — Review, Price & Specs | FlowHome`}
+  description={`${product.name} review: price $${product.price}, rating ${product.rating}/5, specs, pros, cons, and best deals. Compare with similar smart home products.`}
+  type="product"
+  canonicalURL={`https://flowhome.dev/product/${product.slug}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  
+  <nav class="text-sm breadcrumbs mb-4" aria-label="Breadcrumb">
+    <ol class="flex items-center gap-2">
+      <li><a href="/" class="text-blue-600 hover:underline">Home</a></li>
+      <li class="text-slate-400">/</li>
+      <li><a href="/products" class="text-blue-600 hover:underline">Products</a></li>
+      <li class="text-slate-400">/</li>
+      <li class="text-slate-600 font-medium">{product.name}</li>
+    </ol>
+  </nav>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2">
+      <slot />
+    </div>
+    <aside class="space-y-6">
+      <div class="bg-white rounded-xl shadow-md p-6 sticky top-4">
+        <h2 class="text-2xl font-bold text-slate-900">{product.name}</h2>
+        <p class="text-3xl font-bold text-blue-600 mt-2">${product.price}</p>
+        {product.originalPrice && product.originalPrice > product.price && (
+          <p class="text-slate-500 line-through">${product.originalPrice}</p>
+        )}
+        <div class="flex items-center gap-2 mt-2">
+          <span class="text-yellow-500">★</span>
+          <span class="font-semibold">{product.rating}</span>
+          <span class="text-slate-500">({product.reviewCount?.toLocaleString()} reviews)</span>
+        </div>
+        <a
+          href={product.affiliateUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+          class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center mt-4 transition-colors"
+          onclick="gtag('event','affiliate_click',{product_slug:this.dataset.slug})"
+          data-slug={product.slug}
+        >
+          Check Price on Amazon →
+        </a>
+      </div>
+      <slot name="sidebar" />
+    </aside>
+  </div>
+</BaseLayout>

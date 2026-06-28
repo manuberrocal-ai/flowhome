@@ -1,0 +1,11 @@
+﻿---
+interface Props { product: any; }
+const { product } = Astro.props;
+const data = product.data ?? product;
+---
+<div class="sticky-cta md:hidden">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3">
+    <div class="min-w-0"><div class="truncate font-bold text-slate-950">{data.name}</div><div class="text-sm font-black text-blue-700">${data.price}</div></div>
+    <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white">Check price</a>
+  </div>
+</div>

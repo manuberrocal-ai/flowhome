@@ -1,0 +1,34 @@
+slug: echo-dot-5th-gen
+asin: B09B8V1LZ3
+name: "Echo Dot 5th Gen"
+brand: "Amazon"
+price: 49.99
+originalPrice: 59.99
+discountPct: 17
+category: smart-speaker
+affiliateUrl: "https://www.amazon.com/dp/B09B8V1LZ3?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.7
+reviewCount: 735000
+available: true
+dateUpdated: "2026-06-28"
+model: "Echo Dot 5th Gen"
+wifi: true
+bluetooth: true
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: false
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: hero
+priorityScore: 78
+roiApproved: true

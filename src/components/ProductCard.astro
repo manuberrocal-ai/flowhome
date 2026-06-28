@@ -1,0 +1,26 @@
+﻿---
+interface Props { product: any; compact?: boolean; }
+const { product, compact = false } = Astro.props;
+const data = product.data ?? product;
+const slug = data.slug ?? product.slug;
+---
+<article class="product-card overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+  <a href={`/product/${slug}/`} class="block bg-slate-100 p-6">
+    <img src={data.image || '/images/product-placeholder.svg'} alt={data.name} class="mx-auto h-40 w-full object-contain" loading="lazy" />
+  </a>
+  <div class="space-y-3 p-5">
+    <div class="flex items-center justify-between gap-2">
+      <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-blue-700">{data.category}</span>
+      {data.discountPct > 0 && <span class="deal-badge">-{data.discountPct}%</span>}
+    </div>
+    <h2 class="line-clamp-2 text-lg font-extrabold text-slate-950"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
+    {!compact && <p class="text-sm text-slate-600">{data.brand} · {data.rating}★ from {data.reviewCount?.toLocaleString()} owner ratings</p>}
+    <div class="flex items-end justify-between gap-3">
+      <div>
+        <div class="text-2xl font-black text-blue-700">${data.price}</div>
+        {data.originalPrice && data.originalPrice > data.price && <div class="text-sm text-slate-400 line-through">${data.originalPrice}</div>}
+      </div>
+      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" data-asin={data.asin} data-slug={slug} class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700">Check price</a>
+    </div>
+  </div>
+</article>

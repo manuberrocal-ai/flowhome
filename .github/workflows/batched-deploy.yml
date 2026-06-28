@@ -1,0 +1,27 @@
+﻿name: Batched Deploy
+on:
+  schedule:
+    - cron: '0 17 * * 1,4'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+      - 'docs/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run deploy:check
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flowhome-dist
+          path: dist

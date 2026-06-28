@@ -1,0 +1,34 @@
+slug: wyze-bulb-color
+asin: B08WZN4JW2
+name: "Wyze Bulb Color"
+brand: "Wyze"
+price: 29.98
+originalPrice: 39.98
+discountPct: 25
+category: smart-lighting
+affiliateUrl: "https://www.amazon.com/dp/B08WZN4JW2?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.4
+reviewCount: 9800
+available: true
+dateUpdated: "2026-06-28"
+model: "Wyze Bulb Color"
+wifi: true
+bluetooth: true
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: true
+dimmable: true
+subscriptionRequired: false
+priority: featured
+priorityScore: 57
+roiApproved: true

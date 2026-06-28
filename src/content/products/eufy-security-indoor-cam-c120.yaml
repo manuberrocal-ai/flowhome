@@ -1,0 +1,34 @@
+slug: eufy-security-indoor-cam-c120
+asin: B08571VZ3Q
+name: "Eufy Security Indoor Cam C120"
+brand: "Eufy"
+price: 42.99
+originalPrice: 49.99
+discountPct: 14
+category: security-camera
+affiliateUrl: "https://www.amazon.com/dp/B08571VZ3Q?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.5
+reviewCount: 14500
+available: true
+dateUpdated: "2026-06-28"
+model: "Eufy Security Indoor Cam C120"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: true
+appControl: true
+energyMonitoring: false
+nightVision: true
+twoWayAudio: true
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: featured
+priorityScore: 65
+roiApproved: true

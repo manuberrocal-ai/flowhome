@@ -1,0 +1,24 @@
+﻿name: Syndication Queue
+on:
+  schedule:
+    - cron: '30 16 * * 2,5'
+  workflow_dispatch:
+jobs:
+  syndicate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SYNDICATION_DRY_RUN: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run syndicate
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: chore: update syndication queue
+          file_pattern: data/syndication-queue.json

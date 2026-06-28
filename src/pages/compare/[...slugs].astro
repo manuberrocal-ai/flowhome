@@ -1,0 +1,16 @@
+﻿---
+import { getCollection } from 'astro:content';
+import CompareLayout from '../../layouts/CompareLayout.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  const starter = ['echo-dot-5th-gen', 'google-nest-hub-2nd-gen', 'tp-link-kasa-smart-plug-mini'];
+  return [{ params: { slugs: starter.join('-vs-') }, props: { slugs: starter } }];
+}
+const { slugs } = Astro.props;
+const products = await getCollection('products');
+const selected = slugs.map((slug:string) => products.find((p) => p.data.slug === slug)?.data).filter(Boolean);
+---
+<CompareLayout products={selected} title={`${selected.map((p:any) => p.name).join(' vs ')}`}>
+  <p class="text-sm text-slate-500">Comparison pages are generated statically from FlowHome product data.</p>
+</CompareLayout>

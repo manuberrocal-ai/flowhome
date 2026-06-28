@@ -1,0 +1,31 @@
+﻿---
+interface Props { products: any[]; }
+const { products } = Astro.props;
+const rows = [
+  ['Price', (p:any) => `$${p.price}`],
+  ['Rating', (p:any) => `${p.rating} / 5`],
+  ['Reviews', (p:any) => `${p.reviewCount?.toLocaleString?.() ?? p.reviewCount}`],
+  ['Matter', (p:any) => p.matter ? 'Yes' : 'No'],
+  ['Alexa', (p:any) => p.alexaCompatible ? 'Yes' : 'No'],
+  ['Google Home', (p:any) => p.googleHomeCompatible ? 'Yes' : 'No'],
+  ['Apple HomeKit', (p:any) => p.appleHomeKit ? 'Yes' : 'No'],
+  ['Energy monitoring', (p:any) => p.energyMonitoring ? 'Yes' : 'No'],
+];
+---
+<div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+  <table class="compare-table min-w-full text-sm">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        {products.map((product) => <th class="min-w-48">{product.name}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(([label, getter]) => <tr><td class="font-bold text-slate-700">{label}</td>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
+      <tr>
+        <td class="font-bold text-slate-700">Best link</td>
+        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="font-bold text-blue-700 hover:underline">Check price</a></td>)}
+      </tr>
+    </tbody>
+  </table>
+</div>

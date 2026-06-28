@@ -1,0 +1,34 @@
+slug: arlo-essential-outdoor-camera
+asin: B0B1N5HW22
+name: "Arlo Essential Outdoor Camera"
+brand: "Arlo"
+price: 99.99
+originalPrice: 129.99
+discountPct: 23
+category: security-camera
+affiliateUrl: "https://www.amazon.com/dp/B0B1N5HW22?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.1
+reviewCount: 11500
+available: true
+dateUpdated: "2026-06-28"
+model: "Arlo Essential Outdoor Camera"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: true
+twoWayAudio: true
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: true
+priority: standard
+priorityScore: 50
+roiApproved: true

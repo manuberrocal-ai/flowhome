@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-06-28T07:24:35.098Z",
+  "dryRun": true,
+  "queue": [
+    {
+      "title": "Echo Dot 5th Gen Review: Smart Home Value, Setup, and Tradeoffs",
+      "source": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
+      "canonical": "https://flowhome.dev/review/src\\content\\reviews\\echo-dot-5th-gen-review/",
+      "platforms": [
+        {
+          "platform": "wordpress",
+          "status": "dry-run"
+        },
+        {
+          "platform": "devto",
+          "status": "dry-run"
+        },
+        {
+          "platform": "hashnode",
+          "status": "dry-run"
+        },
+        {
+          "platform": "tumblr",
+          "status": "dry-run"
+        },
+        {
+          "platform": "bluesky",
+          "status": "dry-run"
+        }
+      ]
+    },
+    {
+      "title": "ecobee Smart Thermostat Premium Review: Smart Home Value, Setup, and Tradeoffs",
+      "source": "src\\content\\reviews\\ecobee-smart-thermostat-premium-review.md",
+      "canonical": "https://flowhome.dev/review/src\\content\\reviews\\ecobee-smart-thermostat-premium-review/",
+      "platforms": [
+        {
+          "platform": "wordpress",
+          "status": "dry-run"
+        },
+        {
+          "platform": "devto",
+          "status": "dry-run"
+        },
+        {
+          "platform": "hashnode",
+          "status": "dry-run"
+        },
+        {
+          "platform": "tumblr",
+          "status": "dry-run"
+        },
+        {
+          "platform": "bluesky",
+          "status": "dry-run"
+        }
+      ]
+    }
+  ]
+}

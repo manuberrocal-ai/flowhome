@@ -1,0 +1,34 @@
+slug: philips-hue-white-color-starter-kit
+asin: B016H0QZ7I
+name: "Philips Hue White and Color Starter Kit"
+brand: "Philips Hue"
+price: 129.99
+originalPrice: 199.99
+discountPct: 35
+category: smart-lighting
+affiliateUrl: "https://www.amazon.com/dp/B016H0QZ7I?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.7
+reviewCount: 23000
+available: true
+dateUpdated: "2026-06-28"
+model: "Philips Hue White and Color Starter Kit"
+wifi: true
+bluetooth: true
+zigbee: true
+matter: true
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: true
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: true
+dimmable: true
+subscriptionRequired: false
+priority: hero
+priorityScore: 80
+roiApproved: true

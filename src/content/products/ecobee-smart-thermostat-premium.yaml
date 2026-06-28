@@ -1,0 +1,34 @@
+slug: ecobee-smart-thermostat-premium
+asin: B09XXTQP3B
+name: "ecobee Smart Thermostat Premium"
+brand: "ecobee"
+price: 249.99
+originalPrice: 249.99
+discountPct: 0
+category: smart-thermostat
+affiliateUrl: "https://www.amazon.com/dp/B09XXTQP3B?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.5
+reviewCount: 3500
+available: true
+dateUpdated: "2026-06-28"
+model: "ecobee Smart Thermostat Premium"
+wifi: true
+bluetooth: true
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: true
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: hero
+priorityScore: 71
+roiApproved: true

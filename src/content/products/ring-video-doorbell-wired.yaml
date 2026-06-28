@@ -1,0 +1,34 @@
+slug: ring-video-doorbell-wired
+asin: B08CKHPP52
+name: "Ring Video Doorbell Wired"
+brand: "Ring"
+price: 64.99
+originalPrice: 64.99
+discountPct: 0
+category: video-doorbell
+affiliateUrl: "https://www.amazon.com/dp/B08CKHPP52?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.5
+reviewCount: 78000
+available: true
+dateUpdated: "2026-06-28"
+model: "Ring Video Doorbell Wired"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: false
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: true
+twoWayAudio: true
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: true
+priority: featured
+priorityScore: 68
+roiApproved: true

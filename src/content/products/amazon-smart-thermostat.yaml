@@ -1,0 +1,34 @@
+slug: amazon-smart-thermostat
+asin: B08J4C8871
+name: "Amazon Smart Thermostat"
+brand: "Amazon"
+price: 79.99
+originalPrice: 79.99
+discountPct: 0
+category: smart-thermostat
+affiliateUrl: "https://www.amazon.com/dp/B08J4C8871?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.2
+reviewCount: 22000
+available: true
+dateUpdated: "2026-06-28"
+model: "Amazon Smart Thermostat"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: false
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: featured
+priorityScore: 55
+roiApproved: true

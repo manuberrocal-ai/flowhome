@@ -1,0 +1,19 @@
+﻿<div id="exit-popup" class="hidden fixed inset-0 z-50 bg-slate-950/70 p-4">
+  <div class="mx-auto mt-24 max-w-lg rounded-3xl bg-white p-8 shadow-2xl">
+    <button id="exit-close" class="float-right text-slate-400 hover:text-slate-700" aria-label="Close popup">✕</button>
+    <h2 class="text-2xl font-extrabold text-slate-950">Before you go: compare the best deals</h2>
+    <p class="mt-3 text-slate-600">Open the current FlowHome deals board and avoid overpaying for starter smart home gear.</p>
+    <a href="/deals/" class="mt-5 inline-flex rounded-xl bg-blue-600 px-5 py-3 font-bold text-white hover:bg-blue-700">View deals</a>
+  </div>
+</div>
+<script is:inline>
+  let shown = sessionStorage.getItem('flowhome_exit_popup') === '1';
+  const popup = document.getElementById('exit-popup');
+  const close = document.getElementById('exit-close');
+  document.addEventListener('mouseleave', (event) => {
+    if (!shown && event.clientY <= 0 && popup) {
+      popup.classList.remove('hidden'); shown = true; sessionStorage.setItem('flowhome_exit_popup', '1');
+    }
+  });
+  close?.addEventListener('click', () => popup?.classList.add('hidden'));
+</script>

@@ -1,0 +1,25 @@
+﻿name: Conservative Content Generator
+on:
+  workflow_dispatch:
+    inputs:
+      product_slug:
+        description: Product slug to draft
+        required: true
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run content:generate -- ${{ inputs.product_slug }}
+      - run: npm run quality:check || true
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: content: draft generated review
+          file_pattern: src/content/reviews/*.md data/quality-report.json

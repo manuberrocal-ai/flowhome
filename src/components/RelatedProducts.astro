@@ -1,0 +1,11 @@
+﻿---
+import ProductCard from './ProductCard.astro';
+interface Props { products: any[]; title?: string; }
+const { products, title = 'Related smart home picks' } = Astro.props;
+---
+{products.length > 0 && <section class="mt-10">
+  <h2 class="mb-5 text-2xl font-extrabold text-slate-950">{title}</h2>
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {products.map((product) => <ProductCard product={product} compact />)}
+  </div>
+</section>}

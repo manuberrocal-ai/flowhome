@@ -1,0 +1,34 @@
+slug: levoit-core-300s-air-purifier
+asin: B09BJMY8HL
+name: "Levoit Core 300S Smart Air Purifier"
+brand: "Levoit"
+price: 149.99
+originalPrice: 149.99
+discountPct: 0
+category: smart-hub
+affiliateUrl: "https://www.amazon.com/dp/B09BJMY8HL?tag=flowhome-20"
+image: "/images/product-placeholder.svg"
+rating: 4.7
+reviewCount: 11200
+available: true
+dateUpdated: "2026-06-28"
+model: "Levoit Core 300S Smart Air Purifier"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: featured
+priorityScore: 67
+roiApproved: true

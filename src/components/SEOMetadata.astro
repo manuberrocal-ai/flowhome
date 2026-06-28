@@ -1,0 +1,5 @@
+﻿---
+interface Props { schema?: any; }
+const { schema } = Astro.props;
+---
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

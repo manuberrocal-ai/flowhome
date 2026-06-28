@@ -1,0 +1,27 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Smart Home Recommendation Quiz | FlowHome" description="Get a simple smart home starter recommendation based on your priority and ecosystem." canonicalURL="https://flowhome.dev/quiz/">
+  <section class="rounded-3xl bg-white p-8 shadow-sm">
+    <h1 class="text-4xl font-black text-slate-950">Find your smart home starter path</h1>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <button class="quiz rounded-2xl border border-slate-200 p-6 text-left hover:border-blue-500" data-result="security"><strong>Security first</strong><span class="mt-2 block text-slate-600">Cameras, doorbells, locks, sensors.</span></button>
+      <button class="quiz rounded-2xl border border-slate-200 p-6 text-left hover:border-blue-500" data-result="comfort"><strong>Comfort and routines</strong><span class="mt-2 block text-slate-600">Speakers, displays, lights, plugs.</span></button>
+      <button class="quiz rounded-2xl border border-slate-200 p-6 text-left hover:border-blue-500" data-result="cleaning"><strong>Cleaning automation</strong><span class="mt-2 block text-slate-600">Robot vacuums and maintenance gear.</span></button>
+    </div>
+    <div id="quiz-result" class="mt-6 hidden rounded-2xl bg-blue-50 p-6 text-blue-950"></div>
+  </section>
+  <script is:inline>
+    const copy = {
+      security: 'Start with a video doorbell or indoor camera, then add a smart lock. Compare Ring and Eufy options before buying.',
+      comfort: 'Start with a smart speaker/display plus Matter-capable plugs or bulbs. This gives the fastest daily-use win.',
+      cleaning: 'Choose a robot vacuum with LiDAR if your budget allows. Self-empty docks matter more than marketing suction numbers.'
+    };
+    document.querySelectorAll('.quiz').forEach((button) => button.addEventListener('click', () => {
+      const result = button.dataset.result;
+      const target = document.getElementById('quiz-result');
+      target.classList.remove('hidden'); target.textContent = copy[result];
+      window.gtag?.('event','quiz_complete',{result, questions_answered:1});
+    }));
+  </script>
+</BaseLayout>

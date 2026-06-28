@@ -1,0 +1,20 @@
+﻿---
+import { getCollection, render } from 'astro:content';
+import ReviewLayout from '../../layouts/ReviewLayout.astro';
+import RelatedProducts from '../../components/RelatedProducts.astro';
+
+export async function getStaticPaths() {
+  const reviews = await getCollection('reviews');
+  return reviews.map((review) => ({ params: { slug: review.id }, props: { review } }));
+}
+
+const { review } = Astro.props;
+const { Content } = await render(review);
+const products = await getCollection('products');
+const product = products.find((p) => p.data.slug === review.data.productSlug);
+const reviewData = { ...review.data, slug: review.id };
+---
+<ReviewLayout review={reviewData} product={product?.data}>
+  <Content />
+  {product && <RelatedProducts products={[product]} title="Product covered in this review" />}
+</ReviewLayout>

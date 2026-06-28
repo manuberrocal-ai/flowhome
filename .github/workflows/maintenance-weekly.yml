@@ -1,0 +1,22 @@
+﻿name: Weekly Maintenance
+on:
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run maintenance:weekly
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: chore: weekly maintenance reports
+          file_pattern: data/*.json

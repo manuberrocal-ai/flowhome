@@ -1,0 +1,29 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Smart Home Savings Calculator | FlowHome" description="Estimate monthly savings from smart plugs, lighting, thermostats, and automation routines." canonicalURL="https://flowhome.dev/calculator/">
+  <section class="rounded-3xl bg-white p-8 shadow-sm">
+    <h1 class="text-4xl font-black text-slate-950">Smart home savings calculator</h1>
+    <p class="mt-3 max-w-2xl text-slate-600">Use this lightweight calculator to estimate whether an energy-saving smart device can pay for itself.</p>
+    <div class="mt-8 grid gap-4 md:grid-cols-4">
+      <label class="font-bold">Device watts<input id="watts" type="number" value="60" class="mt-2 w-full rounded-xl border border-slate-300 p-3" /></label>
+      <label class="font-bold">Hours/day saved<input id="hours" type="number" value="3" class="mt-2 w-full rounded-xl border border-slate-300 p-3" /></label>
+      <label class="font-bold">Electricity $/kWh<input id="rate" type="number" value="0.17" step="0.01" class="mt-2 w-full rounded-xl border border-slate-300 p-3" /></label>
+      <label class="font-bold">Device cost<input id="cost" type="number" value="25" class="mt-2 w-full rounded-xl border border-slate-300 p-3" /></label>
+    </div>
+    <button id="calc" class="mt-6 rounded-xl bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700">Calculate</button>
+    <div id="result" class="mt-6 rounded-2xl bg-blue-50 p-5 text-lg font-bold text-blue-950">Estimated savings will appear here.</div>
+  </section>
+  <script is:inline>
+    document.getElementById('calc')?.addEventListener('click', () => {
+      const watts = Number(document.getElementById('watts').value || 0);
+      const hours = Number(document.getElementById('hours').value || 0);
+      const rate = Number(document.getElementById('rate').value || 0);
+      const cost = Number(document.getElementById('cost').value || 0);
+      const monthly = (watts / 1000) * hours * 30 * rate;
+      const payback = monthly > 0 ? cost / monthly : 0;
+      document.getElementById('result').textContent = `Estimated monthly savings: $${monthly.toFixed(2)}. Payback period: ${payback.toFixed(1)} months.`;
+      window.gtag?.('event','calculator_used',{device_type:'manual', estimated_savings: monthly});
+    });
+  </script>
+</BaseLayout>

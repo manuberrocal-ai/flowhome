@@ -1,0 +1,56 @@
+﻿---
+import { getCollection } from 'astro:content';
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import PriceHistory from '../../components/PriceHistory.astro';
+import RelatedProducts from '../../components/RelatedProducts.astro';
+import StickyCTA from '../../components/StickyCTA.astro';
+import { getRelatedProducts } from '../../lib/internal-links';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({ params: { slug: product.data.slug }, props: { product } }));
+}
+
+const { product } = Astro.props;
+const data = product.data;
+const related = await getRelatedProducts(data.category, data.slug, 4);
+const featureList = [
+  data.matter && 'Matter ready', data.alexaCompatible && 'Alexa compatible', data.googleHomeCompatible && 'Google Home compatible', data.appleHomeKit && 'Apple HomeKit compatible', data.energyMonitoring && 'Energy monitoring', data.nightVision && 'Night vision', data.twoWayAudio && 'Two-way audio', data.hasMop && 'Mopping support', data.lidarMapping && 'LiDAR mapping'
+].filter(Boolean);
+---
+<ProductLayout product={data}>
+  <article class="space-y-8">
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+        <img src={data.image || '/images/product-placeholder.svg'} alt={data.name} class="mx-auto max-h-80 w-full rounded-2xl bg-slate-100 object-contain p-6" />
+        <div>
+          <p class="text-sm font-bold uppercase tracking-wide text-blue-700">{data.brand} · {data.category}</p>
+          <h1 class="mt-2 text-4xl font-black text-slate-950">{data.name}</h1>
+          <p class="mt-4 text-lg text-slate-600">A FlowHome product profile with core specs, compatibility notes, deal status, and recommended use cases.</p>
+          <div class="mt-5 flex flex-wrap gap-2">{featureList.map((feature) => <span class="rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700">{feature}</span>)}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h2>Who should buy it?</h2>
+      <p>{data.name} is best for buyers who want a reliable {data.category.replaceAll('-', ' ')} with simple setup and broad ecosystem compatibility. FlowHome currently rates it as <strong>{data.priority}</strong> with a priority score of <strong>{data.priorityScore}</strong>.</p>
+      <h2>Key specifications</h2>
+      <ul>
+        <li>Price snapshot: ${data.price}</li>
+        <li>Rating: {data.rating} out of 5 from {data.reviewCount?.toLocaleString()} owner reviews</li>
+        <li>Connectivity: {['Wi‑Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean).join(', ')}</li>
+        <li>Voice platforms: {['Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ')}</li>
+      </ul>
+      <h2>Pros and cons</h2>
+      <div class="grid gap-4 md:grid-cols-2 not-prose">
+        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Pros</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Strong owner feedback</li><li>Clear setup path for beginners</li><li>Good value inside current category</li></ul></div>
+        <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Cons</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Live pricing can change quickly</li><li>Some advanced features may require companion apps</li><li>Check ecosystem compatibility before buying</li></ul></div>
+      </div>
+    </section>
+
+    <PriceHistory product={data} />
+    <RelatedProducts products={related} />
+  </article>
+  <StickyCTA product={data} />
+</ProductLayout>

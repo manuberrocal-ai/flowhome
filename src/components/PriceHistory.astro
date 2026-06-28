@@ -1,0 +1,16 @@
+﻿---
+interface Props { product: any; }
+const { product } = Astro.props;
+const data = product.data ?? product;
+const high = data.originalPrice || Math.round(data.price * 1.18);
+const low = data.price;
+---
+<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+  <h2 class="text-xl font-extrabold">Price snapshot</h2>
+  <p class="mt-2 text-sm text-slate-600">Live Amazon pricing requires approved API access. Until then, FlowHome stores manual or generated snapshots and validates deals before publishing.</p>
+  <div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
+    <div class="rounded-xl bg-slate-100 p-3"><div class="font-bold text-slate-500">Current</div><div class="text-xl font-black text-blue-700">${low}</div></div>
+    <div class="rounded-xl bg-slate-100 p-3"><div class="font-bold text-slate-500">Typical</div><div class="text-xl font-black">${Math.round((high + low) / 2)}</div></div>
+    <div class="rounded-xl bg-slate-100 p-3"><div class="font-bold text-slate-500">High</div><div class="text-xl font-black">${high}</div></div>
+  </div>
+</div>
