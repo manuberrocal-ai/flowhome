@@ -1,0 +1,50 @@
+﻿---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const products = (await getCollection('products')).map((product) => ({
+  name: product.data.name,
+  slug: product.data.slug,
+  brand: product.data.brand,
+  category: product.data.category,
+  rating: product.data.rating,
+  price: product.data.price,
+  image: product.data.image || '/images/product-placeholder.svg',
+}));
+---
+<BaseLayout title="Search Smart Home Products | FlowHome" description="Search FlowHome smart home products, categories, and brands." canonicalURL="https://flowhome.dev/search/">
+  <section class="rounded-3xl bg-white p-8 shadow-sm">
+    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Search</p>
+    <h1 class="mt-2 text-4xl font-black text-slate-950">Search FlowHome</h1>
+    <p class="mt-4 max-w-3xl text-lg text-slate-600">Find smart home products by brand, category, or product name.</p>
+    <label class="sr-only" for="site-search">Search products</label>
+    <input id="site-search" type="search" placeholder="Try robot vacuum, camera, thermostat..." class="mt-6 w-full rounded-2xl border border-slate-300 px-5 py-4 text-lg outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+  </section>
+  <section id="search-results" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite"></section>
+  <script is:inline define:vars={{ products }}>
+    const input = document.getElementById('site-search');
+    const results = document.getElementById('search-results');
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+    }
+    function render(query = '') {
+      const q = query.trim().toLowerCase();
+      const filtered = products.filter((item) => !q || [item.name, item.brand, item.category].join(' ').toLowerCase().includes(q)).slice(0, 24);
+      results.innerHTML = filtered.map((item) => {
+        const category = item.category.replaceAll('-', ' ');
+        return '<article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">' +
+          '<a href="/product/' + encodeURIComponent(item.slug) + '/" class="block">' +
+          '<img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.name) + '" class="mx-auto h-32 w-full object-contain rounded-xl bg-slate-100 p-3" loading="lazy" />' +
+          '<h2 class="mt-4 text-lg font-extrabold text-slate-950">' + escapeHtml(item.name) + '</h2>' +
+          '<p class="mt-1 text-sm text-slate-500">' + escapeHtml(item.brand) + ' · ' + escapeHtml(category) + '</p>' +
+          '<p class="mt-2 font-bold text-blue-700">$' + escapeHtml(item.price) + ' · ' + escapeHtml(item.rating) + '★</p>' +
+          '</a></article>';
+      }).join('');
+    }
+    const params = new URLSearchParams(window.location.search);
+    const initialQuery = params.get('q') || '';
+    input?.addEventListener('input', (event) => render(event.target.value));
+    if (input) input.value = initialQuery;
+    render(initialQuery);
+  </script>
+</BaseLayout>

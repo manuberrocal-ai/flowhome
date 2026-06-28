@@ -1,0 +1,23 @@
+﻿---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+
+const products = (await getCollection('products'))
+  .filter((product) => product.data.available)
+  .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
+const categories = [...new Set(products.map((product) => product.data.category))].sort();
+---
+<BaseLayout title="Smart Home Products | FlowHome" description="Browse FlowHome smart home products by category, rating, deal status, compatibility, and practical setup value." canonicalURL="https://flowhome.dev/products/">
+  <section class="rounded-3xl bg-white p-8 shadow-sm">
+    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Product directory</p>
+    <h1 class="mt-2 text-4xl font-black text-slate-950">Smart home products worth comparing</h1>
+    <p class="mt-4 max-w-3xl text-lg text-slate-600">Browse smart speakers, lighting, cameras, robot vacuums, thermostats, plugs, and hubs. Public rankings focus on usefulness, compatibility, owner feedback, and deal context.</p>
+    <div class="mt-6 flex flex-wrap gap-2">
+      {categories.map((category) => <a href={'/category/' + category + '/'} class="rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700 hover:bg-blue-100">{category.replaceAll('-', ' ')}</a>)}
+    </div>
+  </section>
+  <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {products.map((product) => <ProductCard product={product} />)}
+  </section>
+</BaseLayout>
