@@ -7,6 +7,7 @@ const PUBLIC_DIR = 'public';
 const DIST_DIR = 'dist';
 const ENDPOINT = process.env.INDEXNOW_ENDPOINT || 'https://api.indexnow.org/indexnow';
 const DRY_RUN = process.env.INDEXNOW_DRY_RUN === 'true' || process.argv.includes('--dry-run');
+const SOFT_FAIL = process.env.INDEXNOW_SOFT_FAIL === 'true' || process.argv.includes('--soft-fail');
 
 function findIndexNowKey() {
   const candidates = readdirSync(PUBLIC_DIR)
@@ -76,7 +77,12 @@ async function submitIndexNow() {
   if (responseText) console.log(responseText);
 
   if (![200, 202].includes(response.status)) {
-    throw new Error(`IndexNow submission failed with ${response.status}.`);
+    const message = `IndexNow submission failed with ${response.status}.`;
+    if (SOFT_FAIL) {
+      console.warn(`Warning: ${message}`);
+      return;
+    }
+    throw new Error(message);
   }
 }
 

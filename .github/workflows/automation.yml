@@ -28,6 +28,8 @@ jobs:
       - run: npm run maintenance:weekly
       - run: npm run build
       - run: npm run indexnow:submit
+        env:
+          INDEXNOW_SOFT_FAIL: 'true'
       - name: Upload automation reports
         uses: actions/upload-artifact@v6
         with:
