@@ -27,7 +27,7 @@ jobs:
           SYNDICATION_DRY_RUN: 'true'
       - run: npm run maintenance:weekly
       - name: Upload automation reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: flowhome-automation-reports
           path: data/*.json
