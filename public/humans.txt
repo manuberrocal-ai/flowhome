@@ -1,0 +1,12 @@
+﻿/* TEAM */
+Site: FlowHome
+URL: https://flowhome.dev
+GitHub: https://github.com/manuberrocal-ai/flowhome
+
+/* THANKS */
+Built with Astro, Tailwind CSS, Cloudflare Pages, and GitHub Actions.
+
+/* SITE */
+Language: English
+Market: US / Canada
+Purpose: Smart home product research, buying guides, comparisons, and deals.
