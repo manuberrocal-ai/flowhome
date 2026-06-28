@@ -1,4 +1,4 @@
-﻿name: Syndication Queue
+name: Syndication Queue
 "on":
   schedule:
     - cron: '30 16 * * 2,5'

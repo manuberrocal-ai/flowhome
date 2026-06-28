@@ -1,4 +1,4 @@
-﻿name: Deal Detector
+name: Deal Detector
 "on":
   schedule:
     - cron: '0 15 * * *'

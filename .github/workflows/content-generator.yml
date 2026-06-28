@@ -1,4 +1,4 @@
-﻿name: Conservative Content Generator
+name: Conservative Content Generator
 "on":
   workflow_dispatch:
     inputs:

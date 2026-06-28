@@ -1,4 +1,4 @@
-﻿name: Batched Deploy
+name: Batched Deploy
 "on":
   schedule:
     - cron: '0 17 * * 1,4'

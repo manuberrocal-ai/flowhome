@@ -1,4 +1,4 @@
-﻿name: Weekly Maintenance
+name: Weekly Maintenance
 "on":
   schedule:
     - cron: '0 12 * * 0'

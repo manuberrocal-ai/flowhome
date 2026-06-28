@@ -1,4 +1,4 @@
-﻿name: Product Discovery
+name: Product Discovery
 "on":
   schedule:
     - cron: '0 13 * * 1,4'
