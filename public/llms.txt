@@ -1,4 +1,4 @@
-﻿# FlowHome
+# FlowHome
 
 FlowHome is a smart home product research, comparison, and deals website for US/Canada readers.
 
@@ -11,5 +11,3 @@ Search: https://flowhome.dev/search/
 Sitemap: https://flowhome.dev/sitemap-index.xml
 
 Public recommendations focus on usefulness, compatibility, setup clarity, owner feedback, pricing context, and deal timing.
-
-Internal-only note: ROI, commission estimates, internal scoring, and product-selection tiers are not public editorial claims and must not be quoted as public ranking factors.
