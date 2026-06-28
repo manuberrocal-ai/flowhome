@@ -1,14 +1,14 @@
-﻿---
+---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import DealCard from '../components/DealCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 
-const products = (await getCollection('products')).sort((a, b) => b.data.priorityScore - a.data.priorityScore);
+const products = (await getCollection('products')).sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
 const deals = await getCollection('deals');
 const heroProducts = products.filter((p) => p.data.priority === 'hero').slice(0, 3);
-const featuredProducts = products.filter((p) => p.data.roiApproved).slice(0, 8);
+const featuredProducts = products.filter((p) => p.data.available).slice(0, 8);
 ---
 <BaseLayout>
   <section class="overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-8 text-white shadow-xl md:p-12">
@@ -16,16 +16,16 @@ const featuredProducts = products.filter((p) => p.data.roiApproved).slice(0, 8);
       <div>
         <p class="text-sm font-bold uppercase tracking-[0.3em] text-cyan-100">US / Canada smart home buying hub</p>
         <h1 class="mt-4 max-w-4xl text-5xl font-black leading-tight md:text-7xl">Build a smarter home without buying the wrong gear.</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-blue-50">FlowHome filters smart home products by usefulness, compatibility, owner feedback, deal quality, and affiliate ROI so the site can grow without becoming low-quality AI spam.</p>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-blue-50">FlowHome filters smart home products by usefulness, compatibility, owner feedback, deal quality, and practical setup value so you can avoid noisy shopping pages and bad-fit devices.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/quiz/" class="rounded-2xl bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600">Find my setup</a>
           <a href="/deals/" class="rounded-2xl bg-white/10 px-6 py-3 font-bold text-white ring-1 ring-white/30 hover:bg-white/20">See deals</a>
         </div>
       </div>
       <div class="rounded-3xl bg-white/10 p-5 ring-1 ring-white/20">
-        <h2 class="text-xl font-extrabold">Top ROI picks</h2>
+        <h2 class="text-xl font-extrabold">Best starting points</h2>
         <div class="mt-4 space-y-3">
-          {heroProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="block rounded-2xl bg-white/95 p-4 text-slate-900 hover:bg-white"><div class="font-extrabold">{product.data.name}</div><div class="text-sm text-slate-500">${product.data.price} · {product.data.rating}★ · score {product.data.priorityScore}</div></a>)}
+          {heroProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="block rounded-2xl bg-white/95 p-4 text-slate-900 hover:bg-white"><div class="font-extrabold">{product.data.name}</div><div class="text-sm text-slate-500">${product.data.price} · {product.data.rating}★</div></a>)}
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@ const featuredProducts = products.filter((p) => p.data.roiApproved).slice(0, 8);
 
   <section class="mt-12">
     <div class="mb-5 flex items-end justify-between gap-4">
-      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Featured</p><h2 class="text-3xl font-black text-slate-950">Smart home picks that clear the ROI gate</h2></div>
+      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Featured</p><h2 class="text-3xl font-black text-slate-950">Smart home picks worth your shortlist</h2></div>
       <a href="/best/best-smart-home-starter-kit/" class="font-bold text-blue-700 hover:underline">Best starter kit →</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{featuredProducts.map((product) => <ProductCard product={product} />)}</div>

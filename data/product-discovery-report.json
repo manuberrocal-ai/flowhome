@@ -1,85 +1,108 @@
 {
-  "generatedAt": "2026-06-28T07:24:33.846Z",
+  "generatedAt": "2026-06-28T18:53:34.712Z",
   "totalProducts": 20,
-  "approvedProducts": 20,
-  "heroProducts": [
-    "roborock-q5-plus",
-    "irobot-roomba-j7-plus",
-    "philips-hue-white-color-starter-kit",
-    "echo-dot-5th-gen",
-    "google-nest-hub-2nd-gen",
-    "ecobee-smart-thermostat-premium"
-  ],
+  "approvedProducts": 18,
+  "note": "Internal-only product selection report. Do not expose ROI, commission, or score language in public site copy.",
   "nextCandidates": [
     {
-      "slug": "roborock-q5-plus",
-      "name": "Roborock Q5+ Robot Vacuum",
-      "category": "robot-vacuum",
-      "priorityScore": 88,
-      "price": 399.99
+      "slug": "philips-hue-white-color-starter-kit",
+      "name": "Philips Hue White and Color Starter Kit",
+      "category": "smart-lighting",
+      "price": 129.99,
+      "internalTier": "lead",
+      "internalScore": 100,
+      "estimatedCommission": 3.9,
+      "publicFacing": false
     },
     {
       "slug": "irobot-roomba-j7-plus",
       "name": "iRobot Roomba j7+",
       "category": "robot-vacuum",
-      "priorityScore": 86,
-      "price": 499.99
+      "price": 499.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 15,
+      "publicFacing": false
     },
     {
-      "slug": "philips-hue-white-color-starter-kit",
-      "name": "Philips Hue White and Color Starter Kit",
-      "category": "smart-lighting",
-      "priorityScore": 80,
-      "price": 129.99
-    },
-    {
-      "slug": "echo-dot-5th-gen",
-      "name": "Echo Dot 5th Gen",
-      "category": "smart-speaker",
-      "priorityScore": 78,
-      "price": 49.99
-    },
-    {
-      "slug": "google-nest-hub-2nd-gen",
-      "name": "Google Nest Hub 2nd Gen",
-      "category": "smart-display",
-      "priorityScore": 72,
-      "price": 99.99
-    },
-    {
-      "slug": "ecobee-smart-thermostat-premium",
-      "name": "ecobee Smart Thermostat Premium",
-      "category": "smart-thermostat",
-      "priorityScore": 71,
-      "price": 249.99
-    },
-    {
-      "slug": "tp-link-kasa-smart-plug-mini",
-      "name": "TP-Link Kasa Smart Plug Mini",
-      "category": "smart-plug",
-      "priorityScore": 69,
-      "price": 22.99
-    },
-    {
-      "slug": "ring-video-doorbell-wired",
-      "name": "Ring Video Doorbell Wired",
-      "category": "video-doorbell",
-      "priorityScore": 68,
-      "price": 64.99
+      "slug": "roborock-q5-plus",
+      "name": "Roborock Q5+ Robot Vacuum",
+      "category": "robot-vacuum",
+      "price": 399.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 12,
+      "publicFacing": false
     },
     {
       "slug": "levoit-core-300s-air-purifier",
       "name": "Levoit Core 300S Smart Air Purifier",
       "category": "smart-hub",
-      "priorityScore": 67,
-      "price": 149.99
+      "price": 149.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 6,
+      "publicFacing": false
     },
     {
-      "slug": "eufy-security-indoor-cam-c120",
-      "name": "Eufy Security Indoor Cam C120",
+      "slug": "august-wifi-smart-lock",
+      "name": "August Wi-Fi Smart Lock",
+      "category": "smart-lock",
+      "price": 179.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 5.4,
+      "publicFacing": false
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "name": "Blink Outdoor 4",
       "category": "security-camera",
-      "priorityScore": 65,
-      "price": 42.99
+      "price": 119.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 4.8,
+      "publicFacing": false
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "name": "Google Nest Hub 2nd Gen",
+      "category": "smart-display",
+      "price": 99.99,
+      "internalTier": "lead",
+      "internalScore": 90,
+      "estimatedCommission": 4,
+      "publicFacing": false
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "name": "ecobee Smart Thermostat Premium",
+      "category": "smart-thermostat",
+      "price": 249.99,
+      "internalTier": "lead",
+      "internalScore": 85,
+      "estimatedCommission": 7.5,
+      "publicFacing": false
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "name": "Echo Dot 5th Gen",
+      "category": "smart-speaker",
+      "price": 49.99,
+      "internalTier": "lead",
+      "internalScore": 85,
+      "estimatedCommission": 2,
+      "publicFacing": false
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "name": "Govee RGBIC LED Strip Lights",
+      "category": "smart-lighting",
+      "price": 39.99,
+      "internalTier": "lead",
+      "internalScore": 85,
+      "estimatedCommission": 1.2,
+      "publicFacing": false
     }
   ]
 }

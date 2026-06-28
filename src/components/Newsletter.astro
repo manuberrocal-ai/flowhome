@@ -1,4 +1,4 @@
-﻿---
+---
 interface Props { source?: string; }
 const { source = 'site' } = Astro.props;
 ---
@@ -6,7 +6,7 @@ const { source = 'site' } = Astro.props;
   <div class="grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-center">
     <div>
       <h2 class="text-3xl font-extrabold">Get the weekly smart home deal brief</h2>
-      <p class="mt-3 text-slate-300">One concise email with price drops, high-ROI picks, and setup ideas. No spam, no daily noise.</p>
+      <p class="mt-3 text-slate-300">One concise email with price drops, practical smart home picks, and setup ideas. No spam, no daily noise.</p>
     </div>
     <form class="flex gap-2" action="https://app.convertkit.com/forms/0000000/subscriptions" method="post" data-source={source}>
       <label class="sr-only" for={`email-${source}`}>Email address</label>

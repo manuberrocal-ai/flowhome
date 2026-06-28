@@ -1,4 +1,4 @@
-﻿# FlowHome Project Plan
+# FlowHome Project Plan
 
 FlowHome is an automated smart-home affiliate website for the US/Canada market.
 
@@ -10,7 +10,7 @@ FlowHome is an automated smart-home affiliate website for the US/Canada market.
 - Cloudflare Pages target: `flowhome.dev`
 
 ## Operating model
-1. Products enter `src/content/products` with Amazon ASIN, price snapshot, compatibility fields, and ROI metadata.
+1. Products enter `src/content/products` with Amazon ASIN, price snapshot, compatibility fields, and internal product-selection metadata. ROI scoring is internal only and must not be presented as public-facing copy.
 2. Reviews and best-of pages are generated conservatively and checked by `npm run quality:check`.
 3. Deals are tracked in `src/content/deals` and summarized by `npm run deals:detect`.
 4. Syndication remains dry-run until platform API secrets are added.
