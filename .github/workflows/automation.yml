@@ -1,5 +1,11 @@
 name: FlowHome Automation
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/automation.yml'
+      - 'scripts/**'
+      - 'src/content/**'
   schedule:
     - cron: '0 13 * * 1,4'
   workflow_dispatch:
@@ -36,8 +42,8 @@ jobs:
       - name: Run selected automation
         shell: bash
         env:
-          TASK: ${{ inputs.task || 'scheduled' }}
-          PRODUCT_SLUG: ${{ inputs.product_slug }}
+          TASK: ${{ github.event.inputs.task || 'scheduled' }}
+          PRODUCT_SLUG: ${{ github.event.inputs.product_slug }}
           SYNDICATION_DRY_RUN: 'true'
         run: |
           set -euo pipefail
