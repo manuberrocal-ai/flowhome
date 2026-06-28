@@ -1,4 +1,4 @@
-﻿import { readProducts, writeText } from '../lib/content-utils.mjs';
+import { readProducts, writeText } from '../lib/content-utils.mjs';
 import { evaluateInternalProduct } from '../lib/internal-roi.mjs';
 
 const phase = process.env.FLOWHOME_ROI_PHASE || 'seed';
@@ -38,4 +38,8 @@ writeText('data/product-discovery-report.json', JSON.stringify({
   })),
 }, null, 2));
 
-console.log(JSON.stringify(report, null, 2));
+if (process.env.FLOWHOME_DEBUG_INTERNAL === 'true') {
+  console.log(JSON.stringify(report, null, 2));
+} else {
+  console.log(`Internal product discovery complete. Products: ${report.totalProducts}. Approved: ${report.approvedProducts}. Detailed operator report written to data/internal-product-radar.json.`);
+}
