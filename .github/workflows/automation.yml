@@ -26,6 +26,8 @@ jobs:
         env:
           SYNDICATION_DRY_RUN: 'true'
       - run: npm run maintenance:weekly
+      - run: npm run build
+      - run: npm run indexnow:submit
       - name: Upload automation reports
         uses: actions/upload-artifact@v6
         with:

@@ -16,7 +16,8 @@
     "maintenance:weekly": "node scripts/maintenance/weekly-maintenance.mjs",
     "deploy:check": "node scripts/deploy/cloudflare-pages-check.mjs",
     "deploy:cloudflare": "npx wrangler pages deploy dist --project-name flowhome --branch main",
-    "package:artifacts": "node scripts/deploy/package-artifacts.mjs"
+    "package:artifacts": "node scripts/deploy/package-artifacts.mjs",
+    "indexnow:submit": "node scripts/deploy/indexnow-submit.mjs"
   },
   "dependencies": {
     "astro": "^7.0.3",
