@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-06-28T07:53:38.622Z",
+  "generatedAt": "2026-06-29T02:22:01.116Z",
   "results": [
+    {
+      "file": "src\\content\\reviews\\amazon-smart-thermostat-review.md",
+      "title": "Amazon Smart Thermostat Review: Low-Cost Climate Control for Alexa Homes",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "532 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\august-wifi-smart-lock-review.md",
+      "title": "August Wi-Fi Smart Lock Review: Retrofit Access Without Replacing Keys",
+      "passed": true,
+      "score": 6,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": false,
+          "detail": "280 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "5 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\blink-outdoor-4-review.md",
+      "title": "Blink Outdoor 4 Review: Wireless Security for Alexa Homes",
+      "passed": true,
+      "score": 6,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": false,
+          "detail": "305 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "5 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
     {
       "file": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
       "title": "Echo Dot 5th Gen Review: Smart Home Value, Setup, and Tradeoffs",
@@ -88,6 +217,92 @@
       ]
     },
     {
+      "file": "src\\content\\reviews\\eufy-security-indoor-cam-c120-review.md",
+      "title": "Eufy Security Indoor Cam C120 Review: Flexible Indoor Monitoring Without a Required Subscription",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "530 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\google-nest-hub-2nd-gen-review.md",
+      "title": "Google Nest Hub 2nd Gen Review: A Smart Display for Google Home Routines",
+      "passed": true,
+      "score": 6,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": false,
+          "detail": "288 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "5 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
       "file": "src\\content\\reviews\\philips-hue-white-color-starter-kit-review.md",
       "title": "Philips Hue White and Color Starter Kit Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
@@ -102,6 +317,49 @@
           "name": "h2Structure",
           "passed": true,
           "detail": "5 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\ring-video-doorbell-wired-review.md",
+      "title": "Ring Video Doorbell Wired Review: Budget Doorway Security for Alexa Homes",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "551 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
         },
         {
           "name": "specifications",
