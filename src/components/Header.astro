@@ -284,24 +284,41 @@ const navItems = [
   (async () => {
     const SUPABASE_URL = "https://lbiuwknkrbyzrujarslh.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaXV3a25rcmJ5enJ1amFyc2xoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQzNDgsImV4cCI6MjA5ODYzMDM0OH0.W_sqEbR0DIthUJqRzDRktXnRlw3CHkSrWYq9xy-1MfU";
-    const avatarLink = document.querySelector('[data-header-avatar-link]');
-    const avatarImg = document.querySelector('.data-header-avatar-img');
-    const avatarDefault = document.querySelector('.data-header-avatar-default');
-    if (!avatarLink) return;
+
+    const updateAvatar = async (supabase) => {
+      const avatarLink = document.querySelector('[data-header-avatar-link]');
+      const avatarImg = document.querySelector('.data-header-avatar-img');
+      const avatarDefault = document.querySelector('.data-header-avatar-default');
+      if (!avatarLink || !avatarImg) return;
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          const meta = session.user.user_metadata || {};
+          const pic = meta.avatar_url || meta.picture || '';
+          if (pic) {
+            avatarImg.src = pic;
+            avatarImg.alt = meta.full_name || meta.name || 'Account';
+            avatarImg.classList.remove('hidden');
+            avatarImg.style.display = 'block';
+            if (avatarDefault) avatarDefault.style.display = 'none';
+          }
+        }
+      } catch (e) {
+        console.warn('Avatar sync failed:', e);
+      }
+    };
+
     try {
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session && session.user) {
-        const meta = session.user.user_metadata || {};
-        const pic = meta.avatar_url || meta.picture || '';
-        if (pic && avatarImg) {
-          avatarImg.src = pic;
-          avatarImg.alt = meta.full_name || meta.name || 'Account';
-          avatarImg.classList.remove('hidden');
-          if (avatarDefault) avatarDefault.classList.add('hidden');
-        }
-      }
-    } catch (e) {}
+      // Update on load
+      updateAvatar(supabase);
+      // Update on auth state change (covers OAuth redirect scenarios)
+      supabase.auth.onAuthStateChange(() => updateAvatar(supabase));
+      // Retry after 2 seconds in case session is still loading
+      setTimeout(() => updateAvatar(supabase), 2000);
+    } catch (e) {
+      console.warn('Supabase init failed:', e);
+    }
   })();
 </script>
