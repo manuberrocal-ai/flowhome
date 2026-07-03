@@ -1,0 +1,131 @@
+
+> flowhome@1.0.0 dev
+> astro dev --host 127.0.0.1
+
+[2m19:02:28[22m [34m[vite][39m connected.
+[2m19:02:30[22m [34m[types][39m Generated [2m3ms[22m
+[2m19:02:30[22m [34m[vite][39m connected.
+[2m19:02:31[22m [34m[content][39m Syncing content
+[2m19:02:31[22m [34m[content][39m Synced content
+[2m19:02:31[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[42m[1m astro [22m[49m [32mv7.0.3[39m [2mready in[22m 5424 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4321/[39m
+[2m19:02:31[22m [32mwatching for file changes...[39m
+[2m19:04:38[22m [34m[200][39m / [2m225ms[22m
+[2m19:30:03[22m [34m[200][39m / [2m27ms[22m
+[2m19:30:04[22m [34m[200][39m / [2m17ms[22m
+[2m19:39:28[22m [34m[watch][39m /src/styles/global.css
+[2m19:39:28[22m [34m[watch][39m /src/styles/global.css
+[2m19:39:28[22m [34m[watch][39m /src/styles/global.css
+[2m19:39:29[22m [34m[200][39m / [2m59ms[22m
+[2m19:40:09[22m [34m[200][39m / [2m7ms[22m
+[2m19:40:09[22m [34m[vite][39m program reload
+[2m19:40:09[22m [34m[200][39m / [2m41ms[22m
+[2m19:54:37[22m [34m[200][39m /deals/ [2m125ms[22m
+[2m20:51:41[22m [34m[vite][39m program reload
+[2m20:51:41[22m [34m[200][39m / [2m74ms[22m
+[2m01:56:36[22m [34m[200][39m / [2m14ms[22m
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[vite][39m program reload
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:17[22m [34m[watch][39m /src/styles/global.css
+[2m02:03:19[22m [34m[vite][39m program reload
+[2m02:03:19[22m [34m[vite][39m program reload
+[2m02:03:20[22m [34m[vite][39m program reload
+[2m02:03:20[22m [34m[vite][39m program reload
+[2m02:03:20[22m [34m[vite][39m program reload
+[2m02:03:20[22m [34m[vite][39m program reload
+[2m02:03:21[22m [34m[vite][39m program reload
+[2m02:03:21[22m [34m[vite][39m program reload
+[2m02:03:21[22m [34m[vite][39m program reload
+[2m02:03:21[22m [34m[vite][39m program reload
+[2m02:03:22[22m [34m[vite][39m program reload
+[2m02:03:22[22m [34m[vite][39m program reload
+[2m02:03:22[22m [34m[vite][39m program reload
+[2m02:03:22[22m [34m[vite][39m program reload
+[2m02:03:23[22m [34m[vite][39m program reload
+[2m02:03:23[22m [34m[vite][39m program reload
+[2m02:03:23[22m [34m[200][39m / [2m4511ms[22m
+[2m02:03:23[22m [34m[200][39m / [2m4484ms[22m
+[2m02:03:23[22m [34m[200][39m / [2m304ms[22m
+[2m02:03:23[22m [34m[200][39m / [2m299ms[22m
+[2m02:03:23[22m [34m[200][39m / [2m18ms[22m
+[2m02:04:42[22m [34m[vite][39m program reload
+[2m02:04:42[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css, /src/styles/global.css
+[2m02:04:42[22m [34m[watch][39m /src/styles/global.css
+[2m02:04:43[22m [34m[200][39m / [2m315ms[22m
+[2m02:04:43[22m [34m[200][39m / [2m317ms[22m
+[2m02:04:43[22m [34m[200][39m / [2m307ms[22m
+[2m02:05:04[22m [34m[vite][39m program reload
+[2m02:05:05[22m [34m[200][39m / [2m82ms[22m
+[2m02:07:04[22m [34m[watch][39m /src/styles/global.css
+[2m02:07:23[22m [34m[vite][39m program reload
+[2m02:07:24[22m [34m[200][39m / [2m106ms[22m
+[2m02:40:35[22m [34m[vite][39m program reload
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32maugust-wifi-smart-lock-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mblink-outdoor-4-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mecho-dot-5th-gen-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mecobee-smart-thermostat-premium-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mgoogle-nest-hub-2nd-gen-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mphilips-hue-white-color-starter-kit-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mroborock-q5-plus-review.md[39m
+[2m02:40:36[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-smart-plug-mini-review.md[39m
+[2m02:40:36[22m [34m[vite][39m program reload
+[2m02:40:36[22m [34m[vite][39m program reload
+[2m02:40:36[22m [34m[vite][39m program reload
+[2m02:40:36[22m [34m[vite][39m program reload
+[2m02:40:37[22m [34m[vite][39m program reload
+[2m02:40:37[22m [34m[vite][39m program reload
+[2m02:40:37[22m [34m[vite][39m program reload
+[2m02:40:37[22m [34m[200][39m / [2m1587ms[22m
+[2m02:40:37[22m [34m[200][39m / [2m1388ms[22m
+[2m02:40:52[22m [34m[vite][39m program reload
+[2m02:40:52[22m [34m[200][39m / [2m54ms[22m
+[2m02:43:36[22m [34m[vite][39m program reload
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mecho-dot-5th-gen-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mecobee-smart-thermostat-premium-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mphilips-hue-white-color-starter-kit-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mblink-outdoor-4-deal.yaml[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mroborock-q5-plus-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-smart-plug-mini-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mphilips-hue-white-color-starter-kit-review.md[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mirobot-j7-plus-deal.yaml[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mphilips-hue-starter-kit-deal.yaml[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mroborock-q5-plus-deal.yaml[39m
+[2m02:43:36[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-mini-deal.yaml[39m
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:37[22m [34m[vite][39m program reload
+[2m02:43:38[22m [34m[vite][39m program reload
+[2m02:43:38[22m [34m[vite][39m program reload
+[2m02:43:38[22m [34m[vite][39m program reload
+[2m02:43:38[22m [34m[200][39m / [2m125ms[22m
+[2m02:43:53[22m [34m[vite][39m program reload
+[2m02:43:53[22m [34m[200][39m / [2m43ms[22m
+[2m02:45:45[22m [34m[vite][39m program reload
+[2m02:45:45[22m [34m[vite][39m program reload
+[2m02:45:46[22m [34m[200][39m / [2m62ms[22m
+[2m02:47:24[22m [34m[vite][39m program reload
+[2m02:47:24[22m [34m[200][39m / [2m90ms[22m
+[2m02:48:28[22m [34m[vite][39m program reload
+[2m02:48:29[22m [34m[200][39m / [2m57ms[22m
+[2m02:50:27[22m [34m[vite][39m program reload
+[2m02:50:28[22m [34m[vite][39m program reload
+[2m02:50:28[22m [34m[200][39m / [2m147ms[22m
+[2m02:50:41[22m [34m[vite][39m program reload
+[2m02:50:41[22m [34m[200][39m / [2m47ms[22m
+[2m02:52:03[22m [34m[vite][39m program reload
+[2m02:52:04[22m [34m[vite][39m program reload
+[2m02:52:04[22m [34m[200][39m / [2m58ms[22m
+[2m02:53:35[22m [34m[vite][39m program reload
+[2m02:53:35[22m [34m[200][39m / [2m73ms[22m
+[2m02:54:09[22m [34m[vite][39m program reload
+[2m02:54:09[22m [34m[200][39m / [2m53ms[22m

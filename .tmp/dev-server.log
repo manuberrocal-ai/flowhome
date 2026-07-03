@@ -1,0 +1,228 @@
+
+> flowhome@1.0.0 dev
+> astro dev --host 127.0.0.1
+
+[2m18:16:27[22m [34m[vite][39m connected.
+[2m18:16:29[22m [34m[types][39m Generated [2m2ms[22m
+[2m18:16:29[22m [34m[vite][39m connected.
+[2m18:16:30[22m [34m[content][39m Syncing content
+[2m18:16:30[22m [34m[content][39m Synced content
+[2m18:16:30[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[42m[1m astro [22m[49m [32mv7.0.3[39m [2mready in[22m 4508 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4321/[39m
+[2m18:16:30[22m [32mwatching for file changes...[39m
+[2m18:16:50[22m [34m[200][39m / [2m185ms[22m
+[2m18:16:52[22m [34m[200][39m / [2m17ms[22m
+[2m18:16:56[22m [34m[200][39m / [2m5ms[22m
+[2m18:19:02[22m [34m[200][39m / [2m15ms[22m
+[2m18:19:03[22m [34m[200][39m / [2m15ms[22m
+[2m18:34:34[22m [34m[200][39m / [2m15ms[22m
+[2m18:34:35[22m [34m[200][39m / [2m13ms[22m
+[2m18:34:36[22m [34m[200][39m / [2m16ms[22m
+[2m18:34:37[22m [34m[200][39m / [2m15ms[22m
+[2m18:34:41[22m [34m[200][39m / [2m19ms[22m
+[2m18:34:43[22m [34m[200][39m / [2m11ms[22m
+[2m18:34:50[22m [34m[200][39m / [2m14ms[22m
+[2m18:38:40[22m [34m[watch][39m /src/styles/global.css
+[2m18:38:40[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m18:38:40[22m [34m[watch][39m /src/styles/global.css
+[2m18:38:40[22m [34m[watch][39m /src/styles/global.css
+[2m18:38:41[22m [34m[200][39m / [2m42ms[22m
+[2m18:39:38[22m [34m[watch][39m /src/styles/global.css
+[2m18:39:55[22m [34m[200][39m / [2m86ms[22m
+[2m18:41:00[22m [34m[200][39m / [2m16ms[22m
+[2m18:41:01[22m [34m[200][39m / [2m19ms[22m
+[2m18:41:04[22m [34m[200][39m / [2m16ms[22m
+[2m18:46:32[22m [34m[watch][39m /src/styles/global.css
+[2m18:46:33[22m [34m[200][39m / [2m152ms[22m
+[2m18:46:52[22m [34m[200][39m / [2m7ms[22m
+[2m18:51:40[22m [34m[200][39m / [2m18ms[22m
+[2m18:54:47[22m [34m[watch][39m /src/styles/global.css
+[2m18:54:48[22m [34m[200][39m / [2m80ms[22m
+[2m18:55:08[22m [34m[200][39m / [2m10ms[22m
+[2m18:56:38[22m [34m[200][39m / [2m12ms[22m
+[2m18:59:39[22m [34m[200][39m /category/smart-speaker/ [2m74ms[22m
+[2m18:59:45[22m [34m[200][39m /category/video-doorbell/ [2m11ms[22m
+[2m19:03:52[22m [34m[watch][39m /src/styles/global.css
+[2m19:03:53[22m [34m[200][39m / [2m118ms[22m
+[2m19:04:10[22m [34m[200][39m / [2m15ms[22m
+[2m19:05:20[22m [34m[200][39m / [2m17ms[22m
+[2m19:16:06[22m [34m[vite][39m program reload
+[2m19:16:06[22m [34m[watch][39m /src/styles/global.css
+[2m19:16:06[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m19:16:06[22m [34m[watch][39m /src/styles/global.css, /src/components/Footer.astro?astro&type=style&index=0&lang.css
+[2m19:16:06[22m [34m[watch][39m /src/styles/global.css
+[2m19:16:08[22m [34m[200][39m / [2m111ms[22m
+[2m19:16:31[22m [34m[200][39m / [2m11ms[22m
+[2m19:17:54[22m [34m[200][39m / [2m13ms[22m
+[2m19:27:48[22m [34m[watch][39m /src/styles/global.css
+[2m19:27:49[22m [34m[200][39m / [2m103ms[22m
+[2m19:28:09[22m [34m[200][39m / [2m19ms[22m
+[2m19:33:05[22m [34m[200][39m / [2m16ms[22m
+[2m19:43:42[22m [34m[watch][39m /src/styles/global.css
+[2m19:43:42[22m [34m[200][39m / [2m89ms[22m
+[2m19:44:06[22m [34m[200][39m / [2m14ms[22m
+[2m19:45:31[22m [34m[200][39m / [2m17ms[22m
+[2m19:49:22[22m [34m[vite][39m program reload
+[2m19:49:23[22m [34m[200][39m / [2m53ms[22m
+[2m19:50:32[22m [34m[200][39m / [2m10ms[22m
+[2m19:52:45[22m [34m[200][39m / [2m12ms[22m
+[2m19:58:51[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m19:58:51[22m [34m[watch][39m /src/styles/global.css
+[2m19:58:51[22m [34m[200][39m / [2m61ms[22m
+[2m19:59:12[22m [34m[200][39m / [2m10ms[22m
+[2m20:06:07[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m20:06:07[22m [34m[vite][39m program reload
+[2m20:06:07[22m [34m[watch][39m /src/styles/global.css
+[2m20:06:08[22m [34m[200][39m / [2m212ms[22m
+[2m20:06:08[22m [34m[200][39m / [2m103ms[22m
+[2m20:06:39[22m [34m[200][39m / [2m14ms[22m
+[2m20:08:32[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m20:08:32[22m [34m[watch][39m /src/styles/global.css
+[2m20:08:33[22m [34m[200][39m / [2m68ms[22m
+[2m20:08:33[22m [34m[200][39m / [2m68ms[22m
+[2m20:08:58[22m [34m[200][39m / [2m7ms[22m
+[2m20:30:03[22m [34m[200][39m /product/govee-rgbic-led-strip-lights/ [2m98ms[22m
+[2m20:30:05[22m [34m[200][39m / [2m10ms[22m
+[2m20:30:07[22m [34m[200][39m /product/echo-dot-5th-gen/ [2m9ms[22m
+[2m20:38:56[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m20:38:56[22m [34m[watch][39m /src/styles/global.css
+[2m20:38:57[22m [34m[200][39m / [2m94ms[22m
+[2m20:38:57[22m [34m[200][39m / [2m97ms[22m
+[2m20:42:14[22m [34m[watch][39m /src/styles/global.css
+[2m20:42:15[22m [34m[200][39m / [2m76ms[22m
+[2m20:42:44[22m [34m[200][39m / [2m7ms[22m
+[2m20:49:40[22m [34m[watch][39m /src/styles/global.css
+[2m20:49:41[22m [34m[200][39m / [2m81ms[22m
+[2m20:50:04[22m [34m[200][39m / [2m21ms[22m
+[2m20:50:21[22m [34m[200][39m / [2m16ms[22m
+[2m20:53:45[22m [34m[watch][39m /src/styles/global.css
+[2m20:53:46[22m [34m[200][39m / [2m82ms[22m
+[2m20:55:06[22m [34m[watch][39m /src/styles/global.css
+[2m20:55:07[22m [34m[200][39m / [2m135ms[22m
+[2m20:55:57[22m [34m[200][39m / [2m7ms[22m
+[2m21:17:11[22m [34m[200][39m / [2m15ms[22m
+[2m21:17:26[22m [34m[200][39m /deals/ [2m98ms[22m
+[2m21:17:29[22m [34m[200][39m / [2m10ms[22m
+[2m21:19:20[22m [34m[200][39m / [2m13ms[22m
+[2m21:21:35[22m [34m[watch][39m /src/styles/global.css
+[2m21:21:35[22m [34m[200][39m / [2m55ms[22m
+[2m21:22:32[22m [34m[200][39m / [2m11ms[22m
+[2m21:53:12[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m21:53:12[22m [34m[200][39m / [2m81ms[22m
+[2m21:53:43[22m [34m[200][39m / [2m12ms[22m
+[2m22:09:58[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m22:09:58[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m22:09:59[22m [34m[200][39m / [2m75ms[22m
+[2m22:44:55[22m [34m[200][39m / [2m6ms[22m
+[2m22:48:08[22m [34m[200][39m / [2m13ms[22m
+[2m22:50:26[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m22:50:26[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m22:50:26[22m [34m[200][39m / [2m58ms[22m
+[2m22:50:26[22m [34m[200][39m / [2m58ms[22m
+[2m22:51:00[22m [34m[200][39m / [2m7ms[22m
+[2m22:52:57[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m22:53:36[22m [34m[200][39m / [2m17ms[22m
+[2m23:30:41[22m [34m[200][39m / [2m15ms[22m
+[2m23:34:11[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m23:34:11[22m [34m[200][39m / [2m93ms[22m
+[2m23:34:54[22m [34m[200][39m / [2m7ms[22m
+[2m23:40:35[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m23:40:35[22m [34m[200][39m / [2m73ms[22m
+[2m23:41:21[22m [34m[200][39m / [2m13ms[22m
+[2m23:41:24[22m [34m[200][39m / [2m12ms[22m
+[2m23:41:26[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m23:41:31[22m [34m[200][39m / [2m37ms[22m
+[2m23:41:47[22m [34m[200][39m / [2m11ms[22m
+[2m23:41:55[22m [34m[200][39m / [2m14ms[22m
+[2m23:50:58[22m [34m[200][39m / [2m14ms[22m
+[2m23:53:00[22m [34m[200][39m /products/ [2m99ms[22m
+[2m23:54:08[22m [34m[watch][39m /src/styles/global.css, /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m23:54:08[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m23:54:09[22m [34m[200][39m / [2m158ms[22m
+[2m23:54:09[22m [34m[200][39m / [2m158ms[22m
+[2m23:54:09[22m [34m[200][39m / [2m18ms[22m
+[2m23:54:52[22m [34m[200][39m / [2m7ms[22m
+[2m01:14:39[22m [34m[200][39m / [2m13ms[22m
+[2m01:18:54[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m01:18:54[22m [34m[watch][39m /src/styles/global.css
+[2m01:18:54[22m [34m[200][39m / [2m107ms[22m
+[2m01:18:54[22m [34m[200][39m / [2m108ms[22m
+[2m01:20:02[22m [34m[200][39m / [2m14ms[22m
+[2m01:20:39[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m01:20:59[22m [34m[200][39m / [2m10ms[22m
+[2m01:25:18[22m [34m[200][39m / [2m13ms[22m
+[2m01:35:28[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m01:35:28[22m [34m[watch][39m /src/styles/global.css
+[2m01:35:28[22m [34m[200][39m / [2m153ms[22m
+[2m01:35:28[22m [34m[200][39m / [2m151ms[22m
+[2m01:35:28[22m [34m[200][39m / [2m151ms[22m
+[2m01:36:27[22m [34m[200][39m / [2m10ms[22m
+[2m01:37:58[22m [34m[200][39m / [2m21ms[22m
+[2m01:50:49[22m [34m[200][39m / [2m11ms[22m
+[2m02:06:40[22m [34m[200][39m / [2m15ms[22m
+[2m02:11:55[22m [34m[watch][39m /src/styles/global.css
+[2m02:11:55[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:11:55[22m [34m[watch][39m /src/components/Header.astro?astro&type=style&index=0&lang.css
+[2m02:11:55[22m [34m[200][39m / [2m81ms[22m
+[2m02:11:55[22m [34m[200][39m / [2m81ms[22m
+[2m02:12:42[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:13:24[22m [34m[200][39m / [2m31ms[22m
+[2m02:17:01[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:17:02[22m [34m[200][39m / [2m132ms[22m
+[2m02:17:02[22m [34m[200][39m / [2m134ms[22m
+[2m02:17:44[22m [34m[watch][39m /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:18:18[22m [34m[200][39m / [2m25ms[22m
+[2m02:27:03[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:27:04[22m [34m[200][39m / [2m127ms[22m
+[2m02:27:04[22m [34m[200][39m / [2m128ms[22m
+[2m02:27:52[22m [34m[200][39m / [2m13ms[22m
+[2m02:28:08[22m [34m[200][39m / [2m14ms[22m
+[2m02:28:31[22m [34m[200][39m / [2m12ms[22m
+[2m02:28:53[22m [34m[200][39m / [2m14ms[22m
+[2m02:29:04[22m [34m[200][39m / [2m14ms[22m
+[2m02:29:53[22m [34m[200][39m /deals/ [2m96ms[22m
+[2m02:29:57[22m [34m[200][39m /calculator/ [2m71ms[22m
+[2m02:30:03[22m [34m[200][39m /compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/ [2m116ms[22m
+[2m02:30:34[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:30:34[22m [34m[200][39m /compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/ [2m35ms[22m
+[2m02:30:35[22m [34m[200][39m / [2m199ms[22m
+[2m02:30:35[22m [34m[200][39m / [2m199ms[22m
+[2m02:31:25[22m [34m[200][39m / [2m8ms[22m
+[2m02:31:25[22m [34m[200][39m / [2m6ms[22m
+[2m02:33:15[22m [34m[200][39m /category/smart-speaker/ [2m125ms[22m
+[2m02:33:39[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:33:40[22m [34m[200][39m /compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/ [2m113ms[22m
+[2m02:33:41[22m [34m[200][39m / [2m186ms[22m
+[2m02:33:41[22m [34m[200][39m / [2m189ms[22m
+[2m02:34:39[22m [34m[200][39m / [2m16ms[22m
+[2m02:34:39[22m [34m[200][39m / [2m15ms[22m
+[2m02:35:25[22m [34m[200][39m / [2m12ms[22m
+[2m02:36:06[22m [34m[200][39m / [2m17ms[22m
+[2m02:37:54[22m [34m[200][39m / [2m15ms[22m
+[2m02:38:02[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:38:03[22m [34m[200][39m /compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/ [2m66ms[22m
+[2m02:38:03[22m [34m[200][39m / [2m183ms[22m
+[2m02:38:03[22m [34m[200][39m / [2m186ms[22m
+[2m02:39:45[22m [34m[200][39m / [2m18ms[22m
+[2m02:39:50[22m [34m[200][39m / [2m21ms[22m
+[2m02:41:51[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:41:52[22m [34m[200][39m /compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/ [2m37ms[22m
+[2m02:41:52[22m [34m[200][39m / [2m184ms[22m
+[2m02:41:52[22m [34m[200][39m / [2m182ms[22m
+[2m02:42:56[22m [34m[200][39m / [2m8ms[22m
+[2m02:42:56[22m [34m[200][39m / [2m8ms[22m
+[2m02:44:42[22m [34m[200][39m /product/tp-link-kasa-smart-plug-mini/ [2m110ms[22m
+[2m02:44:59[22m [34m[200][39m /product/tp-link-kasa-smart-plug-mini/ [2m12ms[22m
+[2m02:45:19[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:46:20[22m [34m[200][39m / [2m115ms[22m
+[2m02:46:20[22m [34m[200][39m / [2m114ms[22m
+[2m02:47:03[22m [34m[200][39m / [2m16ms[22m
+[2m02:47:04[22m [34m[200][39m / [2m16ms[22m
+[2m02:48:24[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:48:25[22m [34m[200][39m / [2m202ms[22m
+[2m02:50:03[22m [34m[200][39m / [2m17ms[22m
+[2m02:50:03[22m [34m[200][39m / [2m18ms[22m
+[2m02:50:53[22m [34m[watch][39m /src/styles/global.css, /src/pages/index.astro?astro&type=style&index=0&lang.css
+[2m02:50:54[22m [34m[200][39m / [2m81ms[22m
+[2m03:49:42[22m [34m[200][39m / [2m13ms[22m

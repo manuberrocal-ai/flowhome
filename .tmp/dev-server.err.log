@@ -1,0 +1,4 @@
+[31m[1m19:40:09[22m [ERROR] [vite][39m An error happened during full reload
+Failed to load url astro:server-app.js (resolved id: astro:server-app.js). Does the file exist?
+Error: Failed to load url astro:server-app.js (resolved id: astro:server-app.js). Does the file exist?
+    at loadAndTransform (file:///C:/AGENTES/Proyectos/flowhome/node_modules/vite/dist/node/chunks/node.js:19714:31)

@@ -1,0 +1,177 @@
+
+> flowhome@1.0.0 dev
+> astro dev --host 127.0.0.1 --port 4321
+
+[2m03:56:41[22m [34m[vite][39m connected.
+[2m03:56:43[22m [34m[types][39m Generated [2m2ms[22m
+[2m03:56:43[22m [34m[vite][39m connected.
+[2m03:56:44[22m [34m[content][39m Syncing content
+[2m03:56:44[22m [34m[content][39m Synced content
+[2m03:56:44[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[42m[1m astro [22m[49m [32mv7.0.3[39m [2mready in[22m 4389 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4321/[39m
+[2m03:56:45[22m [32mwatching for file changes...[39m
+[2m04:00:34[22m [34m[200][39m / [2m209ms[22m
+[2m04:00:35[22m [34m[200][39m / [2m11ms[22m
+[2m04:07:38[22m [34m[vite][39m program reload
+[2m04:07:38[22m [34m[watch][39m /src/styles/global.css
+[2m04:07:38[22m [34m[glob-loader][39m Reloaded data from [32marlo-essential-outdoor-camera.yaml[39m
+[2m04:07:39[22m [34m[200][39m / [2m143ms[22m
+[2m04:09:25[22m [34m[vite][39m program reload
+[2m04:09:26[22m [34m[watch][39m /src/styles/global.css
+[2m04:09:26[22m [34m[vite][39m program reload
+[2m04:09:26[22m [34m[200][39m / [2m56ms[22m
+[2m04:10:51[22m [34m[vite][39m program reload
+[2m04:10:51[22m [34m[200][39m / [2m72ms[22m
+[2m04:11:23[22m [34m[watch][39m /src/styles/global.css
+[2m04:11:24[22m [34m[200][39m / [2m69ms[22m
+[2m04:11:58[22m [34m[vite][39m program reload
+[2m04:11:59[22m [34m[200][39m / [2m33ms[22m
+[2m04:12:43[22m [34m[200][39m /product/yale-assure-lock-2-wifi/ [2m54ms[22m
+[2m04:16:45[22m [34m[200][39m /products/ [2m94ms[22m
+[2m04:16:58[22m [34m[200][39m / [2m8ms[22m
+[2m04:18:00[22m [34m[200][39m /products/ [2m18ms[22m
+[2m04:20:22[22m [34m[vite][39m program reload
+[2m04:20:22[22m [34m[glob-loader][39m Reloaded data from [32mamazon-smart-thermostat.yaml[39m
+[2m04:20:23[22m [34m[glob-loader][39m Reloaded data from [32marlo-essential-outdoor-camera.yaml[39m
+[2m04:20:23[22m [34m[vite][39m program reload
+[2m04:20:23[22m [34m[glob-loader][39m Reloaded data from [32maugust-wifi-smart-lock.yaml[39m
+[2m04:20:23[22m [34m[glob-loader][39m Reloaded data from [32mblink-outdoor-4.yaml[39m
+[2m04:20:23[22m [34m[glob-loader][39m Reloaded data from [32mecho-dot-5th-gen.yaml[39m
+[2m04:20:23[22m [34m[glob-loader][39m Reloaded data from [32mecho-show-8-3rd-gen.yaml[39m
+[2m04:20:23[22m [34m[vite][39m program reload
+[2m04:20:23[22m [34m[vite][39m program reload
+[2m04:20:24[22m [34m[vite][39m program reload
+[2m04:20:24[22m [34m[vite][39m program reload
+[2m04:20:24[22m [34m[200][39m / [2m939ms[22m
+[2m04:20:24[22m [34m[200][39m / [2m36ms[22m
+[2m04:20:24[22m [34m[vite][39m program reload
+[2m04:20:24[22m [34m[glob-loader][39m Reloaded data from [32mirobot-roomba-j7-plus.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mlevoit-core-300s-air-purifier.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mmeross-smart-garage-door-opener.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mphilips-hue-white-color-starter-kit.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mring-video-doorbell-wired.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mschlage-encode-smart-wifi-deadbolt.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mswitchbot-hub-2.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mtapo-c120-security-camera.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-smart-dimmer-hs220.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-smart-light-switch-hs200.yaml[39m
+[2m04:20:25[22m [34m[glob-loader][39m Reloaded data from [32mtp-link-kasa-smart-plug-mini.yaml[39m
+[2m04:20:25[22m [34m[vite][39m program reload
+[2m04:20:25[22m [34m[vite][39m program reload
+[2m04:20:26[22m [34m[vite][39m program reload
+[2m04:20:26[22m [34m[vite][39m program reload
+[2m04:20:26[22m [34m[vite][39m program reload
+[2m04:20:26[22m [34m[vite][39m program reload
+[2m04:20:27[22m [34m[vite][39m program reload
+[2m04:20:27[22m [34m[vite][39m program reload
+[2m04:20:27[22m [34m[vite][39m program reload
+[2m04:20:27[22m [34m[vite][39m program reload
+[2m04:20:28[22m [34m[200][39m / [2m150ms[22m
+[2m04:24:10[22m [34m[vite][39m program reload
+[2m04:24:11[22m [34m[watch][39m /src/styles/global.css
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mgovee-rgbic-led-strip-lights.yaml[39m
+[2m04:24:11[22m [34m[watch][39m /src/styles/global.css
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mgoogle-nest-hub-2nd-gen.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mecobee-smart-thermostat-premium.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32meufy-security-indoor-cam-c120.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mroborock-q5-plus.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32myale-assure-lock-2-wifi.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32maeotec-smartthings-hub.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32maqara-hub-m2.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32maqara-motion-sensor-p1.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mswitchbot-blind-tilt.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32mwyze-bulb-color.yaml[39m
+[2m04:24:11[22m [34m[glob-loader][39m Reloaded data from [32myale-assure-lock-2-wifi.yaml[39m
+[2m04:24:12[22m [34m[vite][39m program reload
+[2m04:24:12[22m [34m[vite][39m program reload
+[2m04:24:12[22m [34m[vite][39m program reload
+[2m04:24:12[22m [34m[vite][39m program reload
+[2m04:24:12[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:13[22m [34m[vite][39m program reload
+[2m04:24:14[22m [34m[200][39m / [2m171ms[22m
+[2m04:25:15[22m [34m[vite][39m program reload
+[2m04:25:15[22m [34m[glob-loader][39m Reloaded data from [32mgoogle-nest-hub-2nd-gen.yaml[39m
+[2m04:25:16[22m [34m[200][39m / [2m66ms[22m
+[2m04:25:17[22m [34m[200][39m / [2m66ms[22m
+[2m04:25:51[22m [34m[vite][39m program reload
+[2m04:25:52[22m [34m[200][39m / [2m56ms[22m
+[2m04:26:19[22m [34m[200][39m /products/ [2m44ms[22m
+[2m04:26:45[22m [34m[200][39m / [2m7ms[22m
+[2m04:27:43[22m [34m[200][39m / [2m15ms[22m
+[2m04:34:05[22m [34m[watch][39m /src/styles/global.css
+[2m04:34:06[22m [34m[200][39m / [2m77ms[22m
+[2m04:34:06[22m [34m[200][39m / [2m14ms[22m
+[2m04:35:13[22m [34m[watch][39m /src/styles/global.css
+[2m04:35:13[22m [34m[200][39m / [2m87ms[22m
+[2m04:35:13[22m [34m[200][39m / [2m12ms[22m
+[2m04:35:31[22m [34m[vite][39m program reload
+[2m04:35:32[22m [34m[200][39m / [2m59ms[22m
+[2m04:35:32[22m [34m[200][39m / [2m16ms[22m
+[2m04:36:03[22m [34m[200][39m / [2m11ms[22m
+[2m04:37:05[22m [34m[200][39m / [2m15ms[22m
+[2m04:44:25[22m [34m[watch][39m /src/styles/global.css
+[2m04:44:25[22m [34m[watch][39m /src/styles/global.css, /src/components/GoogleTranslate.astro?astro&type=style&index=0&lang.css
+[2m04:44:25[22m [34m[200][39m / [2m86ms[22m
+[2m04:44:25[22m [34m[200][39m / [2m11ms[22m
+[2m04:44:25[22m [34m[200][39m / [2m11ms[22m
+[2m04:47:21[22m [34m[watch][39m /src/styles/global.css
+[2m04:47:21[22m [34m[200][39m / [2m114ms[22m
+[2m04:47:21[22m [34m[200][39m / [2m116ms[22m
+[2m04:47:21[22m [34m[200][39m / [2m15ms[22m
+[2m04:48:03[22m [34m[vite][39m program reload
+[2m04:48:04[22m [34m[200][39m / [2m71ms[22m
+[2m04:48:04[22m [34m[200][39m / [2m15ms[22m
+[2m04:48:04[22m [34m[200][39m / [2m14ms[22m
+[2m04:49:12[22m [34m[200][39m / [2m5ms[22m
+[2m04:51:13[22m [34m[200][39m / [2m11ms[22m
+[2m04:59:04[22m [34m[watch][39m /src/styles/global.css
+[2m04:59:04[22m [34m[watch][39m /src/styles/global.css, /src/components/GoogleTranslate.astro?astro&type=style&index=0&lang.css
+[2m04:59:04[22m [34m[watch][39m /src/styles/global.css
+[2m04:59:05[22m [34m[200][39m / [2m87ms[22m
+[2m04:59:05[22m [34m[200][39m / [2m89ms[22m
+[2m04:59:05[22m [34m[200][39m / [2m89ms[22m
+[2m04:59:05[22m [34m[200][39m / [2m11ms[22m
+[2m04:59:38[22m [34m[vite][39m program reload
+[2m04:59:39[22m [34m[200][39m / [2m65ms[22m
+[2m04:59:39[22m [34m[200][39m / [2m12ms[22m
+[2m04:59:39[22m [34m[200][39m / [2m12ms[22m
+[2m04:59:39[22m [34m[200][39m / [2m11ms[22m
+[2m05:05:08[22m [34m[200][39m / [2m10ms[22m
+[2m05:05:59[22m [34m[200][39m / [2m10ms[22m
+[2m05:06:43[22m [34m[200][39m / [2m9ms[22m
+[2m05:06:44[22m [34m[200][39m / [2m8ms[22m
+[2m05:06:49[22m [34m[200][39m / [2m8ms[22m
+[2m05:06:51[22m [34m[200][39m / [2m8ms[22m
+[2m05:07:06[22m [34m[200][39m / [2m13ms[22m
+[2m05:07:10[22m [34m[200][39m / [2m7ms[22m
+[2m05:07:47[22m [34m[200][39m / [2m8ms[22m
+[2m05:13:16[22m [34m[watch][39m /src/styles/global.css
+[2m05:13:16[22m [34m[watch][39m /src/styles/global.css
+[2m05:13:17[22m [34m[200][39m / [2m86ms[22m
+[2m05:13:17[22m [34m[200][39m / [2m88ms[22m
+[2m05:13:17[22m [34m[200][39m / [2m88ms[22m
+[2m05:13:17[22m [34m[200][39m / [2m12ms[22m
+[2m05:13:51[22m [34m[watch][39m /src/styles/global.css
+[2m05:13:52[22m [34m[200][39m / [2m107ms[22m
+[2m05:13:52[22m [34m[200][39m / [2m109ms[22m
+[2m05:13:52[22m [34m[200][39m / [2m109ms[22m
+[2m05:13:52[22m [34m[200][39m / [2m11ms[22m
+[2m05:14:06[22m [34m[vite][39m program reload
+[2m05:14:07[22m [34m[200][39m / [2m56ms[22m
+[2m05:14:07[22m [34m[200][39m / [2m16ms[22m
+[2m05:14:07[22m [34m[200][39m / [2m20ms[22m
+[2m05:14:07[22m [34m[200][39m / [2m12ms[22m
+[2m05:15:50[22m [34m[200][39m / [2m8ms[22m
+[2m05:16:29[22m [34m[200][39m / [2m14ms[22m
+[2m05:16:42[22m [34m[200][39m / [2m5ms[22m
+[2m05:16:48[22m [34m[200][39m / [2m8ms[22m
+[2m05:16:51[22m [34m[200][39m / [2m8ms[22m
+[2m05:17:01[22m [34m[200][39m / [2m9ms[22m
+[2m05:17:07[22m [34m[200][39m / [2m7ms[22m
+[2m05:17:12[22m [34m[200][39m / [2m7ms[22m

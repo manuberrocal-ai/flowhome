@@ -1,8 +1,8 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
-const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+const supabaseUrl = 'https://lbiuwknkrbyzrujarslh.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaXV3a25rcmJ5enJ1amFyc2xoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQzNDgsImV4cCI6MjA5ODYzMDM0OH0.W_sqEbR0DIthUJqRzDRktXnRlw3CHkSrWYq9xy-1MfU';
+const isSupabaseConfigured = true;
 ---
 <BaseLayout title="FlowHome Account | Save Smart Home Shortlists" description="Create a FlowHome account with Google to save smart home shortlists, favorites, and deal notes for future promotions." canonicalURL="https://flowhome.dev/account/" noindex={true}>
   <section class="account-hero home-parallax-bg relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/25 md:p-8 lg:p-10">
@@ -33,7 +33,7 @@ const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
             Continue with Google
           </button>
           <p class="account-status min-h-5 mt-3 text-sm font-bold text-cyan-700" aria-live="polite"></p>
-          {!isSupabaseConfigured && (
+          {false && (
             <p class="mt-3 rounded-2xl bg-amber-50 p-3 text-xs font-bold text-amber-800 ring-1 ring-amber-200">
               Auth not configured. Set <code>PUBLIC_SUPABASE_URL</code> and <code>PUBLIC_SUPABASE_ANON_KEY</code> in your environment.
             </p>
