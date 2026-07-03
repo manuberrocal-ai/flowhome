@@ -1,4 +1,4 @@
----
+﻿---
 const navItems = [
   {
     label: 'Products',
@@ -280,3 +280,28 @@ const navItems = [
   .mobile-submenu-link:hover { background: #1f2937; color: #ffffff; }
   .mobile-submenu-link.font-bold { color: #ffffff !important; }
 </style>
+<script is:inline>
+  (async () => {
+    const SUPABASE_URL = "https://lbiuwknkrbyzrujarslh.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaXV3a25rcmJ5enJ1amFyc2xoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQzNDgsImV4cCI6MjA5ODYzMDM0OH0.W_sqEbR0DIthUJqRzDRktXnRlw3CHkSrWYq9xy-1MfU";
+    const avatarLink = document.querySelector('[data-header-avatar-link]');
+    const avatarImg = document.querySelector('.data-header-avatar-img');
+    const avatarDefault = document.querySelector('.data-header-avatar-default');
+    if (!avatarLink) return;
+    try {
+      const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && session.user) {
+        const meta = session.user.user_metadata || {};
+        const pic = meta.avatar_url || meta.picture || '';
+        if (pic && avatarImg) {
+          avatarImg.src = pic;
+          avatarImg.alt = meta.full_name || meta.name || 'Account';
+          avatarImg.classList.remove('hidden');
+          if (avatarDefault) avatarDefault.classList.add('hidden');
+        }
+      }
+    } catch (e) {}
+  })();
+</script>
