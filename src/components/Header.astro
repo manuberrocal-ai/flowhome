@@ -80,12 +80,12 @@ const navItems = [
     </nav>
 
     <div class="flex shrink-0 items-center gap-2">
-      <a href="/account/" class="account-avatar-link hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-100 sm:inline-flex" aria-label="Open account" data-header-avatar-link>
-        <svg class="h-5 w-5 data-header-avatar-default" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <a href="/account/" style="position:relative;overflow:hidden;" class="account-avatar-link hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-100 sm:inline-flex" aria-label="Open account" data-header-avatar-link>
+        <svg class="h-5 w-5 data-header-avatar-default" style="display:block;" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="2" />
           <path d="M5.75 20a6.25 6.25 0 0 1 12.5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
-        <img class="hidden h-full w-full rounded-full object-cover data-header-avatar-img" alt="" />
+        <img class="data-header-avatar-img" style="display:none;position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="" />
       </a>
       <a href="/deals/" class="today-deals-link hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-2 text-sm font-black text-white shadow-sm shadow-cyan-900/35 transition hover:-translate-y-0.5 hover:from-teal-400 hover:via-cyan-600 hover:to-blue-900 sm:inline-flex">Today's deals</a>
       <button class="mobile-menu-btn rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm transition hover:bg-slate-50 lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -287,10 +287,9 @@ const navItems = [
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaXV3a25rcmJ5enJ1amFyc2xoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQzNDgsImV4cCI6MjA5ODYzMDM0OH0.W_sqEbR0DIthUJqRzDRktXnRlw3CHkSrWYq9xy-1MfU";
 
     const updateAvatar = async (supabase) => {
-      const avatarLink = document.querySelector('[data-header-avatar-link]');
       const avatarImg = document.querySelector('.data-header-avatar-img');
       const avatarDefault = document.querySelector('.data-header-avatar-default');
-      if (!avatarLink || !avatarImg) return;
+      if (!avatarImg) return;
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session && session.user) {
@@ -299,27 +298,20 @@ const navItems = [
           if (pic) {
             avatarImg.src = pic;
             avatarImg.alt = meta.full_name || meta.name || 'Account';
-            avatarImg.classList.remove('hidden');
             avatarImg.style.display = 'block';
             if (avatarDefault) avatarDefault.style.display = 'none';
           }
         }
-      } catch (e) {
-        console.warn('Avatar sync failed:', e);
-      }
+      } catch (e) {}
     };
 
     try {
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      // Update on load
       updateAvatar(supabase);
-      // Update on auth state change (covers OAuth redirect scenarios)
       supabase.auth.onAuthStateChange(() => updateAvatar(supabase));
-      // Retry after 2 seconds in case session is still loading
-      setTimeout(() => updateAvatar(supabase), 2000);
-    } catch (e) {
-      console.warn('Supabase init failed:', e);
-    }
+      setTimeout(() => updateAvatar(supabase), 1500);
+      setTimeout(() => updateAvatar(supabase), 3000);
+    } catch (e) {}
   })();
 </script>
