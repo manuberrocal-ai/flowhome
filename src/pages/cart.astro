@@ -37,7 +37,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <strong class="text-xl font-black text-slate-950" data-cart-page-total>$0.00</strong>
           </div>
         </div>
-        <button type="button" class="premium-action flow-wave mt-5 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-5 py-4 text-center text-base font-black text-white" data-cart-page-buy>Open Amazon cart</button>
+        <button type="button" class="premium-action flow-wave mt-5 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-5 py-4 text-center text-base font-black text-white" data-cart-page-buy data-fh-amazon-link data-fh-amazon-link>Open Amazon cart</button>
         <p class="mt-3 text-center text-xs font-semibold leading-5 text-slate-500">Amazon may change price or availability. FlowHome does not process checkout.</p>
       </aside>
     </div>
@@ -51,7 +51,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const empty = document.querySelector('[data-cart-page-empty]');
       const count = document.querySelector('[data-cart-page-count]');
       const total = document.querySelector('[data-cart-page-total]');
-      const buy = document.querySelector('[data-cart-page-buy]');
+      const buy = document.querySelector('[data-cart-page-buy data-fh-amazon-link data-fh-amazon-link]');
       const clear = document.querySelector('[data-cart-page-clear]');
 
       const readItems = () => {

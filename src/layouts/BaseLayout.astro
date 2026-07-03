@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import GoogleTranslate from '../components/GoogleTranslate.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
+import AuthGuardModal from '../components/AuthGuardModal.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
 
 interface Props {
@@ -265,5 +266,6 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
         if (!reduceMotion) setupProductZoom();
       })();
     </script>
-  </body>
+    <AuthGuardModal />
+</body>
 </html>
