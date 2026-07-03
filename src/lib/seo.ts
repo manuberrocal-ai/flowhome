@@ -48,6 +48,11 @@ export function generateMetaTags(config: SEOConfig) {
 }
 
 export function generateProductSchema(product: any) {
+  const SITE = 'https://flowhome.dev';
+  const toAbsolute = (url: string) => {
+    if (!url) return '';
+    return url.startsWith('http') ? url : new URL(url, SITE).href;
+  };
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -57,13 +62,31 @@ export function generateProductSchema(product: any) {
       '@type': 'Brand',
       name: product.brand || 'Unknown',
     },
-    ...(product.image ? { image: product.image } : {}),
+    image: toAbsolute(product.image || '/images/og-default.svg'),
     offers: {
       '@type': 'Offer',
       price: product.price,
       priceCurrency: 'USD',
       availability: product.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: product.affiliateUrl,
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'US',
+        },
+      },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'US',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 30,
+      },
     },
     ...(product.rating ? {
       aggregateRating: {
