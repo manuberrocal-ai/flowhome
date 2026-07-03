@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const lists = (await getCollection('best-of')).sort((a, b) => a.data.title.localeCompare(b.data.title));
 ---
 <BaseLayout title="Best Smart Home Picks | FlowHome" description="Browse FlowHome best-of smart home buying guides for starter kits, robot vacuums, security basics, and more." canonicalURL="https://flowhome.dev/best/">
-  <section class="rounded-3xl bg-white p-8 shadow-sm">
+  <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Buying guides</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">Best smart home picks</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">Curated shortlists for common smart home goals, from starter kits to cleaning automation and basic security.</p>

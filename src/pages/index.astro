@@ -4,40 +4,208 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import DealCard from '../components/DealCard.astro';
 import Newsletter from '../components/Newsletter.astro';
+import { getCategoryLabel } from '../lib/product-art';
 
 const products = (await getCollection('products')).sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
 const deals = await getCollection('deals');
-const heroProducts = products.filter((p) => p.data.priority === 'hero').slice(0, 3);
-const featuredProducts = products.filter((p) => p.data.available).slice(0, 8);
+const reviews = (await getCollection('reviews')).sort((a, b) => b.data.qualityScore - a.data.qualityScore || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredProducts = products.filter((p) => p.data.available).slice(0, 12);
+const showcaseProducts = featuredProducts.slice(0, 6);
+const dealProducts = products.filter((p) => p.data.discountPct > 0).slice(0, 4);
+const topProduct = showcaseProducts[0]?.data;
+const categories = [...new Set(products.map((p) => p.data.category))].slice(0, 7);
+const reviewCards = reviews.slice(0, 3);
+
+const shopperQuotes: Record<string, string> = {
+  'tp-link-kasa-smart-plug-mini': 'This little plug feels like a hidden gem for everyday routines.',
+  'echo-dot-5th-gen': 'It made the whole home feel smarter without spending much.',
+  'govee-rgbic-led-strip-lights': 'The room looks completely different the second these turn on.',
+  'amazon-smart-thermostat': 'A quiet upgrade that makes comfort feel automatic.',
+  'blink-outdoor-4': 'It is the kind of camera you appreciate the first time you need it.',
+  'google-nest-hub-2nd-gen': 'The screen becomes the calm control center of the room.',
+};
+
+const categoryQuotes: Record<string, string> = {
+  'smart-plug': 'This is the tiny upgrade people wish they bought sooner.',
+  'smart-speaker': 'It makes voice control feel natural from day one.',
+  'smart-lighting': 'A simple mood upgrade that feels bigger than the price.',
+  'smart-thermostat': 'It is one of those set-it-and-notice-it-later upgrades.',
+  'security-camera': 'Peace of mind starts feeling pretty affordable here.',
+  'video-doorbell': 'It changes how confident you feel about the front door.',
+  'smart-lock': 'Keys suddenly feel a little outdated after this.',
+  'robot-vacuum': 'It quietly buys back time every week.',
+};
+
+const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuotes[data.category] || 'This feels like a smart-home upgrade that actually earns its spot.';
 ---
 <BaseLayout>
-  <section class="overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-8 text-white shadow-xl md:p-12">
-    <div class="grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+  <section class="hero-parallax relative isolate overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-2xl shadow-blue-950/20">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(249,115,22,0.38),transparent_24%),radial-gradient(circle_at_12%_0%,rgba(37,99,235,0.82),transparent_36%),linear-gradient(135deg,#020617_0%,#172554_43%,#0369a1_100%)]"></div>
+    <div class="absolute right-0 top-0 -z-10 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08))]"></div>
+
+    <div class="grid gap-8 p-6 md:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:p-10">
       <div>
-        <p class="text-sm font-bold uppercase tracking-[0.3em] text-cyan-100">US / Canada smart home buying hub</p>
-        <h1 class="mt-4 max-w-4xl text-5xl font-black leading-tight md:text-7xl">Build a smarter home without buying the wrong gear.</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-blue-50">FlowHome filters smart home products by usefulness, compatibility, owner feedback, deal quality, and practical setup value so you can avoid noisy shopping pages and bad-fit devices.</p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/quiz/" class="rounded-2xl bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600">Find my setup</a>
-          <a href="/deals/" class="rounded-2xl bg-white/10 px-6 py-3 font-bold text-white ring-1 ring-white/30 hover:bg-white/20">See deals</a>
+        <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
+        <h1 class="mt-5 max-w-4xl text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Buy smart home gear that actually fits your home.</h1>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-blue-50 md:text-lg">FlowHome turns messy Amazon research into a clean shortlist: useful devices, strong owner feedback, ecosystem fit, and clear deal context.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/quiz/" class="flow-wave inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
+          <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Shop picks</a>
         </div>
+        {topProduct && <div class="mt-7 flex max-w-xl flex-wrap gap-2 text-sm">
+          <span class="rounded-full bg-white/10 px-3 py-1.5 font-bold text-blue-50 ring-1 ring-white/15">Top pick: {topProduct.name}</span>
+          <span class="rounded-full bg-orange-500/20 px-3 py-1.5 font-bold text-orange-100 ring-1 ring-orange-300/20">From ${topProduct.price}</span>
+          <span class="rounded-full bg-white/10 px-3 py-1.5 font-bold text-blue-50 ring-1 ring-white/15">{topProduct.rating} / 5 rating</span>
+        </div>}
       </div>
-      <div class="rounded-3xl bg-white/10 p-5 ring-1 ring-white/20">
-        <h2 class="text-xl font-extrabold">Best starting points</h2>
-        <div class="mt-4 space-y-3">
-          {heroProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="block rounded-2xl bg-white/95 p-4 text-slate-900 hover:bg-white"><div class="font-extrabold">{product.data.name}</div><div class="text-sm text-slate-500">${product.data.price} · {product.data.rating}★</div></a>)}
+
+      <div class="relative" aria-label="Featured smart home product showcase">
+        <div class="relative overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-100 p-3 text-slate-950">
+          <div class="flex items-center justify-between gap-3 px-2 pb-3">
+            <div>
+              <p class="text-[11px] font-black uppercase tracking-[0.2em] text-orange-600">Live shortlist</p>
+              <h2 class="text-lg font-black">Featured products</h2>
+            </div>
+            <a href="/deals/" class="flow-wave rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-sm shadow-orange-300/50 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500">Deals</a>
+          </div>
+
+          <div class="hero-showcase relative min-h-[462px]" data-hero-showcase>
+            {showcaseProducts.map((product, index) => {
+              const data = product.data;
+              const categoryLabel = getCategoryLabel(data.category);
+              const hasDeal = data.discountPct > 0 && data.originalPrice && data.originalPrice > data.price;
+              return <article class:list={["hero-slide absolute inset-0 grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-500", index === 0 ? 'is-active opacity-100 translate-x-0' : 'pointer-events-none opacity-0 translate-x-6']} data-hero-slide={index}>
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <p class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-blue-700">{categoryLabel}</p>
+                  </div>
+                  <h3 class="mt-1.5 max-w-full text-[1.36rem] font-black leading-[1.02] tracking-tight text-slate-950 md:text-[1.52rem]">{data.name}</h3>
+                </div>
+
+                <div class="hero-product-stage hero-sync-wave relative min-h-[20.25rem] overflow-hidden rounded-[1.25rem] bg-[#f8fafc] p-0 ring-1 ring-slate-200/70 md:min-h-[22rem]">
+                  <a href={`/product/${data.slug}/`} class="hero-product-photo flex h-full min-h-[20.25rem] items-center justify-start rounded-[1.25rem] bg-white md:min-h-[22rem]" aria-label={`View ${data.name}`}>
+                    <img src={data.image} alt={data.name} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchpriority={index === 0 ? 'high' : 'low'} />
+                  </a>
+
+
+                  {hasDeal && <div class="flow-wave absolute right-4 top-[2.35rem] z-50 flex h-[4.1rem] w-[7.05rem] flex-col items-center justify-center rounded-[1.35rem] bg-gradient-to-br from-blue-950 via-blue-700 to-cyan-500 px-3 py-2 text-center text-white shadow-xl shadow-blue-950/25 ring-1 ring-cyan-200/60">
+                    <span class="text-[9px] font-black uppercase leading-none tracking-[0.14em] text-cyan-100">Save today</span>
+                    <span class="mt-1 text-[1.65rem] font-black leading-none tracking-tight">-{data.discountPct}%</span>
+                  </div>}
+
+                  <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${data.name} price on Amazon`}>
+                    <p class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">Amazon price</p>
+                    <div class="mt-1 flex flex-wrap items-end gap-x-2 gap-y-1">
+                      <p class="text-[1.52rem] font-black leading-none tracking-tight text-white">${data.price}</p>
+                      {hasDeal && <p class="pb-0.5 text-[13px] font-bold text-slate-400 line-through">${data.originalPrice}</p>}
+                    </div>
+                    <div class="mt-2.5 flex items-center justify-between gap-2 border-t border-white/10 pt-2.5">
+                      <div class="flex items-center gap-0.5" aria-label={`Rated ${data.rating} out of 5 stars`}>
+                        {Array.from({ length: 5 }).map((_, starIndex) => (
+                          <svg class:list={["hero-star h-3.5 w-3.5", starIndex < Math.round(data.rating) ? "text-amber-300" : "text-slate-600"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.801 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 0 0 .95-.69l1.07-3.292Z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <span class="text-[11px] font-black text-amber-200">{data.rating}</span>
+                    </div>
+                    <span class="flow-wave amazon-cta-button mt-2.5 block rounded-xl px-3 py-2 text-center text-xs font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+                  </a>
+                </div>
+
+                <div class="grid gap-1.5">
+                  <p class="rounded-2xl border border-sky-100 bg-sky-50/80 px-3.5 py-2 text-sm font-bold italic leading-5">
+                    <span class="bg-clip-text text-transparent [background-image:linear-gradient(90deg,#0f2a52,#06b6d4)]">"{getShopperQuote(data)}"</span>
+                  </p>
+                </div>
+              </article>;
+            })}
+          </div>
+
+          <div class="mt-3 flex items-center justify-between gap-4 px-1">
+            <div class="flex gap-2" aria-label="Choose featured product">
+              {showcaseProducts.map((product, index) => <button class:list={["hero-dot h-2.5 rounded-full transition-all", index === 0 ? 'w-8 bg-orange-500' : 'w-2.5 bg-slate-300 hover:bg-slate-400']} type="button" data-hero-dot={index} aria-label={`Show ${product.data.name}`}></button>)}
+            </div>
+            <div class="flex items-center gap-2">
+              <a href={showcaseProducts[0] ? `/product/${showcaseProducts[0].data.slug}/` : '/products/'} class="hero-details-link inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-4 text-xs font-black text-slate-950 hover:bg-slate-200">Details</a>
+              <button type="button" class="hero-prev grid h-9 w-9 place-items-center rounded-full bg-slate-100 font-black text-slate-700 hover:bg-slate-200" aria-label="Previous product"><</button>
+              <button type="button" class="hero-next grid h-9 w-9 place-items-center rounded-full bg-slate-950 font-black text-white hover:bg-slate-800" aria-label="Next product">></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="mt-12">
-    <div class="mb-5 flex items-end justify-between gap-4">
-      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Featured</p><h2 class="text-3xl font-black text-slate-950">Smart home picks worth your shortlist</h2></div>
-      <a href="/best/best-smart-home-starter-kit/" class="font-bold text-blue-700 hover:underline">Best starter kit →</a>
+  {dealProducts.length > 0 && <section class="home-parallax-bg mt-8 rounded-[1.75rem] bg-slate-950 text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden" data-dark-parallax>
+    <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
+      <div><p class="text-xs font-black uppercase tracking-[0.2em] text-orange-400">Deal radar</p><h2 class="mt-1 text-2xl font-black">Discounts that deserve attention</h2></div>
+      <a href="/deals/" class="premium-action flow-wave rounded-full px-4 py-2 text-sm font-black text-white">See all deals</a>
     </div>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{featuredProducts.map((product) => <ProductCard product={product} />)}</div>
+    <div class="relative z-10 mx-5 mb-5 grid gap-3 md:grid-cols-4">
+      {dealProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="group flex items-center gap-3 rounded-2xl bg-slate-900/60 p-3 ring-1 ring-white/10 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-slate-900 hover:ring-orange-500/20">
+        <img src={product.data.image} alt={product.data.name} class="h-16 w-16 rounded-xl bg-slate-800 object-contain p-1" loading="lazy" decoding="async" fetchpriority="low" />
+        <div class="min-w-0"><p class="truncate text-sm font-black">{product.data.name}</p><p class="text-lg font-black text-orange-400">-{product.data.discountPct}% <span class="text-sm text-slate-300">${product.data.price}</span></p></div>
+      </a>)}
+    </div>
+  </section>}
+
+  <section class="featured-products mt-10 rounded-[2rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/70 p-4 ring-1 ring-slate-200/80 md:p-5">
+    <div class="mb-5 flex flex-wrap items-end justify-between gap-4">
+      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Featured</p><h2 class="text-3xl font-black text-slate-950">Smart home picks worth your shortlist</h2></div>
+      <div class="flex flex-wrap gap-2">{categories.map((category) => <a href={`/category/${category}/`} class="rounded-full bg-white px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm ring-1 ring-slate-200 hover:text-blue-700">{getCategoryLabel(category)}</a>)}</div>
+    </div>
+    <div class="product-flow-field relative grid gap-5 overflow-hidden rounded-[1.55rem] sm:grid-cols-2 lg:grid-cols-4">{featuredProducts.map((product) => <ProductCard product={product} />)}</div>
   </section>
+
+
+
+  <section class="mt-16 rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
+    <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+    <div class="home-parallax-bg min-h-full rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10" data-dark-parallax>
+      <div class="relative z-10">
+        <p class="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">Shortlist confidence</p>
+        <h2 class="mt-2 text-3xl font-black leading-tight">More signal before you click Amazon.</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-300">FlowHome turns price, compatibility, owner feedback, and everyday usefulness into a calmer buying path.</p>
+        <div class="mt-5 grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1">
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">28</strong><span class="text-slate-300">curated products</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">11</strong><span class="text-slate-300">practical reviews</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">3 min</strong><span class="text-slate-300">quiz shortlist</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6 shadow-sm">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Review notes</p><h2 class="text-3xl font-black text-slate-950">What readers check before buying</h2></div>
+        <a href="/reviews/" class="rounded-full bg-slate-950 px-4 py-2 text-sm font-black text-white hover:bg-slate-800">All reviews</a>
+      </div>
+      <div class="mt-5 grid gap-4 md:grid-cols-3">
+        {reviewCards.map((review) => <article class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+          <p class="text-xs font-black uppercase tracking-[0.16em] text-blue-700">{review.data.category?.replaceAll('-', ' ') || 'Review'}</p>
+          <h3 class="mt-2 text-lg font-black leading-tight text-slate-950"><a href={'/review/' + review.id + '/'} class="hover:text-blue-700">{review.data.title}</a></h3>
+          <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{review.data.description}</p>
+          <a href={'/review/' + review.id + '/'} class="mt-3 inline-flex text-sm font-black text-blue-700 hover:underline">Read notes</a>
+        </article>)}
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="mt-10 rounded-[1.75rem] border border-cyan-100 bg-gradient-to-br from-white via-cyan-50/70 to-blue-50 p-6 shadow-sm">
+    <div class="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-wide text-cyan-700">FlowHome account</p>
+        <h2 class="mt-2 text-3xl font-black text-slate-950">Save your shortlist for later.</h2>
+        <p class="mt-3 max-w-2xl text-slate-600">Create an account with Google or email to keep quiz results, favorite products, and deal notes in one place once account sync is connected.</p>
+      </div>
+      <div class="flex flex-wrap gap-3 lg:justify-end">
+        <a href="/account/" class="flow-wave inline-flex min-h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-black text-white shadow-lg shadow-slate-950/15">Create account</a>
+        <a href="/quiz/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-5 py-3 font-black text-slate-950 ring-1 ring-slate-200 hover:bg-slate-50">Start with quiz</a>
+      </div>
+    </div>
+  </section>
+
 
   <section class="mt-12 grid gap-6 lg:grid-cols-2">
     {deals.slice(0, 4).map((deal) => <DealCard deal={deal} product={products.find((p) => p.data.slug === deal.data.productSlug)} />)}
@@ -50,4 +218,274 @@ const featuredProducts = products.filter((p) => p.data.available).slice(0, 8);
   </section>
 
   <section class="mt-12"><Newsletter source="home" /></section>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-hero-showcase]');
+      if (!root) return;
+      const slides = Array.from(root.querySelectorAll('[data-hero-slide]'));
+      const dots = Array.from(document.querySelectorAll('[data-hero-dot]'));
+      const prev = document.querySelector('.hero-prev');
+      const next = document.querySelector('.hero-next');
+      const details = document.querySelector('.hero-details-link');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let active = 0;
+      let timer;
+
+
+      function markImageRatio(image) {
+        if (!image || !image.naturalWidth || !image.naturalHeight) return;
+        const ratio = image.naturalHeight / image.naturalWidth;
+        image.classList.toggle('is-portrait', ratio >= 1.12);
+        image.classList.toggle('is-wide', ratio <= 0.78);
+        image.classList.toggle('is-squareish', ratio > 0.78 && ratio < 1.12);
+      }
+
+      root.querySelectorAll('.hero-product-image').forEach((image) => {
+        if (image.complete) markImageRatio(image);
+        image.addEventListener('load', () => markImageRatio(image), { once: true });
+      });
+
+      function show(index) {
+        active = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          const isActive = i === active;
+          slide.classList.toggle('is-active', isActive);
+          slide.classList.toggle('opacity-100', isActive);
+          slide.classList.toggle('translate-x-0', isActive);
+          slide.classList.toggle('pointer-events-none', !isActive);
+          slide.classList.toggle('opacity-0', !isActive);
+          slide.classList.toggle('translate-x-6', !isActive);
+        });
+        dots.forEach((dot, i) => {
+          const isActive = i === active;
+          dot.classList.toggle('w-8', isActive);
+          dot.classList.toggle('w-2.5', !isActive);
+          dot.classList.toggle('bg-orange-500', isActive);
+          dot.classList.toggle('bg-slate-300', !isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+        const activeSlide = slides[active];
+        const productLink = activeSlide?.querySelector('a[href^="/product/"]');
+        if (details && productLink) details.setAttribute('href', productLink.getAttribute('href') || '/products/');
+      }
+
+      function restart() {
+        if (timer) window.clearInterval(timer);
+        if (!reduceMotion && slides.length > 1) timer = window.setInterval(() => show(active + 1), 4300);
+      }
+
+      dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); restart(); }));
+      prev?.addEventListener('click', () => { show(active - 1); restart(); });
+      next?.addEventListener('click', () => { show(active + 1); restart(); });
+      restart();
+
+    })();
+  </script>
+
+  <script is:inline>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const parallaxSections = Array.from(document.querySelectorAll('[data-dark-parallax]'));
+      if (!parallaxSections.length || reduceMotion) return;
+
+      let ticking = false;
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const updateParallax = () => {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        parallaxSections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          const progress = clamp((viewportHeight - rect.top) / (viewportHeight + rect.height), 0, 1);
+          const shift = Math.round((progress - 0.5) * 150);
+          const glow = Math.round((progress - 0.5) * 42);
+          section.style.setProperty('--home-bg-y', `${shift}px`);
+          section.style.setProperty('--home-glow-x', `${glow}px`);
+        });
+        ticking = false;
+      };
+      const requestParallax = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateParallax);
+      };
+      updateParallax();
+      window.addEventListener('scroll', requestParallax, { passive: true });
+      window.addEventListener('resize', requestParallax);
+    })();
+  </script>
+
+  <style is:global>
+    body {
+      background: #f1f5f9;
+    }
+
+    .flowhome-home-page {
+      background: radial-gradient(circle at 50% 0%, rgba(219,234,254,0.55), transparent 34%), #f1f5f9;
+    }
+
+    .hero-parallax {
+      background-image:
+        radial-gradient(circle at 80% 18%, rgba(20,184,166,0.24), transparent 24%),
+        radial-gradient(circle at 12% 8%, rgba(37,99,235,0.55), transparent 34%),
+        linear-gradient(135deg, #020617 0%, #172554 42%, #075985 100%);
+      background-size: 140% 140%, 130% 130%, cover;
+      background-position: center top;
+    }
+
+
+
+    .home-parallax-bg {
+      --home-bg-y: 0px;
+      --home-glow-x: 0px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      contain: paint;
+    }
+
+    .home-parallax-bg > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .home-parallax-bg::before {
+      content: "";
+      position: absolute;
+      inset: -18% -6%;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at calc(78% + var(--home-glow-x)) 8%, rgba(34,211,238,0.52), transparent 18%),
+        radial-gradient(circle at calc(12% - var(--home-glow-x)) 92%, rgba(37,99,235,0.62), transparent 28%),
+        linear-gradient(135deg, #020617 0%, #061335 42%, #0c4a6e 76%, #020617 100%);
+      background-size: 130% 130%;
+      transform: translate3d(0, var(--home-bg-y), 0) scale(1.08);
+      backface-visibility: hidden;
+    }
+
+    .home-parallax-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(125,211,252,0.20) 1px, transparent 1.5px),
+        linear-gradient(135deg, rgba(125,211,252,0.09) 0 1px, transparent 1px 22px);
+      background-size: 28px 28px, 42px 42px;
+      opacity: 0.34;
+      transform: translate3d(var(--home-glow-x), calc(var(--home-bg-y) * -0.45), 0);
+      backface-visibility: hidden;
+    }
+
+    .hero-showcase .hero-product-stage,
+    .hero-showcase .hero-product-photo {
+      background-color: #ffffff !important;
+      box-shadow: none !important;
+    }
+
+    .hero-showcase .hero-product-image {
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      opacity: 1 !important;
+      box-shadow: none !important;
+    }
+
+    .hero-showcase .hero-product-photo {
+      overflow: hidden;
+    }
+
+    .hero-showcase .hero-product-image {
+      display: block;
+      width: 92% !important;
+      max-height: 21.75rem !important;
+      transform: none;
+      transform-origin: center center;
+      backdrop-filter: none !important;
+    }
+
+    .hero-showcase .hero-product-image.is-squareish {
+      width: 92% !important;
+      max-height: 22rem !important;
+      transform: none;
+    }
+
+    .hero-showcase .hero-product-image.is-portrait {
+      width: auto !important;
+      max-width: 94% !important;
+      max-height: 24rem !important;
+      transform: scale(1.12);
+      transform-origin: center center;
+    }
+
+    .hero-showcase .hero-product-image.is-wide {
+      width: 96% !important;
+      max-height: 21.75rem !important;
+      transform: none;
+    }
+
+    @media (min-width: 768px) {
+      .hero-showcase .hero-product-image {
+        max-height: 22.75rem !important;
+      }
+
+      .hero-showcase .hero-product-image.is-squareish {
+        max-height: 23rem !important;
+        transform: none;
+      }
+
+      .hero-showcase .hero-product-image.is-portrait {
+        max-height: 25rem !important;
+        transform: scale(1.16);
+      }
+    }
+
+
+    .product-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-products,
+    .home-parallax-bg,
+    .product-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 520px;
+    }
+
+    .hero-star {
+      opacity: 0;
+      transform: translateY(2px) scale(0.7);
+      transform-origin: center;
+      animation: heroStarPop 3.8s ease-in-out infinite;
+    }
+
+    .hero-star:nth-child(1) { animation-delay: 0.05s; }
+    .hero-star:nth-child(2) { animation-delay: 0.18s; }
+    .hero-star:nth-child(3) { animation-delay: 0.31s; }
+    .hero-star:nth-child(4) { animation-delay: 0.44s; }
+    .hero-star:nth-child(5) { animation-delay: 0.57s; }
+
+    @keyframes heroStarPop {
+      0% { opacity: 0; transform: translateY(2px) scale(0.7); }
+      8% { opacity: 1; transform: translateY(-1px) scale(1.18); }
+      14% { opacity: 1; transform: translateY(0) scale(1); }
+      76% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(2px) scale(0.86); }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-star {
+        animation: none;
+      }
+
+      .hero-star {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+  </style>
+
 </BaseLayout>

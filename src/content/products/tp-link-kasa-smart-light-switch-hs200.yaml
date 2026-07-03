@@ -1,0 +1,34 @@
+slug: tp-link-kasa-smart-light-switch-hs200
+asin: B01EZV35QU
+name: "TP-Link Kasa Smart Light Switch HS200"
+brand: "TP-Link Kasa"
+price: 19.99
+originalPrice: 24.99
+discountPct: 20
+category: smart-lighting
+affiliateUrl: "https://www.amazon.com/dp/B01EZV35QU?tag=flowhome-20"
+image: "https://m.media-amazon.com/images/P/B01EZV35QU.01._SCLZZZZZZZ_.jpg"
+rating: 4.6
+reviewCount: 47000
+available: true
+dateUpdated: "2026-06-29"
+model: "HS200"
+wifi: true
+bluetooth: false
+zigbee: false
+matter: false
+alexaCompatible: true
+googleHomeCompatible: true
+appleHomeKit: false
+appControl: true
+energyMonitoring: false
+nightVision: false
+twoWayAudio: false
+hasMop: false
+lidarMapping: false
+rgb: false
+dimmable: false
+subscriptionRequired: false
+priority: featured
+priorityScore: 64
+roiApproved: true

@@ -9,7 +9,7 @@ const products = (await getCollection('products'))
 const categories = [...new Set(products.map((product) => product.data.category))].sort();
 ---
 <BaseLayout title="Smart Home Products | FlowHome" description="Browse FlowHome smart home products by category, rating, deal status, compatibility, and practical setup value." canonicalURL="https://flowhome.dev/products/">
-  <section class="rounded-3xl bg-white p-8 shadow-sm">
+  <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Product directory</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">Smart home products worth comparing</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">Browse smart speakers, lighting, cameras, robot vacuums, thermostats, plugs, and hubs. Public rankings focus on usefulness, compatibility, owner feedback, and deal context.</p>

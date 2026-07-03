@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T02:22:01.116Z",
+  "generatedAt": "2026-07-03T07:22:42.079Z",
   "results": [
     {
       "file": "src\\content\\reviews\\amazon-smart-thermostat-review.md",
@@ -48,17 +48,17 @@
       "file": "src\\content\\reviews\\august-wifi-smart-lock-review.md",
       "title": "August Wi-Fi Smart Lock Review: Retrofit Access Without Replacing Keys",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "280 words"
+          "passed": true,
+          "detail": "482 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "7 H2 sections"
         },
         {
           "name": "specifications",
@@ -91,17 +91,17 @@
       "file": "src\\content\\reviews\\blink-outdoor-4-review.md",
       "title": "Blink Outdoor 4 Review: Wireless Security for Alexa Homes",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "305 words"
+          "passed": true,
+          "detail": "503 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "7 H2 sections"
         },
         {
           "name": "specifications",
@@ -134,17 +134,17 @@
       "file": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
       "title": "Echo Dot 5th Gen Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "230 words"
+          "passed": true,
+          "detail": "485 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",
@@ -177,17 +177,17 @@
       "file": "src\\content\\reviews\\ecobee-smart-thermostat-premium-review.md",
       "title": "ecobee Smart Thermostat Premium Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "230 words"
+          "passed": true,
+          "detail": "458 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",
@@ -263,17 +263,17 @@
       "file": "src\\content\\reviews\\google-nest-hub-2nd-gen-review.md",
       "title": "Google Nest Hub 2nd Gen Review: A Smart Display for Google Home Routines",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "288 words"
+          "passed": true,
+          "detail": "500 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",
@@ -306,17 +306,17 @@
       "file": "src\\content\\reviews\\philips-hue-white-color-starter-kit-review.md",
       "title": "Philips Hue White and Color Starter Kit Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "236 words"
+          "passed": true,
+          "detail": "488 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",
@@ -392,17 +392,17 @@
       "file": "src\\content\\reviews\\roborock-q5-plus-review.md",
       "title": "Roborock Q5+ Robot Vacuum Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "230 words"
+          "passed": true,
+          "detail": "446 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",
@@ -435,17 +435,17 @@
       "file": "src\\content\\reviews\\tp-link-kasa-smart-plug-mini-review.md",
       "title": "TP-Link Kasa Smart Plug Mini Review: Smart Home Value, Setup, and Tradeoffs",
       "passed": true,
-      "score": 6,
+      "score": 7,
       "checks": [
         {
           "name": "wordCount",
-          "passed": false,
-          "detail": "232 words"
+          "passed": true,
+          "detail": "458 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "8 H2 sections"
         },
         {
           "name": "specifications",

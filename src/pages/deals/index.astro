@@ -7,9 +7,9 @@ const deals = (await getCollection('deals')).sort((a, b) => b.data.discountPct -
 const products = await getCollection('products');
 ---
 <BaseLayout title="Smart Home Deals | FlowHome" description="Current smart home deals filtered by discount size, product quality, and affiliate sustainability." canonicalURL="https://flowhome.dev/deals/">
-  <section class="rounded-3xl bg-gradient-to-br from-orange-500 to-rose-600 p-8 text-white shadow-xl">
-    <h1 class="text-5xl font-black">Smart home deals</h1>
-    <p class="mt-4 max-w-2xl text-lg text-orange-50">Discounts change fast. Verify final price on Amazon before buying.</p>
+  <section class="premium-page-hero">
+    <h1 class="text-5xl font-black text-slate-950">Smart home deals</h1>
+    <p class="mt-4 max-w-2xl text-lg text-slate-600">Discounts change fast. Verify final price on Amazon before buying.</p>
   </section>
   <section class="mt-8 grid gap-6 lg:grid-cols-2">
     {deals.map((deal) => <DealCard deal={deal} product={products.find((p) => p.data.slug === deal.data.productSlug)} />)}

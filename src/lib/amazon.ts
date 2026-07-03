@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Amazon Affiliate Link Utilities
  * StoreID: flowhome-20
  */

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#brandGradient)" opacity="0.12"/>
+  <!-- House shape with wifi waves -->
+  <g transform="translate(16, 20)">
+    <!-- House base -->
+    <path d="M48 76 L48 38 L24 14 L0 38 L0 76 Z" fill="none" stroke="url(#brandGradient)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Roof accent -->
+    <path d="M48 38 L24 14 L0 38" fill="url(#accentGradient)" opacity="0.9"/>
+    <!-- WiFi waves emanating from roof peak -->
+    <g transform="translate(24, 14)">
+      <path d="M0 0 C-18 -18, -18 -36, 0 -54" fill="none" stroke="url(#brandGradient)" stroke-width="2.5" stroke-linecap="round" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite" begin="0s"/>
+      </path>
+      <path d="M0 0 C-12 -12, -12 -24, 0 -36" fill="none" stroke="url(#brandGradient)" stroke-width="2.5" stroke-linecap="round" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+      </path>
+      <path d="M0 0 C-6 -6, -6 -12, 0 -18" fill="none" stroke="url(#accentGradient)" stroke-width="2" stroke-linecap="round" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+      </path>
+    </g>
+    <!-- Smart home indicator dot -->
+    <circle cx="38" cy="58" r="5" fill="url(#accentGradient)">
+      <animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <!-- FlowHome wordmark -->
+  <text x="64" y="110" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle" letter-spacing="0.5">FlowHome</text>
+</svg>

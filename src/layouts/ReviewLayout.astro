@@ -1,5 +1,7 @@
-﻿---
+---
 import BaseLayout from './BaseLayout.astro';
+import { getProductImage, getProductImageAlt, getCategoryLabel } from '../lib/product-art';
+import { generateReviewSchema, generateBreadcrumbSchema } from '../lib/seo';
 
 interface Props {
   review: any;
@@ -7,22 +9,68 @@ interface Props {
 }
 
 const { review, product } = Astro.props;
+const productImage = product ? getProductImage(product) : undefined;
+const productAlt = product ? getProductImageAlt(product) : review.title;
+const categoryLabel = getCategoryLabel(review.category ?? product?.category);
+const reviewDate = review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const reviewSchema = product ? generateReviewSchema(review, product) : undefined;
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: 'https://flowhome.dev/' },
+  { name: 'Reviews', url: 'https://flowhome.dev/reviews/' },
+  { name: review.title, url: `https://flowhome.dev/review/${review.slug}/` },
+]);
 ---
 
 <BaseLayout
   title={`${review.title} | FlowHome`}
   description={review.description || review.title}
   type="article"
-  canonicalURL={`https://flowhome.dev/review/${review.slug}`}
-  image={product?.image}
+  canonicalURL={`https://flowhome.dev/review/${review.slug}/`}
+  image={productImage ?? product?.image}
 >
-  <article class="prose prose-lg max-w-none prose-headings:font-heading prose-a:text-blue-600">
-    <h1>{review.title}</h1>
-    <div class="text-slate-500 text-sm mb-6">
-      Published: {review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+  {reviewSchema && <script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />}
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <header class="premium-page-hero">
+    <div class="grid items-center gap-8 lg:grid-cols-[1.35fr_0.65fr]">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-wide text-blue-700">{categoryLabel} review</p>
+        <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{review.title}</h1>
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{review.description}</p>
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm font-bold text-slate-600">
+          {reviewDate && <span class="rounded-full border border-slate-200 bg-white px-4 py-2">Published {reviewDate}</span>}
+          <span class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">Editorial buying guide</span>
+          <span class="rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-amber-700">Affiliate disclosure included</span>
+        </div>
+      </div>
+      {product && (
+        <aside class="premium-card p-5">
+          <div class="rounded-3xl bg-slate-50 p-4">
+            <img src={productImage} alt={productAlt} class="mx-auto h-48 w-full object-contain" width="640" height="480" loading="eager" decoding="async" fetchpriority="high" />
+          </div>
+          <p class="mt-4 text-xs font-black uppercase tracking-wide text-slate-500">Product covered</p>
+          <h2 class="mt-1 font-heading text-2xl font-black text-slate-950">{product.name}</h2>
+          <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-2xl bg-orange-50 p-3">
+              <p class="font-bold text-orange-700">Current snapshot</p>
+              <p class="mt-1 text-2xl font-black text-slate-950">${product.price}</p>
+            </div>
+            <div class="rounded-2xl bg-blue-50 p-3">
+              <p class="font-bold text-blue-700">Rating</p>
+              <p class="mt-1 text-2xl font-black text-slate-950">{product.rating}/5</p>
+            </div>
+          </div>
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white">
+            <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+          </a>
+          <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">Price and availability can change on Amazon. FlowHome may earn from qualifying purchases.</p>
+        </aside>
+      )}
     </div>
-    <div class="affiliate-disclosure">
-      <strong>Affiliate Disclosure:</strong> As an Amazon Associate, we earn from qualifying purchases. This review may contain affiliate links.
+  </header>
+
+  <article class="premium-card prose prose-lg mt-8 max-w-none p-6 prose-headings:font-heading prose-headings:text-slate-950 prose-a:text-blue-600 md:p-8">
+    <div class="not-prose affiliate-disclosure mb-8">
+      <strong>Affiliate Disclosure:</strong> As an Amazon Associate, FlowHome earns from qualifying purchases. This review may contain affiliate links at no extra cost to you.
     </div>
     <slot />
   </article>

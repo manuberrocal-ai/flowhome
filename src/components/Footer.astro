@@ -1,33 +1,381 @@
 ---
 const year = new Date().getFullYear();
+const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=10&data=https%3A%2F%2Fflowhome.dev%2Fquiz%2F';
 ---
-<footer class="mt-16 border-t border-slate-200 bg-slate-950 text-slate-300">
-  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-4 lg:px-8">
-    <div class="md:col-span-2">
-      <div class="font-heading text-2xl font-extrabold text-white">FlowHome</div>
-      <p class="mt-3 max-w-xl text-sm leading-6">Independent smart home buying guides, comparison tools, and deal tracking for US and Canada readers. We prioritize useful products, strong owner feedback, ecosystem compatibility, and clear long-term value.</p>
+
+<footer class="footer-parallax relative isolate mt-16 overflow-hidden border-t border-slate-800 bg-slate-950 text-slate-300">
+  <div class="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-9 lg:px-8">
+    <div class="footer-parallax-orb footer-parallax-orb-a pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
+    <div class="footer-parallax-orb footer-parallax-orb-b pointer-events-none absolute -bottom-24 left-10 h-72 w-72 rounded-full bg-blue-700/20 blur-3xl"></div>
+    <div class="footer-parallax-orb footer-parallax-orb-c pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-400/5 blur-3xl"></div>
+
+    <div class="relative grid gap-5 lg:grid-cols-[1.35fr_0.85fr] lg:gap-6">
+      <section class="footer-parallax-panel footer-parallax-panel-a rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-slate-950/30 sm:p-6">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <a href="/" class="flex items-center gap-3" aria-label="FlowHome home">
+            <img src="/images/flowhome-logo.png" alt="FlowHome" class="h-10 w-auto" width="190" height="48" loading="lazy" decoding="async" />
+          </a>
+          <span class="inline-flex w-fit rounded-full border border-orange-400/30 bg-orange-400/10 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-orange-200">Deal-aware guides</span>
+        </div>
+
+        <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
+          Independent smart-home buying guides, comparison tools, and deal tracking for US and Canada readers. We focus on practical value, ecosystem fit, owner feedback, and products that make everyday homes easier to run.
+        </p>
+
+        <div class="mt-5 grid gap-2 sm:grid-cols-3">
+          <a href="/quiz/" class="footer-cta-card">
+            <span class="footer-icon bg-blue-400/15 text-blue-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.74V16h8v-1.26A7 7 0 0 0 12 2Z"/></svg></span>
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-blue-200">Start here</span>
+            <span class="mt-1 block text-base font-extrabold text-white">Take the quiz</span>
+          </a>
+          <a href="/deals/" class="footer-cta-card">
+            <span class="footer-icon bg-orange-400/15 text-orange-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.59 13.41 11 3.82A2.8 2.8 0 0 0 9.02 3H4a1 1 0 0 0-1 1v5.02c0 .74.3 1.45.82 1.98l9.59 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7.5 7.5h.01"/></svg></span>
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-orange-200">Save money</span>
+            <span class="mt-1 block text-base font-extrabold text-white">Check deals</span>
+          </a>
+          <a href="/calculator/" class="footer-cta-card">
+            <span class="footer-icon bg-emerald-400/15 text-emerald-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 4-4 3 3 5-7"/></svg></span>
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-emerald-200">Plan better</span>
+            <span class="mt-1 block text-base font-extrabold text-white">Estimate savings</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="footer-parallax-panel footer-parallax-panel-b footer-qr-card flex min-h-full flex-col justify-between rounded-[1.75rem] border border-cyan-200/10 bg-gradient-to-br from-white/[0.075] via-white/[0.04] to-cyan-400/[0.055] p-5 shadow-2xl shadow-slate-950/30">
+        <div class="footer-qr-main flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div class="footer-qr-media relative mx-auto shrink-0 sm:mx-0">
+            <div class="absolute inset-0 rounded-[1.8rem] bg-cyan-400/20 blur-xl"></div>
+            <div class="relative rounded-[1.55rem] border border-cyan-200/20 bg-slate-950/80 p-3 shadow-lg shadow-slate-950/50">
+              <div class="footer-qr-frame rounded-[1.05rem] bg-white p-2 ring-1 ring-cyan-200/50">
+                <img src={qrUrl} alt="QR code for the FlowHome recommendation quiz" class="footer-qr-img h-28 w-28 rounded-lg" width="116" height="116" loading="lazy" decoding="async" />
+              </div>
+              <div class="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-cyan-100">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span> Mobile ready
+              </div>
+            </div>
+          </div>
+          <div class="footer-qr-copy min-w-0 text-center sm:text-left">
+            <span class="inline-flex rounded-full bg-cyan-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-cyan-100 ring-1 ring-cyan-200/15">Quick scan</span>
+            <h2 class="footer-qr-title mt-3 font-heading text-xl font-extrabold text-white">Scan your next setup</h2>
+            <p class="footer-qr-text mt-2 text-sm leading-6 text-slate-300">Open the quiz on your phone and get a faster smart-home shortlist.</p>
+            <button type="button" class="footer-share footer-qr-button mt-4 rounded-full bg-gradient-to-r from-cyan-100 to-white px-4 py-2 text-sm font-black text-slate-950 shadow-sm shadow-cyan-400/20 transition hover:-translate-y-0.5 hover:from-cyan-50 hover:to-white" data-share-url="https://flowhome.dev/quiz/">Copy quiz link</button>
+            <p class="footer-share-status mt-2 text-xs font-bold text-emerald-300" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="footer-proof-grid mt-4 grid gap-2">
+          <div class="footer-proof-chip">
+            <span class="footer-proof-icon text-cyan-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span>
+            <span class="footer-proof-label text-[10px] font-black uppercase tracking-[0.14em] text-cyan-100">Clear picks</span>
+          </div>
+          <div class="footer-proof-chip">
+            <span class="footer-proof-icon text-emerald-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <span class="footer-proof-label text-[10px] font-black uppercase tracking-[0.14em] text-emerald-100">Fast shortlist</span>
+          </div>
+          <div class="footer-proof-chip">
+            <span class="footer-proof-icon text-blue-200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3v8Z"/><path d="M9 12l2 2 4-5"/></svg></span>
+            <span class="footer-proof-label text-[10px] font-black uppercase tracking-[0.14em] text-blue-100">No noise</span>
+          </div>
+        </div>
+      </section>
     </div>
-    <div>
-      <h2 class="font-bold text-white">Explore</h2>
-      <ul class="mt-3 space-y-2 text-sm">
-        <li><a href="/products/" class="hover:text-white">Products</a></li>
-        <li><a href="/search/" class="hover:text-white">Search</a></li>
-        <li><a href="/reviews/" class="hover:text-white">Reviews</a></li>
-        <li><a href="/best/" class="hover:text-white">Best Picks</a></li>
-        <li><a href="/deals/" class="hover:text-white">Deals</a></li>
-        <li><a href="/calculator/" class="hover:text-white">Savings Calculator</a></li>
-        <li><a href="/quiz/" class="hover:text-white">Recommendation Quiz</a></li>
-        <li><a href="/rss.xml" class="hover:text-white">RSS</a></li>
-      </ul>
-    </div>
-    <div>
-      <h2 class="font-bold text-white">Trust</h2>
-      <ul class="mt-3 space-y-2 text-sm">
-        <li><a href="/about/" class="hover:text-white">About FlowHome</a></li>
-        <li><a href="/about/#affiliate-policy" class="hover:text-white">Affiliate policy</a></li>
-        <li><a href="/sitemap-index.xml" class="hover:text-white">Sitemap</a></li>
-      </ul>
+
+    <div class="footer-parallax-panel footer-parallax-panel-c relative mx-auto mt-7 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+      <div>
+        <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></span>Shop</h2>
+        <ul class="mt-2 space-y-1.5 text-sm">
+          <li><a href="/products/" class="footer-link">All products</a></li>
+          <li><a href="/deals/" class="footer-link">Deals</a></li>
+          <li><a href="/category/security-camera/" class="footer-link">Security cameras</a></li>
+          <li><a href="/category/robot-vacuum/" class="footer-link">Robot vacuums</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z"/><path d="M8 7h8"/><path d="M8 11h6"/></svg></span>Guides</h2>
+        <ul class="mt-2 space-y-1.5 text-sm">
+          <li><a href="/best/" class="footer-link">Best picks</a></li>
+          <li><a href="/reviews/" class="footer-link">Reviews</a></li>
+          <li><a href="/best/best-smart-home-starter-kit/" class="footer-link">Starter kit</a></li>
+          <li><a href="/best/best-smart-home-devices-for-renters/" class="footer-link">For renters</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-3 3-3-3 3-3Z"/></svg></span>Tools</h2>
+        <ul class="mt-2 space-y-1.5 text-sm">
+          <li><a href="/quiz/" class="footer-link">Recommendation quiz</a></li>
+          <li><a href="/calculator/" class="footer-link">Savings calculator</a></li>
+          <li><a href="/search/" class="footer-link">Search</a></li>
+          <li><a href="/rss.xml" class="footer-link">RSS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg></span>Trust</h2>
+        <ul class="mt-2 space-y-1.5 text-sm">
+          <li><a href="/about/" class="footer-link">About FlowHome</a></li>
+          <li><a href="/about/#affiliate-policy" class="footer-link">Affiliate policy</a></li>
+          <li><a href="/sitemap-index.xml" class="footer-link">Sitemap</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="border-t border-slate-800 px-4 py-5 text-center text-xs text-slate-500">© {year} FlowHome. As an Amazon Associate we earn from qualifying purchases.</div>
+
+  <div class="relative z-10 border-t border-slate-800 px-4 py-3 text-center text-xs text-slate-500">
+    &copy; {year} FlowHome. As an Amazon Associate we earn from qualifying purchases.
+  </div>
 </footer>
+
+<script is:inline>
+  (() => {
+    const button = document.querySelector('.footer-share');
+    const status = document.querySelector('.footer-share-status');
+    if (!button) return;
+
+    button.addEventListener('click', async () => {
+      const url = button.getAttribute('data-share-url') || 'https://flowhome.dev/';
+      try {
+        await navigator.clipboard.writeText(url);
+        if (status) status.textContent = 'Copied. Send it to your phone or a friend.';
+      } catch {
+        if (status) status.textContent = url;
+      }
+    });
+
+    const footer = document.querySelector('.footer-parallax');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!footer || reduceMotion) return;
+
+    let ticking = false;
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+    const updateParallax = () => {
+      const rect = footer.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const footerCenter = rect.top + rect.height / 2;
+      const offset = clamp((viewportCenter - footerCenter) / 18, -22, 22);
+      footer.style.setProperty('--footer-parallax-near', `${offset * -0.34}px`);
+      footer.style.setProperty('--footer-parallax-mid', `${offset * 0.52}px`);
+      footer.style.setProperty('--footer-parallax-far', `${offset * -0.82}px`);
+      const progress = clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0, 1);
+      const bgShift = (progress - 0.5) * 180;
+      footer.style.setProperty('--footer-bg-y', `${bgShift}px`);
+      ticking = false;
+    };
+    const requestParallax = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateParallax);
+    };
+    updateParallax();
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', requestParallax);
+  })();
+</script>
+
+<style is:global>
+  .footer-parallax {
+    --footer-parallax-near: 0px;
+    --footer-parallax-mid: 0px;
+    --footer-parallax-far: 0px;
+    --footer-bg-y: 0px;
+    background: #020617;
+  }
+  .footer-parallax::before {
+    content: "";
+    position: absolute;
+    inset: -32% -12%;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 78% 8%, rgba(34,211,238,0.34), transparent 22%),
+      radial-gradient(circle at 16% 86%, rgba(37,99,235,0.42), transparent 30%),
+      radial-gradient(circle at 52% 42%, rgba(20,184,166,0.18), transparent 34%),
+      linear-gradient(135deg, #020617 0%, #030712 42%, #08233b 72%, #020617 100%);
+    background-size: 135% 135%;
+    transform: translate3d(0, var(--footer-bg-y), 0) scale(1.08);
+    will-change: transform;
+  }
+  .footer-parallax::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(125,211,252,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,211,252,0.045) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: 0.32;
+    transform: translate3d(0, calc(var(--footer-bg-y) * -0.22), 0);
+    will-change: transform;
+  }
+
+  .footer-parallax-orb,
+  .footer-parallax-panel {
+    will-change: transform;
+  }
+  .footer-parallax-orb-a {
+    transform: translate3d(0, var(--footer-parallax-far), 0);
+  }
+  .footer-parallax-orb-b {
+    transform: translate3d(0, var(--footer-parallax-mid), 0);
+  }
+  .footer-parallax-orb-c {
+    transform: translate3d(-50%, calc(-50% + var(--footer-parallax-near)), 0);
+  }
+  .footer-parallax-panel-a {
+    transform: translate3d(0, var(--footer-parallax-near), 0);
+  }
+  .footer-parallax-panel-b {
+    transform: translate3d(0, var(--footer-parallax-mid), 0);
+  }
+  .footer-parallax-panel-c {
+    transform: translate3d(0, var(--footer-parallax-far), 0);
+  }
+  .footer-qr-main {
+    flex-wrap: wrap;
+  }
+  .footer-qr-media {
+    max-width: 100%;
+  }
+  .footer-qr-frame {
+    width: fit-content;
+    max-width: 100%;
+  }
+  .footer-qr-img {
+    display: block;
+    height: 6.25rem !important;
+    width: 6.25rem !important;
+    max-width: 6.25rem !important;
+    object-fit: contain;
+  }
+  .footer-qr-copy {
+    flex: 1 1 12.5rem;
+    min-width: 12.5rem;
+  }
+  .footer-qr-title {
+    line-height: 1.16;
+    text-wrap: balance;
+  }
+  .footer-qr-text {
+    max-width: 16.5rem;
+  }
+  .footer-qr-button {
+    min-height: 2.45rem;
+    max-width: 12rem;
+    white-space: normal;
+    line-height: 1.2;
+  }
+  .footer-proof-grid {
+    grid-template-columns: repeat(auto-fit, minmax(6.65rem, 1fr));
+  }
+  .footer-cta-card {
+    display: block;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.055);
+    padding: 0.8rem;
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  }
+  .footer-icon {
+    display: grid;
+    height: 1.65rem;
+    width: 1.65rem;
+    place-items: center;
+    border-radius: 0.85rem;
+    margin-bottom: 0.55rem;
+  }
+  .footer-icon svg {
+    height: 1rem;
+    width: 1rem;
+  }
+  .footer-cta-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.085);
+  }
+  .footer-proof-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.045);
+    padding: 0.5rem 0.55rem;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .footer-proof-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.22;
+  }
+  .footer-proof-icon {
+    display: grid;
+    height: 1.25rem;
+    width: 1.25rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.075);
+  }
+  .footer-proof-icon svg {
+    height: 0.72rem;
+    width: 0.72rem;
+  }
+  html.translated-ltr .footer-qr-main,
+  html.translated-rtl .footer-qr-main {
+    align-items: center;
+  }
+  html.translated-ltr .footer-qr-copy,
+  html.translated-rtl .footer-qr-copy {
+    flex-basis: 15rem;
+    min-width: 15rem;
+  }
+  html.translated-ltr .footer-qr-title,
+  html.translated-rtl .footer-qr-title {
+    font-size: 1.1rem;
+    line-height: 1.14;
+  }
+  html.translated-ltr .footer-proof-label,
+  html.translated-rtl .footer-proof-label {
+    letter-spacing: 0.06em;
+    font-size: 0.58rem;
+  }
+  .footer-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #ffffff;
+  }
+  .footer-heading-icon {
+    display: inline-grid;
+    height: 1.18rem;
+    width: 1.18rem;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(34,211,238,0.1);
+    color: #67e8f9;
+  }
+  .footer-heading-icon svg {
+    height: 0.72rem;
+    width: 0.72rem;
+  }
+  .footer-link {
+    color: #cbd5e1;
+    line-height: 1.35;
+    transition: color 150ms ease, padding-left 150ms ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer-parallax-orb,
+    .footer-parallax-panel {
+      transform: none !important;
+    }
+  }
+
+  .footer-link:hover {
+    color: #ffffff;
+    padding-left: 0.15rem;
+  }
+</style>

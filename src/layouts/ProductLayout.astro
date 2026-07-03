@@ -1,68 +1,109 @@
-﻿---
+---
 import BaseLayout from './BaseLayout.astro';
 import { generateProductSchema, generateBreadcrumbSchema } from '../lib/seo';
+import { getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../lib/product-art';
 
 interface Props {
   product: any;
 }
 
 const { product } = Astro.props;
-const productSchema = generateProductSchema(product);
+const productImage = getProductImage(product);
+const fallbackImage = getProductFallbackImage(product);
+const productImageAlt = getProductImageAlt(product);
+const productImageKind = getProductImageKind(product);
+const sourceLabel = getProductImageSourceLabel(product);
+const hasDeal = product.discountPct > 0 && product.originalPrice && product.originalPrice > product.price;
+const isHotDeal = hasDeal && Number(product.discountPct) >= 35;
+const rating = Number(product.rating ?? 0);
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
+const roundedStars = Math.round(rating);
+const productSchema = generateProductSchema({ ...product, image: productImage });
 const breadcrumbs = [
-  { name: 'Home', url: 'https://flowhome.dev' },
-  { name: 'Products', url: 'https://flowhome.dev/products' },
-  { name: product.name, url: `https://flowhome.dev/product/${product.slug}` },
+  { name: 'Home', url: 'https://flowhome.dev/' },
+  { name: 'Products', url: 'https://flowhome.dev/products/' },
+  { name: product.name, url: `https://flowhome.dev/product/${product.slug}/` },
 ];
 const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
 ---
 
 <BaseLayout
-  title={`${product.name} — Review, Price & Specs | FlowHome`}
+  title={`${product.name} - Review, Price & Specs | FlowHome`}
   description={`${product.name} review: price $${product.price}, rating ${product.rating}/5, specs, pros, cons, and best deals. Compare with similar smart home products.`}
+  image={productImage}
   type="product"
-  canonicalURL={`https://flowhome.dev/product/${product.slug}`}
+  canonicalURL={`https://flowhome.dev/product/${product.slug}/`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   
-  <nav class="text-sm breadcrumbs mb-4" aria-label="Breadcrumb">
-    <ol class="flex items-center gap-2">
+  <nav class="mb-4 text-sm breadcrumbs" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap items-center gap-2">
       <li><a href="/" class="text-blue-600 hover:underline">Home</a></li>
       <li class="text-slate-400">/</li>
-      <li><a href="/products" class="text-blue-600 hover:underline">Products</a></li>
+      <li><a href="/products/" class="text-blue-600 hover:underline">Products</a></li>
       <li class="text-slate-400">/</li>
-      <li class="text-slate-600 font-medium">{product.name}</li>
+      <li class="font-medium text-slate-600">{product.name}</li>
     </ol>
   </nav>
   
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
     <div class="lg:col-span-2">
       <slot />
     </div>
     <aside class="space-y-6">
-      <div class="bg-white rounded-xl shadow-md p-6 sticky top-4">
-        <h2 class="text-2xl font-bold text-slate-900">{product.name}</h2>
-        <p class="text-3xl font-bold text-blue-600 mt-2">${product.price}</p>
-        {product.originalPrice && product.originalPrice > product.price && (
-          <p class="text-slate-500 line-through">${product.originalPrice}</p>
-        )}
-        <div class="flex items-center gap-2 mt-2">
-          <span class="text-yellow-500">★</span>
-          <span class="font-semibold">{product.rating}</span>
-          <span class="text-slate-500">({product.reviewCount?.toLocaleString()} reviews)</span>
+      <div class="sticky top-4 overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-xl shadow-slate-200/70">
+        <div class="bg-gradient-to-br from-white via-orange-50 to-blue-50 p-5">
+          <div class="flex h-64 items-center justify-center rounded-2xl bg-white/75 p-4 shadow-inner shadow-slate-100">
+            <img
+              src={productImage}
+              alt={productImageAlt}
+              class="max-h-60 w-full object-contain"
+              loading="lazy" decoding="async" fetchpriority="low"
+              width="500"
+              height="500"
+              data-fallback-src={fallbackImage}
+              onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
+            />
+          </div>
+          <p class:list={["mt-2 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
         </div>
-        <a
-          href={product.affiliateUrl}
-          target="_blank"
-          rel="nofollow sponsored noopener"
-          class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center mt-4 transition-colors"
-          onclick="gtag('event','affiliate_click',{product_slug:this.dataset.slug})"
-          data-slug={product.slug}
-        >
-          Check Price on Amazon →
-        </a>
+        <div class="space-y-4 p-6">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Amazon buying option</p>
+            <h2 class="mt-2 text-2xl font-black leading-tight text-slate-950">{product.name}</h2>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Price snapshot</p>
+                <p class="mt-1 text-4xl font-black text-slate-950">${product.price}</p>
+                {hasDeal && <p class="text-slate-500 line-through">${product.originalPrice}</p>}
+              </div>
+              <div class="product-detail-side-stack">
+                {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{product.discountPct}%</span>}
+                <div class="product-detail-stars product-detail-stars--side" aria-label={`Rated ${product.rating} out of 5`}><span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => { const starNumber = index + 1; const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty')); return <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>; })}</span><strong>{product.rating}</strong></div>
+              </div>
+            </div>
+            <p class="mt-2 text-sm text-slate-500">Based on {product.reviewCount?.toLocaleString()} owner ratings. Amazon price and availability can change.</p>
+          </div>
+          <a
+            href={product.affiliateUrl}
+            target="_blank"
+            rel="nofollow sponsored noopener"
+            class="premium-action flow-wave inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50"
+            onclick="window.gtag&&window.gtag('event','affiliate_click',{product_slug:this.dataset.slug})"
+            data-slug={product.slug}
+            aria-label={`Check ${product.name} price on Amazon`}
+          >
+            <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+          </a>
+          <p class="text-center text-xs font-medium leading-relaxed text-slate-500">As an Amazon Associate, FlowHome may earn from qualifying purchases. No extra cost to you.</p>
+        </div>
       </div>
       <slot name="sidebar" />
     </aside>
   </div>
 </BaseLayout>
+

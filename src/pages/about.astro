@@ -1,13 +1,32 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="About FlowHome" description="How FlowHome reviews smart home products, handles affiliate links, and keeps automation quality controlled." canonicalURL="https://flowhome.dev/about/">
-  <article class="prose prose-lg max-w-4xl rounded-3xl bg-white p-8 shadow-sm">
-    <h1>About FlowHome</h1>
-    <p>FlowHome is a smart home affiliate research site focused on practical buying decisions: compatibility, setup friction, owner feedback, deal timing, and long-term utility.</p>
+  <section class="premium-page-hero">
+    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">About FlowHome</p>
+    <h1 class="mt-2 text-4xl font-black text-slate-950 md:text-5xl">Practical smart-home buying guidance</h1>
+    <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">FlowHome helps shoppers compare smart-home products by focusing on compatibility, setup friction, everyday usefulness, deal timing, and long-term ownership tradeoffs.</p>
+    <div class="mt-6 flex flex-wrap gap-3 text-sm font-bold">
+      <span class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">Compatibility-first</span>
+      <span class="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-emerald-700">Quality checked</span>
+      <span class="rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-amber-700">Amazon Associate disclosure</span>
+    </div>
+  </section>
+
+  <article class="premium-card prose prose-lg mt-8 max-w-4xl p-6 prose-headings:font-heading prose-headings:text-slate-950 prose-a:text-blue-600 md:p-8">
+    <h2>What FlowHome optimizes for</h2>
+    <p>Smart-home shopping is easy to get wrong because the best product on paper is not always the best product for a real household. FlowHome prioritizes the questions that prevent bad buys: does it fit your ecosystem, does it solve a daily problem, is setup realistic, and does the final price make sense?</p>
+
     <h2 id="affiliate-policy">Affiliate policy</h2>
-    <p>As an Amazon Associate, FlowHome earns from qualifying purchases. Affiliate revenue keeps the site free, but public recommendations are filtered through usefulness, compatibility, pricing, and quality checks before publication.</p>
+    <p>As an Amazon Associate, FlowHome earns from qualifying purchases. Affiliate revenue keeps the site free, but public recommendations are filtered through usefulness, compatibility, pricing, owner feedback, and quality checks before publication. Affiliate links do not increase your purchase price.</p>
+
     <h2>Automation policy</h2>
-    <p>Automation assists with discovery, draft generation, quality checks, syndication, and maintenance. Content should still be useful, specific, and verifiable before publication.</p>
+    <p>Automation assists with discovery, draft generation, quality checks, syndication, and maintenance. Automation does not replace editorial responsibility. Content should still be specific, useful, and honest about tradeoffs before it is treated as publishable.</p>
+
+    <h2>How to use the site</h2>
+    <p>Start with the category or product page that matches your room or problem. Check ecosystem fit first, then compare price, setup requirements, and whether the feature set is actually useful for your household. If a device requires wiring, subscriptions, account access, or privacy-sensitive placement, review those constraints before buying.</p>
+
+    <h2>Important limitations</h2>
+    <p>Prices, discounts, stock, bundles, and Amazon availability can change quickly. Always confirm the final product listing, return policy, compatibility details, and delivered price on Amazon before checkout.</p>
   </article>
 </BaseLayout>

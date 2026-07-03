@@ -1,26 +1,112 @@
 ﻿---
+import { getCategoryLabel, getProductImage, getProductImageAlt, getProductFallbackImage } from '../lib/product-art';
+
 interface Props { product: any; compact?: boolean; }
 const { product, compact = false } = Astro.props;
 const data = product.data ?? product;
 const slug = data.slug ?? product.slug;
+const productImage = getProductImage(data);
+const fallbackImage = getProductFallbackImage(data);
+const productImageAlt = getProductImageAlt(data);
+const categoryLabel = getCategoryLabel(data.category);
+const hasDeal = data.discountPct > 0 && data.originalPrice && data.originalPrice > data.price;
+const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
+const rating = Number(data.rating ?? 0);
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
+const roundedStars = Math.round(rating);
 ---
-<article class="product-card overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-  <a href={`/product/${slug}/`} class="block bg-slate-100 p-6">
-    <img src={data.image || '/images/product-placeholder.svg'} alt={data.name} class="mx-auto h-40 w-full object-contain" loading="lazy" />
-  </a>
-  <div class="space-y-3 p-5">
-    <div class="flex items-center justify-between gap-2">
-      <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-blue-700">{data.category}</span>
-      {data.discountPct > 0 && <span class="deal-badge">-{data.discountPct}%</span>}
+<article class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
+  <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-700" aria-label={`Read the ${data.name} product profile`}>
+    <div class="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</div>
+    {!hasDeal && data.priority === 'featured' && <div class="absolute right-3 top-3 z-10 rounded-full bg-blue-600 px-3 py-1 text-xs font-black text-white shadow-lg shadow-blue-200">Top pick</div>}
+    <div class="product-card-media flex h-44 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white p-1 shadow-inner shadow-slate-100 ring-1 ring-white/80">
+      <img
+        src={productImage}
+        alt={productImageAlt}
+        class="product-card-image h-full max-h-none w-full object-contain drop-shadow-sm transition duration-[1150ms] ease-out"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        width="420"
+        height="420"
+        data-fallback-src={fallbackImage}
+        onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
+      />
     </div>
-    <h2 class="line-clamp-2 text-lg font-extrabold text-slate-950"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
-    {!compact && <p class="text-sm text-slate-600">{data.brand} · {data.rating}★ from {data.reviewCount?.toLocaleString()} owner ratings</p>}
-    <div class="flex items-end justify-between gap-3">
-      <div>
-        <div class="text-2xl font-black text-blue-700">${data.price}</div>
-        {data.originalPrice && data.originalPrice > data.price && <div class="text-sm text-slate-400 line-through">${data.originalPrice}</div>}
+  </a>
+  <div class="product-card-body flex flex-1 flex-col space-y-3 p-4 pt-3 transition-all duration-700">
+    <div>
+      <p class="product-card-brand text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">{data.brand}</p>
+      <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-700"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
+      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-700">{data.rating} / 5 from {data.reviewCount?.toLocaleString()} ratings</p>}
+    </div>
+
+    <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-700">
+      <div class="flex items-end justify-between gap-3">
+        <div>
+          <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">Amazon price</div>
+          <div class="mt-0.5 text-2xl font-black leading-none text-slate-950">${data.price}</div>
+          {hasDeal && <div class="mt-1 text-xs font-bold text-slate-400 line-through">${data.originalPrice}</div>}
+        </div>
+        <div class="product-card-stat-stack min-w-[4.6rem] text-right">
+          {hasDeal && <div class="product-card-stat-line product-card-stat-line--deal text-lg font-black text-orange-600">
+            <svg class="product-card-stat-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>
+            -{data.discountPct}%
+          </div>}
+          <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Rated ${data.rating} out of 5`}>
+            <span class="product-card-stars" aria-hidden="true">
+              {Array.from({ length: 5 }, (_, index) => {
+                const starNumber = index + 1;
+                const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty'));
+                return <span class:list={["product-card-star", `product-card-star--${state}`]}>{'\u2605'}</span>;
+              })}
+            </span>
+            <span class="product-card-rating-value">{data.rating}</span>
+          </div>
+        </div>
       </div>
-      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" data-asin={data.asin} data-slug={slug} class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700">Check price</a>
+      <div class:list={["product-card-action-row mt-3", compact && "product-card-action-row--compact"]} data-product-action-row>
+        {!compact && <a
+          href={data.affiliateUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+          data-asin={data.asin}
+          data-slug={slug}
+          class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50"
+          aria-label={`View ${data.name} on Amazon`}
+        >
+          <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="amazon-cta-compact-icon" aria-hidden="true"><svg viewBox="0 0 64 18"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>}
+        <a
+          href={`/product/${slug}/`}
+          class="product-card-side-action product-card-side-action--details" data-product-action="details"
+          aria-label={`View ${data.name} details on FlowHome`}
+          title="View details"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.06 12.35a1 1 0 0 1 0-.7C3.65 7.55 7.38 5 12 5s8.35 2.55 9.94 6.65a1 1 0 0 1 0 .7C20.35 16.45 16.62 19 12 19s-8.35-2.55-9.94-6.65Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="product-card-side-action-label" aria-hidden="true">Details</span>
+          <span class="sr-only">View details</span>
+        </a>
+        <button
+          type="button"
+          class="product-card-side-action product-card-side-action--list" data-product-action="list"
+          data-flow-cart-add
+          data-asin={data.asin}
+          data-slug={slug}
+          data-name={data.name}
+          data-price={data.price}
+          data-image={productImage}
+          data-url={`/product/${slug}/`}
+          aria-label={`Add ${data.name} to FlowHome Amazon list`}
+          title="Add to list"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="product-card-side-action-label" aria-hidden="true">Add to list</span>
+          <span class="sr-only">Add to list</span>
+          <span class="flow-cart-button-count" data-flow-cart-item-count hidden>0</span>
+        </button>
+      </div>
     </div>
   </div>
 </article>

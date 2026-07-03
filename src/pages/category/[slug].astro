@@ -14,7 +14,7 @@ const products = (await getCollection('products'))
   .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
 ---
 <BaseLayout title={category.data.name + ' | FlowHome'} description={category.data.description} canonicalURL={'https://flowhome.dev/category/' + category.data.slug + '/'}>
-  <section class="rounded-3xl bg-white p-8 shadow-sm">
+  <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Category</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">{category.data.name}</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">{category.data.description}</p>

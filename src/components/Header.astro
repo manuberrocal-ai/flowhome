@@ -1,27 +1,282 @@
 ---
-const nav = [
-  { href: '/products/', label: 'Products' },
-  { href: '/search/', label: 'Search' },
-  { href: '/reviews/', label: 'Reviews' },
-  { href: '/deals/', label: 'Deals' },
-  { href: '/calculator/', label: 'Savings Calculator' },
-  { href: '/quiz/', label: 'Smart Home Quiz' },
-  { href: '/best/best-smart-home-starter-kit/', label: 'Best Picks' },
-  { href: '/about/', label: 'About' },
+const navItems = [
+  {
+    label: 'Products',
+    href: '/products/',
+    featured: 'Browse all smart-home gear',
+    children: [
+      { label: 'All products', href: '/products/' },
+      { label: 'Thermostats', href: '/category/smart-thermostat/' },
+      { label: 'Security cameras', href: '/category/security-camera/' },
+      { label: 'Video doorbells', href: '/category/video-doorbell/' },
+      { label: 'Smart locks', href: '/category/smart-lock/' },
+      { label: 'Robot vacuums', href: '/category/robot-vacuum/' },
+      { label: 'Lighting', href: '/category/smart-lighting/' },
+      { label: 'Plugs', href: '/category/smart-plug/' },
+      { label: 'Speakers', href: '/category/smart-speaker/' },
+      { label: 'Displays', href: '/category/smart-display/' },
+      { label: 'Hubs', href: '/category/smart-hub/' },
+    ],
+  },
+  {
+    label: 'Guides',
+    href: '/best/',
+    featured: 'Best picks by room and ecosystem',
+    children: [
+      { label: 'Best picks hub', href: '/best/' },
+      { label: 'Starter kit', href: '/best/best-smart-home-starter-kit/' },
+      { label: 'Alexa devices', href: '/best/best-alexa-smart-home-devices/' },
+      { label: 'Google Home devices', href: '/best/best-google-home-starter-devices/' },
+      { label: 'Robot vacuums', href: '/best/best-robot-vacuums-for-smart-homes/' },
+      { label: 'Security basics', href: '/best/best-smart-security-basics/' },
+      { label: 'Renter-friendly gear', href: '/best/best-smart-home-devices-for-renters/' },
+    ],
+  },
+  {
+    label: 'Tools',
+    href: '/calculator/',
+    featured: 'Compare, calculate, and choose faster',
+    children: [
+      { label: 'Savings calculator', href: '/calculator/' },
+      { label: 'Product comparison', href: '/compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/' },
+      { label: 'Smart home quiz', href: '/quiz/' },
+      { label: 'Search FlowHome', href: '/search/' },
+    ],
+  },
+  { label: 'Deals', href: '/deals/', children: [] },
+  { label: 'Reviews', href: '/reviews/', children: [] },
 ];
 ---
-<header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-    <a href="/" class="flex items-center gap-3" aria-label="FlowHome home">
-      <span class="grid h-10 w-10 place-items-center rounded-2xl bg-blue-600 text-xl font-black text-white">F</span>
-      <span>
-        <span class="block font-heading text-xl font-extrabold text-slate-950">FlowHome</span>
-        <span class="hidden text-xs font-medium text-slate-500 sm:block">Smarter homes, fewer bad buys</span>
-      </span>
+
+<header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+    <a href="/" class="flex min-w-0 items-center" aria-label="FlowHome home">
+      <img src="/images/flowhome-logo.png" alt="FlowHome" class="h-9 w-auto max-w-[260px] object-contain sm:h-11" width="420" height="96" decoding="async" fetchpriority="high" />
     </a>
-    <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-700 md:flex" aria-label="Main navigation">
-      {nav.map((item) => <a class="hover:text-blue-600" href={item.href}>{item.label}</a>)}
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+      {navItems.map((item) => item.children.length > 0 ? (
+        <div class="nav-dropdown" data-menu={item.label.toLowerCase()}>
+          <a class="nav-link inline-flex items-center gap-1.5" href={item.href} aria-haspopup="true">
+            {item.label}
+            <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </a>
+          <div class="nav-menu" role="menu">
+            <a href={item.href} class="nav-menu-feature" role="menuitem">
+              <span class="nav-menu-kicker text-xs font-black uppercase tracking-[0.18em]">{item.label}</span>
+              <span class="mt-1 block text-sm font-bold text-slate-950">{item.featured}</span>
+            </a>
+            <div class="my-2 h-px bg-slate-700"></div>
+            <div class="grid gap-1">
+              {item.children.map((child) => (
+                <a href={child.href} class="nav-menu-link" role="menuitem">{child.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <a class="nav-link" href={item.href}>{item.label}</a>
+      ))}
     </nav>
-    <a href="/deals/" class="rounded-full bg-orange-500 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-orange-600">Today's deals</a>
+
+    <div class="flex shrink-0 items-center gap-2">
+      <a href="/account/" class="account-avatar-link hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-100 sm:inline-flex" aria-label="Open account">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="2" />
+          <path d="M5.75 20a6.25 6.25 0 0 1 12.5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </a>
+      <a href="/deals/" class="today-deals-link hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-2 text-sm font-black text-white shadow-sm shadow-cyan-900/35 transition hover:-translate-y-0.5 hover:from-teal-400 hover:via-cyan-600 hover:to-blue-900 sm:inline-flex">Today's deals</a>
+      <button class="mobile-menu-btn rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm transition hover:bg-slate-50 lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-panel border-t border-slate-200 bg-white lg:hidden" hidden>
+    <nav class="mx-auto max-w-7xl px-4 py-4 sm:px-6" aria-label="Mobile navigation">
+      <div class="space-y-1">
+        {navItems.map((item) => item.children.length > 0 ? (
+          <div class="mobile-nav-group">
+            <button class="mobile-nav-trigger" type="button" aria-expanded="false">
+              <span>{item.label}</span>
+              <svg class="mobile-chevron h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            <div class="mobile-submenu">
+              <a href={item.href} class="mobile-submenu-link font-bold text-slate-900">{item.featured}</a>
+              {item.children.map((child) => <a href={child.href} class="mobile-submenu-link">{child.label}</a>)}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class="mobile-nav-link">{item.label}</a>
+        ))}
+      </div>
+      <div class="mt-4 grid gap-2 sm:grid-cols-2">
+        <a href="/account/" class="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-black text-slate-800 shadow-sm">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-slate-950 text-white" aria-hidden="true">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="2" /><path d="M5.75 20a6.25 6.25 0 0 1 12.5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+          </span>
+          Profile
+        </a>
+        <a href="/deals/" class="today-deals-link block rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-3 text-center text-sm font-black text-white shadow-sm shadow-cyan-900/35">See today's deals</a>
+      </div>
+    </nav>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const button = document.querySelector('.mobile-menu-btn');
+    const panel = document.getElementById('mobile-menu');
+    const openIcon = '<svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
+    const closeIcon = '<svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
+
+    if (button && panel) {
+      button.addEventListener('click', () => {
+        const willOpen = panel.hidden;
+        panel.hidden = !willOpen;
+        button.setAttribute('aria-expanded', String(willOpen));
+        button.innerHTML = willOpen ? closeIcon : openIcon;
+      });
+    }
+
+    document.querySelectorAll('.mobile-nav-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const group = trigger.closest('.mobile-nav-group');
+        const isOpen = group?.classList.toggle('is-open') || false;
+        trigger.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+  })();
+</script>
+
+<style is:global>
+  .site-header { transition: box-shadow 180ms ease, border-color 180ms ease; }
+  .site-header:hover { box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07); }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.65rem 0.85rem;
+    color: #334155;
+    font-size: 0.9rem;
+    font-weight: 800;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+  .nav-link:hover, .nav-dropdown:hover > .nav-link, .nav-dropdown:focus-within > .nav-link { background: #111827; color: #ffffff; transform: translateY(-1px); }
+  .nav-dropdown:hover > .nav-link svg, .nav-dropdown:focus-within > .nav-link svg { color: #ffffff; }
+  .nav-dropdown {
+    position: relative;
+    padding-bottom: 0.35rem;
+    margin-bottom: -0.35rem;
+  }
+  .nav-dropdown::after {
+    content: "";
+    position: absolute;
+    left: -0.35rem;
+    right: -0.35rem;
+    top: 100%;
+    height: 0.75rem;
+  }
+  .nav-menu {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 0.32rem);
+    width: min(22rem, 90vw);
+    border: 1px solid #334155;
+    border-radius: 1.25rem;
+    background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+    padding: 0.65rem;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28), 0 4px 14px rgba(15, 23, 42, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-7px) scale(0.985);
+    pointer-events: none;
+    transform-origin: top left;
+    transition: opacity 190ms ease, transform 210ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 190ms;
+  }
+  .nav-dropdown:hover .nav-menu,
+  .nav-dropdown:focus-within .nav-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  .nav-menu-feature,
+  .nav-menu-link {
+    display: block;
+    border-radius: 0.9rem;
+    padding: 0.7rem 0.85rem;
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+  .nav-menu-feature { background: linear-gradient(135deg, #0f172a, #164e63); color: #ffffff; }
+  .nav-menu-feature span { color: #ffffff !important; }
+  .nav-menu-feature .nav-menu-kicker { color: #67e8f9 !important; }
+  .nav-dropdown[data-menu="guides"] .nav-menu-feature .nav-menu-kicker { color: #c084fc !important; }
+  .nav-dropdown[data-menu="tools"] .nav-menu-feature .nav-menu-kicker { color: #fbbf24 !important; }
+  .nav-menu-link { color: #e5e7eb; font-size: 0.9rem; font-weight: 700; }
+  .today-deals-link {
+    transform-origin: center;
+    animation: todayDealsWiggle 3s cubic-bezier(.36,.07,.19,.97) infinite;
+    will-change: transform;
+  }
+  @keyframes todayDealsWiggle {
+    0%, 72%, 100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+    76% { transform: translate3d(-2px,0,0) rotate(-4deg) scale(1.04); }
+    80% { transform: translate3d(3px,0,0) rotate(4deg) scale(1.04); }
+    84% { transform: translate3d(-2px,0,0) rotate(-3deg) scale(1.03); }
+    88% { transform: translate3d(2px,0,0) rotate(3deg) scale(1.03); }
+    92% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .today-deals-link { animation: none; }
+  }
+  .nav-menu-link:hover { background: #1f2937; color: #ffffff; transform: translateX(2px); }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-menu { transition: opacity 120ms ease, visibility 0s linear 120ms; transform: none; }
+    .nav-dropdown:hover .nav-menu,
+    .nav-dropdown:focus-within .nav-menu { transform: none; }
+  }
+  .mobile-panel { background: #111827 !important; border-color: #1f2937 !important; animation: mobileMenuDown 220ms ease-out; }
+  @keyframes mobileMenuDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .mobile-nav-link,
+  .mobile-nav-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    border-radius: 1rem;
+    background: transparent;
+    padding: 0.9rem 0.95rem;
+    color: #f8fafc;
+    text-align: left;
+    font-size: 0.98rem;
+    font-weight: 850;
+  }
+  .mobile-nav-link:hover,
+  .mobile-nav-trigger:hover { background: #1f2937; color: #ffffff; }
+  .mobile-chevron { transition: transform 180ms ease; }
+  .mobile-nav-group.is-open .mobile-chevron { transform: rotate(180deg); }
+  .mobile-submenu {
+    margin-left: 0.95rem;
+    max-height: 0;
+    overflow: hidden;
+    border-left: 2px solid #334155;
+    padding-left: 0.85rem;
+    transition: max-height 260ms ease, padding-bottom 180ms ease;
+  }
+  .mobile-nav-group.is-open .mobile-submenu { max-height: 42rem; padding-bottom: 0.55rem; }
+  .mobile-submenu-link {
+    display: block;
+    border-radius: 0.8rem;
+    padding: 0.55rem 0.7rem;
+    color: #dbeafe;
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+  .mobile-submenu-link:hover { background: #1f2937; color: #ffffff; }
+  .mobile-submenu-link.font-bold { color: #ffffff !important; }
+</style>

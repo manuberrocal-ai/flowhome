@@ -1,7 +1,125 @@
-﻿<div class="fixed bottom-4 right-4 z-40 rounded-2xl border border-slate-200 bg-white p-3 text-xs shadow-lg" id="google_translate_element" aria-label="Translate this site"></div>
+<div class="language-switcher" aria-label="Language selector">
+  <button class="language-switcher__button is-active" type="button" data-lang="en" aria-label="Show site in English">EN</button>
+  <button class="language-switcher__button" type="button" data-lang="es" aria-label="Translate site to Spanish">ES</button>
+</div>
+<div id="google_translate_element" class="google-translate-hidden" aria-hidden="true"></div>
+
 <script is:inline>
   function googleTranslateElementInit(){
-    new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'es,fr,de,pt,it,ja,ko,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'es,en',
+      autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
   }
+
+  (() => {
+    const COOKIE_DAYS = 365;
+    const buttons = () => Array.from(document.querySelectorAll('[data-lang]'));
+    const host = location.hostname;
+
+    function setCookie(name, value) {
+      const expires = new Date(Date.now() + COOKIE_DAYS * 864e5).toUTCString();
+      document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+      if (host && host.includes('.')) document.cookie = `${name}=${value}; expires=${expires}; path=/; domain=.${host}`;
+    }
+
+    function clearTranslateCookie() {
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+      if (host && host.includes('.')) document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=.${host}`;
+    }
+
+    function currentLanguage() {
+      const match = document.cookie.match(/(?:^|; )googtrans=([^;]+)/);
+      if (!match) return 'en';
+      return decodeURIComponent(match[1]).includes('/es') ? 'es' : 'en';
+    }
+
+    function syncButtons(lang) {
+      buttons().forEach((button) => {
+        const active = button.dataset.lang === lang;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    function loadTranslateScript() {
+      if (document.querySelector('script[data-google-translate]')) return;
+      const script = document.createElement('script');
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      script.dataset.googleTranslate = 'true';
+      document.head.appendChild(script);
+    }
+
+    function applyLanguage(lang) {
+      if (lang === 'es') setCookie('googtrans', '/en/es');
+      else clearTranslateCookie();
+      syncButtons(lang);
+      window.location.reload();
+    }
+
+    window.FlowHomeLanguage = { applyLanguage, currentLanguage };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = currentLanguage();
+      syncButtons(lang);
+      if (lang === 'es') loadTranslateScript();
+      buttons().forEach((button) => button.addEventListener('click', () => applyLanguage(button.dataset.lang || 'en')));
+    });
+  })();
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+
+<style is:global>
+  .language-switcher {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.2rem;
+    border: 1px solid rgba(203, 213, 225, 0.95);
+    border-radius: 999px;
+    background: rgba(248, 250, 252, 0.9);
+    padding: 0.2rem;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.24), 0 4px 12px rgba(37, 99, 235, 0.12), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  .language-switcher__button {
+    min-width: 2.45rem;
+    min-height: 2.1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    font: 900 0.72rem/1 Inter, system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .language-switcher__button:hover {
+    color: #0f172a;
+    transform: translateY(-1px);
+  }
+
+  .language-switcher__button.is-active {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.30), 0 0 0 1px rgba(255,255,255,0.18);
+  }
+
+  .google-translate-hidden,
+  .google-translate-hidden iframe,
+  .goog-te-banner-frame,
+  body > .skiptranslate {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body { top: 0 !important; }
+</style>

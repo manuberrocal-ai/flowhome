@@ -57,6 +57,7 @@ export function generateProductSchema(product: any) {
       '@type': 'Brand',
       name: product.brand || 'Unknown',
     },
+    ...(product.image ? { image: product.image } : {}),
     offers: {
       '@type': 'Offer',
       price: product.price,

@@ -1,8 +1,7 @@
----
+﻿---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
 import GoogleTranslate from '../components/GoogleTranslate.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
@@ -17,7 +16,7 @@ interface Props {
 }
 
 const {
-  title = 'FlowHome — Smart Home Reviews, Comparisons & Deals',
+  title = 'FlowHome - Smart Home Reviews, Comparisons & Deals',
   description = 'Expert smart home product reviews, side-by-side comparisons, and the best deals on robot vacuums, security cameras, smart speakers, and more.',
   image = '/images/og-default.svg',
   type = 'website',
@@ -43,7 +42,8 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
     <meta name="generator" content="Astro v7" />
     <meta name="author" content="FlowHome Team" />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/images/flowhome-favicon.png" />
+    <link rel="apple-touch-icon" href="/images/flowhome-icon-192.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0f172a" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -81,12 +81,189 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
   <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
     {GTM_ID && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
     <Header />
+    <div class="border-b border-amber-100 bg-amber-50/75">
+      <div class="mx-auto max-w-7xl px-4 py-2 text-center text-[11px] font-semibold leading-5 text-amber-900 sm:px-6 lg:px-8">
+        FlowHome may earn from qualifying Amazon purchases. Recommendations prioritize usefulness, compatibility, owner feedback, and buying context.
+      </div>
+    </div>
     <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <AffiliateDisclosure />
       <slot />
     </main>
     <Footer />
-    <GoogleTranslate />
+    <div class="floating-language-switcher" aria-label="Language switcher">
+      <GoogleTranslate />
+    </div>
     <ExitIntentPopup />
+    <div class="flow-cart-dock" data-flow-cart-dock hidden aria-live="polite">
+      <div class="flow-cart-dock__summary"><span data-flow-cart-count>0</span> selected for Amazon. Prices and availability can change on Amazon.</div>
+      <div class="flow-cart-dock__actions">
+        <a href="/cart/" class="flow-cart-dock__review">Review list</a>
+        <button type="button" class="flow-cart-dock__clear" data-flow-cart-clear>Clear</button>
+      </div>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const setupFlowWave = () => {
+          const buttons = Array.from(document.querySelectorAll('.flow-wave'));
+          if (!buttons.length) return;
+
+          const layer = document.createElement('div');
+          layer.className = 'flow-wave-viewport-layer';
+          layer.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(layer);
+
+          const clips = new Map();
+          let syncQueued = false;
+
+          const ensureClip = (button) => {
+            let clip = clips.get(button);
+            if (clip) return clip;
+            clip = document.createElement('div');
+            clip.className = 'flow-wave-clip';
+            const sample = document.createElement('div');
+            sample.className = 'flow-wave-sample';
+            const ribbon = document.createElement('div');
+            ribbon.className = 'flow-wave-ribbon';
+            sample.appendChild(ribbon);
+            clip.appendChild(sample);
+            layer.appendChild(clip);
+            clips.set(button, clip);
+            return clip;
+          };
+
+          const syncClips = () => {
+            buttons.forEach((button) => {
+              const rect = button.getBoundingClientRect();
+              const clip = ensureClip(button);
+              const isVisible = rect.width > 0 && rect.height > 0 && rect.bottom >= 0 && rect.top <= window.innerHeight;
+              if (!isVisible) {
+                clip.style.display = 'none';
+                return;
+              }
+              const styles = window.getComputedStyle(button);
+              clip.style.display = 'block';
+              clip.style.left = `${rect.left}px`;
+              clip.style.top = `${rect.top}px`;
+              clip.style.width = `${rect.width}px`;
+              clip.style.height = `${rect.height}px`;
+              clip.style.borderRadius = styles.borderRadius;
+              clip.style.setProperty('--flow-clip-left', `${rect.left}px`);
+              clip.style.setProperty('--flow-clip-top', `${rect.top}px`);
+            });
+          };
+
+          const queueSync = () => {
+            if (syncQueued) return;
+            syncQueued = true;
+            window.requestAnimationFrame(() => {
+              syncQueued = false;
+              syncClips();
+            });
+          };
+
+          syncClips();
+          window.addEventListener('scroll', queueSync, { passive: true });
+          window.addEventListener('resize', queueSync);
+        };
+
+        const setupFlowCart = () => {
+          const storageKey = 'flowhome-amazon-list';
+          const dock = document.querySelector('[data-flow-cart-dock]');
+          const count = document.querySelector('[data-flow-cart-count]');
+          const clearButton = document.querySelector('[data-flow-cart-clear]');
+          const buttons = Array.from(document.querySelectorAll('[data-flow-cart-add]'));
+
+          const readItems = () => {
+            try {
+              const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
+              return Array.isArray(parsed) ? parsed.filter((item) => item && item.asin) : [];
+            } catch {
+              return [];
+            }
+          };
+
+          const writeItems = (items) => localStorage.setItem(storageKey, JSON.stringify(items));
+          const sync = () => {
+            const items = readItems();
+            const totalQuantity = items.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+            if (count) count.textContent = String(totalQuantity);
+            if (dock) dock.hidden = totalQuantity === 0;
+            buttons.forEach((button) => {
+              const item = items.find((entry) => entry.asin === button.dataset.asin);
+              const quantity = item ? Math.max(1, Number(item.quantity || 1)) : 0;
+              const badge = button.querySelector('[data-flow-cart-item-count]');
+              button.classList.toggle('is-added', quantity > 0);
+              button.setAttribute('aria-pressed', String(quantity > 0));
+              button.setAttribute('title', quantity > 0 ? `Add another (${quantity} selected)` : 'Add to list');
+              if (badge) {
+                badge.textContent = String(quantity);
+                badge.hidden = quantity === 0;
+              }
+            });
+          };
+
+          buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+              const asin = button.dataset.asin;
+              if (!asin) return;
+              const items = readItems();
+              const existing = items.find((item) => item.asin === asin);
+              if (existing) {
+                existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
+              } else {
+                items.push({
+                  asin,
+                  quantity: 1,
+                  slug: button.dataset.slug || '',
+                  name: button.dataset.name || asin,
+                  price: Number(button.dataset.price || 0),
+                  image: button.dataset.image || '',
+                  url: button.dataset.url || '',
+                });
+              }
+              writeItems(items);
+              sync();
+              window.gtag?.('event', 'flowhome_list_add', { asin, product_slug: button.dataset.slug || '' });
+            });
+          });
+
+          clearButton?.addEventListener('click', () => {
+            localStorage.removeItem(storageKey);
+            sync();
+          });
+
+          sync();
+        };
+
+
+        const setupProductZoom = () => {
+          document.querySelectorAll('.product-card-media').forEach((media) => {
+            const image = media.querySelector('.product-card-image');
+            if (!image) return;
+            const card = media.closest('.product-card');
+            media.addEventListener('pointerenter', () => card?.classList.add('is-image-zooming'));
+            media.addEventListener('pointermove', (event) => {
+              const rect = media.getBoundingClientRect();
+              const x = Math.min(Math.max(((event.clientX - rect.left) / rect.width) * 100, 0), 100);
+              const y = Math.min(Math.max(((event.clientY - rect.top) / rect.height) * 100, 0), 100);
+              image.style.setProperty('--product-zoom-x', `${x}%`);
+              image.style.setProperty('--product-zoom-y', `${y}%`);
+            });
+            media.addEventListener('pointerleave', () => {
+              card?.classList.remove('is-image-zooming');
+              image.style.setProperty('--product-zoom-x', '50%');
+              image.style.setProperty('--product-zoom-y', '50%');
+            });
+          });
+        };
+
+        if (!reduceMotion) setupFlowWave();
+        setupFlowCart();
+        if (!reduceMotion) setupProductZoom();
+      })();
+    </script>
   </body>
 </html>

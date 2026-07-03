@@ -4,7 +4,9 @@ import ProductLayout from '../../layouts/ProductLayout.astro';
 import PriceHistory from '../../components/PriceHistory.astro';
 import RelatedProducts from '../../components/RelatedProducts.astro';
 import StickyCTA from '../../components/StickyCTA.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getRelatedProducts } from '../../lib/internal-links';
+import { getCategoryLabel, getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../../lib/product-art';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -14,36 +16,77 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const data = product.data;
 const related = await getRelatedProducts(data.category, data.slug, 4);
+const productImage = getProductImage(data, 'SL500');
+const fallbackImage = getProductFallbackImage(data);
+const productImageAlt = getProductImageAlt(data);
+const productImageKind = getProductImageKind(data);
+const sourceLabel = getProductImageSourceLabel(data);
+const categoryLabel = getCategoryLabel(data.category);
 const featureList = [
   data.matter && 'Matter ready', data.alexaCompatible && 'Alexa compatible', data.googleHomeCompatible && 'Google Home compatible', data.appleHomeKit && 'Apple HomeKit compatible', data.energyMonitoring && 'Energy monitoring', data.nightVision && 'Night vision', data.twoWayAudio && 'Two-way audio', data.hasMop && 'Mopping support', data.lidarMapping && 'LiDAR mapping'
 ].filter(Boolean);
+const connectivity = ['Wi-Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean).join(', ') || 'Check listing';
+const voicePlatforms = ['Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ') || 'Check listing';
+const hasDeal = data.discountPct > 0 && data.originalPrice && data.originalPrice > data.price;
+const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
+const rating = Number(data.rating ?? 0);
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
+const roundedStars = Math.round(rating);
 ---
 <ProductLayout product={data}>
   <article class="space-y-8">
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div class="grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-        <img src={data.image || '/images/product-placeholder.svg'} alt={data.name} class="mx-auto max-h-80 w-full rounded-2xl bg-slate-100 object-contain p-6" />
-        <div>
-          <p class="text-sm font-bold uppercase tracking-wide text-blue-700">{data.brand} · {data.category}</p>
-          <h1 class="mt-2 text-4xl font-black text-slate-950">{data.name}</h1>
-          <p class="mt-4 text-lg text-slate-600">A FlowHome product profile with core specs, compatibility notes, deal status, and recommended use cases.</p>
-          <div class="mt-5 flex flex-wrap gap-2">{featureList.map((feature) => <span class="rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700">{feature}</span>)}</div>
+    <AffiliateDisclosure />
+
+    <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <div class="grid gap-0 md:grid-cols-[0.95fr_1.05fr] md:items-stretch">
+        <div class="relative flex min-h-96 flex-col justify-center bg-gradient-to-br from-white via-blue-50 to-orange-50 p-6">
+          <span class="absolute left-5 top-5 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</span>
+          <div class="flex min-h-80 items-center justify-center rounded-3xl bg-white/75 p-5 shadow-inner shadow-slate-100">
+            <img
+              src={productImage}
+              alt={productImageAlt}
+              class="max-h-80 w-full object-contain drop-shadow-sm"
+              width="500"
+              height="500"
+              data-fallback-src={fallbackImage}
+              onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
+            />
+          </div>
+          <p class:list={["mt-3 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
+        </div>
+        <div class="flex flex-col justify-center p-6 md:p-8">
+          <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-700">{data.brand} - {categoryLabel}</p>
+          <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{data.name}</h1>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">A practical FlowHome buying profile with compatibility notes, deal context, and the safest Amazon purchase path.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            {featureList.map((feature) => <span class="product-detail-chip product-detail-chip--feature"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.32a1 1 0 0 1-1.42.006L3.29 9.28a1 1 0 0 1 1.42-1.41l4.04 4.04 6.54-6.61a1 1 0 0 1 1.414-.01Z" clip-rule="evenodd" /></svg>{feature}</span>)}
+            {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{data.discountPct}% deal</span>}
+            {featureList.length === 0 && <span class="product-detail-chip product-detail-chip--neutral">Core smart-home profile</span>}
+          </div>
+          <div class="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
+            <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Price snapshot</p><p class="mt-1 text-2xl font-black text-slate-950">${data.price}</p>{hasDeal && <p class="mt-1 text-sm font-bold text-slate-400 line-through">${data.originalPrice}</p>}</div>
+            <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Owner rating</p><div class="product-detail-stars mt-1" aria-label={`Rated ${data.rating} out of 5`}><span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => { const starNumber = index + 1; const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty')); return <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>; })}</span><strong>{data.rating}</strong></div></div>
+            <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Reviews</p><p class="mt-1 text-2xl font-black text-slate-950">{data.reviewCount?.toLocaleString()}</p></div>
+          </div>
+          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`}><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+          <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
         </div>
       </div>
     </section>
 
     <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <h2>Who should buy it?</h2>
-      <p>{data.name} is best for buyers who want a reliable {data.category.replaceAll('-', ' ')} with simple setup, broad ecosystem compatibility, and a clear reason to exist in a smart home setup.</p>
+      <p>{data.name} is best for buyers who want a reliable {categoryLabel.toLowerCase()} with simple setup, broad ecosystem compatibility, and a clear reason to exist in a smart home setup.</p>
       <h2>Key specifications</h2>
       <ul>
-        <li>Price snapshot: ${data.price}</li>
-        <li>Rating: {data.rating} out of 5 from {data.reviewCount?.toLocaleString()} owner reviews</li>
-        <li>Connectivity: {['Wi‑Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean).join(', ')}</li>
-        <li>Voice platforms: {['Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ')}</li>
+        <li><strong>Price snapshot:</strong> ${data.price}{hasDeal && ` vs. typical ${data.originalPrice}`}</li>
+        <li><strong>Rating:</strong> {data.rating} out of 5 from {data.reviewCount?.toLocaleString()} owner reviews</li>
+        <li><strong>Connectivity:</strong> {connectivity}</li>
+        <li><strong>Voice platforms:</strong> {voicePlatforms}</li>
       </ul>
       <h2>Pros and cons</h2>
-      <div class="grid gap-4 md:grid-cols-2 not-prose">
+      <div class="not-prose grid gap-4 md:grid-cols-2">
         <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Pros</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Strong owner feedback</li><li>Clear setup path for beginners</li><li>Good value inside current category</li></ul></div>
         <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Cons</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Live pricing can change quickly</li><li>Some advanced features may require companion apps</li><li>Check ecosystem compatibility before buying</li></ul></div>
       </div>
