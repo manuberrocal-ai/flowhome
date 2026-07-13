@@ -1,4 +1,6 @@
 ﻿---
+import { isSupabaseConfigured, supabaseAnonKey, supabaseUrl } from '../lib/supabase-client';
+
 const navItems = [
   {
     label: 'Products',
@@ -231,9 +233,7 @@ const navItems = [
     88% { transform: translate3d(2px,0,0) rotate(3deg) scale(1.03); }
     92% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .today-deals-link { animation: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .today-deals-link { animation: none; } }
   .nav-menu-link:hover { background: #1f2937; color: #ffffff; transform: translateX(2px); }
   @media (prefers-reduced-motion: reduce) {
     .nav-menu { transition: opacity 120ms ease, visibility 0s linear 120ms; transform: none; }
@@ -281,37 +281,63 @@ const navItems = [
   .mobile-submenu-link:hover { background: #1f2937; color: #ffffff; }
   .mobile-submenu-link.font-bold { color: #ffffff !important; }
 </style>
-<script is:inline>
-  (async () => {
-    const SUPABASE_URL = "https://lbiuwknkrbyzrujarslh.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaXV3a25rcmJ5enJ1amFyc2xoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQzNDgsImV4cCI6MjA5ODYzMDM0OH0.W_sqEbR0DIthUJqRzDRktXnRlw3CHkSrWYq9xy-1MfU";
 
-    const updateAvatar = async (supabase) => {
+<script is:inline define:vars={{ SUPABASE_URL: supabaseUrl, SUPABASE_ANON_KEY: supabaseAnonKey, SUPABASE_CONFIGURED: isSupabaseConfigured }}>
+  (() => {
+    const stateKey = '__flowhomeHeaderAvatarState';
+    const state = window[stateKey] ||= {};
+
+    const renderAvatar = (user) => {
       const avatarImg = document.querySelector('.data-header-avatar-img');
       const avatarDefault = document.querySelector('.data-header-avatar-default');
-      if (!avatarImg) return;
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session && session.user) {
-          const meta = session.user.user_metadata || {};
-          const pic = meta.avatar_url || meta.picture || '';
-          if (pic) {
-            avatarImg.src = pic;
-            avatarImg.alt = meta.full_name || meta.name || 'Account';
-            avatarImg.style.display = 'block';
-            if (avatarDefault) avatarDefault.style.display = 'none';
-          }
-        }
-      } catch (e) {}
+      if (!avatarImg || !avatarDefault) return;
+
+      const metadata = user?.user_metadata || {};
+      const avatarUrl = metadata.avatar_url || metadata.picture || '';
+      if (!avatarUrl) {
+        avatarImg.removeAttribute('src');
+        avatarImg.alt = '';
+        avatarImg.style.display = 'none';
+        avatarDefault.style.display = 'block';
+        return;
+      }
+
+      avatarImg.src = avatarUrl;
+      avatarImg.alt = metadata.full_name || metadata.name || 'Account';
+      avatarImg.style.display = 'block';
+      avatarImg.onerror = () => renderAvatar();
+      avatarDefault.style.display = 'none';
     };
 
-    try {
-      const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      updateAvatar(supabase);
-      supabase.auth.onAuthStateChange(() => updateAvatar(supabase));
-      setTimeout(() => updateAvatar(supabase), 1500);
-      setTimeout(() => updateAvatar(supabase), 3000);
-    } catch (e) {}
+    const syncAvatar = async () => {
+      if (!state.client) return;
+      try {
+        const { data: { session } } = await state.client.auth.getSession();
+        renderAvatar(session?.user);
+      } catch {
+        renderAvatar();
+      }
+    };
+
+    const initialize = async () => {
+      if (!SUPABASE_CONFIGURED) return;
+      try {
+        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+        state.client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { data: { subscription } } = state.client.auth.onAuthStateChange((_event, session) => renderAvatar(session?.user));
+        state.subscription = subscription;
+        await syncAvatar();
+      } catch {
+        renderAvatar();
+      }
+    };
+
+    if (!state.initialized) {
+      state.initialized = true;
+      document.addEventListener('astro:page-load', syncAvatar);
+      initialize();
+    } else {
+      syncAvatar();
+    }
   })();
 </script>
