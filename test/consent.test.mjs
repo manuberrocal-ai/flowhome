@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const consentSource = await readFile(new URL('../src/lib/consent.ts', import.meta.url), 'utf8');
+const bannerSource = await readFile(new URL('../src/components/ConsentBanner.astro', import.meta.url), 'utf8');
 const executableConsent = consentSource
   .replace(/(storage)\?: Storage \| null/g, '$1')
   .replace(/choice: 'accepted' \| 'rejected'/g, 'choice')
@@ -36,6 +37,18 @@ test('a preference is not reported as saved when persistent storage is unavailab
   const unavailable = { getItem: () => null, setItem: () => { throw new Error('storage unavailable'); } };
   assert.equal(consent.setConsentPreference('rejected', unavailable), 'unset');
   assert.equal(consent.getConsentPreference(unavailable), 'unset');
+});
+
+test('consent banner only speaks accepted/rejected to the setter and keeps revoke/open behavior', () => {
+  assert.match(bannerSource, /data-consent-action="rejected"/);
+  assert.match(bannerSource, /data-consent-action="accepted"/);
+  assert.doesNotMatch(bannerSource, /data-consent-action="reject"/);
+  assert.doesNotMatch(bannerSource, /data-consent-action="accept"/);
+  assert.match(bannerSource, /querySelector<HTMLElement>\('\[data-consent-action="rejected"\]'\)\?\.focus\(\);/);
+  assert.match(bannerSource, /if \(action === 'accepted' \|\| action === 'rejected'\) \{/);
+  assert.match(bannerSource, /if \(setConsentPreference\(action\) !== action\) return;\n\s+hideBanner\(\);\n\s+window\.dispatchEvent\(new CustomEvent\('flowhome:consent-change'\)\);/);
+  assert.match(bannerSource, /if \(action === 'revoke'\) \{/);
+  assert.match(bannerSource, /if \(target\?\.closest\('\[data-consent-open\]'\)\) showBanner\(\);/);
 });
 
 test('reload is required only once when an accepted optional runtime was loaded', () => {
