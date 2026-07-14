@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test test/**/*.test.mjs",
+    "diff-check": "git diff --check",
     "discover:products": "node scripts/discovery/product-discovery.mjs",
     "quality:check": "node scripts/content/quality-check.mjs",
     "content:generate": "node scripts/content/generate-review.mjs",

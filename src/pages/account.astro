@@ -2,13 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { isSupabaseConfigured } from '../lib/supabase-client';
 ---
-<BaseLayout title="FlowHome Account | Save Smart Home Shortlists" description="Create a FlowHome account with Google to save smart home shortlists, favorites, and deal notes for future promotions." canonicalURL="https://flowhome.dev/account/" noindex={true}>
+<BaseLayout title="FlowHome Account | Save Smart Home Shortlists" description="Create a FlowHome account with Google or email to save smart home shortlists, favorites, and deal notes." canonicalURL="https://flowhome.dev/account/" noindex={true}>
   <section class="account-hero home-parallax-bg relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/25 md:p-8 lg:p-10">
     <div class="relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
       <div>
         <p class="inline-flex rounded-full bg-cyan-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-cyan-200/20">FlowHome account</p>
         <h1 class="mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-5xl">Save your smart-home shortlist.</h1>
-        <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">Sign in with Google to keep quiz results, favorites, product comparisons, and deal notes ready for your next setup session.</p>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">Sign in with Google or email to keep quiz results, favorites, product comparisons, and deal notes ready for your next setup session.</p>
         <div class="mt-6 grid gap-3 text-sm sm:grid-cols-3">
           <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Shortlists</strong><span class="text-slate-300">Save product picks</span></div>
           <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Deals</strong><span class="text-slate-300">Track buy timing</span></div>
@@ -22,22 +22,38 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
         </div>
         <div class="rounded-2xl bg-slate-50 p-4 pr-16 ring-1 ring-slate-200">
           <h2 class="text-2xl font-black" data-account-title>Sign in or create account</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-600" data-account-subtitle>Use your Google account to sync quiz results, favorites, and deal notes across devices.</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600" data-account-subtitle>Use Google or email to sync your picks across devices.</p>
         </div>
 
         <div data-account-loggedout>
-          <div class="account-google mt-5 flex min-h-12 w-full items-center justify-center" data-account-google aria-label="Continue with Google"></div>
-          <p class="account-status min-h-5 mt-3 text-sm font-bold text-cyan-700" aria-live="polite"></p>
+          <div data-account-google-flow>
+            <div class="account-google mt-5 flex min-h-12 w-full items-center justify-center" data-account-google aria-label="Continue with Google"></div>
+            <p class="account-status min-h-5 mt-3 text-sm font-bold text-cyan-700" data-account-status aria-live="polite"></p>
+          </div>
+          <div class="mt-5" data-account-email-flow hidden>
+            <form data-account-email-form novalidate>
+              <label class="block text-sm font-black text-slate-800" for="account-email">Email address</label>
+              <input id="account-email" name="email" type="email" autocomplete="email" required class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3 text-slate-950 shadow-sm focus:border-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100" aria-describedby="account-email-status" />
+              <button type="submit" class="mt-3 flex min-h-12 w-full items-center justify-center rounded-2xl bg-slate-950 px-4 py-3 font-black text-white transition hover:bg-slate-800">Send sign-in link</button>
+            </form>
+            <p id="account-email-status" class="min-h-5 mt-3 text-sm font-bold text-cyan-700" data-account-email-status aria-live="polite"></p>
+          </div>
           {!isSupabaseConfigured && <p class="mt-3 rounded-2xl bg-amber-50 p-3 text-xs font-bold text-amber-800 ring-1 ring-amber-200">Auth is not configured.</p>}
+        </div>
+
+        <div data-account-email-complete hidden class="mt-5 rounded-2xl bg-emerald-50 p-4 ring-1 ring-emerald-200">
+          <h3 class="font-black text-emerald-950">Email verified</h3>
+          <p class="mt-1 text-sm font-semibold text-emerald-800">You are signed in. This window can be closed safely.</p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <a data-account-return class="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-950 px-4 py-2 text-sm font-black text-white">Return</a>
+            <button type="button" data-account-close class="min-h-11 rounded-xl border border-emerald-300 px-4 py-2 text-sm font-black text-emerald-900">Close window</button>
+          </div>
         </div>
 
         <div data-account-loggedin hidden class="mt-5 space-y-4">
           <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
             <img data-account-avatar class="h-10 w-10 rounded-full bg-slate-200 object-cover" alt="" />
-            <div class="min-w-0 flex-1">
-              <p data-account-name class="truncate font-black text-slate-950">Account</p>
-              <p data-account-email class="truncate text-sm font-bold text-slate-500"></p>
-            </div>
+            <div class="min-w-0 flex-1"><p data-account-name class="truncate font-black text-slate-950">Account</p><p data-account-email class="truncate text-sm font-bold text-slate-500"></p></div>
           </div>
           <button type="button" class="account-signout flex min-h-11 w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 font-black text-slate-700 shadow-sm transition hover:bg-slate-50" data-account-signout>Sign out</button>
         </div>
@@ -47,24 +63,52 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
 
   <section class="mt-8 grid gap-4 md:grid-cols-3">
     <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Google sign-in</h2><p class="mt-2 text-slate-600">Secure sign-in with Google. No passwords to remember.</p></article>
+    <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Email sign-in</h2><p class="mt-2 text-slate-600">We send a secure sign-in link. No password required.</p></article>
     <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Secure database</h2><p class="mt-2 text-slate-600">Your data lives in a protected Supabase database. Only you can read it.</p></article>
-    <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Promotions & updates</h2><p class="mt-2 text-slate-600">Get notified about deals on the products you actually care about.</p></article>
   </section>
 
   <script>
-    import { getSupabaseClient } from '../lib/supabase-client';
+    import { announceAuthChange, subscribeToAuthChanges } from '../lib/auth-channel.js';
+    import { buildEmailCompleteUrl, getSafeReturnPath } from '../lib/auth-helpers.js';
     import { registerGoogleCredentialHandler } from '../lib/google-identity';
+    import { getSupabaseClient } from '../lib/supabase-client';
 
     (async () => {
-      const status = document.querySelector('.account-status');
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      const emailMode = mode === 'email';
+      const emailCompleteMode = mode === 'email-complete';
+      const returnPath = getSafeReturnPath(params.get('return'));
+      const status = document.querySelector('[data-account-status]');
+      const emailStatus = document.querySelector('[data-account-email-status]');
       const googleButton = document.querySelector('[data-account-google]');
+      const googleFlow = document.querySelector('[data-account-google-flow]');
+      const emailFlow = document.querySelector('[data-account-email-flow]');
+      const emailForm = document.querySelector('[data-account-email-form]');
+      const emailInput = document.querySelector('#account-email');
       const signoutBtn = document.querySelector('[data-account-signout]');
       const loggedout = document.querySelector('[data-account-loggedout]');
       const loggedin = document.querySelector('[data-account-loggedin]');
+      const complete = document.querySelector('[data-account-email-complete]');
+      const returnLink = document.querySelector('[data-account-return]');
+      const closeButton = document.querySelector('[data-account-close]');
+      const title = document.querySelector('[data-account-title]');
+      const subtitle = document.querySelector('[data-account-subtitle]');
       const nameEl = document.querySelector('[data-account-name]');
       const emailEl = document.querySelector('[data-account-email]');
       const avatarEl = document.querySelector('[data-account-avatar]');
       const supabase = getSupabaseClient();
+      let completionAnnounced = false;
+
+      if (emailMode) {
+        if (title) title.textContent = 'Continue with email';
+        if (subtitle) subtitle.textContent = 'We will send a secure sign-in link to your inbox.';
+      } else if (emailCompleteMode) {
+        if (title) title.textContent = 'Completing email sign-in';
+        if (subtitle) subtitle.textContent = 'Checking your secure sign-in link.';
+      }
+      if (returnLink) returnLink.href = returnPath;
+      closeButton?.addEventListener('click', () => window.close());
 
       if (!supabase) {
         if (status) status.textContent = 'Auth provider not configured yet.';
@@ -74,61 +118,99 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
       const syncUI = async () => {
         try {
           const { data, error } = await supabase.auth.getSession();
-          if (error) {
-            if (status) status.textContent = 'We could not load your account. Please try again.';
-          } else if (data.session?.user) {
-            const user = data.session.user;
+          if (error) throw error;
+          const user = data.session?.user;
+          if (user) {
+            if (emailCompleteMode) {
+              if (loggedout) loggedout.hidden = true;
+              if (loggedin) loggedin.hidden = true;
+              if (complete) complete.hidden = false;
+              if (!completionAnnounced) {
+                completionAnnounced = true;
+                announceAuthChange();
+              }
+              return;
+            }
             const metadata = user.user_metadata || {};
             const avatarUrl = metadata.avatar_url || metadata.picture || '';
             if (nameEl) nameEl.textContent = metadata.full_name || metadata.name || user.email || 'Account';
             if (emailEl) emailEl.textContent = user.email || '';
             if (avatarEl) {
               avatarEl.src = avatarUrl;
-              avatarEl.alt = metadata.full_name || metadata.name || 'Account avatar';
+              avatarEl.alt = avatarUrl ? metadata.full_name || metadata.name || 'Account avatar' : '';
               avatarEl.hidden = !avatarUrl;
             }
             if (loggedout) loggedout.hidden = true;
+            if (complete) complete.hidden = true;
             if (loggedin) loggedin.hidden = false;
             return;
           }
         } catch {
+          if (emailCompleteMode && complete) complete.hidden = true;
           if (status) status.textContent = 'We could not load your account. Please try again.';
         }
 
-        if (avatarEl) {
-          avatarEl.removeAttribute('src');
-          avatarEl.hidden = true;
-        }
+        if (avatarEl) { avatarEl.removeAttribute('src'); avatarEl.hidden = true; }
         if (emailEl) emailEl.textContent = '';
         if (nameEl) nameEl.textContent = 'Account';
-        if (loggedout) loggedout.hidden = false;
         if (loggedin) loggedin.hidden = true;
+        if (complete) complete.hidden = true;
+        if (loggedout) loggedout.hidden = false;
+        if (googleFlow) googleFlow.hidden = emailMode || emailCompleteMode;
+        if (emailFlow) emailFlow.hidden = !emailMode;
+        if (emailCompleteMode && emailStatus) emailStatus.textContent = 'Open the sign-in link in your email to finish.';
       };
 
-      try {
-        const googleSignIn = await registerGoogleCredentialHandler('account', async (response) => {
-          if (!response.credential) {
-            if (status) status.textContent = 'Google did not return a sign-in credential.';
-            return;
-          }
-
-          if (status) status.textContent = 'Signing you in...';
-          try {
-            const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token: response.credential });
-            if (error && status) status.textContent = error.message;
-          } catch {
-            if (status) status.textContent = 'Sign-in failed. Please try again.';
-          }
-        });
-        if (googleButton) {
-          ['pointerenter', 'pointerdown', 'focusin', 'click'].forEach((eventName) => {
-            googleButton.addEventListener(eventName, googleSignIn.activate);
+      if (!emailMode && !emailCompleteMode) {
+        try {
+          const googleSignIn = await registerGoogleCredentialHandler('account', async (response) => {
+            if (!response.credential) {
+              if (status) status.textContent = 'Google did not return a sign-in credential.';
+              return;
+            }
+            if (status) status.textContent = 'Signing you in...';
+            try {
+              const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token: response.credential });
+              if (error && status) status.textContent = error.message;
+            } catch {
+              if (status) status.textContent = 'Sign-in failed. Please try again.';
+            }
           });
-          googleSignIn.renderButton(googleButton);
+          if (googleButton) {
+            ['pointerenter', 'pointerdown', 'focusin', 'click'].forEach((eventName) => googleButton.addEventListener(eventName, googleSignIn.activate));
+            googleSignIn.renderButton(googleButton);
+          }
+        } catch (error) {
+          if (status) status.textContent = error instanceof Error ? error.message : 'Google sign-in is unavailable.';
         }
-      } catch (error) {
-        if (status) status.textContent = error instanceof Error ? error.message : 'Google sign-in is unavailable.';
       }
+
+      emailForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!emailInput?.checkValidity()) {
+          emailInput?.reportValidity();
+          if (emailStatus) emailStatus.textContent = 'Enter a valid email address.';
+          return;
+        }
+        const submit = emailForm.querySelector('button[type="submit"]');
+        if (submit) submit.disabled = true;
+        if (emailStatus) emailStatus.textContent = 'Sending your sign-in link...';
+        try {
+          const { error } = await supabase.auth.signInWithOtp({
+            email: emailInput.value.trim(),
+            options: {
+              shouldCreateUser: true,
+              emailRedirectTo: buildEmailCompleteUrl(window.location.origin, returnPath),
+            },
+          });
+          if (error) throw error;
+          if (emailStatus) emailStatus.textContent = 'Check your email for a sign-in link.';
+        } catch (error) {
+          if (emailStatus) emailStatus.textContent = error instanceof Error ? error.message : 'We could not send the sign-in link. Please try again.';
+        } finally {
+          if (submit) submit.disabled = false;
+        }
+      });
 
       signoutBtn?.addEventListener('click', async () => {
         try {
@@ -140,7 +222,7 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
         await syncUI();
       });
 
-      supabase.auth.onAuthStateChange(() => { void syncUI(); });
+      subscribeToAuthChanges(supabase, () => { void syncUI(); });
       await syncUI();
     })();
   </script>
