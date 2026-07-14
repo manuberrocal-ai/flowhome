@@ -25,6 +25,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run diff-check
+      - run: npm test
       - run: npm run quality:check
       - run: npm run links:check
       - run: npm run build
