@@ -13,6 +13,8 @@ on:
 jobs:
   automation:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

@@ -30,8 +30,8 @@ const {
 const absoluteImage = image.startsWith('http') ? image : new URL(image, Astro.site || Astro.url.origin).href;
 const orgSchema = generateOrganizationSchema();
 const websiteSchema = generateWebSiteSchema();
-const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-KX37WSZQ';
-const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID || '';
+const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || '';
 const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/cart';
 const pageType = Astro.url.pathname.split('/').filter(Boolean)[0] || 'home';
 ---

@@ -8,8 +8,19 @@ const read = (path) => readFile(new URL(path, root), 'utf8');
 test('BaseLayout emits no analytics loader, queue, or noscript fallback before consent', async () => {
   const layout = await read('src/layouts/BaseLayout.astro');
   assert.doesNotMatch(layout, /gtag\/js|googletagmanager\.com\/ns\.html|gtm\.js\}\);/);
+  assert.match(layout, /const GTM_ID = import\.meta\.env\.PUBLIC_GTM_ID \|\| '';/);
+  assert.match(layout, /const CLARITY_ID = import\.meta\.env\.PUBLIC_CLARITY_ID \|\| '';/);
+  assert.doesNotMatch(layout, /GTM-KX37WSZQ|xdyay13jq0/);
   assert.match(layout, /setupAnalytics/);
   assert.match(layout, /data-gtm-id/);
+});
+
+test('workflows configure the audited GTM variable without a Clarity fallback', async () => {
+  for (const path of ['.github/workflows/quality-check.yml', '.github/workflows/batched-deploy.yml', '.github/workflows/automation.yml']) {
+    const workflow = await read(path);
+    assert.match(workflow, /PUBLIC_GTM_ID:\s*\$\{\{ vars\.PUBLIC_GTM_ID \}\}/);
+    assert.doesNotMatch(workflow, /vars\.PUBLIC_CLARITY_ID/);
+  }
 });
 
 test('optional analytics IDs are conditionally injected only after an accepted preference', async () => {
