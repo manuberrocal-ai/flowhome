@@ -1,5 +1,5 @@
 ﻿---
-import { isSupabaseConfigured, supabaseAnonKey, supabaseUrl } from '../lib/supabase-client';
+import { supabaseAnonKey, supabaseUrl } from '../lib/supabase-client';
 
 const navItems = [
   {
@@ -50,7 +50,7 @@ const navItems = [
 ];
 ---
 
-<header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+<header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl" data-supabase-url={supabaseUrl} data-supabase-anon-key={supabaseAnonKey}>
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
     <a href="/" class="flex min-w-0 items-center" aria-label="FlowHome home">
       <img src="/images/flowhome-logo.png" alt="FlowHome" class="h-9 w-auto max-w-[260px] object-contain sm:h-11" width="420" height="96" decoding="async" fetchpriority="high" />
@@ -130,7 +130,7 @@ const navItems = [
   </div>
 </header>
 
-<script is:inline>
+<script>
   (() => {
     const button = document.querySelector('.mobile-menu-btn');
     const panel = document.getElementById('mobile-menu');
@@ -285,13 +285,6 @@ const navItems = [
   .mobile-submenu-link.font-bold { color: #ffffff !important; }
 </style>
 
-<script is:inline define:vars={{ SUPABASE_URL: supabaseUrl, SUPABASE_ANON_KEY: supabaseAnonKey, SUPABASE_CONFIGURED: isSupabaseConfigured }}>
-  window.__flowhomeSupabaseConfig = Object.freeze({
-    url: SUPABASE_URL,
-    anonKey: SUPABASE_ANON_KEY,
-  });
-</script>
-
 <script>
   import { subscribeToAuthChanges } from '../lib/auth-channel.js';
   import { getUserInitials } from '../lib/auth-helpers.js';
@@ -328,7 +321,7 @@ const navItems = [
         avatarImg.src = avatarUrl;
         avatarImg.alt = '';
         avatarImg.hidden = false;
-        avatarImg.onerror = () => renderAvatar({ ...user, user_metadata: { ...metadata, avatar_url: '', picture: '' } });
+        avatarImg.addEventListener('error', () => renderAvatar({ ...user, user_metadata: { ...metadata, avatar_url: '', picture: '' } }), { once: true });
       });
       avatarInitials.forEach((avatarInitial) => { avatarInitial.hidden = true; });
       avatarDefaults.forEach((avatarDefault) => { avatarDefault.hidden = true; });

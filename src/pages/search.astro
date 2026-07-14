@@ -20,10 +20,11 @@ const products = (await getCollection('products')).map((product) => ({
     <label class="sr-only" for="site-search">Search products</label>
     <input id="site-search" type="search" placeholder="Try robot vacuum, camera, thermostat..." class="mt-6 w-full rounded-2xl border border-slate-300 px-5 py-4 text-lg outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
   </section>
-  <section id="search-results" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite"></section>
-  <script is:inline define:vars={{ products }}>
+  <section id="search-results" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite" data-search-products={JSON.stringify(products)}></section>
+  <script>
     const input = document.getElementById('site-search');
     const results = document.getElementById('search-results');
+    const products = JSON.parse(results?.dataset.searchProducts || '[]');
     function escapeHtml(value) {
       return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
     }

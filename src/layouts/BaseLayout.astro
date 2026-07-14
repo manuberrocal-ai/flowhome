@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import GoogleTranslate from '../components/GoogleTranslate.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
 import AuthGuardModal from '../components/AuthGuardModal.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 
@@ -29,10 +30,10 @@ const {
 const absoluteImage = image.startsWith('http') ? image : new URL(image, Astro.site || Astro.url.origin).href;
 const orgSchema = generateOrganizationSchema();
 const websiteSchema = generateWebSiteSchema();
-const GA4_ID = import.meta.env.PUBLIC_GA4_ID || '';
 const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-KX37WSZQ';
 const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
 const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/cart';
+const pageType = Astro.url.pathname.split('/').filter(Boolean)[0] || 'home';
 ---
 
 <!DOCTYPE html>
@@ -67,22 +68,8 @@ const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/c
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
-    {GA4_ID && <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>}
-    {GA4_ID && <script is:inline define:vars={{ GA4_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', GA4_ID, { attribution_model: 'paid_and_organic_last_click' });
-    </script>}
-    {GTM_ID && <script is:inline define:vars={{ GTM_ID }}>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',GTM_ID);
-    </script>}
-    {CLARITY_ID && <script is:inline define:vars={{ CLARITY_ID }}>
-      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",CLARITY_ID);
-    </script>}
   </head>
-  <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
-    {GTM_ID && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
+  <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800" data-page-type={pageType} data-gtm-id={GTM_ID} data-clarity-id={CLARITY_ID}>
     <Header />
     <div class="border-b border-amber-100 bg-amber-50/75">
       <div class="mx-auto max-w-7xl px-4 py-2 text-center text-[11px] font-semibold leading-5 text-amber-900 sm:px-6 lg:px-8">
@@ -93,6 +80,7 @@ const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/c
       <slot />
     </main>
     <Footer />
+    <ConsentBanner />
     <div class="floating-language-switcher" aria-label="Language switcher">
       <GoogleTranslate />
     </div>
@@ -107,7 +95,7 @@ const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/c
       </div>
     )}
 
-    <script is:inline>
+    <script>
       (() => {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -200,8 +188,29 @@ const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/c
       })();
     </script>
     <script>
+      import { setupAnalytics } from '../lib/analytics';
+
+      document.addEventListener('error', (event) => {
+        const image = event.target;
+        if (!(image instanceof HTMLImageElement)) return;
+        const fallbackSrc = image.dataset.fallbackSrc;
+        if (!fallbackSrc || image.src === new URL(fallbackSrc, window.location.href).href) return;
+        image.src = fallbackSrc;
+      }, true);
+
+      setupAnalytics({
+        gtmId: document.body.dataset.gtmId || '',
+        clarityId: document.body.dataset.clarityId || '',
+      });
+    </script>
+    <script>
       import { setupCartDock } from '../lib/cart-client.js';
+      import { getCartStore } from '../lib/cart-store.js';
+      import { createCartSync } from '../lib/cart-sync.ts';
+      import { getSupabaseClient } from '../lib/supabase-client';
       setupCartDock();
+      const supabase = getSupabaseClient();
+      if (supabase) createCartSync({ store: getCartStore(), supabase }).start();
     </script>
     <AuthGuardModal />
 </body>

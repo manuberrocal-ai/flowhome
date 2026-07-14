@@ -11,6 +11,8 @@ export async function getStaticPaths() {
 const { list } = Astro.props;
 const products = await getCollection('products');
 const selected = list.data.productSlugs.map((slug) => products.find((p) => p.data.slug === slug)).filter(Boolean);
+const reviews = await getCollection('reviews');
+const relevantReviews = reviews.filter((review) => review.data.category === list.data.category || selected.some((product) => product.data.slug === review.data.productSlug));
 ---
 <BaseLayout title={`${list.data.title} | FlowHome`} description={list.data.description} canonicalURL={`https://flowhome.dev/best/${list.data.slug}/`}>
   <section class="premium-page-hero">
@@ -19,4 +21,8 @@ const selected = list.data.productSlugs.map((slug) => products.find((p) => p.dat
     <p class="mt-4 max-w-3xl text-lg text-slate-600">{list.data.description}</p>
   </section>
   <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{selected.map((product) => <ProductCard product={product} />)}</section>
+  <section class="mt-8 flex flex-wrap gap-3" aria-label="Guide links">
+    <a class="font-bold text-blue-700 hover:underline" href={`/category/${list.data.category}/`}>Browse {list.data.category.replaceAll('-', ' ')} category →</a>
+    {relevantReviews.slice(0, 4).map((review) => <a class="font-bold text-blue-700 hover:underline" href={`/review/${review.id}/`}>{review.data.title} review →</a>)}
+  </section>
 </BaseLayout>

@@ -9,29 +9,9 @@ const { source = 'site' } = Astro.props;
       <h2 class="mt-3 text-3xl font-black leading-tight">Get the smart home deal brief</h2>
       <p class="mt-3 text-slate-300">One concise update with price drops, practical picks, and setup ideas. No spam, no daily noise.</p>
     </div>
-    <form class="newsletter-form grid gap-3 sm:grid-cols-[1fr_auto]" data-source={source}>
-      <label class="sr-only" for={`email-${source}`}>Email address</label>
-      <input id={`email-${source}`} name="email_address" type="email" required placeholder="you@email.com" class="min-h-12 min-w-0 rounded-2xl border border-white/10 bg-white px-4 py-3 text-slate-950 outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-200/30" />
-      <button class="premium-action flow-wave min-h-12 rounded-2xl px-5 py-3 font-black text-white" type="submit">Join</button>
-      <p class="newsletter-status min-h-5 text-sm font-bold text-cyan-200 sm:col-span-2" aria-live="polite"></p>
-    </form>
+    <div class="grid gap-3">
+      <p class="text-sm leading-6 text-slate-300">We do not collect email addresses. Follow the RSS feed in your reader for new guides and deal updates.</p>
+      <a href="/rss.xml" class="premium-action flow-wave inline-flex min-h-12 w-fit items-center justify-center rounded-2xl px-5 py-3 font-black text-white" data-fh-track="feed_follow" data-cta-position={`newsletter_${source}`}>Follow via RSS</a>
+    </div>
   </div>
 </section>
-<script is:inline>
-  (() => {
-    document.querySelectorAll('.newsletter-form').forEach((form) => {
-      const status = form.querySelector('.newsletter-status');
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const email = new FormData(form).get('email_address');
-        if (typeof email === 'string' && email.includes('@')) {
-          localStorage.setItem('flowhome-newsletter-preview', email);
-          if (status) status.textContent = 'Saved locally for preview. Connect an email provider before production sends.';
-          window.gtag?.('event', 'newsletter_signup_preview', { source: form.dataset.source || 'site' });
-        } else if (status) {
-          status.textContent = 'Enter a valid email address.';
-        }
-      });
-    });
-  })();
-</script>

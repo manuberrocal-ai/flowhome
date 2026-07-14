@@ -17,7 +17,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </form>
     <div id="result" class="mt-6 rounded-2xl bg-blue-50 p-5 text-lg font-black text-blue-950 ring-1 ring-blue-100" role="status" aria-live="polite">Estimated savings will appear here.</div>
   </section>
-  <script is:inline>
+  <script>
+    import { trackEvent } from '../lib/analytics';
     const form = document.getElementById('savings-form');
     const resultBox = document.getElementById('result');
     const readNumber = (id) => Math.max(0, Number(document.getElementById(id)?.value || 0));
@@ -34,7 +35,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         ? `Estimated monthly savings: $${monthly.toFixed(2)}. Estimated annual savings: $${annual.toFixed(2)}. Payback period: ${payback.toFixed(1)} months.`
         : 'Enter a wattage, saved runtime, and electricity rate above zero to estimate savings.';
       if (resultBox) resultBox.textContent = message;
-      window.gtag?.('event','calculator_used',{device_type:'manual', estimated_savings: monthly});
+      trackEvent('calculator_used', { device_type: 'manual', estimated_savings: monthly, page_type: 'calculator' });
     });
   </script>
 </BaseLayout>

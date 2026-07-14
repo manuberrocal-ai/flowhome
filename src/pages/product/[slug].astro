@@ -50,7 +50,6 @@ const roundedStars = Math.round(rating);
               width="500"
               height="500"
               data-fallback-src={fallbackImage}
-              onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
             />
           </div>
           <p class:list={["mt-3 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
@@ -69,7 +68,7 @@ const roundedStars = Math.round(rating);
             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Owner rating</p><div class="product-detail-stars mt-1" aria-label={`Rated ${data.rating} out of 5`}><span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => { const starNumber = index + 1; const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty')); return <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>; })}</span><strong>{data.rating}</strong></div></div>
             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Reviews</p><p class="mt-1 text-2xl font-black text-slate-950">{data.reviewCount?.toLocaleString()}</p></div>
           </div>
-          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`}><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
           <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
         </div>
       </div>

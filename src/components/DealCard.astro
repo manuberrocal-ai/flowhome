@@ -7,6 +7,8 @@ const data = deal.data ?? deal;
 const productData = product?.data ?? product;
 const imageSource = getProductImage(productData ?? { image: data.image, category: undefined, name: data.title });
 const imageAlt = getProductImageAlt(productData ?? { image: data.image, category: undefined, name: data.title });
+const productSlug = productData?.slug ?? data.productSlug ?? '';
+const category = productData?.category ?? data.category ?? '';
 ---
 <article class="premium-card rounded-2xl border border-orange-100 bg-white p-5 shadow-sm">
   <div class="flex items-start gap-4">
@@ -19,7 +21,7 @@ const imageAlt = getProductImageAlt(productData ?? { image: data.image, category
         <span class="text-2xl font-black text-orange-600">${data.dealPrice}</span>
         <span class="text-slate-400 line-through">${data.originalPrice}</span>
       </div>
-      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={productSlug} data-category={category} data-discount={data.discountPct} data-cta-position="deal_card"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
   </div>
 </article>

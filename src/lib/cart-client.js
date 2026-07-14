@@ -47,9 +47,6 @@ export function setupCartDock() {
         image: button.dataset.image,
         url: button.dataset.url,
       });
-      if (items.some((item) => item.asin === button.dataset.asin?.toUpperCase())) {
-        window.gtag?.('event', 'flowhome_list_add', { asin: button.dataset.asin, product_slug: button.dataset.slug || '' });
-      }
     });
   });
   clearButton?.addEventListener('click', () => store.clear());

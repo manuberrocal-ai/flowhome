@@ -1,89 +1,99 @@
-﻿/**
- * Analytics - GA4 event tracking helpers
- */
+import { hasAnalyticsConsent, shouldReloadOptionalAnalytics } from './consent';
 
-export function trackAffiliateClick(asin: string, productSlug: string, pagePath: string, commissionEstimate: number) {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'affiliate_click', {
-      link_url: `https://www.amazon.com/dp/${asin}?tag=flowhome-20`,
-      product_slug: productSlug,
-      page_path: pagePath,
-      commission_estimate: commissionEstimate,
-    });
+const OPTIONAL_SCRIPT_SELECTOR = '[data-flowhome-optional-analytics]';
+const RUNTIME_LOADED_FLAG = '__flowhomeOptionalAnalyticsLoaded';
+const RELOAD_PENDING_FLAG = '__flowhomeOptionalAnalyticsReloadPending';
+
+type AnalyticsWindow = Window & {
+  dataLayer?: Array<Record<string, unknown>>;
+  [RUNTIME_LOADED_FLAG]?: boolean;
+  [RELOAD_PENDING_FLAG]?: boolean;
+};
+
+function cleanValue(value: unknown) {
+  if (typeof value === 'string') return value.slice(0, 120);
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'boolean') return value;
+  return undefined;
+}
+
+function cleanParameters(parameters: Record<string, unknown> = {}) {
+  return Object.fromEntries(Object.entries(parameters)
+    .map(([key, value]) => [key, cleanValue(value)])
+    .filter(([, value]) => value !== undefined));
+}
+
+export function trackEvent(name: string, parameters: Record<string, unknown> = {}) {
+  if (typeof window === 'undefined' || !hasAnalyticsConsent()) return false;
+  const dataLayer = (window as AnalyticsWindow).dataLayer;
+  if (!dataLayer) return false;
+  dataLayer.push({ event: name, ...cleanParameters(parameters) });
+  return true;
+}
+
+function injectScript(src: string, name: string) {
+  if (document.querySelector(`${OPTIONAL_SCRIPT_SELECTOR}[data-service="${name}"]`)) return;
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = src;
+  script.dataset.flowhomeOptionalAnalytics = '';
+  script.dataset.service = name;
+  document.head.appendChild(script);
+}
+
+function loadOptionalAnalytics(gtmId: string, clarityId: string) {
+  if (!hasAnalyticsConsent()) return;
+  const analyticsWindow = window as AnalyticsWindow;
+  let runtimeLoaded = false;
+  if (gtmId) {
+    analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+    analyticsWindow.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    injectScript(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`, 'gtm');
+    runtimeLoaded = true;
   }
-}
-
-export function trackNewsletterSignup(source: string, pagePath: string) {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'newsletter_signup', {
-      source: source,
-      page_path: pagePath,
-    });
+  if (clarityId) {
+    injectScript(`https://www.clarity.ms/tag/${encodeURIComponent(clarityId)}`, 'clarity');
+    runtimeLoaded = true;
   }
+  if (runtimeLoaded) analyticsWindow[RUNTIME_LOADED_FLAG] = true;
 }
 
-export function trackQuizComplete(result: string, questionsAnswered: number) {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'quiz_complete', {
-      result: result,
-      questions_answered: questionsAnswered,
-    });
-  }
+function stopOptionalAnalytics() {
+  const analyticsWindow = window as AnalyticsWindow;
+  if (!shouldReloadOptionalAnalytics(Boolean(analyticsWindow[RUNTIME_LOADED_FLAG]), Boolean(analyticsWindow[RELOAD_PENDING_FLAG]))) return;
+  analyticsWindow[RELOAD_PENDING_FLAG] = true;
+  document.querySelectorAll(OPTIONAL_SCRIPT_SELECTOR).forEach((script) => script.remove());
+  delete analyticsWindow.dataLayer;
+  window.location.reload();
 }
 
-export function trackAddToComparison(productSlug: string, comparisonCount: number) {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'add_to_comparison', {
-      product_slug: productSlug,
-      comparison_count: comparisonCount,
-    });
-  }
+function pageParameters(element: HTMLElement) {
+  const body = document.body;
+  return {
+    page_type: body.dataset.pageType || 'page',
+    cta_position: element.dataset.ctaPosition || 'content',
+    product_slug: element.dataset.productSlug || '',
+    category: element.dataset.category || '',
+    discount: element.dataset.discount || '',
+  };
 }
 
-export function trackCalculatorUsed(deviceType: string, estimatedSavings: number) {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'calculator_used', {
-      device_type: deviceType,
-      estimated_savings: estimatedSavings,
-    });
-  }
+function setupEventDelegation() {
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const element = target?.closest<HTMLElement>('[data-fh-amazon-cta], [data-fh-track]');
+    if (!element) return;
+    const eventName = element.hasAttribute('data-fh-amazon-cta') ? 'affiliate_click' : element.dataset.fhTrack;
+    if (eventName) trackEvent(eventName, pageParameters(element));
+  });
 }
 
-export function getAnalyticsScript(measurementId: string): string {
-  return `
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${measurementId}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${measurementId}', {
-        attribution_model: 'paid_and_organic_last_click',
-        allow_google_signals: true,
-      });
-    </script>
-  `;
-}
-
-export function getClarityScript(projectId: string): string {
-  return `
-    <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window,document,"clarity","script","${projectId}");
-    </script>
-  `;
-}
-
-export function getGTMScript(containerId: string): string {
-  return `
-    <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','${containerId}');
-    </script>
-  `;
+export function setupAnalytics({ gtmId = '', clarityId = '' } = {}) {
+  if (typeof window === 'undefined') return;
+  loadOptionalAnalytics(gtmId, clarityId);
+  window.addEventListener('flowhome:consent-change', () => {
+    if (hasAnalyticsConsent()) loadOptionalAnalytics(gtmId, clarityId);
+    else stopOptionalAnalytics();
+  });
+  setupEventDelegation();
 }

@@ -65,7 +65,6 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
               width="500"
               height="500"
               data-fallback-src={fallbackImage}
-              onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
             />
           </div>
           <p class:list={["mt-2 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
@@ -94,8 +93,11 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
             target="_blank"
             rel="nofollow sponsored noopener"
             class="premium-action flow-wave inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50"
-            onclick="window.gtag&&window.gtag('event','affiliate_click',{product_slug:this.dataset.slug})"
-            data-slug={product.slug}
+            data-fh-amazon-cta
+            data-product-slug={product.slug}
+            data-category={product.category}
+            data-discount={product.discountPct}
+            data-cta-position="product_sidebar"
             aria-label={`Check ${product.name} price on Amazon`}
           >
             <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>

@@ -12,6 +12,9 @@ const { category } = Astro.props;
 const products = (await getCollection('products'))
   .filter((product) => product.data.category === category.data.slug && product.data.available)
   .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
+const [guides, reviews] = await Promise.all([getCollection('best-of'), getCollection('reviews')]);
+const relevantGuides = guides.filter((guide) => guide.data.category === category.data.slug);
+const relevantReviews = reviews.filter((review) => review.data.category === category.data.slug);
 ---
 <BaseLayout title={category.data.name + ' | FlowHome'} description={category.data.description} canonicalURL={'https://flowhome.dev/category/' + category.data.slug + '/'}>
   <section class="premium-page-hero">
@@ -22,5 +25,12 @@ const products = (await getCollection('products'))
   </section>
   <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
     {products.map((product) => <ProductCard product={product} />)}
+  </section>
+  <section class="mt-10" aria-labelledby="category-guides">
+    <h2 id="category-guides" class="text-2xl font-black text-slate-950">More {category.data.name} resources</h2>
+    <div class="mt-4 flex flex-wrap gap-3 text-sm font-bold">
+      {relevantGuides.map((guide) => <a class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700 hover:underline" href={`/best/${guide.data.slug}/`}>{guide.data.title}</a>)}
+      {relevantReviews.slice(0, 6).map((review) => <a class="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 hover:underline" href={`/review/${review.id}/`}>{review.data.title}</a>)}
+    </div>
   </section>
 </BaseLayout>

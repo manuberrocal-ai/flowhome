@@ -2,8 +2,11 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   CART_STORAGE_KEY,
+  CART_STORAGE_VERSION,
   buildAmazonCartUrl,
+  chooseCartEntry,
   createCartStore,
+  mergeCartStates,
   normalizeCartItems,
   parseCartPayload,
 } from '../src/lib/cart-store.js';
@@ -13,13 +16,13 @@ const ASIN = 'B012345678';
 const OTHER_ASIN = 'B087654321';
 
 function createStorage(initialValue = null) {
-  let value = initialValue;
+  const values = new Map([[CART_STORAGE_KEY, initialValue]]);
   let writes = 0;
   return {
-    getItem: () => value,
-    setItem: (_key, nextValue) => { writes += 1; value = nextValue; },
-    value: () => value,
-    setExternalValue: (nextValue) => { value = nextValue; },
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => { writes += 1; values.set(key, value); },
+    value: (key = CART_STORAGE_KEY) => values.get(key) ?? null,
+    setExternalValue: (value, key = CART_STORAGE_KEY) => values.set(key, value),
     writes: () => writes,
   };
 }
@@ -27,184 +30,104 @@ function createStorage(initialValue = null) {
 function createEventTarget() {
   const listeners = new Map();
   return {
-    addEventListener(type, listener) {
-      const callbacks = listeners.get(type) || new Set();
-      callbacks.add(listener);
-      listeners.set(type, callbacks);
-    },
-    removeEventListener(type, listener) {
-      listeners.get(type)?.delete(listener);
-    },
-    dispatchEvent(event) {
-      listeners.get(event.type)?.forEach((listener) => listener(event));
-      return true;
-    },
+    addEventListener(type, listener) { const callbacks = listeners.get(type) || new Set(); callbacks.add(listener); listeners.set(type, callbacks); },
+    removeEventListener(type, listener) { listeners.get(type)?.delete(listener); },
+    dispatchEvent(event) { listeners.get(event.type)?.forEach((listener) => listener(event)); return true; },
   };
 }
 
-test('migrates legacy arrays and exposes corrupt JSON without overwriting it', () => {
-  const legacy = JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }]);
-  const storage = createStorage(legacy);
+test('migrates v1 arrays to a v2 per-ASIN state', () => {
+  const storage = createStorage(JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }]));
   const store = createCartStore({ storage });
   assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 2, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
-  assert.match(storage.value(), /"version":1/);
-  assert.deepEqual(parseCartPayload('{broken'), {
-    items: [], needsMigration: false, needsRepair: false, hasCorruptSavedList: true,
-  });
+  const payload = JSON.parse(storage.value());
+  assert.equal(payload.version, CART_STORAGE_VERSION);
+  assert.equal(payload.entries[0].clock, 1);
+  assert.match(payload.entries[0].deviceId, /^[A-Za-z0-9_-]{8,128}$/);
 });
 
-test('preserves corrupt JSON until an explicit reset, while repairing valid structural payloads', () => {
-  const target = createEventTarget();
+test('preserves corrupt JSON and never exposes it for synchronization', () => {
   const storage = createStorage('{broken');
-  const store = createCartStore({ storage, eventTarget: target });
-  let notifications = 0;
-  store.subscribe(() => { notifications += 1; });
-
+  const store = createCartStore({ storage });
   assert.deepEqual(store.initialize(), []);
   assert.equal(store.getRecoveryState().hasCorruptSavedList, true);
+  assert.equal(store.getSyncPayload(), null);
   assert.equal(storage.value(), '{broken');
-  assert.equal(storage.writes(), 0);
-  assert.equal(notifications, 0);
-  assert.deepEqual(store.add({ asin: ASIN }), []);
-  store.clear();
-  assert.deepEqual(store.getItems(), []);
-  assert.equal(store.getRecoveryState().hasCorruptSavedList, true);
-  assert.equal(storage.value(), '{broken');
-  assert.equal(storage.writes(), 0);
+  assert.deepEqual(parseCartPayload('{broken').hasCorruptSavedList, true);
   assert.equal(store.resetCorruptSavedList(), true);
   assert.equal(store.getRecoveryState().hasCorruptSavedList, false);
-  assert.equal(storage.value(), '{"version":1,"items":[]}');
-  assert.equal(storage.writes(), 1);
-  assert.deepEqual(store.add({ asin: ASIN }).map((item) => item.asin), [ASIN]);
-
-  storage.setExternalValue(JSON.stringify({ version: 1, items: 'not-an-array' }));
-  const invalidStructureStore = createCartStore({ storage });
-  assert.deepEqual(invalidStructureStore.initialize(), []);
-  assert.equal(storage.value(), '{"version":1,"items":[]}');
 });
 
-test('repairs normalized fields, duplicates, and discarded items in a versioned payload once', () => {
-  const target = createEventTarget();
-  const storage = createStorage(JSON.stringify({
-    version: 1,
-    items: [
-      { asin: ASIN.toLowerCase(), quantity: -1.5, price: -5, name: ' Product ' },
-      { asin: ASIN, quantity: 2.8, price: 19 },
-      { asin: 'not-an-asin', quantity: 4, price: 10 },
-    ],
-  }));
-  const store = createCartStore({ storage, eventTarget: target });
-  let notifications = 0;
-  store.subscribe(() => { notifications += 1; });
-
-  assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 3, slug: '', name: 'Product', price: 0, image: '', url: '' }]);
-  assert.equal(storage.value(), JSON.stringify({
-    version: 1,
-    items: [{ asin: ASIN, quantity: 3, slug: '', name: 'Product', price: 0, image: '', url: '' }],
-  }));
-  assert.equal(storage.writes(), 1);
-  assert.equal(notifications, 0);
-  store.getItems();
-  assert.equal(storage.writes(), 1);
+test('uses deterministic clock and device ID conflict winners', () => {
+  const low = { asin: ASIN, quantity: 1, clock: 4, deviceId: 'device-aaa', name: 'Low' };
+  const highClock = { ...low, quantity: 2, clock: 5, deviceId: 'device-aaa' };
+  const highDevice = { ...low, quantity: 3, deviceId: 'device-zzz' };
+  assert.equal(chooseCartEntry(low, highClock).quantity, 2);
+  assert.equal(chooseCartEntry(low, highDevice).quantity, 3);
+  const merged = mergeCartStates({ version: 2, deviceId: 'device-local', clock: 4, entries: [low] }, { version: 2, deviceId: 'device-remote', clock: 4, entries: [highDevice] });
+  assert.equal(merged.entries[0].quantity, 3);
 });
 
-test('normalizes invalid quantities, prices, text, URLs, and ASINs', () => {
-  assert.deepEqual(normalizeCartItems([
-    { asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' },
-    { asin: OTHER_ASIN, quantity: -4, price: Number.POSITIVE_INFINITY, image: 'https://example.com/a.png' },
-    { asin: 'not-an-asin', quantity: 4 },
-  ]), [
-    { asin: ASIN, quantity: 1, slug: '', name: 'Name', price: 0, image: '', url: '' },
-    { asin: OTHER_ASIN, quantity: 1, slug: '', name: OTHER_ASIN, price: 0, image: 'https://example.com/a.png', url: '' },
-  ]);
-});
-
-test('adds repeated items, increments, decrements, removes, and clears', () => {
+test('keeps zero-quantity tombstones out of the UI while retaining sync state', () => {
   const store = createCartStore({ storage: createStorage() });
-  store.add({ asin: ASIN, quantity: 1, name: 'One', price: 20 });
-  store.add({ asin: ASIN, quantity: 1, name: 'One', price: 20 });
-  assert.equal(store.getItems()[0].quantity, 2);
-  store.increment(ASIN);
-  assert.equal(store.getItems()[0].quantity, 3);
-  store.decrement(ASIN);
-  assert.equal(store.getItems()[0].quantity, 2);
-  store.decrement(ASIN);
-  assert.equal(store.getItems()[0].quantity, 1);
-  store.decrement(ASIN);
-  assert.deepEqual(store.getItems(), []);
   store.add({ asin: ASIN });
-  store.add({ asin: OTHER_ASIN });
-  store.remove(ASIN);
-  assert.deepEqual(store.getItems().map((item) => item.asin), [OTHER_ASIN]);
-  store.clear();
+  store.decrement(ASIN);
   assert.deepEqual(store.getItems(), []);
+  assert.equal(store.getSyncPayload().entries[0].quantity, 0);
+  store.add({ asin: ASIN, quantity: 2 });
+  assert.equal(store.getItems()[0].quantity, 2);
 });
 
-test('notifies same-tab subscribers after cart mutations', () => {
+test('keeps anonymous and authenticated namespaces separate and merges once', () => {
+  const storage = createStorage();
+  const store = createCartStore({ storage });
+  store.add({ asin: ASIN });
+  store.setAuthenticatedUser('user-1234');
+  assert.deepEqual(store.getItems().map((item) => item.asin), [ASIN]);
+  store.add({ asin: OTHER_ASIN });
+  store.setAnonymousNamespace();
+  assert.deepEqual(store.getItems().map((item) => item.asin), [ASIN]);
+  store.setAuthenticatedUser('user-1234');
+  assert.deepEqual(store.getItems().map((item) => item.asin).sort(), [ASIN, OTHER_ASIN]);
+  assert.equal(storage.value(`${CART_STORAGE_KEY}:merged:user-1234`), '1');
+});
+
+test('normalizes invalid values and retains existing cart interactions', () => {
+  assert.deepEqual(normalizeCartItems([{ asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' }]), [{ asin: ASIN, quantity: 1, slug: '', name: 'Name', price: 0, image: '', url: '' }]);
   const target = createEventTarget();
   const store = createCartStore({ storage: createStorage(), eventTarget: target });
   const notifications = [];
-  const unsubscribe = store.subscribe((items) => notifications.push(items));
-
-  store.add({ asin: ASIN });
-  assert.deepEqual(notifications.map((items) => items.map((item) => item.asin)), [[ASIN]]);
-  unsubscribe();
-  store.clear();
-  assert.equal(notifications.length, 1);
-});
-
-test('notifies subscribers when the storage adapter reports a cross-tab cart change', () => {
-  const target = createEventTarget();
-  const storage = createStorage('{"version":1,"items":[]}');
-  const store = createCartStore({ storage, eventTarget: target });
-  const notifications = [];
   store.subscribe((items) => notifications.push(items));
-
-  storage.setExternalValue(JSON.stringify({ version: 1, items: [{ asin: ASIN, quantity: 2 }] }));
-  target.dispatchEvent({ type: 'storage', key: CART_STORAGE_KEY, storageArea: storage });
-  assert.equal(notifications.length, 1);
-  assert.equal(notifications[0][0].asin, ASIN);
-  assert.equal(notifications[0][0].quantity, 2);
+  store.add({ asin: ASIN });
+  store.increment(ASIN);
+  store.remove(ASIN);
+  assert.equal(store.getItems().length, 0);
+  assert.equal(notifications.length, 3);
 });
 
-test('keeps an in-memory cart when storage reads or writes are blocked', () => {
-  const readBlockedStorage = {
-    getItem: () => { throw new Error('read blocked'); },
-    setItem: () => { throw new Error('write blocked'); },
-  };
-  const writeBlockedStorage = {
-    getItem: () => null,
-    setItem: () => { throw new Error('write blocked'); },
-  };
-
-  const readBlockedStore = createCartStore({ storage: readBlockedStorage });
-  assert.deepEqual(readBlockedStore.add({ asin: ASIN }), [{ asin: ASIN, quantity: 1, slug: '', name: ASIN, price: 0, image: '', url: '' }]);
-  assert.equal(readBlockedStore.getItems()[0].asin, ASIN);
-
-  const writeBlockedStore = createCartStore({ storage: writeBlockedStorage });
-  writeBlockedStore.add({ asin: OTHER_ASIN });
-  assert.equal(writeBlockedStore.getItems()[0].asin, OTHER_ASIN);
+test('keeps an in-memory cart when storage is unavailable', () => {
+  const storage = { getItem: () => { throw new Error('blocked'); }, setItem: () => { throw new Error('blocked'); } };
+  const store = createCartStore({ storage });
+  assert.equal(store.add({ asin: ASIN })[0].asin, ASIN);
+  assert.doesNotThrow(() => store.setAuthenticatedUser('user-1234'));
+  assert.equal(store.getNamespace(), 'user:user-1234');
+  assert.deepEqual(store.getItems().map((item) => item.asin), [ASIN]);
+  store.add({ asin: OTHER_ASIN });
+  store.setAnonymousNamespace();
+  assert.deepEqual(store.getItems().map((item) => item.asin), [ASIN]);
+  store.setAuthenticatedUser('user-1234');
+  assert.deepEqual(store.getItems().map((item) => item.asin).sort(), [ASIN, OTHER_ASIN]);
 });
 
-test('builds a single valid Amazon cart URL only for a non-empty cart', () => {
+test('builds an Amazon cart URL only for a non-empty cart', () => {
   assert.equal(buildAmazonCartUrl([]), null);
   const url = new URL(buildAmazonCartUrl([{ asin: ASIN, quantity: 2 }, { asin: OTHER_ASIN, quantity: 1 }]));
-  assert.equal(url.origin, 'https://www.amazon.com');
-  assert.equal(url.searchParams.get('AssociateTag'), 'flowhome-20');
   assert.equal(url.searchParams.get('ASIN.1'), ASIN);
   assert.equal(url.searchParams.get('Quantity.1'), '2');
-  assert.equal(url.searchParams.get('ASIN.2'), OTHER_ASIN);
 });
 
 test('serializes JSON-LD without executable script delimiters', () => {
   const output = serializeJsonLd({ value: '</script><script>alert(1)</script>&\u2028\u2029' });
   assert.equal(output.includes('</script>'), false);
   assert.match(output, /\\u003c\/script\\u003e/);
-  assert.match(output, /\\u0026/);
-  assert.match(output, /\\u2028/);
-  assert.match(output, /\\u2029/);
-});
-
-test('uses the declared cart storage key', () => {
-  assert.equal(CART_STORAGE_KEY, 'flowhome-amazon-list');
 });

@@ -4,15 +4,15 @@
 </div>
 <div id="google_translate_element" class="google-translate-hidden" aria-hidden="true"></div>
 
-<script is:inline>
-  function googleTranslateElementInit(){
+<script>
+  (window as Window & { googleTranslateElementInit?: () => void }).googleTranslateElementInit = function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
       includedLanguages: 'es,en',
       autoDisplay: false,
       layout: google.translate.TranslateElement.InlineLayout.SIMPLE
     }, 'google_translate_element');
-  }
+  };
 
   (() => {
     const COOKIE_DAYS = 365;

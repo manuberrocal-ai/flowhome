@@ -93,7 +93,7 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
                     <span class="mt-1 text-[1.65rem] font-black leading-none tracking-tight">-{data.discountPct}%</span>
                   </div>}
 
-                  <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${data.name} price on Amazon`}>
+                  <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${data.name} price on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="home_hero">
                     <p class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">Amazon price</p>
                     <div class="mt-1 flex flex-wrap items-end gap-x-2 gap-y-1">
                       <p class="text-[1.52rem] font-black leading-none tracking-tight text-white">${data.price}</p>
@@ -213,13 +213,13 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
 
   <section class="mt-12 grid gap-6 md:grid-cols-3">
     <a href="/calculator/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md"><h2 class="text-2xl font-extrabold">Energy savings calculator</h2><p class="mt-2 text-slate-600">Estimate simple monthly savings from plugs, thermostats, lights, and sensors.</p></a>
-    <a href="/compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md"><h2 class="text-2xl font-extrabold">Compare products</h2><p class="mt-2 text-slate-600">Side-by-side specs for popular starter devices.</p></a>
+    <a href="/compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md" data-fh-track="compare_open" data-cta-position="home_tools"><h2 class="text-2xl font-extrabold">Compare products</h2><p class="mt-2 text-slate-600">Side-by-side specs for popular starter devices.</p></a>
     <a href="/quiz/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md"><h2 class="text-2xl font-extrabold">Get a recommendation</h2><p class="mt-2 text-slate-600">Answer a few questions and pick a practical smart home path.</p></a>
   </section>
 
   <section class="mt-12"><Newsletter source="home" /></section>
 
-  <script is:inline>
+  <script>
     (() => {
       const root = document.querySelector('[data-hero-showcase]');
       if (!root) return;
@@ -285,7 +285,7 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
     })();
   </script>
 
-  <script is:inline>
+  <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const parallaxSections = Array.from(document.querySelectorAll('[data-dark-parallax]'));

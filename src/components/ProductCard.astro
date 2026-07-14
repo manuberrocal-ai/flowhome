@@ -31,7 +31,6 @@ const roundedStars = Math.round(rating);
         width="420"
         height="420"
         data-fallback-src={fallbackImage}
-        onerror="this.onerror=null;this.src=this.dataset.fallbackSrc"
       />
     </div>
   </a>
@@ -71,10 +70,13 @@ const roundedStars = Math.round(rating);
           href={data.affiliateUrl}
           target="_blank"
           rel="nofollow sponsored noopener"
-          data-asin={data.asin}
-          data-slug={slug}
+           data-asin={data.asin}
+           data-product-slug={slug}
+           data-category={data.category}
+           data-discount={data.discountPct}
+           data-cta-position="product_card"
           class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50"
-          aria-label={`View ${data.name} on Amazon`} data-fh-amazon-link
+           aria-label={`View ${data.name} on Amazon`} data-fh-amazon-link data-fh-amazon-cta
         >
           <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="amazon-cta-compact-icon" aria-hidden="true"><svg viewBox="0 0 64 18"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>}
@@ -91,9 +93,13 @@ const roundedStars = Math.round(rating);
         <button
           type="button"
           class="product-card-side-action product-card-side-action--list" data-product-action="list"
-          data-flow-cart-add
-          data-asin={data.asin}
-          data-slug={slug}
+           data-flow-cart-add
+           data-asin={data.asin}
+           data-slug={slug}
+           data-product-slug={slug}
+           data-category={data.category}
+           data-cta-position="product_card_list"
+           data-fh-track="list_add"
           data-name={data.name}
           data-price={data.price}
           data-image={productImage}

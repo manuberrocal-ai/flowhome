@@ -8,14 +8,8 @@ export const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY |
 export const googleClientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '231826717362-i9uu1ppas7i6t2ls7552n3pa41ae0me8.apps.googleusercontent.com';
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
-export interface SupabasePublicConfig {
-  url: string;
-  anonKey: string;
-}
-
 declare global {
   interface Window {
-    __flowhomeSupabaseConfig?: SupabasePublicConfig;
     __flowhomeSupabaseClient?: SupabaseClient;
   }
 }
@@ -23,9 +17,10 @@ declare global {
 export function getSupabaseClient(): SupabaseClient | null {
   if (typeof window === 'undefined') return null;
 
-  const config = window.__flowhomeSupabaseConfig || {
-    url: supabaseUrl,
-    anonKey: supabaseAnonKey,
+  const publicConfig = document.querySelector<HTMLElement>('[data-supabase-url]')?.dataset;
+  const config = {
+    url: publicConfig?.supabaseUrl || supabaseUrl,
+    anonKey: publicConfig?.supabaseAnonKey || supabaseAnonKey,
   };
 
   if (!config.url || !config.anonKey) return null;

@@ -1,0 +1,38 @@
+<aside class="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-950/20" data-consent-banner role="dialog" aria-label="Privacy choices" aria-live="polite" hidden>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-sm leading-6 text-slate-700">We use optional analytics only if you agree. Essential storage keeps your cart, account session, and privacy choice working. <a class="font-bold text-blue-700 underline" href="/privacy/">Privacy details</a></p>
+    <div class="flex shrink-0 gap-2">
+      <button type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-800" data-consent-action="reject">Reject</button>
+      <button type="button" class="min-h-11 rounded-xl bg-slate-950 px-4 py-2 text-sm font-bold text-white" data-consent-action="accept">Accept</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  import { getConsentPreference, setConsentPreference, revokeConsent } from '../lib/consent';
+
+  const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
+  const showBanner = () => {
+    if (!banner) return;
+    banner.hidden = false;
+    banner.querySelector<HTMLElement>('[data-consent-action="reject"]')?.focus();
+  };
+  const hideBanner = () => { if (banner) banner.hidden = true; };
+
+  if (getConsentPreference() === 'unset') showBanner();
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const action = target?.closest<HTMLElement>('[data-consent-action]')?.dataset.consentAction;
+    if (action === 'accept' || action === 'reject') {
+      if (setConsentPreference(action) !== action) return;
+      hideBanner();
+      window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
+    }
+    if (action === 'revoke') {
+      if (revokeConsent() !== 'rejected') return;
+      showBanner();
+      window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
+    }
+    if (target?.closest('[data-consent-open]')) showBanner();
+  });
+</script>

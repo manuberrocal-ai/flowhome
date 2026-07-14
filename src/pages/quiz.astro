@@ -13,7 +13,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
     <div id="quiz-result" class="mt-6 hidden rounded-2xl bg-blue-50 p-6 font-bold leading-7 text-blue-950 ring-1 ring-blue-100" role="status" aria-live="polite"></div>
   </section>
-  <script is:inline>
+  <script>
+    import { trackEvent } from '../lib/analytics';
     const copy = {
       security: 'Start with a video doorbell or indoor camera, then add a smart lock only after confirming door compatibility, Wi-Fi coverage, privacy settings, and storage costs.',
       comfort: 'Start with a smart speaker/display plus compatible plugs or bulbs. This gives fast daily value through routines, timers, lighting control, and voice access.',
@@ -33,7 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         target.classList.remove('hidden');
         target.textContent = copy[result];
       }
-      window.gtag?.('event','quiz_complete',{result, questions_answered:1});
+      trackEvent('quiz_complete', { result, questions_answered: 1, page_type: 'quiz' });
     }));
   </script>
 </BaseLayout>

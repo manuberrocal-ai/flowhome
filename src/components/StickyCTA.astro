@@ -9,6 +9,6 @@ const data = product.data ?? product;
       <div class="truncate font-bold text-slate-950">{data.name}</div>
       <div class="text-sm font-black text-slate-700">${data.price} - Amazon</div>
     </div>
-    <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave inline-flex min-h-12 shrink-0 items-center justify-center rounded-2xl px-4 py-3 text-sm font-black text-white" aria-label={`Check ${data.name} price on Amazon`}><span class="amazon-cta-label">Amazon</span></a>
+    <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave inline-flex min-h-12 shrink-0 items-center justify-center rounded-2xl px-4 py-3 text-sm font-black text-white" aria-label={`Check ${data.name} price on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="sticky_mobile"><span class="amazon-cta-label">Amazon</span></a>
   </div>
 </div>

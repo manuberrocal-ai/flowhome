@@ -45,7 +45,7 @@ test('CSP permits the current integrations while keeping restrictive defaults', 
     assert.match(csp, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 
-  assert.match(directive(csp, 'script-src'), /'unsafe-inline'/);
+  assert.doesNotMatch(directive(csp, 'script-src'), /'unsafe-inline'/);
   assert.match(directive(csp, 'script-src'), /https:\/\/accounts\.google\.com/);
   assert.match(directive(csp, 'script-src'), /https:\/\/www\.googletagmanager\.com/);
   assert.match(directive(csp, 'style-src'), /https:\/\/fonts\.googleapis\.com/);

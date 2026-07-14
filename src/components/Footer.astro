@@ -111,9 +111,11 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       <div>
         <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg></span>Trust</h2>
         <ul class="mt-2 space-y-1.5 text-sm">
-          <li><a href="/about/" class="footer-link">About FlowHome</a></li>
-          <li><a href="/about/#affiliate-policy" class="footer-link">Affiliate policy</a></li>
-          <li><a href="/sitemap-index.xml" class="footer-link">Sitemap</a></li>
+           <li><a href="/about/" class="footer-link">About FlowHome</a></li>
+           <li><a href="/about/#affiliate-policy" class="footer-link">Affiliate policy</a></li>
+           <li><a href="/privacy/" class="footer-link">Privacy choices</a></li>
+           <li><button type="button" class="footer-link min-h-11 text-left" data-consent-open>Manage analytics choices</button></li>
+           <li><a href="/sitemap-index.xml" class="footer-link">Sitemap</a></li>
         </ul>
       </div>
     </div>
@@ -124,7 +126,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
   </div>
 </footer>
 
-<script is:inline>
+<script>
   (() => {
     const button = document.querySelector('.footer-share');
     const status = document.querySelector('.footer-share-status');

@@ -24,7 +24,7 @@ const rows = [
       {rows.map(([label, getter]) => <tr><td class="font-bold text-slate-700">{label}</td>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
       <tr>
         <td class="font-bold text-slate-700">Best link</td>
-        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="font-bold text-blue-700 hover:underline">Check on Amazon</a></td>)}
+        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
       </tr>
     </tbody>
   </table>
