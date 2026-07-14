@@ -1,6 +1,7 @@
 ﻿---
 import BaseLayout from './BaseLayout.astro';
 import { generateProductSchema, generateBreadcrumbSchema } from '../lib/seo';
+import { serializeJsonLd } from '../lib/json-ld.js';
 import { getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../lib/product-art';
 
 interface Props {
@@ -35,8 +36,8 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
   type="product"
   canonicalURL={`https://flowhome.dev/product/${product.slug}/`}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={serializeJsonLd(productSchema)} />
+  <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
   
   <nav class="mb-4 text-sm breadcrumbs" aria-label="Breadcrumb">
     <ol class="flex flex-wrap items-center gap-2">

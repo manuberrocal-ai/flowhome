@@ -1,5 +1,6 @@
 ﻿---
+import { serializeJsonLd } from '../lib/json-ld.js';
 interface Props { schema?: any; }
 const { schema } = Astro.props;
 ---
-{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+{schema && <script type="application/ld+json" set:html={serializeJsonLd(schema)} />}

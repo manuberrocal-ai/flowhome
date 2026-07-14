@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { getProductImage, getProductImageAlt, getCategoryLabel } from '../lib/product-art';
 import { generateReviewSchema, generateBreadcrumbSchema } from '../lib/seo';
+import { serializeJsonLd } from '../lib/json-ld.js';
 
 interface Props {
   review: any;
@@ -28,8 +29,8 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   canonicalURL={`https://flowhome.dev/review/${review.slug}/`}
   image={productImage ?? product?.image}
 >
-  {reviewSchema && <script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />}
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  {reviewSchema && <script type="application/ld+json" set:html={serializeJsonLd(reviewSchema)} />}
+  <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
   <header class="premium-page-hero">
     <div class="grid items-center gap-8 lg:grid-cols-[1.35fr_0.65fr]">
       <div>

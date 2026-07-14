@@ -6,6 +6,7 @@ import GoogleTranslate from '../components/GoogleTranslate.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
 import AuthGuardModal from '../components/AuthGuardModal.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
+import { serializeJsonLd } from '../lib/json-ld.js';
 
 interface Props {
   title?: string;
@@ -31,6 +32,7 @@ const websiteSchema = generateWebSiteSchema();
 const GA4_ID = import.meta.env.PUBLIC_GA4_ID || '';
 const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-KX37WSZQ';
 const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
+const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/cart';
 ---
 
 <!DOCTYPE html>
@@ -60,8 +62,8 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
-    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(orgSchema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(websiteSchema)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -95,13 +97,15 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
       <GoogleTranslate />
     </div>
     <ExitIntentPopup />
-    <div class="flow-cart-dock" data-flow-cart-dock hidden aria-live="polite">
-      <div class="flow-cart-dock__summary"><span data-flow-cart-count>0</span> selected for Amazon. Prices and availability can change on Amazon.</div>
-      <div class="flow-cart-dock__actions">
-        <a href="/cart/" class="flow-cart-dock__review">Review list</a>
-        <button type="button" class="flow-cart-dock__clear" data-flow-cart-clear>Clear</button>
+    {!isCartPage && (
+      <div class="flow-cart-dock" data-flow-cart-dock hidden aria-live="polite">
+        <div class="flow-cart-dock__summary"><span data-flow-cart-count>0</span> selected for Amazon. Prices and availability can change on Amazon.</div>
+        <div class="flow-cart-dock__actions">
+          <a href="/cart/" class="flow-cart-dock__review">Review list</a>
+          <button type="button" class="flow-cart-dock__clear" data-flow-cart-clear>Clear</button>
+        </div>
       </div>
-    </div>
+    )}
 
     <script is:inline>
       (() => {
@@ -170,76 +174,6 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
           window.addEventListener('resize', queueSync);
         };
 
-        const setupFlowCart = () => {
-          const storageKey = 'flowhome-amazon-list';
-          const dock = document.querySelector('[data-flow-cart-dock]');
-          const count = document.querySelector('[data-flow-cart-count]');
-          const clearButton = document.querySelector('[data-flow-cart-clear]');
-          const buttons = Array.from(document.querySelectorAll('[data-flow-cart-add]'));
-
-          const readItems = () => {
-            try {
-              const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
-              return Array.isArray(parsed) ? parsed.filter((item) => item && item.asin) : [];
-            } catch {
-              return [];
-            }
-          };
-
-          const writeItems = (items) => localStorage.setItem(storageKey, JSON.stringify(items));
-          const sync = () => {
-            const items = readItems();
-            const totalQuantity = items.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
-            if (count) count.textContent = String(totalQuantity);
-            if (dock) dock.hidden = totalQuantity === 0;
-            buttons.forEach((button) => {
-              const item = items.find((entry) => entry.asin === button.dataset.asin);
-              const quantity = item ? Math.max(1, Number(item.quantity || 1)) : 0;
-              const badge = button.querySelector('[data-flow-cart-item-count]');
-              button.classList.toggle('is-added', quantity > 0);
-              button.setAttribute('aria-pressed', String(quantity > 0));
-              button.setAttribute('title', quantity > 0 ? `Add another (${quantity} selected)` : 'Add to list');
-              if (badge) {
-                badge.textContent = String(quantity);
-                badge.hidden = quantity === 0;
-              }
-            });
-          };
-
-          buttons.forEach((button) => {
-            button.addEventListener('click', () => {
-              const asin = button.dataset.asin;
-              if (!asin) return;
-              const items = readItems();
-              const existing = items.find((item) => item.asin === asin);
-              if (existing) {
-                existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
-              } else {
-                items.push({
-                  asin,
-                  quantity: 1,
-                  slug: button.dataset.slug || '',
-                  name: button.dataset.name || asin,
-                  price: Number(button.dataset.price || 0),
-                  image: button.dataset.image || '',
-                  url: button.dataset.url || '',
-                });
-              }
-              writeItems(items);
-              sync();
-              window.gtag?.('event', 'flowhome_list_add', { asin, product_slug: button.dataset.slug || '' });
-            });
-          });
-
-          clearButton?.addEventListener('click', () => {
-            localStorage.removeItem(storageKey);
-            sync();
-          });
-
-          sync();
-        };
-
-
         const setupProductZoom = () => {
           document.querySelectorAll('.product-card-media').forEach((media) => {
             const image = media.querySelector('.product-card-image');
@@ -262,9 +196,12 @@ const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || 'xdyay13jq0';
         };
 
         if (!reduceMotion) setupFlowWave();
-        setupFlowCart();
         if (!reduceMotion) setupProductZoom();
       })();
+    </script>
+    <script>
+      import { setupCartDock } from '../lib/cart-client.js';
+      setupCartDock();
     </script>
     <AuthGuardModal />
 </body>

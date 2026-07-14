@@ -823,7 +823,7 @@ html.goog-te-banner-active * {
 .flow-cart-dock__summary span { color: #67e8f9; }
 .flow-cart-dock__actions { display: flex; flex-shrink: 0; gap: 0.5rem; }
 .flow-cart-dock__review, .flow-cart-dock__clear {
-  min-height: 2.55rem; border-radius: 999px; padding: 0.55rem 0.9rem;
+  min-height: 2.75rem; border-radius: 999px; padding: 0.55rem 0.9rem;
   font-size: 0.78rem; font-weight: 950; transition: transform 180ms ease, filter 180ms ease; text-align: center;
 }
 .flow-cart-dock__review {
@@ -846,9 +846,9 @@ html.goog-te-banner-active * {
 .flow-cart-page-item__image img { max-height: 4.8rem; width: 100%; object-fit: contain; }
 .flow-cart-page-item__name { display: inline-block; color: #0f172a; font-weight: 950; line-height: 1.2; }
 .flow-cart-page-item__name:hover { color: #2563eb; }
-.flow-cart-page-qty, .flow-cart-page-qty-value, .flow-cart-page-remove { display: inline-grid; min-height: 2.15rem; place-items: center; border-radius: 999px; font-size: 0.85rem; font-weight: 950; }
-.flow-cart-page-qty { width: 2.15rem; background: #111827; color: #ffffff; }
-.flow-cart-page-qty-value { min-width: 2.25rem; background: #f1f5f9; color: #0f172a; }
+.flow-cart-page-qty, .flow-cart-page-qty-value, .flow-cart-page-remove { display: inline-grid; min-height: 2.75rem; place-items: center; border-radius: 999px; font-size: 0.85rem; font-weight: 950; }
+.flow-cart-page-qty { width: 2.75rem; background: #111827; color: #ffffff; }
+.flow-cart-page-qty-value { min-width: 2.75rem; background: #f1f5f9; color: #0f172a; }
 .flow-cart-page-remove { padding: 0 0.85rem; background: #fee2e2; color: #991b1b; }
 .flow-cart-page-item__line { color: #0f172a; font-size: 1.1rem; font-weight: 950; }
 @media (max-width: 640px) {
