@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { isSupabaseConfigured } from '../lib/supabase-client';
 ---
 <BaseLayout title="FlowHome Account | Save Smart Home Shortlists" description="Create a FlowHome account with Google or email to save smart home shortlists, favorites, and deal notes." canonicalURL="https://flowhome.dev/account/" noindex={true}>
-  <section class="account-hero home-parallax-bg relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/25 md:p-8 lg:p-10">
+  <section class="account-hero home-parallax-bg home-parallax-bg--account relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/25 md:p-8 lg:p-10">
     <div class="relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
       <div>
         <p class="inline-flex rounded-full bg-cyan-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-cyan-200/20">FlowHome account</p>
@@ -28,6 +28,8 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
         <div data-account-loggedout>
           <div data-account-google-flow>
             <div class="account-google mt-5 flex min-h-12 w-full items-center justify-center" data-account-google aria-label="Continue with Google"></div>
+            <div class="my-4 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-400" aria-hidden="true"><span class="h-px flex-1 bg-slate-200"></span>or<span class="h-px flex-1 bg-slate-200"></span></div>
+            <a href="/account/?mode=email&return=%2Faccount%2F" class="flex min-h-11 w-full items-center justify-center rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-black text-slate-700 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-800">Continue with email</a>
             <p class="account-status min-h-5 mt-3 text-sm font-bold text-cyan-700" data-account-status aria-live="polite"></p>
           </div>
           <div class="mt-5" data-account-email-flow hidden>
@@ -227,8 +229,4 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
     })();
   </script>
 
-  <style is:global>
-    .account-hero::before { content: ""; position: absolute; inset: -30% -10%; z-index: 0; pointer-events: none; background-image: radial-gradient(circle at 78% 12%, rgba(34,211,238,0.34), transparent 22%), radial-gradient(circle at 12% 88%, rgba(37,99,235,0.42), transparent 30%), radial-gradient(circle at 50% 45%, rgba(20,184,166,0.16), transparent 36%), linear-gradient(135deg, #020617 0%, #0f1d49 45%, #075985 78%, #020617 100%); background-size: 135% 135%; }
-    .account-hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(125,211,252,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(125,211,252,0.045) 1px, transparent 1px); background-size: 44px 44px; opacity: 0.24; }
-  </style>
 </BaseLayout>

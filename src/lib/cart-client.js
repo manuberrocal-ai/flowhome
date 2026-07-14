@@ -32,6 +32,8 @@ export function setupCartDock() {
     const quantity = getCartQuantity(items);
     if (count) count.textContent = String(quantity);
     if (dock) dock.hidden = quantity === 0;
+    document.body.dataset.flowCartDockVisible = String(Boolean(dock && quantity > 0));
+    document.dispatchEvent(new CustomEvent('flowhome:cart-dock-visibility', { detail: { visible: Boolean(dock && quantity > 0) } }));
     syncProductButtons(items);
   };
 
@@ -93,7 +95,7 @@ export function setupCartPage() {
         <div class="min-w-0">
           <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__name">${escapeHtml(item.name)}</a>
           <p class="mt-1 text-sm font-bold text-slate-500">${formatMoney(item.price)} each</p>
-          <div class="mt-3 flex flex-wrap items-center gap-2">
+          <div class="flow-cart-page-item__controls mt-3">
             <button type="button" class="flow-cart-page-qty" data-cart-page-decrease aria-label="Decrease quantity">&minus;</button>
             <span class="flow-cart-page-qty-value" aria-label="Quantity ${item.quantity}">${item.quantity}</span>
             <button type="button" class="flow-cart-page-qty" data-cart-page-increase aria-label="Increase quantity">+</button>
