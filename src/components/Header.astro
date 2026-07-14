@@ -283,6 +283,15 @@ const navItems = [
 </style>
 
 <script is:inline define:vars={{ SUPABASE_URL: supabaseUrl, SUPABASE_ANON_KEY: supabaseAnonKey, SUPABASE_CONFIGURED: isSupabaseConfigured }}>
+  window.__flowhomeSupabaseConfig = Object.freeze({
+    url: SUPABASE_URL,
+    anonKey: SUPABASE_ANON_KEY,
+  });
+</script>
+
+<script>
+  import { getSupabaseClient } from '../lib/supabase-client';
+
   (() => {
     const stateKey = '__flowhomeHeaderAvatarState';
     const state = window[stateKey] ||= {};
@@ -312,18 +321,29 @@ const navItems = [
     const syncAvatar = async () => {
       if (!state.client) return;
       try {
-        const { data: { session } } = await state.client.auth.getSession();
-        renderAvatar(session?.user);
+        const { data, error } = await state.client.auth.getSession();
+        if (error) {
+          state.lastSessionError = true;
+          state.lastSessionErrorAt = Date.now();
+          renderAvatar();
+          return;
+        }
+        state.lastSessionError = false;
+        renderAvatar(data.session?.user);
       } catch {
+        state.lastSessionError = true;
+        state.lastSessionErrorAt = Date.now();
         renderAvatar();
       }
     };
 
     const initialize = async () => {
-      if (!SUPABASE_CONFIGURED) return;
       try {
-        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-        state.client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        state.client = getSupabaseClient();
+        if (!state.client) {
+          renderAvatar();
+          return;
+        }
         const { data: { subscription } } = state.client.auth.onAuthStateChange((_event, session) => renderAvatar(session?.user));
         state.subscription = subscription;
         await syncAvatar();
