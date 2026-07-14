@@ -14,16 +14,17 @@ const rows = [
 ---
 <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
   <table class="compare-table min-w-full text-sm">
+    <caption class="sr-only">Side-by-side product data comparison</caption>
     <thead>
       <tr>
-        <th>Feature</th>
-        {products.map((product) => <th class="min-w-48">{product.name}</th>)}
+        <th scope="col">Feature</th>
+        {products.map((product) => <th scope="col" class="min-w-48">{product.name}</th>)}
       </tr>
     </thead>
     <tbody>
-      {rows.map(([label, getter]) => <tr><td class="font-bold text-slate-700">{label}</td>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
+      {rows.map(([label, getter]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
       <tr>
-        <td class="font-bold text-slate-700">Best link</td>
+        <th scope="row" class="font-bold text-slate-700">Listing link</th>
         {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
       </tr>
     </tbody>

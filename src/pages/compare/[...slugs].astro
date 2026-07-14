@@ -3,14 +3,84 @@ import { getCollection } from 'astro:content';
 import CompareLayout from '../../layouts/CompareLayout.astro';
 
 export async function getStaticPaths() {
+  const comparisonConfigs = [
+  {
+    slugs: ['amazon-smart-thermostat', 'ecobee-smart-thermostat-premium'],
+    title: 'Amazon Smart Thermostat vs ecobee Smart Thermostat Premium',
+    description: 'Compare two smart thermostats by price, owner feedback, voice compatibility, and app features.',
+    angle: 'A focused thermostat comparison for shoppers weighing Alexa compatibility, Google Home support, and the available owner-feedback signal.',
+    guidance: 'Use the Amazon model when Alexa compatibility is the deciding filter. Consider the ecobee profile when Google Home or Apple HomeKit compatibility is more important, then verify the current listing details before buying.',
+  },
+  {
+    slugs: ['roborock-q5-plus', 'irobot-roomba-j7-plus'],
+    title: 'Roborock Q5+ vs iRobot Roomba j7+',
+    description: 'Compare two robot vacuums by price, ratings, review volume, navigation data, and smart-home compatibility.',
+    angle: 'This side-by-side emphasizes the structured signals available for navigation, mopping, voice platforms, and owner feedback.',
+    guidance: 'Both product profiles mark LiDAR mapping as available. Compare that shared navigation signal with price, rating, review count, and ecosystem compatibility for your setup.',
+  },
+  {
+    slugs: ['august-wifi-smart-lock', 'schlage-encode-smart-wifi-deadbolt', 'yale-assure-lock-2-wifi'],
+    title: 'August vs Schlage vs Yale Smart Locks',
+    description: 'Compare August, Schlage, and Yale smart locks using price, ratings, review counts, and compatibility fields.',
+    angle: 'A three-way smart-lock view for sorting ecosystem fit and owner-feedback volume before checking a listing.',
+    guidance: 'Start with the voice platform and compatibility flags that match your home. Use price, rating, and review count as supporting context rather than a standalone verdict.',
+  },
+  {
+    slugs: ['blink-outdoor-4', 'arlo-essential-outdoor-camera'],
+    title: 'Blink Outdoor 4 vs Arlo Essential Outdoor Camera',
+    description: 'Compare two outdoor security cameras by price, night vision, two-way audio, ratings, and smart-home compatibility.',
+    angle: 'The useful split here is feature presence: night vision, two-way audio, and supported voice ecosystems alongside owner feedback.',
+    guidance: 'Check night vision and two-way audio first, then use the compatibility flags for your preferred voice platform. Price and review volume add context to that feature fit.',
+  },
+  {
+    slugs: ['eufy-security-indoor-cam-c120', 'tapo-c120-security-camera'],
+    title: 'Eufy Security Indoor Cam C120 vs Tapo C120',
+    description: 'Compare Eufy and Tapo indoor cameras by price, ratings, review volume, audio, night vision, and compatibility.',
+    angle: 'A compact indoor-camera comparison centered on the structured security features and platform support in each product profile.',
+    guidance: 'Use night vision and two-way audio to narrow the feature fit, then check Alexa, Google Home, and Apple HomeKit flags against your household setup.',
+  },
+  {
+    slugs: ['echo-dot-5th-gen', 'echo-show-8-3rd-gen'],
+    title: 'Echo Dot 5th Gen vs Echo Show 8 3rd Gen',
+    description: 'Compare two Echo devices by price, ratings, review counts, display category context, and compatibility fields.',
+    angle: 'This comparison separates a compact smart speaker profile from a smart-display profile using available product data.',
+    guidance: 'Choose based on the product format your room needs: the Echo Dot profile is the compact speaker option, while the Echo Show profile is the display option. Use price and owner feedback as secondary filters.',
+  },
+  {
+    slugs: ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'],
+    title: 'Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec SmartThings Hub',
+    description: 'Compare three smart hubs by price, Matter, wireless connectivity, ecosystem compatibility, ratings, and reviews.',
+    angle: 'A hub decision is mostly an ecosystem decision, so this view puts Matter, connectivity, and platform flags next to price and owner feedback.',
+    guidance: 'Prioritize the Matter and connectivity fields your devices require. Then compare Alexa, Google Home, and Apple HomeKit support before using rating and price as tie-breakers.',
+  },
+  {
+    slugs: ['philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'],
+    title: 'Philips Hue vs Govee RGBIC vs Wyze Bulb Color',
+    description: 'Compare three smart-lighting profiles by price, color capability, dimming, ratings, and platform compatibility.',
+    angle: 'This lighting comparison highlights the structured RGB and dimming fields alongside ecosystem support and owner feedback.',
+    guidance: 'Start with whether RGB and dimming are required, then match Alexa, Google Home, and Apple HomeKit compatibility to your setup. Use price and review count for additional context.',
+  },
+  ];
   const products = await getCollection('products');
-  const starter = ['echo-dot-5th-gen', 'google-nest-hub-2nd-gen', 'tp-link-kasa-smart-plug-mini'];
-  return [{ params: { slugs: starter.join('-vs-') }, props: { slugs: starter } }];
+  return comparisonConfigs
+    .filter((comparison) => comparison.slugs.every((slug) => products.some((product) => product.data.slug === slug)))
+    .map((comparison) => ({
+      params: { slugs: comparison.slugs.join('-vs-') },
+      props: { comparison, relatedComparisons: comparisonConfigs.filter((candidate) => candidate !== comparison).slice(0, 3) },
+    }));
 }
-const { slugs } = Astro.props;
+
+const { comparison, relatedComparisons } = Astro.props;
 const products = await getCollection('products');
-const selected = slugs.map((slug:string) => products.find((p) => p.data.slug === slug)?.data).filter(Boolean);
+const selected = comparison.slugs.map((slug:string) => products.find((p) => p.data.slug === slug)?.data).filter(Boolean);
+const updatedThrough = selected.map((product:any) => product.dateUpdated).filter(Boolean).sort().at(-1);
 ---
-<CompareLayout products={selected} title={`${selected.map((p:any) => p.name).join(' vs ')}`}>
-  <p class="text-sm text-slate-500">Comparison pages are generated statically from FlowHome product data.</p>
-</CompareLayout>
+<CompareLayout
+  products={selected}
+  title={comparison.title}
+  description={comparison.description}
+  angle={comparison.angle}
+  guidance={comparison.guidance}
+  updatedThrough={updatedThrough}
+  relatedComparisons={relatedComparisons}
+/>
