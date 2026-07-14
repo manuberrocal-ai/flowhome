@@ -69,24 +69,6 @@ export function generateProductSchema(product: any) {
       priceCurrency: 'USD',
       availability: product.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: product.affiliateUrl,
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'USD',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'US',
-        },
-      },
-      hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'US',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-        merchantReturnDays: 30,
-      },
     },
     ...(product.rating ? {
       aggregateRating: {
@@ -150,7 +132,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: 'FlowHome',
     url: 'https://flowhome.dev',
-    logo: 'https://flowhome.dev/logo.svg',
+    logo: 'https://flowhome.dev/images/flowhome-logo.svg',
     description: 'Smart home product reviews, comparisons, and deals',
     sameAs: [
       'https://dev.to/flowhome',

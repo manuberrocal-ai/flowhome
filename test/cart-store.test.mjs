@@ -42,16 +42,18 @@ function createEventTarget() {
   };
 }
 
-test('migrates legacy arrays and safely handles corrupt storage', () => {
+test('migrates legacy arrays and exposes corrupt JSON without overwriting it', () => {
   const legacy = JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }]);
   const storage = createStorage(legacy);
   const store = createCartStore({ storage });
   assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 2, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
   assert.match(storage.value(), /"version":1/);
-  assert.deepEqual(parseCartPayload('{broken').items, []);
+  assert.deepEqual(parseCartPayload('{broken'), {
+    items: [], needsMigration: false, needsRepair: false, hasCorruptSavedList: true,
+  });
 });
 
-test('repairs corrupt and structurally invalid payloads once without emitting a cart event', () => {
+test('preserves corrupt JSON until an explicit reset, while repairing valid structural payloads', () => {
   const target = createEventTarget();
   const storage = createStorage('{broken');
   const store = createCartStore({ storage, eventTarget: target });
@@ -59,11 +61,21 @@ test('repairs corrupt and structurally invalid payloads once without emitting a 
   store.subscribe(() => { notifications += 1; });
 
   assert.deepEqual(store.initialize(), []);
+  assert.equal(store.getRecoveryState().hasCorruptSavedList, true);
+  assert.equal(storage.value(), '{broken');
+  assert.equal(storage.writes(), 0);
+  assert.equal(notifications, 0);
+  assert.deepEqual(store.add({ asin: ASIN }), []);
+  store.clear();
+  assert.deepEqual(store.getItems(), []);
+  assert.equal(store.getRecoveryState().hasCorruptSavedList, true);
+  assert.equal(storage.value(), '{broken');
+  assert.equal(storage.writes(), 0);
+  assert.equal(store.resetCorruptSavedList(), true);
+  assert.equal(store.getRecoveryState().hasCorruptSavedList, false);
   assert.equal(storage.value(), '{"version":1,"items":[]}');
   assert.equal(storage.writes(), 1);
-  assert.equal(notifications, 0);
-  store.getItems();
-  assert.equal(storage.writes(), 1);
+  assert.deepEqual(store.add({ asin: ASIN }).map((item) => item.asin), [ASIN]);
 
   storage.setExternalValue(JSON.stringify({ version: 1, items: 'not-an-array' }));
   const invalidStructureStore = createCartStore({ storage });

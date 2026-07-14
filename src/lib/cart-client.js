@@ -66,12 +66,15 @@ export function setupCartPage() {
   const buy = document.querySelector('[data-cart-page-buy]');
   const clear = document.querySelector('[data-cart-page-clear]');
   const feedback = document.querySelector('[data-cart-page-feedback]');
+  const recovery = document.querySelector('[data-cart-page-recovery]');
+  const resetSavedList = document.querySelector('[data-cart-page-reset-saved-list]');
 
   const render = (items) => {
     const totalQuantity = getCartQuantity(items);
     if (count) count.textContent = String(totalQuantity);
     if (total) total.textContent = formatMoney(getCartSubtotal(items));
     if (empty) empty.hidden = items.length > 0;
+    if (recovery) recovery.hidden = !store.getRecoveryState().hasCorruptSavedList;
     if (feedback) feedback.textContent = items.length ? `${totalQuantity} item${totalQuantity === 1 ? '' : 's'} ready to open on Amazon.` : 'Your list is empty. Add products before opening Amazon.';
     if (buy instanceof HTMLAnchorElement) {
       const destination = buildAmazonCartUrl(items);
@@ -116,6 +119,11 @@ export function setupCartPage() {
     else if (target.matches('[data-cart-page-remove]')) store.remove(asin);
   });
   clear?.addEventListener('click', () => store.clear());
+  resetSavedList?.addEventListener('click', () => {
+    const reset = store.resetCorruptSavedList();
+    render(store.getItems());
+    if (!reset && feedback) feedback.textContent = 'We could not reset the saved list. Please check your browser storage and try again.';
+  });
   render(store.initialize());
   return store.subscribe(render);
 }

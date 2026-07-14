@@ -2,17 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { isSupabaseConfigured } from '../lib/supabase-client';
 ---
-<BaseLayout title="FlowHome Account | Save Smart Home Shortlists" description="Create a FlowHome account with Google or email to save smart home shortlists, favorites, and deal notes." canonicalURL="https://flowhome.dev/account/" noindex={true}>
+<BaseLayout title="FlowHome Account | Sign in with Google or email" description="Create or access your FlowHome account with Google or email." canonicalURL="https://flowhome.dev/account/" noindex={true}>
   <section class="account-hero home-parallax-bg home-parallax-bg--account relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/25 md:p-8 lg:p-10">
     <div class="relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
       <div>
         <p class="inline-flex rounded-full bg-cyan-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-cyan-200/20">FlowHome account</p>
-        <h1 class="mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-5xl">Save your smart-home shortlist.</h1>
-        <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">Sign in with Google or email to keep quiz results, favorites, product comparisons, and deal notes ready for your next setup session.</p>
+        <h1 class="mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-5xl">Your FlowHome account.</h1>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">Sign in with Google or email to create or access your FlowHome account.</p>
         <div class="mt-6 grid gap-3 text-sm sm:grid-cols-3">
-          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Shortlists</strong><span class="text-slate-300">Save product picks</span></div>
-          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Deals</strong><span class="text-slate-300">Track buy timing</span></div>
-          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Notes</strong><span class="text-slate-300">Keep setup context</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Google</strong><span class="text-slate-300">Secure sign-in</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Email</strong><span class="text-slate-300">Sign-in link</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-cyan-100">Account</strong><span class="text-slate-300">Manage your session</span></div>
         </div>
       </div>
 
@@ -22,7 +22,7 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
         </div>
         <div class="rounded-2xl bg-slate-50 p-4 pr-16 ring-1 ring-slate-200">
           <h2 class="text-2xl font-black" data-account-title>Sign in or create account</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-600" data-account-subtitle>Use Google or email to sync your picks across devices.</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600" data-account-subtitle>Use Google or email to sign in to your account.</p>
         </div>
 
         <div data-account-loggedout>
@@ -66,7 +66,7 @@ import { isSupabaseConfigured } from '../lib/supabase-client';
   <section class="mt-8 grid gap-4 md:grid-cols-3">
     <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Google sign-in</h2><p class="mt-2 text-slate-600">Secure sign-in with Google. No passwords to remember.</p></article>
     <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Email sign-in</h2><p class="mt-2 text-slate-600">We send a secure sign-in link. No password required.</p></article>
-    <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Secure database</h2><p class="mt-2 text-slate-600">Your data lives in a protected Supabase database. Only you can read it.</p></article>
+    <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"><h2 class="text-xl font-black text-slate-950">Account access</h2><p class="mt-2 text-slate-600">Manage your FlowHome sign-in session.</p></article>
   </section>
 
   <script>

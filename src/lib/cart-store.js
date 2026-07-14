@@ -88,20 +88,20 @@ function areJsonValuesEqual(left, right) {
 }
 
 export function parseCartPayload(rawValue) {
-  if (rawValue === null || typeof rawValue === 'undefined') return { items: [], needsMigration: false, needsRepair: false };
-  if (typeof rawValue !== 'string' || !rawValue) return { items: [], needsMigration: false, needsRepair: true };
+  if (rawValue === null || typeof rawValue === 'undefined') return { items: [], needsMigration: false, needsRepair: false, hasCorruptSavedList: false };
+  if (typeof rawValue !== 'string') return { items: [], needsMigration: false, needsRepair: true, hasCorruptSavedList: false };
   try {
     const parsed = JSON.parse(rawValue);
-    if (Array.isArray(parsed)) return { items: normalizeCartItems(parsed), needsMigration: true, needsRepair: false };
+    if (Array.isArray(parsed)) return { items: normalizeCartItems(parsed), needsMigration: true, needsRepair: false, hasCorruptSavedList: false };
     if (parsed && typeof parsed === 'object' && parsed.version === CART_STORAGE_VERSION && Array.isArray(parsed.items)) {
       const items = normalizeCartItems(parsed.items);
       const canonicalPayload = { version: CART_STORAGE_VERSION, items };
-      return { items, needsMigration: false, needsRepair: !areJsonValuesEqual(parsed, canonicalPayload) };
+      return { items, needsMigration: false, needsRepair: !areJsonValuesEqual(parsed, canonicalPayload), hasCorruptSavedList: false };
     }
   } catch {
-    // Corrupt browser storage is treated as an empty cart.
+    return { items: [], needsMigration: false, needsRepair: false, hasCorruptSavedList: true };
   }
-  return { items: [], needsMigration: false, needsRepair: true };
+  return { items: [], needsMigration: false, needsRepair: true, hasCorruptSavedList: false };
 }
 
 export function serializeCartPayload(items) {
@@ -146,12 +146,14 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
   const persistentStorage = storage || (typeof window !== 'undefined' ? getBrowserStorage() : null);
   let memoryItems = [];
   let useMemoryFallback = false;
+  let hasCorruptSavedList = false;
 
   const read = () => {
     if (!persistentStorage || useMemoryFallback) return cloneItems(memoryItems);
     try {
       const payload = parseCartPayload(persistentStorage.getItem(CART_STORAGE_KEY));
       memoryItems = payload.items;
+      hasCorruptSavedList = payload.hasCorruptSavedList;
       if (payload.needsMigration || payload.needsRepair) {
         try {
           persistentStorage.setItem(CART_STORAGE_KEY, serializeCartPayload(memoryItems));
@@ -181,23 +183,34 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
 
   const write = (items) => {
     memoryItems = normalizeCartItems(items);
+    let persisted = !persistentStorage;
     if (persistentStorage) {
       try {
         persistentStorage.setItem(CART_STORAGE_KEY, serializeCartPayload(memoryItems));
+        persisted = true;
       } catch {
         // The in-memory cart remains usable when storage writes fail.
         useMemoryFallback = true;
       }
     }
+    if (persisted) hasCorruptSavedList = false;
     emit();
     return cloneItems(memoryItems);
   };
 
-  const update = (updater) => write(updater(read()));
+  const update = (updater) => {
+    const items = read();
+    if (hasCorruptSavedList) return items;
+    return write(updater(items));
+  };
 
   return {
     initialize: read,
     getItems: read,
+    getRecoveryState() {
+      read();
+      return { hasCorruptSavedList };
+    },
     add(item) {
       const normalized = normalizeCartItem(item);
       if (!normalized) return read();
@@ -226,7 +239,11 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
       return normalizedAsin ? update((items) => items.filter((item) => item.asin !== normalizedAsin)) : read();
     },
     clear() {
-      return write([]);
+      return update(() => []);
+    },
+    resetCorruptSavedList() {
+      write([]);
+      return !hasCorruptSavedList;
     },
     subscribe(listener) {
       if (typeof listener !== 'function' || !target?.addEventListener) return () => {};
