@@ -23,6 +23,12 @@ test('workflows configure the audited GTM variable without a Clarity fallback', 
   }
 });
 
+test('Cloudflare Pages build config provides GTM without a separate Clarity ID', async () => {
+  const wrangler = await read('wrangler.toml');
+  assert.match(wrangler, /PUBLIC_GTM_ID\s*=\s*"GTM-KX37WSZQ"/);
+  assert.doesNotMatch(wrangler, /PUBLIC_CLARITY_ID/);
+});
+
 test('optional analytics IDs are conditionally injected only after an accepted preference', async () => {
   const analytics = await read('src/lib/analytics.ts');
   assert.match(analytics, /if \(!hasAnalyticsConsent\(\)\) return;/);

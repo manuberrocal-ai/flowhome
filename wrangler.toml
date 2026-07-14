@@ -4,3 +4,4 @@ pages_build_output_dir = "dist"
 
 [vars]
 PUBLIC_SITE_URL = "https://flowhome.dev"
+PUBLIC_GTM_ID = "GTM-KX37WSZQ"
