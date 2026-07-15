@@ -79,3 +79,29 @@ test('comparison data and table semantics stay consistent', () => {
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">\{label\}<\/th>/);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">Listing link<\/th>/);
 });
+
+test('robot vacuum editorial cluster has optional guide fields and exact links', () => {
+  const schema = read('src/content.config.ts');
+  const guide = read('src/content/best-of/best-robot-vacuums-for-smart-homes.yaml');
+  const bestPage = read('src/pages/best/[slug].astro');
+  const products = read('src/pages/products/index.astro');
+  const q5 = read('src/content/reviews/roborock-q5-plus-review.md');
+  const roomba = read('src/content/reviews/irobot-roomba-j7-plus-review.md');
+  assert.match(schema, /buyingConsiderations: z\.array/);
+  assert.match(schema, /comparisonSlug: z\.string\(\)\.optional\(\)/);
+  assert.match(bestPage, /list\.data\.buyingConsiderations/);
+  assert.match(bestPage, /list\.data\.comparisonSlug/);
+  for (const source of [guide, products, q5, roomba]) {
+    assert.match(source, /roborock-q5-plus-vs-irobot-roomba-j7-plus/);
+  }
+  assert.match(bestPage, /`\/compare\/\$\{list\.data\.comparisonSlug\}\//);
+  assert.match(products, /irobot-roomba-j7-plus-review/);
+  assert.match(q5, /irobot-roomba-j7-plus-review/);
+  assert.match(roomba, /best-robot-vacuums-for-smart-homes/);
+  assert.match(roomba, /productSlug: irobot-roomba-j7-plus/);
+  assert.match(roomba, /## (Key specifications|Setup and compatibility|Strengths and tradeoffs|FAQ)/g);
+  assert.ok(roomba.split(/\s+/).length >= 500, 'Roomba review should remain substantive');
+  assert.doesNotMatch(`${guide}\n${q5}\n${roomba}`, /hands-on|live price|shipping|returns|Canada availability|obstacle avoidance/i);
+  assert.match(`${guide}\n${roomba}`, /LiDAR mapping/);
+  assert.doesNotMatch(`${guide}\n${roomba}`, /Roomba[^\n]*(?:lacks|without) LiDAR/i);
+});

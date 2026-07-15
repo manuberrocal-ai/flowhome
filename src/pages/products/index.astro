@@ -8,14 +8,25 @@ const products = (await getCollection('products'))
   .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
 const categories = [...new Set(products.map((product) => product.data.category))].sort();
 ---
-<BaseLayout title="Smart Home Products | FlowHome" description="Browse FlowHome smart home products by category, rating, deal status, compatibility, and practical setup value." canonicalURL="https://flowhome.dev/products/">
+<BaseLayout title="Smart Home Products, Research & Buying Guides | FlowHome" description="Research smart-home products and buying guides by category, compatibility, ratings, and practical setup considerations." canonicalURL="https://flowhome.dev/products/">
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Product directory</p>
-    <h1 class="mt-2 text-4xl font-black text-slate-950">Smart home products worth comparing</h1>
-    <p class="mt-4 max-w-3xl text-lg text-slate-600">Browse smart speakers, lighting, cameras, robot vacuums, thermostats, plugs, and hubs. Public rankings focus on usefulness, compatibility, owner feedback, and deal context.</p>
+    <h1 class="mt-2 text-4xl font-black text-slate-950">Smart home products worth researching</h1>
+    <p class="mt-4 max-w-3xl text-lg text-slate-600">Browse smart speakers, lighting, cameras, robot vacuums, thermostats, plugs, and hubs. Use the directory for category discovery, then follow focused guides and reviews for a closer buying decision.</p>
     <div class="mt-6 flex flex-wrap gap-2">
       {categories.map((category) => <a href={'/category/' + category + '/'} class="rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700 hover:bg-blue-100">{category.replaceAll('-', ' ')}</a>)}
     </div>
+  </section>
+  <section class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="research-paths">
+    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Start with a focused path</p>
+    <h2 id="research-paths" class="mt-2 text-2xl font-black text-slate-950">Robot-vacuum research paths</h2>
+    <p class="mt-2 max-w-3xl leading-7 text-slate-700">Compare mapped, app-controlled robot vacuums from the guide, then check each profile and the direct comparison before browsing the wider catalog.</p>
+    <nav class="mt-5 grid gap-3 sm:grid-cols-2" aria-label="Robot vacuum research links">
+      <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/best/best-robot-vacuums-for-smart-homes/">Best robot vacuums for smart homes →</a>
+      <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/review/roborock-q5-plus-review/">Roborock Q5+ review →</a>
+      <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/review/irobot-roomba-j7-plus-review/">iRobot Roomba j7+ review →</a>
+      <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/">Roborock Q5+ vs Roomba j7+ comparison →</a>
+    </nav>
   </section>
   <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
     {products.map((product) => <ProductCard product={product} />)}

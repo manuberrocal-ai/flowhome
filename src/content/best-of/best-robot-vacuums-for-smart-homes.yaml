@@ -1,9 +1,22 @@
 slug: best-robot-vacuums-for-smart-homes
-title: "Best Robot Vacuums for Smart Homes"
-description: "High-utility robot vacuums for automated cleaning, mapped rooms, and app routines."
+title: "Best Smart Robot Vacuums for Smart Homes: Roborock Q5+ vs Roomba j7+"
+description: "Compare the Roborock Q5+ and iRobot Roomba j7+ by mapping, app control, smart-home compatibility, mopping, and subscription requirements."
 category: robot-vacuum
 maxPrice: 800
 productSlugs:
   - roborock-q5-plus
   - irobot-roomba-j7-plus
 pubDate: 2026-06-28
+intro: "This buying guide uses FlowHome's structured product profiles to make the robot-vacuum decision easier: compare two mapped, app-controlled options without treating changing prices or ratings as permanent facts."
+buyingConsiderations:
+  - label: "Mapping and app control"
+    detail: "Both profiles list LiDAR mapping and app control, so start by checking whether mapped room routines fit your home."
+  - label: "Mopping"
+    detail: "The Roborock Q5+ profile lists mopping; the Roomba j7+ profile does not. Choose based on whether vacuuming alone is enough."
+  - label: "Smart-home compatibility"
+    detail: "Both profiles list Alexa, Google Home, and no required subscription."
+comparisonSlug: "roborock-q5-plus-vs-irobot-roomba-j7-plus"
+comparisonLabel: "Read the Roborock Q5+ vs Roomba j7+ comparison"
+reviewSlugs:
+  - roborock-q5-plus-review
+  - irobot-roomba-j7-plus-review

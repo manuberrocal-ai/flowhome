@@ -127,6 +127,14 @@ const bestOfCollection = defineCollection({
     maxPrice: z.number(),
     productSlugs: z.array(z.string()),
     pubDate: z.coerce.date().default(() => new Date()),
+    intro: z.string().optional(),
+    buyingConsiderations: z.array(z.object({
+      label: z.string(),
+      detail: z.string(),
+    })).optional(),
+    comparisonSlug: z.string().optional(),
+    comparisonLabel: z.string().optional(),
+    reviewSlugs: z.array(z.string()).optional(),
   }),
 });
 

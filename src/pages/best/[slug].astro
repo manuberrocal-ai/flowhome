@@ -19,10 +19,18 @@ const relevantReviews = reviews.filter((review) => review.data.category === list
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Best of FlowHome</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">{list.data.title}</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">{list.data.description}</p>
+    {list.data.intro && <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700">{list.data.intro}</p>}
   </section>
   <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{selected.map((product) => <ProductCard product={product} />)}</section>
+  {list.data.buyingConsiderations?.length && <section class="mt-10" aria-labelledby="buying-considerations">
+    <h2 id="buying-considerations" class="text-2xl font-black text-slate-950">Buying considerations</h2>
+    <ul class="mt-4 grid gap-4 md:grid-cols-3">
+      {list.data.buyingConsiderations.map((item) => <li class="rounded-xl border border-slate-200 p-5"><h3 class="font-bold text-slate-950">{item.label}</h3><p class="mt-2 leading-7 text-slate-600">{item.detail}</p></li>)}
+    </ul>
+  </section>}
   <section class="mt-8 flex flex-wrap gap-3" aria-label="Guide links">
-    <a class="font-bold text-blue-700 hover:underline" href={`/category/${list.data.category}/`}>Browse {list.data.category.replaceAll('-', ' ')} category →</a>
-    {relevantReviews.slice(0, 4).map((review) => <a class="font-bold text-blue-700 hover:underline" href={`/review/${review.id}/`}>{review.data.title} review →</a>)}
+    <a class="inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/category/${list.data.category}/`}>Browse {list.data.category.replaceAll('-', ' ')} category →</a>
+    {relevantReviews.slice(0, 4).map((review) => <a class="inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/review/${review.id}/`}>{review.data.title} review →</a>)}
+    {list.data.comparisonSlug && <a class="inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/compare/${list.data.comparisonSlug}/`}>{list.data.comparisonLabel ?? 'Compare these products'} →</a>}
   </section>
 </BaseLayout>
