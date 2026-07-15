@@ -16,6 +16,7 @@
     "links:check": "node scripts/maintenance/link-check.mjs",
     "syndicate": "node scripts/expansion/syndicate.mjs",
     "maintenance:weekly": "node scripts/maintenance/weekly-maintenance.mjs",
+    "growth:report": "node scripts/maintenance/organic-growth-report.mjs",
     "deploy:check": "node scripts/deploy/cloudflare-pages-check.mjs",
     "deploy:cloudflare": "npx wrangler pages deploy dist --project-name flowhome --branch main",
     "package:artifacts": "node scripts/deploy/package-artifacts.mjs",
