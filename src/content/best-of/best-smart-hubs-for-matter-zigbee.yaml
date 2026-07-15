@@ -1,0 +1,24 @@
+slug: best-smart-hubs-for-matter-zigbee
+title: "Best Smart Hubs for Matter and Zigbee: Aqara vs SwitchBot vs Aeotec"
+description: "Compare three structured smart-hub profiles by Matter, Zigbee, ecosystem support, app control, and catalog price context."
+category: smart-hub
+maxPrice: 200
+productSlugs:
+  - aqara-hub-m2
+  - switchbot-hub-2
+  - aeotec-smartthings-hub
+pubDate: 2026-07-15
+intro: "This guide uses FlowHome's structured product profiles to compare three smart hubs without treating changing prices, ratings, or availability as permanent facts. The right choice depends on the protocols and ecosystems your home already uses."
+buyingConsiderations:
+  - label: "Matter and Zigbee support"
+    detail: "The Aqara Hub M2 profile lists Zigbee but not Matter, SwitchBot Hub 2 lists Matter but not Zigbee, and Aeotec SmartThings Hub lists both."
+  - label: "Platform coverage"
+    detail: "All three profiles list Alexa, Google Home, and app control. Aqara and SwitchBot also list Apple HomeKit, while Aeotec does not."
+  - label: "Catalog price context"
+    detail: "The profiles list $59.99 for Aqara Hub M2, $69.99 for SwitchBot Hub 2, and $134.99 for Aeotec SmartThings Hub; check the current listing before buying."
+comparisonSlug: "aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub"
+comparisonLabel: "Read the Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec comparison"
+reviewSlugs:
+  - aqara-hub-m2-review
+  - switchbot-hub-2-review
+  - aeotec-smartthings-hub-review

@@ -105,3 +105,29 @@ test('robot vacuum editorial cluster has optional guide fields and exact links',
   assert.match(`${guide}\n${roomba}`, /LiDAR mapping/);
   assert.doesNotMatch(`${guide}\n${roomba}`, /Roomba[^\n]*(?:lacks|without) LiDAR/i);
 });
+
+test('smart-hub editorial cluster has exact products, reviews, comparison, and honest claims', () => {
+  const guide = read('src/content/best-of/best-smart-hubs-for-matter-zigbee.yaml');
+  const reviews = [
+    read('src/content/reviews/aqara-hub-m2-review.md'),
+    read('src/content/reviews/switchbot-hub-2-review.md'),
+    read('src/content/reviews/aeotec-smartthings-hub-review.md'),
+  ];
+  const comparison = read('src/pages/compare/[...slugs].astro');
+  const all = `${guide}\n${reviews.join('\n')}`;
+  const slugs = ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'];
+  const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
+  assert.deepEqual([...productBlock.matchAll(/^  - ([\w-]+)$/gm)].map((match) => match[1]), slugs);
+  assert.match(guide, /comparisonSlug: "aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub"/);
+  assert.deepEqual(reviews.map((review) => review.match(/^productSlug: ([\w-]+)$/m)?.[1]), slugs);
+  assert.match(comparison, /'aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'/);
+  for (const review of reviews) {
+    assert.ok(review.split(/\s+/).length >= 350, 'Each smart-hub review should be substantive');
+    assert.match(review, /## (Key specifications and features|Strengths and tradeoffs|Comparison context|FAQ)/g);
+    assert.match(review, /\/best\/best-smart-hubs-for-matter-zigbee/);
+    assert.match(review, /\/compare\/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/);
+    assert.match(review, /As an Amazon Associate/);
+  }
+  assert.match(guide, /aqara-hub-m2-review[\s\S]*switchbot-hub-2-review[\s\S]*aeotec-smartthings-hub-review/);
+  assert.doesNotMatch(all, /hands-on|live price|shipping|returns|we tested|guaranteed winner/i);
+});
