@@ -131,3 +131,45 @@ test('smart-hub editorial cluster has exact products, reviews, comparison, and h
   assert.match(guide, /aqara-hub-m2-review[\s\S]*switchbot-hub-2-review[\s\S]*aeotec-smartthings-hub-review/);
   assert.doesNotMatch(all, /hands-on|live price|shipping|returns|we tested|guaranteed winner/i);
 });
+
+test('smart-lighting room-control guide has exact editorial links and source-backed claims', () => {
+  const guide = read('src/content/best-of/best-smart-lighting-for-room-control.yaml');
+  const products = [
+    read('src/content/products/philips-hue-white-color-starter-kit.yaml'),
+    read('src/content/products/govee-rgbic-led-strip-lights.yaml'),
+    read('src/content/products/wyze-bulb-color.yaml'),
+  ];
+  const review = read('src/content/reviews/philips-hue-white-color-starter-kit-review.md');
+  const comparison = read('src/pages/compare/[...slugs].astro');
+  const bestPage = read('src/pages/best/[slug].astro');
+  const rss = read('src/pages/rss.xml.js');
+  const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
+  assert.deepEqual([...productBlock.matchAll(/^  - ([\w-]+)$/gm)].map((match) => match[1]), [
+    'philips-hue-white-color-starter-kit',
+    'govee-rgbic-led-strip-lights',
+    'wyze-bulb-color',
+  ]);
+  assert.match(guide, /comparisonSlug: "philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color"/);
+  assert.deepEqual([...guide.matchAll(/^  - ([\w-]+-review)$/gm)].map((match) => match[1]), ['philips-hue-white-color-starter-kit-review']);
+  assert.ok((guide.match(/^  - label:/gm) ?? []).length >= 3, 'Guide should have substantive buying considerations');
+  assert.match(guide, /Bulb or strip installation/);
+  assert.match(guide, /Wall-switch and always-powered behavior/);
+  assert.match(guide, /Ecosystem and app control/);
+  assert.match(guide, /Catalog price context/);
+  assert.match(guide, /time-sensitive catalog snapshots/);
+  assert.match(guide, /wall switches should usually stay on/);
+  assert.match(guide, /current listing before buying/);
+  assert.match(review, /wall switches should usually stay on/);
+  assert.match(comparison, /'philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'/);
+  for (const product of products) {
+    assert.match(product, /^category: smart-lighting$/m);
+    assert.match(product, /^rgb: true$/m);
+    assert.match(product, /^dimmable: true$/m);
+  }
+  assert.match(bestPage, /canonicalURL={`https:\/\/flowhome\.dev\/best\/\$\{list\.data\.slug\}\//);
+  assert.match(bestPage, /`\/category\/\$\{list\.data\.category\}\//);
+  assert.match(bestPage, /`\/review\/\$\{review\.id\}\//);
+  assert.match(bestPage, /`\/compare\/\$\{list\.data\.comparisonSlug\}\//);
+  assert.match(rss, /link: `\/best\/\$\{item\.data\.slug\}\//);
+  assert.doesNotMatch(guide, /hands-on|live price|shipping|returns|guaranteed winner|we tested/i);
+});

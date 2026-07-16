@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-06-28T07:24:35.098Z",
+  "generatedAt": "2026-07-16T23:24:30.951Z",
   "dryRun": true,
   "queue": [
     {
-      "title": "Echo Dot 5th Gen Review: Smart Home Value, Setup, and Tradeoffs",
-      "source": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
-      "canonical": "https://flowhome.dev/review/src\\content\\reviews\\echo-dot-5th-gen-review/",
+      "title": "Aeotec SmartThings Hub Review: The Matter and Zigbee Option",
+      "source": "src\\content\\reviews\\aeotec-smartthings-hub-review.md",
+      "canonical": "https://flowhome.dev/review/aeotec-smartthings-hub-review/",
       "platforms": [
         {
           "platform": "wordpress",
@@ -30,9 +30,9 @@
       ]
     },
     {
-      "title": "ecobee Smart Thermostat Premium Review: Smart Home Value, Setup, and Tradeoffs",
-      "source": "src\\content\\reviews\\ecobee-smart-thermostat-premium-review.md",
-      "canonical": "https://flowhome.dev/review/src\\content\\reviews\\ecobee-smart-thermostat-premium-review/",
+      "title": "Amazon Smart Thermostat Review: Low-Cost Climate Control for Alexa Homes",
+      "source": "src\\content\\reviews\\amazon-smart-thermostat-review.md",
+      "canonical": "https://flowhome.dev/review/amazon-smart-thermostat-review/",
       "platforms": [
         {
           "platform": "wordpress",
