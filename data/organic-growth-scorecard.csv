@@ -4,5 +4,7 @@ recorded_at,window_days,source,cluster,page_url,query,impressions,clicks,ctr,avg
 2026-07-16T23:34:40.2946553-03:00,7,GSC,smart-lighting,https://flowhome.dev/category/smart-lighting/,,2,0,0,8,,,,"category baseline only; newly published guide was outside source window."
 2026-07-16T23:34:40.2946553-03:00,7,GA4,sitewide,,,,,,,15,10,,"all-users window 2026-07-09 through 2026-07-15; 10 active users, 9 new users, 56 views, 125 events."
 2026-07-16T23:34:40.2946553-03:00,7,GA4,sitewide-organic,,,,,,,1,0,,"Organic Search channel in same window; zero key events and zero reported revenue."
-2026-07-16T23:34:40.2946553-03:00,91,Bing,sitewide,,,49,3,6.12,,,,,"3-month preset 2026-04-16 through 2026-07-15; 7-day selection returned User is unauthorized and was not retried."
+2026-07-17T00:32:12.9540475-03:00,7,Bing,sitewide,,,45,1,2.22,,,,,"7-day All performance preset for 2026-07-09 through 2026-07-15 after interactive sign-in restored access."
+2026-07-17T00:32:12.9540475-03:00,7,Bing,smart-hubs,https://flowhome.dev/category/smart-hub/,,3,0,0,5,,,,"Bing Web page breakdown for the same 7-day window; page rows exclude Chat and other verticals."
+2026-07-17T00:32:12.9540475-03:00,7,Bing,smart-lighting,https://flowhome.dev/category/smart-lighting/,,3,0,0,10,,,,"Bing Web page breakdown for the same 7-day window; page rows exclude Chat and other verticals."
 2026-07-16T23:34:40.2946553-03:00,7,Amazon,sitewide,,,,,,,,,0,"US Associates all tracking IDs 2026-07-09 through 2026-07-15; zero ordered/shipped items and zero earnings; 30-day context was 26 clicks."
