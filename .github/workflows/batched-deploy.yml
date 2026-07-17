@@ -2,7 +2,12 @@ name: Batched Deploy
 on:
   schedule:
     - cron: '0 17 * * 1,4'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      notification_urls:
+        description: 'Optional newline-separated canonical URLs to notify after a successful deployment'
+        required: false
+        type: string
   push:
     branches: [main]
     paths-ignore:
@@ -21,6 +26,8 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID_VALUE: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -31,17 +38,63 @@ jobs:
       - run: npm run quality:check
       - run: npm run links:check
       - run: npm run build
+      - name: Check out previous push revision
+        if: ${{ github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000' }}
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.before }}
+          path: previous-source
+      - name: Build previous push revision
+        if: ${{ github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000' }}
+        working-directory: previous-source
+        run: npm ci && npm run build
+      - name: Prepare deployment notification URLs
+        id: notification-urls
+        env:
+          DEPLOYMENT_EVENT_NAME: ${{ github.event_name }}
+          DEPLOYMENT_BEFORE_SHA: ${{ github.event.before }}
+          DEPLOYED_URLS_MANUAL_INPUT: ${{ inputs.notification_urls }}
+        run: |
+          node scripts/deploy/deployed-urls.mjs --prepare --event-name "$DEPLOYMENT_EVENT_NAME" --before-sha "$DEPLOYMENT_BEFORE_SHA" --current-dist dist --previous-dist previous-source/dist --output "$RUNNER_TEMP/deployed-urls.txt" --github-output "$GITHUB_OUTPUT"
       - run: npm run deploy:check
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy to Cloudflare Pages
+        id: deploy
         if: ${{ env.CLOUDFLARE_API_TOKEN_VALUE != '' && env.CLOUDFLARE_ACCOUNT_ID_VALUE != '' }}
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name flowhome --branch main
+      - name: Decide deployment notifications
+        id: notification-decision
+        if: ${{ always() }}
+        env:
+          DEPLOYMENT_EVENT_NAME: ${{ github.event_name }}
+          DEPLOYMENT_OUTCOME: ${{ steps.deploy.outcome }}
+          DEPLOYMENT_HAS_URLS: ${{ steps.notification-urls.outputs.has_urls }}
+        run: |
+          node scripts/deploy/deployed-urls.mjs --decide-notifications --event-name "$DEPLOYMENT_EVENT_NAME" --deploy-outcome "$DEPLOYMENT_OUTCOME" --has-urls "$DEPLOYMENT_HAS_URLS" --github-output "$GITHUB_OUTPUT"
+      - name: Publish WebSub update
+        if: ${{ steps.notification-decision.outputs.notify == 'true' }}
+        run: npm run websub:publish
+        env:
+          WEBSUB_SOFT_FAIL: 'true'
+      - name: Submit IndexNow via default endpoint
+        if: ${{ steps.notification-decision.outputs.notify == 'true' }}
+        run: npm run indexnow:submit
+        env:
+          INDEXNOW_URLS_FILE: ${{ runner.temp }}/deployed-urls.txt
+          INDEXNOW_SOFT_FAIL: 'true'
+      - name: Submit IndexNow via Yandex fallback
+        if: ${{ steps.notification-decision.outputs.notify == 'true' }}
+        run: npm run indexnow:submit
+        env:
+          INDEXNOW_URLS_FILE: ${{ runner.temp }}/deployed-urls.txt
+          INDEXNOW_ENDPOINT: 'https://yandex.com/indexnow'
+          INDEXNOW_SOFT_FAIL: 'true'
       - name: Upload static artifact
         uses: actions/upload-artifact@v6
         with:

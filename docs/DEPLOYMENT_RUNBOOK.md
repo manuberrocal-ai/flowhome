@@ -63,3 +63,23 @@ Then check:
 - https://flowhome.dev
 - https://flowhome.dev/sitemap-index.xml
 - GitHub Actions latest runs
+
+## Discovery notification lifecycle
+
+`Batched Deploy` is the only workflow that publishes discovery notifications. It builds the site, prepares an explicit URL file, deploys to Cloudflare Pages, and only then runs best-effort WebSub and IndexNow when the deployment outcome is successful.
+
+- Pushes compare the current build with the previous push build and select only new or byte-changed canonical HTML pages present in the current sitemap.
+- `workflow_dispatch` accepts optional newline-separated canonical URLs. Each is validated against the current sitemap; an empty input sends no notifications.
+- Scheduled deploys perform no WebSub or IndexNow notification.
+- If Cloudflare credentials are unavailable, the deploy step is skipped and notifications are skipped too.
+
+To preview a targeted IndexNow payload locally without network access:
+
+```powershell
+npm run build
+$urls = Join-Path $env:TEMP 'flowhome-indexnow-urls.txt'
+Set-Content -LiteralPath $urls -Value 'https://flowhome.dev/best/best-smart-lighting-for-room-control/' -NoNewline
+$env:INDEXNOW_URLS_FILE=$urls
+npm run indexnow:submit -- --dry-run
+$env:INDEXNOW_URLS_FILE=$null
+```
