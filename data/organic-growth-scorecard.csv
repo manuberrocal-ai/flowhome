@@ -1,1 +1,8 @@
 recorded_at,window_days,source,cluster,page_url,query,impressions,clicks,ctr,avg_position,sessions,engaged_sessions,affiliate_clicks,notes
+2026-07-16T23:34:40.2946553-03:00,7,GSC,sitewide,,,96,0,0,39.8,,,,"observed Web property aggregate for 2026-07-08 through 2026-07-14; latest available GSC data lagged two days."
+2026-07-16T23:34:40.2946553-03:00,7,GSC,robot-vacuums,https://flowhome.dev/best/best-robot-vacuums-for-smart-homes/,,16,0,0,29.9,,,,"observed page breakdown for 2026-07-08 through 2026-07-14; latest available GSC data lagged two days."
+2026-07-16T23:34:40.2946553-03:00,7,GSC,smart-lighting,https://flowhome.dev/category/smart-lighting/,,2,0,0,8,,,,"category baseline only; newly published guide was outside source window."
+2026-07-16T23:34:40.2946553-03:00,7,GA4,sitewide,,,,,,,15,10,,"all-users window 2026-07-09 through 2026-07-15; 10 active users, 9 new users, 56 views, 125 events."
+2026-07-16T23:34:40.2946553-03:00,7,GA4,sitewide-organic,,,,,,,1,0,,"Organic Search channel in same window; zero key events and zero reported revenue."
+2026-07-16T23:34:40.2946553-03:00,91,Bing,sitewide,,,49,3,6.12,,,,,"3-month preset 2026-04-16 through 2026-07-15; 7-day selection returned User is unauthorized and was not retried."
+2026-07-16T23:34:40.2946553-03:00,7,Amazon,sitewide,,,,,,,,,0,"US Associates all tracking IDs 2026-07-09 through 2026-07-15; zero ordered/shipped items and zero earnings; 30-day context was 26 clicks."

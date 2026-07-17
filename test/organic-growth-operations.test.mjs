@@ -9,10 +9,16 @@ import { parseCsv, validateRows, renderReport } from '../scripts/maintenance/org
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (file) => readFile(path.join(root, file), 'utf8');
 
-test('scorecard is header-only and has no invented observations', async () => {
+test('scorecard keeps the required 14-column header and evidence-backed rows', async () => {
   const rows = parseCsv(await read('data/organic-growth-scorecard.csv'));
-  assert.equal(rows.length, 1);
-  assert.equal(rows[0].length, 14);
+  assert.deepEqual(rows[0], ['recorded_at', 'window_days', 'source', 'cluster', 'page_url', 'query', 'impressions', 'clicks', 'ctr', 'avg_position', 'sessions', 'engaged_sessions', 'affiliate_clicks', 'notes']);
+  const records = validateRows(rows);
+  const sources = new Set(records.map((record) => record.source));
+  assert.ok(records.length > 0);
+  assert.ok(sources.has('Amazon'));
+  assert.ok(sources.has('Bing'));
+  assert.ok(sources.has('GA4'));
+  assert.ok(sources.has('GSC'));
 });
 
 test('CSV parser handles quoted commas and escaped quotes', () => {
@@ -56,10 +62,10 @@ test('runbook and package expose the required operating contracts', async () => 
   assert.equal(packageJson.scripts['growth:report'], 'node scripts/maintenance/organic-growth-report.mjs');
 });
 
-test('CLI reports empty state and rejects malformed input without network access', async () => {
+test('CLI reports the non-empty scorecard and rejects malformed input without network access', async () => {
   const report = spawnSync(process.execPath, ['scripts/maintenance/organic-growth-report.mjs'], { cwd: root, encoding: 'utf8' });
   assert.equal(report.status, 0);
-  assert.match(report.stdout, /no observations recorded/i);
+  assert.match(report.stdout, /\d+ observation\(s\)/i);
   const badPath = path.join(root, '.tmp-organic-growth-invalid.csv');
   await writeFile(badPath, `${awaitableHeader('bad')}\n`);
   const invalid = spawnSync(process.execPath, ['scripts/maintenance/organic-growth-report.mjs', badPath], { cwd: root, encoding: 'utf8' });
@@ -70,5 +76,5 @@ test('CLI reports empty state and rejects malformed input without network access
   const optional = spawnSync(process.execPath, ['scripts/maintenance/organic-growth-report.mjs', optionalPath], { cwd: root, encoding: 'utf8' });
   await rm(optionalPath, { force: true });
   assert.equal(optional.status, 0);
-  assert.match(optional.stdout, /no observations recorded/i);
+  assert.match(optional.stdout, /\d+ observation\(s\)/i);
 });
