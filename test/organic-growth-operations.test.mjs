@@ -42,6 +42,8 @@ test('strict CSV parser rejects every malformed quote class', () => {
 
 const awaitableHeader = (value = '') => `recorded_at,window_days,source,cluster,page_url,query,impressions,clicks,ctr,avg_position,sessions,engaged_sessions,affiliate_clicks,notes\n2026-07-15,${value},GSC,c,https://example.test,q,1,1,100,1,1,1,1,n`;
 
+const reportRow = (source, cluster, values) => `recorded_at,window_days,source,cluster,page_url,query,impressions,clicks,ctr,avg_position,sessions,engaged_sessions,affiliate_clicks,notes\n2026-07-15,7,${source},${cluster},https://example.test/q,query,${values.impressions ?? ''},${values.clicks ?? ''},${values.ctr ?? ''},${values.avg_position ?? ''},${values.sessions ?? ''},${values.engaged_sessions ?? ''},${values.affiliate_clicks ?? ''},note`;
+
 test('empty report is explicit and grouped summaries stay within source and cluster', () => {
   assert.match(renderReport([]), /no observations/i);
   const rows = validateRows(parseCsv(`${awaitableHeader('7')}\n2026-07-16,7,GA4,c,https://example.test,q,,,,,2,1,3,n`));
@@ -49,6 +51,25 @@ test('empty report is explicit and grouped summaries stay within source and clus
   assert.match(report, /GSC \| c/);
   assert.match(report, /GA4 \| c/);
   assert.match(report, /not combined/);
+});
+
+test('renderReport keeps explicit zero numeric metrics and omits unavailable ones', () => {
+  const gscRows = validateRows(parseCsv(reportRow('GSC', 'gsc-zero', { impressions: 12, clicks: 0 })));
+  const gscReport = renderReport(gscRows);
+  assert.match(gscReport, /GSC \| gsc-zero \| .*impressions=12.*clicks=0.*ctr=0\.00%/);
+  assert.ok(!gscReport.includes('sessions='));
+  assert.ok(!gscReport.includes('engaged_sessions='));
+  assert.ok(!gscReport.includes('affiliate_clicks='));
+
+  const ga4Rows = validateRows(parseCsv(reportRow('GA4', 'ga4-sessions', { sessions: 2, engaged_sessions: 1 })));
+  const ga4Report = renderReport(ga4Rows);
+  assert.match(ga4Report, /GA4 \| ga4-sessions \| .*sessions=2.*engaged_sessions=1/);
+  assert.ok(!ga4Report.includes('impressions='));
+  assert.ok(!ga4Report.includes('clicks='));
+
+  const amazonRows = validateRows(parseCsv(reportRow('Amazon', 'amazon-zero', { affiliate_clicks: 0 })));
+  const amazonReport = renderReport(amazonRows);
+  assert.match(amazonReport, /Amazon \| amazon-zero \| .*affiliate_clicks=0/);
 });
 
 test('runbook and package expose the required operating contracts', async () => {

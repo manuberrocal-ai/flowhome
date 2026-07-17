@@ -94,6 +94,11 @@ export function validateRows(rows) {
 const number = (value) => value === '' ? null : Number(value.trim());
 const format = (value) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
+function aggregateNumeric(records, column) {
+  const values = records.map((record) => number(record[column])).filter((value) => value !== null);
+  return values.length > 0 ? values.reduce((total, value) => total + value, 0) : null;
+}
+
 export function summarize(records) {
   const groups = new Map();
   for (const record of records) {
@@ -102,20 +107,19 @@ export function summarize(records) {
     groups.get(key).records.push(record);
   }
   return [...groups.values()].map((group) => {
-    const sum = (column) => group.records.reduce((total, record) => total + (number(record[column]) ?? 0), 0);
-    const impressions = sum('impressions');
-    const clicks = sum('clicks');
+    const impressions = aggregateNumeric(group.records, 'impressions');
+    const clicks = aggregateNumeric(group.records, 'clicks');
     const positions = group.records.map((record) => number(record.avg_position)).filter((value) => value !== null);
     return {
       ...group,
       observations: group.records.length,
       impressions,
       clicks,
-      ctr: impressions > 0 ? clicks / impressions * 100 : null,
+      ctr: impressions !== null && impressions > 0 && clicks !== null ? clicks / impressions * 100 : null,
       avgPosition: positions.length > 0 ? positions.reduce((total, value) => total + value, 0) / positions.length : null,
-      sessions: sum('sessions'),
-      engagedSessions: sum('engaged_sessions'),
-      affiliateClicks: sum('affiliate_clicks'),
+      sessions: aggregateNumeric(group.records, 'sessions'),
+      engagedSessions: aggregateNumeric(group.records, 'engaged_sessions'),
+      affiliateClicks: aggregateNumeric(group.records, 'affiliate_clicks'),
     };
   });
 }
@@ -124,16 +128,14 @@ export function renderReport(records) {
   if (records.length === 0) return 'Organic growth report: no observations recorded.\nTracker is valid and header-only; no conclusions are available.\n';
   const lines = [`Organic growth report: ${records.length} observation(s).`, 'Summaries are kept within each source + cluster; source metrics are not combined.'];
   for (const group of summarize(records)) {
-    const metrics = [
-      `observations=${group.observations}`,
-      `impressions=${format(group.impressions)}`,
-      `clicks=${format(group.clicks)}`,
-      group.ctr === null ? null : `ctr=${group.ctr.toFixed(2)}%`,
-      group.avgPosition === null ? null : `avg_position=${group.avgPosition.toFixed(2)}`,
-      `sessions=${format(group.sessions)}`,
-      `engaged_sessions=${format(group.engagedSessions)}`,
-      `affiliate_clicks=${format(group.affiliateClicks)}`,
-    ].filter(Boolean);
+    const metrics = [`observations=${group.observations}`];
+    if (group.impressions !== null) metrics.push(`impressions=${format(group.impressions)}`);
+    if (group.clicks !== null) metrics.push(`clicks=${format(group.clicks)}`);
+    if (group.ctr !== null) metrics.push(`ctr=${group.ctr.toFixed(2)}%`);
+    if (group.avgPosition !== null) metrics.push(`avg_position=${group.avgPosition.toFixed(2)}`);
+    if (group.sessions !== null) metrics.push(`sessions=${format(group.sessions)}`);
+    if (group.engagedSessions !== null) metrics.push(`engaged_sessions=${format(group.engagedSessions)}`);
+    if (group.affiliateClicks !== null) metrics.push(`affiliate_clicks=${format(group.affiliateClicks)}`);
     lines.push(`${group.source} | ${group.cluster} | ${metrics.join(' ')}`);
   }
   return `${lines.join('\n')}\n`;
