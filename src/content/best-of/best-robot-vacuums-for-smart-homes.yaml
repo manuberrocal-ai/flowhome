@@ -1,20 +1,22 @@
 slug: best-robot-vacuums-for-smart-homes
 title: "Best Robot Vacuums for Smart Homes: Roborock Q5+ vs Roomba j7+"
-description: "Compare the Roborock Q5+ and iRobot Roomba j7+ by mapping, app control, smart-home compatibility, mopping, and subscription requirements."
+description: "Compare the vacuum-only Roborock Q5+ and iRobot Roomba j7+ by navigation approach, app control, smart-home compatibility, and subscription requirements."
 category: robot-vacuum
 maxPrice: 800
 productSlugs:
   - roborock-q5-plus
   - irobot-roomba-j7-plus
 pubDate: 2026-06-28
-intro: "This buying guide uses FlowHome's structured product profiles to make the robot-vacuum decision easier: compare two mapped, app-controlled options without treating changing prices or ratings as permanent facts."
+intro: "This buying guide uses FlowHome's structured product profiles and manufacturer information to compare two vacuum-only, app-connected robot vacuums without treating changing prices, ratings, or availability as permanent facts."
 buyingConsiderations:
-  - label: "Mapping and app control"
-    detail: "Both profiles list LiDAR mapping and app control, so start by checking whether mapped room routines fit your home."
-  - label: "Mopping"
-    detail: "The Roborock Q5+ profile lists mopping; the Roomba j7+ profile does not. Choose based on whether vacuuming alone is enough."
+  - label: "Navigation approach and app control"
+    detail: "The Q5+ uses PreciSense Precision LiDAR for mapping and custom routines. The j7+ uses PrecisionVision obstacle avoidance with Imprint Smart Mapping rather than LiDAR. Both support app-connected planning, but their navigation approaches are different."
+  - label: "Cleaning type"
+    detail: "Both models are vacuum-only, so choose a separate mop/vacuum combination if wet floor cleaning is a required part of your routine."
   - label: "Smart-home compatibility"
     detail: "Both profiles list Alexa, Google Home, and no required subscription."
+  - label: "Verify the model details"
+    detail: "Roborock describes the original Q5+ and its Auto-Empty Dock Pure at https://us.roborock.com/pages/roborock-q5. iRobot documents the j7+ navigation and dock at https://www.irobot.com/en_US/roomba-j7plus-self-emptying-robot-vacuum/J755020.html. Confirm the current listing and included dock before buying."
 comparisonSlug: "roborock-q5-plus-vs-irobot-roomba-j7-plus"
 comparisonLabel: "Read the Roborock Q5+ vs Roomba j7+ comparison"
 reviewSlugs:

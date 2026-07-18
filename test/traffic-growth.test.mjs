@@ -73,9 +73,15 @@ test('comparison data and table semantics stay consistent', () => {
   const q5 = read('src/content/products/roborock-q5-plus.yaml');
   const roomba = read('src/content/products/irobot-roomba-j7-plus.yaml');
   assert.match(q5, /^lidarMapping: true$/m);
-  assert.match(roomba, /^lidarMapping: true$/m);
-  assert.match(page, /Both product profiles mark LiDAR mapping as available/);
-  assert.doesNotMatch(page, /Roomba j7\+ profile does not|Roomba j7\+[^\n]*lacks LiDAR/i);
+  assert.match(q5, /^hasMop: false$/m);
+  assert.match(q5, /^dateUpdated: "2026-07-18"$/m);
+  assert.match(roomba, /^lidarMapping: false$/m);
+  assert.match(roomba, /^obstacleDetection: true$/m);
+  assert.match(roomba, /^hasMop: false$/m);
+  assert.match(roomba, /^dateUpdated: "2026-07-18"$/m);
+  assert.match(page, /Q5\+.*PreciSense.*LiDAR/i);
+  assert.match(page, /j7\+.*PrecisionVision.*Imprint Smart Mapping/i);
+  assert.match(page, /both.*vacuum-only/i);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">\{label\}<\/th>/);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">Listing link<\/th>/);
 });
@@ -101,9 +107,33 @@ test('robot vacuum editorial cluster has optional guide fields and exact links',
   assert.match(roomba, /productSlug: irobot-roomba-j7-plus/);
   assert.match(roomba, /## (Key specifications|Setup and compatibility|Strengths and tradeoffs|FAQ)/g);
   assert.ok(roomba.split(/\s+/).length >= 500, 'Roomba review should remain substantive');
-  assert.doesNotMatch(`${guide}\n${q5}\n${roomba}`, /hands-on|live price|shipping|returns|Canada availability|obstacle avoidance/i);
-  assert.match(`${guide}\n${roomba}`, /LiDAR mapping/);
-  assert.doesNotMatch(`${guide}\n${roomba}`, /Roomba[^\n]*(?:lacks|without) LiDAR/i);
+  assert.ok(q5.split(/\s+/).length >= 500, 'Q5+ review should remain substantive');
+  assert.match(q5, /^updatedDate: 2026-07-18$/m);
+  assert.match(roomba, /^updatedDate: 2026-07-18$/m);
+  assert.match(`${guide}\n${q5}`, /PreciSense(?: Precision)? LiDAR/i);
+  assert.match(`${guide}\n${roomba}`, /PrecisionVision(?: Navigation)?/i);
+  assert.match(`${guide}\n${roomba}`, /Imprint Smart Mapping/i);
+  assert.match(`${guide}\n${q5}`, /https:\/\/us\.roborock\.com\/pages\/roborock-q5/);
+  assert.match(`${guide}\n${roomba}`, /https:\/\/www\.irobot\.com\/en_US\/roomba-j7plus-self-emptying-robot-vacuum\/J755020\.html/);
+  assert.match(`${guide}\n${q5}\n${roomba}`, /vacuum-only/i);
+  assert.doesNotMatch(`${guide}\n${q5}\n${roomba}`, /hands-on|live price|shipping|returns|Canada availability/i);
+});
+
+test('robot-vacuum corrections reject affirmative mopping and shared-LiDAR claims', () => {
+  const q5 = read('src/content/products/roborock-q5-plus.yaml');
+  const roomba = read('src/content/products/irobot-roomba-j7-plus.yaml');
+  const guide = read('src/content/best-of/best-robot-vacuums-for-smart-homes.yaml');
+  const q5Review = read('src/content/reviews/roborock-q5-plus-review.md');
+  const roombaReview = read('src/content/reviews/irobot-roomba-j7-plus-review.md');
+  const comparison = read('src/pages/compare/[...slugs].astro');
+  const editorial = `${guide}\n${q5Review}\n${roombaReview}\n${comparison}`;
+
+  assert.doesNotMatch(q5, /^hasMop: true$/m);
+  assert.doesNotMatch(roomba, /^lidarMapping: true$/m);
+  assert.doesNotMatch(editorial, /Q5\+[^\n.]{0,100}\b(?:has|includes|offers|supports|with)\b[^\n.]{0,50}\b(?:mop|mopping)\b/i);
+  assert.doesNotMatch(editorial, /(?:shared|both)[^\n.]{0,80}LiDAR/i);
+  assert.doesNotMatch(editorial, /Roomba j7\+[^\n.]{0,100}\b(?:uses|has|includes|offers|relies on)\b[^\n.]{0,50}LiDAR/i);
+  assert.doesNotMatch(editorial, /j7\+ profile[^\n.]{0,80}\b(?:lists|marks)\b[^\n.]{0,30}LiDAR/i);
 });
 
 test('smart-hub editorial cluster has exact products, reviews, comparison, and honest claims', () => {

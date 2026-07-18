@@ -11,7 +11,7 @@ image: "https://cdn.pji.nu/product/standard/800/12935114.jpg"
 rating: 4.4
 reviewCount: 7200
 available: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-07-18"
 model: "Roborock Q5+ Robot Vacuum"
 wifi: true
 bluetooth: false
@@ -24,7 +24,7 @@ appControl: true
 energyMonitoring: false
 nightVision: false
 twoWayAudio: false
-hasMop: true
+hasMop: false
 lidarMapping: true
 rgb: false
 dimmable: false
