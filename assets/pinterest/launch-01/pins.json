@@ -1,0 +1,162 @@
+{
+  "campaignId": "flowhome-pinterest-launch-01",
+  "status": "draft",
+  "published": false,
+  "approvalRequiredBeforePublishing": true,
+  "credentials": null,
+  "prePublishBlockers": [
+    {
+      "id": "correct-roborock-q5-plus-source-claims",
+      "resolved": true,
+      "resolvedAt": "2026-07-18",
+      "resolutionCommit": "e798068",
+      "productionVerified": true,
+      "sourceFiles": [
+        "src/content/best-of/best-robot-vacuums-for-smart-homes.yaml",
+        "src/content/reviews/roborock-q5-plus-review.md"
+      ],
+      "officialEvidenceUrl": "https://us.roborock.com/pages/roborock-q5",
+      "reason": "Audit: the affected FlowHome source content was corrected and deployed to production in commit e798068; verify the deployed destination against the official Q5 evidence before any Pin publication."
+    },
+    {
+      "id": "correct-roomba-j7-plus-source-claims",
+      "resolved": true,
+      "resolvedAt": "2026-07-18",
+      "resolutionCommit": "e798068",
+      "productionVerified": true,
+      "sourceFiles": [
+        "src/content/best-of/best-robot-vacuums-for-smart-homes.yaml",
+        "src/content/reviews/irobot-roomba-j7-plus-review.md"
+      ],
+      "officialEvidenceUrl": "https://www.irobot.com/en_US/roomba-j7plus-self-emptying-robot-vacuum/J755020.html",
+      "reason": "Audit: the affected FlowHome source content was corrected and deployed to production in commit e798068; verify the deployed destination against the official Roomba evidence before any Pin publication."
+    }
+  ],
+  "boards": [
+    {
+      "id": "robot-vacuums-smart-homes",
+      "name": "Robot Vacuums for Smart Homes",
+      "description": "FlowHome guides and reviews for mapped, app-controlled robot vacuum research and practical home setup questions."
+    },
+    {
+      "id": "smart-lighting-ideas-reviews",
+      "name": "Smart Lighting Ideas & Reviews",
+      "description": "Room-control ideas and grounded smart-lighting reviews covering formats, ecosystems, scenes, and setup decisions."
+    },
+    {
+      "id": "smart-home-hubs-matter-zigbee",
+      "name": "Smart Home Hubs: Matter & Zigbee",
+      "description": "FlowHome comparisons and reviews for choosing smart hubs by protocol support, ecosystem fit, and app control."
+    }
+  ],
+  "pins": [
+    {
+      "id": "robot-vacuums-guide",
+      "board": "robot-vacuums-smart-homes",
+      "kind": "guide",
+      "source": "src/content/best-of/best-robot-vacuums-for-smart-homes.yaml",
+      "canonical": "https://flowhome.dev/best/best-robot-vacuums-for-smart-homes/",
+      "image": "png/robot-vacuums-guide.png",
+      "title": "Best Robot Vacuums for Smart Homes: A Practical Guide",
+      "description": "Compare the Roborock Q5+ and Roomba j7+ by navigation approach, app control, docking and setup, smart-home compatibility, and floor-care fit.",
+      "altText": "FlowHome editorial pin with an abstract robot vacuum path motif and the headline Best Robot Vacuums for Smart Homes: A Practical Guide.",
+      "overlay": { "headline": "Best robot vacuums for smart homes", "subhead": "Compare navigation, app control, docking, smart-home fit, and floor-care needs.", "CTA": "Read the guide" }
+    },
+    {
+      "id": "roborock-q5-plus-review",
+      "board": "robot-vacuums-smart-homes",
+      "kind": "review",
+      "source": "src/content/reviews/roborock-q5-plus-review.md",
+      "canonical": "https://flowhome.dev/review/roborock-q5-plus-review/",
+      "image": "png/roborock-q5-plus-review.png",
+      "title": "Roborock Q5+ Review: LiDAR, App Control & Auto-Emptying",
+      "description": "A cautious review of the original Roborock Q5+ covering PreciSense LiDAR navigation, app control, Auto Dust Emptying, smart-home compatibility, and vacuum-only floor-care fit.",
+      "altText": "FlowHome review pin for the original Roborock Q5+ with a circular navigation motif and text about LiDAR, app control, and auto-emptying.",
+      "overlay": { "headline": "Roborock Q5+", "subhead": "PreciSense LiDAR, app control, and Auto Dust Emptying in a vacuum-only system.", "CTA": "Read the review" }
+    },
+    {
+      "id": "roomba-j7-plus-review",
+      "board": "robot-vacuums-smart-homes",
+      "kind": "review",
+      "source": "src/content/reviews/irobot-roomba-j7-plus-review.md",
+      "canonical": "https://flowhome.dev/review/irobot-roomba-j7-plus-review/",
+      "image": "png/roomba-j7-plus-review.png",
+      "title": "iRobot Roomba j7+ Review: Smart Mapping & Obstacle Avoidance",
+      "description": "Review the iRobot Roomba j7+ through PrecisionVision Navigation, Imprint Smart Mapping, app and voice controls, obstacle avoidance, and vacuum-only floor-care fit.",
+      "altText": "FlowHome review pin for iRobot Roomba j7+ with a mapped-room grid motif and text about smart mapping and tradeoffs.",
+      "overlay": { "headline": "Roomba j7+", "subhead": "PrecisionVision obstacle avoidance, Imprint Smart Mapping, and connected controls.", "CTA": "Read the review" }
+    },
+    {
+      "id": "smart-lighting-guide",
+      "board": "smart-lighting-ideas-reviews",
+      "kind": "guide",
+      "source": "src/content/best-of/best-smart-lighting-for-room-control.yaml",
+      "canonical": "https://flowhome.dev/best/best-smart-lighting-for-room-control/",
+      "image": "png/smart-lighting-guide.png",
+      "title": "Smart Lighting Ideas & Reviews for Better Room Control",
+      "description": "Start with the right format for your room, then compare color, dimming, ecosystem support, and app control across smart-lighting profiles.",
+      "altText": "FlowHome editorial pin with an abstract layered light-bulb motif and the headline Smart Lighting Ideas for Room Control.",
+      "overlay": { "headline": "Smart lighting for better room control", "subhead": "Choose bulb or strip, then match color, dimming, and ecosystem to your routine.", "CTA": "Read the guide" }
+    },
+    {
+      "id": "philips-hue-starter-kit-review",
+      "board": "smart-lighting-ideas-reviews",
+      "kind": "review",
+      "source": "src/content/reviews/philips-hue-white-color-starter-kit-review.md",
+      "canonical": "https://flowhome.dev/review/philips-hue-white-color-starter-kit-review/",
+      "image": "png/philips-hue-starter-kit-review.png",
+      "title": "Philips Hue Starter Kit Review: Scenes, Setup & Fit",
+      "description": "A grounded review of the Philips Hue White and Color Starter Kit, with room planning, scenes, schedules, color temperature, and wall-switch setup notes.",
+      "altText": "FlowHome review pin for Philips Hue White and Color Starter Kit with an abstract color-scene motif and setup notes.",
+      "overlay": { "headline": "Philips Hue kit", "subhead": "Plan scenes, schedules, and color temperature—then keep room controls aligned with the setup.", "CTA": "Read the review" }
+    },
+    {
+      "id": "smart-hubs-guide",
+      "board": "smart-home-hubs-matter-zigbee",
+      "kind": "guide",
+      "source": "src/content/best-of/best-smart-hubs-for-matter-zigbee.yaml",
+      "canonical": "https://flowhome.dev/best/best-smart-hubs-for-matter-zigbee/",
+      "image": "png/smart-hubs-guide.png",
+      "title": "Smart Home Hubs: Matter & Zigbee Buying Guide",
+      "description": "Compare Aqara, SwitchBot, and Aeotec by Matter, Zigbee, ecosystem support, and app control. Start with the protocols your existing devices require.",
+      "altText": "FlowHome editorial pin with connected hub nodes and the headline Smart Home Hubs: Matter and Zigbee Buying Guide.",
+      "overlay": { "headline": "Best smart hubs for Matter & Zigbee", "subhead": "Match Matter, Zigbee, and ecosystem support to the devices in your home.", "CTA": "Read the guide" }
+    },
+    {
+      "id": "aeotec-smartthings-hub-review",
+      "board": "smart-home-hubs-matter-zigbee",
+      "kind": "review",
+      "source": "src/content/reviews/aeotec-smartthings-hub-review.md",
+      "canonical": "https://flowhome.dev/review/aeotec-smartthings-hub-review/",
+      "image": "png/aeotec-smartthings-hub-review.png",
+      "title": "Aeotec SmartThings Hub Review: Matter + Zigbee",
+      "description": "Review the Aeotec SmartThings Hub profile for Matter, Zigbee, Wi-Fi, Bluetooth, app control, Alexa, and Google Home compatibility.",
+      "altText": "FlowHome review pin for Aeotec SmartThings Hub with two connected protocol rings labeled Matter and Zigbee.",
+      "overlay": { "headline": "Aeotec SmartThings", "subhead": "A profile-listed Matter and Zigbee match for buyers comparing protocol breadth.", "CTA": "Read the review" }
+    },
+    {
+      "id": "aqara-hub-m2-review",
+      "board": "smart-home-hubs-matter-zigbee",
+      "kind": "review",
+      "source": "src/content/reviews/aqara-hub-m2-review.md",
+      "canonical": "https://flowhome.dev/review/aqara-hub-m2-review/",
+      "image": "png/aqara-hub-m2-review.png",
+      "title": "Aqara Hub M2 Review: Zigbee Focus & Ecosystem Fit",
+      "description": "See how the Aqara Hub M2 profile fits Zigbee-centered setups with Wi-Fi, Bluetooth, app control, Alexa, Google Home, and Apple HomeKit support.",
+      "altText": "FlowHome review pin for Aqara Hub M2 with a focused Zigbee node motif and ecosystem-fit notes.",
+      "overlay": { "headline": "Aqara Hub M2", "subhead": "A Zigbee-focused profile with app control and broad listed ecosystem support.", "CTA": "Read the review" }
+    },
+    {
+      "id": "switchbot-hub-2-review",
+      "board": "smart-home-hubs-matter-zigbee",
+      "kind": "review",
+      "source": "src/content/reviews/switchbot-hub-2-review.md",
+      "canonical": "https://flowhome.dev/review/switchbot-hub-2-review/",
+      "image": "png/switchbot-hub-2-review.png",
+      "title": "SwitchBot Hub 2 Review: Matter Ready, No Zigbee",
+      "description": "Review the SwitchBot Hub 2 profile for Matter, Wi-Fi, Bluetooth, app control, Alexa, Google Home, and Apple HomeKit support—and its lack of Zigbee.",
+      "altText": "FlowHome review pin for SwitchBot Hub 2 with a Matter node motif and a clear note that Zigbee is not listed.",
+      "overlay": { "headline": "SwitchBot Hub 2", "subhead": "Matter is listed; Zigbee is not. Match the protocol to the devices already in your home.", "CTA": "Read the review" }
+    }
+  ]
+}
