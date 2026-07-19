@@ -8,6 +8,7 @@ productSlugs:
   - govee-rgbic-led-strip-lights
   - wyze-bulb-color
 pubDate: 2026-07-16
+pinterestImage: /images/pinterest/smart-lighting-guide.png
 intro: "Room control starts with the lighting format your space can use, then moves to the ecosystem you already operate. This guide connects three structured smart-lighting profiles with the existing Philips Hue review and comparison so you can check bulb-versus-strip fit, RGB and dimming needs, platform support, and the catalog snapshot without turning changing listing data into a promise."
 buyingConsiderations:
   - label: "Bulb or strip installation"

@@ -135,6 +135,7 @@ const bestOfCollection = defineCollection({
     comparisonSlug: z.string().optional(),
     comparisonLabel: z.string().optional(),
     reviewSlugs: z.array(z.string()).optional(),
+    pinterestImage: z.string().regex(/^\/images\/pinterest\/[a-z0-9]+(?:-[a-z0-9]+)*\.png$/).optional(),
   }),
 });
 

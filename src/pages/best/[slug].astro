@@ -14,7 +14,7 @@ const selected = list.data.productSlugs.map((slug) => products.find((p) => p.dat
 const reviews = await getCollection('reviews');
 const relevantReviews = reviews.filter((review) => review.data.category === list.data.category || selected.some((product) => product.data.slug === review.data.productSlug));
 ---
-<BaseLayout title={`${list.data.title} | FlowHome`} description={list.data.description} canonicalURL={`https://flowhome.dev/best/${list.data.slug}/`}>
+<BaseLayout title={`${list.data.title} | FlowHome`} description={list.data.description} canonicalURL={`https://flowhome.dev/best/${list.data.slug}/`} image={list.data.pinterestImage} type="article">
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Best of FlowHome</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">{list.data.title}</h1>

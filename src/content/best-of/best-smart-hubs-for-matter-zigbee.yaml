@@ -8,6 +8,7 @@ productSlugs:
   - switchbot-hub-2
   - aeotec-smartthings-hub
 pubDate: 2026-07-15
+pinterestImage: /images/pinterest/smart-hubs-guide.png
 intro: "This guide uses FlowHome's structured product profiles to compare three smart hubs without treating changing prices, ratings, or availability as permanent facts. The right choice depends on the protocols and ecosystems your home already uses."
 buyingConsiderations:
   - label: "Matter and Zigbee support"
