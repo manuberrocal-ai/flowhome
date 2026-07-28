@@ -1,10 +1,17 @@
 ﻿---
 import BaseLayout from './BaseLayout.astro';
 import CompareTable from '../components/CompareTable.astro';
+import { generateBreadcrumbSchema, generateItemListSchema } from '../lib/seo';
+import { serializeJsonLd } from '../lib/json-ld.js';
 interface Props { products: any[]; title: string; description: string; angle: string; guidance: string; updatedThrough?: string; relatedComparisons: any[]; }
 const { products, title, description, angle, guidance, updatedThrough, relatedComparisons } = Astro.props;
+const canonicalURL = `https://flowhome.dev${Astro.url.pathname}`;
+const itemListSchema = generateItemListSchema(products, canonicalURL);
+const breadcrumbSchema = generateBreadcrumbSchema([{ name: 'Home', url: 'https://flowhome.dev/' }, { name: 'Comparisons', url: 'https://flowhome.dev/compare/' }, { name: title, url: canonicalURL }]);
 ---
-<BaseLayout title={`${title} | FlowHome`} description={description} canonicalURL={`https://flowhome.dev${Astro.url.pathname}`}>
+<BaseLayout title={`${title} | FlowHome`} description={description} canonicalURL={canonicalURL}>
+  <script type="application/ld+json" set:html={serializeJsonLd(itemListSchema)} />
+  <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
   <section class="space-y-6">
     <div class="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-8 text-white">
       <p class="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-100">FlowHome Compare</p>
@@ -14,7 +21,7 @@ const { products, title, description, angle, guidance, updatedThrough, relatedCo
     <section class="rounded-3xl border border-blue-100 bg-blue-50/70 p-6" aria-labelledby="comparison-angle">
       <h2 id="comparison-angle" class="text-2xl font-black text-slate-950">What this comparison helps you decide</h2>
       <p class="mt-3 text-lg leading-8 text-slate-700">{angle}</p>
-      <p class="mt-3 text-sm font-semibold text-slate-600">Prices, ratings, and review counts are snapshots from FlowHome product data{updatedThrough ? ` updated through ${updatedThrough}` : ''}; listings can change.</p>
+      <p class="mt-3 text-sm font-semibold text-slate-600">Prices are historical snapshots unless recently checked. Ratings and rating counts are Amazon customer ratings{updatedThrough ? ` updated through ${updatedThrough}` : ''}; listings can change.</p>
     </section>
     <CompareTable products={products} />
     <section class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]" aria-labelledby="quick-decision">
@@ -22,7 +29,7 @@ const { products, title, description, angle, guidance, updatedThrough, relatedCo
         <h2 id="quick-decision" class="text-2xl font-black text-slate-950">Quick decision framework</h2>
         <ol class="mt-4 list-decimal space-y-3 pl-5 leading-7 text-slate-700">
           <li>Filter by the compatibility and feature fields that your home actually needs.</li>
-          <li>Compare the price snapshot with rating and review count as context.</li>
+          <li>Compare the price snapshot with Amazon customer rating and rating count as context.</li>
           <li>Open the product profile and current Amazon listing before purchasing.</li>
         </ol>
         <p class="mt-5 rounded-2xl bg-amber-50 p-4 text-sm font-semibold leading-6 text-amber-900">Decision guidance: {guidance}</p>
@@ -33,13 +40,22 @@ const { products, title, description, angle, guidance, updatedThrough, relatedCo
             <p class="text-xs font-black uppercase tracking-wide text-blue-700">{product.category.replaceAll('-', ' ')}</p>
             <h2 class="mt-2 text-xl font-black text-slate-950"><a class="hover:text-blue-700 hover:underline" href={`/product/${product.slug}/`}>{product.name}</a></h2>
             <ul class="mt-3 space-y-1 text-sm leading-6 text-slate-600">
-              <li><strong>Price:</strong> ${product.price}</li>
-              <li><strong>Rating:</strong> {product.rating} / 5 from {product.reviewCount?.toLocaleString()} reviews</li>
+              <li><strong>Price snapshot:</strong> ${product.price} - checked {product.priceLastChecked}</li>
+              <li><strong>Amazon customer rating:</strong> {product.ownerRating} / 5 from {product.ownerRatingCount?.toLocaleString()} ratings - checked {product.ratingLastChecked}</li>
               <li><strong>Compatibility:</strong> {[product.matter && 'Matter', product.alexaCompatible && 'Alexa', product.googleHomeCompatible && 'Google Home', product.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ') || 'Check profile'}</li>
             </ul>
             <a class="mt-3 inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/category/${product.category}/`}>Browse {product.category.replaceAll('-', ' ')} category</a>
           </article>
         ))}
+      </div>
+    </section>
+    <section class="rounded-3xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="comparison-methodology">
+      <h2 id="comparison-methodology" class="text-2xl font-black text-slate-950">Editorial methodology</h2>
+      <div class="mt-3 text-sm leading-7 text-slate-700">
+        <p><strong>Author:</strong> FlowHome Editorial Team.</p>
+        <p class="mt-2"><strong>Ratings source:</strong> Amazon customer ratings, not FlowHome controlled lab tests. Ratings and counts are snapshots checked on the dates shown above; they may change on Amazon.</p>
+        <p class="mt-2"><strong>Price source:</strong> Historical snapshots from product data, not live Amazon pricing. Prices, discounts, and availability may change after publication. FlowHome may earn from qualifying purchases.</p>
+        <p class="mt-2"><strong>Feature fields:</strong> Compatibility and feature flags come from public product data and manufacturer listings. Specs not surfaced in the table are not verified for these products.</p>
       </div>
     </section>
     <nav class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" aria-labelledby="related-comparisons">

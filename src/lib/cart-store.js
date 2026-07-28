@@ -30,6 +30,10 @@ function cleanAsin(value) {
   return ASIN_PATTERN.test(asin) ? asin : '';
 }
 
+function cleanSlug(value) {
+  return cleanText(value).replace(/^\/+|\/+$/g, '');
+}
+
 function cleanQuantity(value) {
   const quantity = Number(value);
   return Number.isFinite(quantity) && quantity >= 1 ? Math.floor(quantity) : 1;
@@ -66,13 +70,14 @@ function clone(value) {
 
 export function normalizeCartItem(value) {
   if (!value || typeof value !== 'object') return null;
-  const asin = cleanAsin(value.asin);
-  if (!asin) return null;
+  const asin = cleanAsin(value.asin || value.productId);
+  const slug = cleanSlug(value.slug);
+  if (!asin && !slug) return null;
 
   return {
     asin,
     quantity: cleanQuantity(value.quantity),
-    slug: cleanText(value.slug),
+    slug,
     name: cleanText(value.name, asin),
     price: cleanPrice(value.price),
     image: cleanUrl(value.image),
@@ -80,17 +85,36 @@ export function normalizeCartItem(value) {
   };
 }
 
+function itemIdentity(item) {
+  return item.asin || `slug:${item.slug}`;
+}
+
+function normalizeActionItem(value) {
+  return normalizeCartItem({ asin: value, productId: value, slug: value });
+}
+
+function matchingItemKey(entriesByIdentity, item) {
+  const identity = itemIdentity(item);
+  if (entriesByIdentity.has(identity)) return identity;
+  if (!item.slug) return identity;
+  for (const [key, existing] of entriesByIdentity) {
+    if (existing.slug === item.slug && (!existing.asin || !item.asin)) return key;
+  }
+  return identity;
+}
+
 export function normalizeCartItems(values) {
   if (!Array.isArray(values)) return [];
-  const itemsByAsin = new Map();
+  const itemsByIdentity = new Map();
   values.forEach((value) => {
     const item = normalizeCartItem(value);
     if (!item) return;
-    const existing = itemsByAsin.get(item.asin);
+    const key = matchingItemKey(itemsByIdentity, item);
+    const existing = itemsByIdentity.get(key);
     if (existing) existing.quantity += item.quantity;
-    else itemsByAsin.set(item.asin, item);
+    else itemsByIdentity.set(key, item);
   });
-  return [...itemsByAsin.values()];
+  return [...itemsByIdentity.values()];
 }
 
 function normalizeEntry(value, fallbackDeviceId = '') {
@@ -123,13 +147,14 @@ function normalizeState(value, fallbackDeviceId = createDeviceId()) {
   const deviceId = cleanDeviceId(value.deviceId, fallbackDeviceId);
   const clock = cleanClock(value.clock);
   if (!deviceId || clock === null) return null;
-  const entriesByAsin = new Map();
+  const entriesByIdentity = new Map();
   for (const rawEntry of value.entries) {
     const entry = normalizeEntry(rawEntry, deviceId);
     if (!entry) return null;
-    entriesByAsin.set(entry.asin, chooseCartEntry(entriesByAsin.get(entry.asin), entry));
+    const key = matchingItemKey(entriesByIdentity, entry);
+    entriesByIdentity.set(key, chooseCartEntry(entriesByIdentity.get(key), entry));
   }
-  const entries = [...entriesByAsin.values()].sort((left, right) => left.asin.localeCompare(right.asin));
+  const entries = [...entriesByIdentity.values()].sort((left, right) => itemIdentity(left).localeCompare(itemIdentity(right)));
   return { version: CART_STORAGE_VERSION, deviceId, clock: Math.max(clock, ...entries.map((entry) => entry.clock), 0), entries };
 }
 
@@ -142,7 +167,7 @@ function statesEqual(left, right) {
 }
 
 function migrateV1(items, deviceId = createDeviceId()) {
-  const entries = normalizeCartItems(items).map((item, index) => ({ ...item, clock: index + 1, deviceId }));
+  const entries = normalizeCartItems(items).map((item, index) => ({ ...item, quantity: 1, clock: index + 1, deviceId }));
   return { version: CART_STORAGE_VERSION, deviceId, clock: entries.length, entries };
 }
 
@@ -180,12 +205,20 @@ export function getCartQuantity(items) {
   return normalizeCartItems(items).reduce((total, item) => total + item.quantity, 0);
 }
 
+/**
+ * Number of unique product identifiers in the shortlist. Used by the dock and
+ * ProductCard counters so two clicks never inflate the displayed number.
+ */
+export function getUniqueItemCount(items) {
+  return normalizeCartItems(items).filter((item) => item.quantity > 0).length;
+}
+
 export function getCartSubtotal(items) {
   return normalizeCartItems(items).reduce((total, item) => total + item.price * item.quantity, 0);
 }
 
 export function buildAmazonCartUrl(items, associateTag = 'flowhome-20') {
-  const normalizedItems = normalizeCartItems(items);
+  const normalizedItems = normalizeCartItems(items).filter((item) => Boolean(cleanAsin(item.asin)));
   if (!normalizedItems.length) return null;
   const params = new URLSearchParams({ AssociateTag: cleanText(associateTag, 'flowhome-20') });
   normalizedItems.forEach((item, index) => {
@@ -213,9 +246,12 @@ export function mergeCartStates(left, right) {
   const remote = normalizeState(right);
   if (!local) return remote ? clone(remote) : null;
   if (!remote) return clone(local);
-  const byAsin = new Map(local.entries.map((entry) => [entry.asin, entry]));
-  remote.entries.forEach((entry) => byAsin.set(entry.asin, chooseCartEntry(byAsin.get(entry.asin), entry)));
-  const entries = [...byAsin.values()].sort((a, b) => a.asin.localeCompare(b.asin));
+  const byIdentity = new Map(local.entries.map((entry) => [itemIdentity(entry), entry]));
+  remote.entries.forEach((entry) => {
+    const key = matchingItemKey(byIdentity, entry);
+    byIdentity.set(key, chooseCartEntry(byIdentity.get(key), entry));
+  });
+  const entries = [...byIdentity.values()].sort((a, b) => itemIdentity(a).localeCompare(itemIdentity(b)));
   return { version: CART_STORAGE_VERSION, deviceId: local.deviceId, clock: Math.max(local.clock, remote.clock, ...entries.map((entry) => entry.clock), 0), entries };
 }
 
@@ -313,13 +349,14 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
     return persist(next);
   };
 
-  const updateEntry = (state, asin, updater) => {
-    const entries = new Map(state.entries.map((entry) => [entry.asin, entry]));
-    const existing = entries.get(asin);
+  const updateEntry = (state, item, updater) => {
+    const entries = new Map(state.entries.map((entry) => [itemIdentity(entry), entry]));
+    const key = matchingItemKey(entries, item);
+    const existing = entries.get(key);
     const clock = Math.max(state.clock, ...state.entries.map((entry) => entry.clock), 0) + 1;
     const next = updater(existing, clock);
-    if (next) entries.set(asin, { ...next, asin, clock, deviceId: state.deviceId });
-    return { ...state, clock, entries: [...entries.values()].sort((a, b) => a.asin.localeCompare(b.asin)) };
+    if (next) entries.set(key, { ...next, clock, deviceId: state.deviceId });
+    return { ...state, clock, entries: [...entries.values()].sort((a, b) => itemIdentity(a).localeCompare(itemIdentity(b))) };
   };
 
   return {
@@ -372,28 +409,50 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
       const merged = mergeCartStates(local, remote);
       return persist(merged);
     },
-    add(item) {
+    add(item, { multiply = false } = {}) {
       const normalized = normalizeCartItem(item);
       if (!normalized) return this.getItems();
-      return mutate((state) => updateEntry(state, normalized.asin, (existing) => ({ ...normalized, quantity: (existing?.quantity || 0) + normalized.quantity })));
+      return mutate((state) => updateEntry(state, normalized, (existing) => {
+        // By default the shortlist is a SET of unique products. Two clicks on
+        // the same ProductCard "Add" button must never duplicate an entry or
+        // inflate the counter; the UI uses toggle() for that. multiply=true
+        // preserves legacy quantity stacking (used only when intentionally
+        // adding more units from the dedicated list page).
+        if (existing && existing.quantity > 0 && !multiply) return { ...existing };
+        return { ...normalized, quantity: (existing?.quantity || 0) + normalized.quantity };
+      }));
+    },
+    toggle(item) {
+      const normalized = normalizeCartItem(item);
+      if (!normalized) return this.getItems();
+      return mutate((state) => updateEntry(state, normalized, (existing) => existing && existing.quantity > 0
+        ? { ...existing, quantity: 0 }
+        : { ...normalized, quantity: 1 }));
+    },
+    hasItem(productId) {
+      const item = normalizeActionItem(productId);
+      if (!item) return false;
+      const state = load();
+      const key = matchingItemKey(new Map(state.entries.map((entry) => [itemIdentity(entry), entry])), item);
+      return Boolean(state.entries.find((entry) => itemIdentity(entry) === key && entry.quantity > 0));
     },
     increment(asin) {
-      const normalizedAsin = cleanAsin(asin);
-      if (!normalizedAsin) return this.getItems();
-      return mutate((state) => updateEntry(state, normalizedAsin, (existing) => existing ? { ...existing, quantity: existing.quantity + 1 } : null));
+      const item = normalizeActionItem(asin);
+      if (!item) return this.getItems();
+       return mutate((state) => updateEntry(state, item, (existing) => existing ? { ...existing, quantity: existing.quantity + 1 } : null));
     },
     decrement(asin) {
-      const normalizedAsin = cleanAsin(asin);
-      if (!normalizedAsin) return this.getItems();
-      return mutate((state) => updateEntry(state, normalizedAsin, (existing) => existing ? { ...existing, quantity: Math.max(0, existing.quantity - 1) } : null));
+      const item = normalizeActionItem(asin);
+      if (!item) return this.getItems();
+       return mutate((state) => updateEntry(state, item, (existing) => existing ? { ...existing, quantity: Math.max(0, existing.quantity - 1) } : null));
     },
     remove(asin) {
-      const normalizedAsin = cleanAsin(asin);
-      if (!normalizedAsin) return this.getItems();
-      return mutate((state) => updateEntry(state, normalizedAsin, (existing) => existing ? { ...existing, quantity: 0 } : null));
+      const item = normalizeActionItem(asin);
+      if (!item) return this.getItems();
+       return mutate((state) => updateEntry(state, item, (existing) => existing ? { ...existing, quantity: 0 } : null));
     },
     clear() {
-      return mutate((state) => state.entries.filter((entry) => entry.quantity > 0).reduce((next, entry) => updateEntry(next, entry.asin, (existing) => ({ ...existing, quantity: 0 })), state));
+       return mutate((state) => state.entries.filter((entry) => entry.quantity > 0).reduce((next, entry) => updateEntry(next, entry, (existing) => ({ ...existing, quantity: 0 })), state));
     },
     resetCorruptSavedList() {
       const state = createEmptyState();

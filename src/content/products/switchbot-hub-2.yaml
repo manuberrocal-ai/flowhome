@@ -8,10 +8,14 @@ discountPct: 0
 category: smart-hub
 affiliateUrl: "https://www.amazon.com/dp/B0BM8VS13P?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B0BM8VS13P.01._SCLZZZZZZZ_.jpg"
-rating: 4.3
-reviewCount: 8200
-available: true
+ownerRating: 4.3
+ownerRatingCount: 8200
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Hub 2"
 wifi: true
 bluetooth: true

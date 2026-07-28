@@ -4,6 +4,7 @@ import test from 'node:test';
 
 const cssPath = new URL('../src/styles/global.css', import.meta.url);
 const homePath = new URL('../src/pages/index.astro', import.meta.url);
+const heroCarouselPath = new URL('../src/lib/hero-carousel.js', import.meta.url);
 const headerPath = new URL('../src/components/Header.astro', import.meta.url);
 const accountPath = new URL('../src/pages/account.astro', import.meta.url);
 const cartClientPath = new URL('../src/lib/cart-client.js', import.meta.url);
@@ -44,13 +45,14 @@ test('cart dock reserves content space only while the dock is visible', async ()
 });
 
 test('hero carousel and mobile menu retain 44px interaction targets', async () => {
-  const [home, header] = await Promise.all([source(homePath), source(headerPath)]);
+  const [home, header, heroCarousel] = await Promise.all([source(homePath), source(headerPath), source(heroCarouselPath)]);
   assert.match(home, /hero-dot group grid h-11 w-11[\s\S]*?<span class:list=\{\["block h-2\.5 rounded-full transition-all group-focus-visible:opacity-80"/);
   assert.match(home, /hero-prev grid h-11 w-11/);
   assert.match(home, /hero-next grid h-11 w-11/);
   assert.match(home, /hero-details-link inline-flex h-11/);
   assert.match(home, /aria-pressed=\{index === 0 \? 'true' : 'false'\}/);
-  assert.match(home, /dot\.setAttribute\('aria-pressed', isActive \? 'true' : 'false'\)/);
+  assert.match(heroCarousel, /setAttribute\('aria-pressed', String\(selected\)\)/);
+  assert.doesNotMatch(home, /data-hero-slide=\{index\}/);
   assert.match(header, /mobile-menu-btn grid h-11 w-11/);
 });
 

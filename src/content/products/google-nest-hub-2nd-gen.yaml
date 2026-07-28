@@ -8,10 +8,14 @@ discountPct: 0
 category: smart-display
 affiliateUrl: "https://www.amazon.com/dp/B08R8N3Q7C?tag=flowhome-20"
 image: "https://multimedia.bbycastatic.ca/multimedia/products/500x500/153/15303/15303231.jpg"
-rating: 4.6
-reviewCount: 16000
-available: true
+ownerRating: 4.6
+ownerRatingCount: 16000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "Google Nest Hub 2nd Gen"
 wifi: true
 bluetooth: true

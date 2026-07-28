@@ -1,10 +1,20 @@
----
+﻿---
 interface Props { products: any[]; }
+import { getCommerceData } from '../lib/commerce-data';
 const { products } = Astro.props;
+const commerceBySlug = new Map(products.map((p) => [p.slug, getCommerceData(p)]));
 const rows = [
-  ['Price', (p:any) => `$${p.price}`],
-  ['Rating', (p:any) => `${p.rating} / 5`],
-  ['Reviews', (p:any) => `${p.reviewCount?.toLocaleString?.() ?? p.reviewCount}`],
+  ['Price', (p:any) => {
+    const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
+    return `${c.priceLabel}: $${p.price}${c.priceLastCheckedLabel ? ` (checked ${c.priceLastCheckedLabel})` : ''}`;
+  }],
+  ['Price source', (p:any) => {
+    const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
+    return c.priceSourceLabel;
+  }],
+  ['Amazon customer rating', (p:any) => `${p.ownerRating} / 5`],
+  ['Amazon rating count', (p:any) => `${p.ownerRatingCount?.toLocaleString?.() ?? p.ownerRatingCount}`],
+  ['Rating checked', (p:any) => p.ratingLastChecked ?? 'Not recorded'],
   ['Matter', (p:any) => p.matter ? 'Yes' : 'No'],
   ['Alexa', (p:any) => p.alexaCompatible ? 'Yes' : 'No'],
   ['Google Home', (p:any) => p.googleHomeCompatible ? 'Yes' : 'No'],
@@ -25,7 +35,7 @@ const rows = [
       {rows.map(([label, getter]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
       <tr>
         <th scope="row" class="font-bold text-slate-700">Listing link</th>
-        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
+        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
       </tr>
     </tbody>
   </table>

@@ -5,13 +5,17 @@ brand: "Meross"
 price: 49.99
 originalPrice: 59.99
 discountPct: 17
-category: smart-lock
+category: garage-door-opener
 affiliateUrl: "https://www.amazon.com/dp/B084Z5QZR2?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B084Z5QZR2.01._SCLZZZZZZZ_.jpg"
-rating: 4.4
-reviewCount: 9200
-available: true
+ownerRating: 4.4
+ownerRatingCount: 9200
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "Meross Smart Garage Door Opener"
 wifi: true
 bluetooth: false

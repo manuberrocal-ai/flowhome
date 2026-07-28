@@ -4,8 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 
 const products = (await getCollection('products'))
-  .filter((product) => product.data.available)
-  .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
+  .filter((product) => product.data.catalogActive)
+  .sort((a, b) => (b.data.ownerRating * Math.log10(b.data.ownerRatingCount + 1)) - (a.data.ownerRating * Math.log10(a.data.ownerRatingCount + 1)));
 const categories = [...new Set(products.map((product) => product.data.category))].sort();
 ---
 <BaseLayout title="Smart Home Products, Research & Buying Guides | FlowHome" description="Research smart-home products and buying guides by category, compatibility, ratings, and practical setup considerations." canonicalURL="https://flowhome.dev/products/">

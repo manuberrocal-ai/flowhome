@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProductImage, getProductImageAlt, getCategoryLabel } from '../../lib/product-art';
+import { getCommerceData } from '../../lib/commerce-data';
 
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const products = await getCollection('products');
@@ -40,8 +41,8 @@ const guides = await getCollection('best-of');
         </>}
         <p class="mt-4 flex-1 leading-7 text-slate-600">{review.data.description}</p>
         {productData && <div class="mt-5 grid grid-cols-3 gap-2 text-center text-xs font-bold text-slate-600">
-          <span class="rounded-2xl bg-orange-50 px-3 py-2 text-orange-700">${productData.price}</span>
-          <span class="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700">{productData.rating}/5</span>
+           <span class="rounded-2xl bg-orange-50 px-3 py-2 text-orange-700">{getCommerceData(productData).priceLabel}: ${productData.price}</span>
+           <span class="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700">Amazon customer rating {productData.ownerRating}/5</span>
           <span class="rounded-2xl bg-slate-50 px-3 py-2">{productData.brand}</span>
         </div>}
            <a href={'/review/' + review.id + '/'} class="premium-secondary-action mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2 text-sm font-black transition hover:-translate-y-0.5">Read review →</a>

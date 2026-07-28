@@ -5,6 +5,8 @@ import { generateReviewSchema, generateBreadcrumbSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 import { getCollection } from 'astro:content';
 import RelatedProducts from '../components/RelatedProducts.astro';
+import { selectDirectAlternatives } from '../lib/product-taxonomy';
+import { getCommerceData } from '../lib/commerce-data';
 
 interface Props {
   review: any;
@@ -17,8 +19,9 @@ const productAlt = product ? getProductImageAlt(product) : review.title;
 const categoryLabel = getCategoryLabel(review.category ?? product?.category);
 const reviewDate = review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const reviewSchema = product ? generateReviewSchema(review, product) : undefined;
+const commerce = product ? getCommerceData(product) : undefined;
 const allProducts = product ? await getCollection('products') : [];
-const alternatives = allProducts.filter((item) => item.data.category === (product?.category ?? review.category) && item.data.slug !== product?.slug).slice(0, 4);
+const alternatives = product ? selectDirectAlternatives(product, allProducts, 4) : [];
 const allGuides = product ? await getCollection('best-of') : [];
 const relevantGuides = allGuides.filter((guide) => guide.data.category === (product?.category ?? review.category));
 const breadcrumbSchema = generateBreadcrumbSchema([
@@ -58,18 +61,18 @@ const breadcrumbSchema = generateBreadcrumbSchema([
           <h2 class="mt-1 font-heading text-2xl font-black text-slate-950">{product.name}</h2>
           <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
             <div class="rounded-2xl bg-orange-50 p-3">
-              <p class="font-bold text-orange-700">Current snapshot</p>
+              <p class="font-bold text-orange-700">{commerce?.priceLabel}</p>
               <p class="mt-1 text-2xl font-black text-slate-950">${product.price}</p>
             </div>
             <div class="rounded-2xl bg-blue-50 p-3">
-              <p class="font-bold text-blue-700">Rating</p>
-              <p class="mt-1 text-2xl font-black text-slate-950">{product.rating}/5</p>
+              <p class="font-bold text-blue-700">Amazon customer rating</p>
+              <p class="mt-1 text-2xl font-black text-slate-950">{product.ownerRating}/5</p>
             </div>
           </div>
-          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="review_summary">
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action flow-wave mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="review_summary">
             <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
           </a>
-          <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">Price and availability can change on Amazon. FlowHome may earn from qualifying purchases.</p>
+           <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">{commerce?.priceLastCheckedLabel ? `Price last checked ${commerce.priceLastCheckedLabel}. ` : ''}Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
         </aside>
       )}
     </div>
@@ -81,10 +84,19 @@ const breadcrumbSchema = generateBreadcrumbSchema([
     </div>
     <slot />
   </article>
+  <section class="premium-card mt-8 rounded-3xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="review-methodology">
+    <h2 id="review-methodology" class="text-2xl font-black text-slate-950">Editorial methodology</h2>
+    <div class="mt-3 text-sm leading-7 text-slate-700">
+      <p><strong>Author:</strong> FlowHome Editorial Team.</p>
+      <p class="mt-2"><strong>Ratings source:</strong> {product ? `${product.ratingSource ?? 'Amazon customer ratings'}` : 'Amazon customer ratings'}. Ratings and counts are snapshots checked on {product ? `${product.ratingLastChecked ?? 'the publication date'}` : 'the publication date'}; they reflect Amazon customer feedback, not FlowHome editorial opinions. FlowHome does not run controlled lab tests.</p>
+      <p class="mt-2"><strong>Price source:</strong> {commerce ? `${commerce.priceSourceLabel}` : 'Historical snapshots'}. Prices are snapshots checked on the dates shown above. Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
+      <p class="mt-2"><strong>How to read this review:</strong> Treat each section as buying guidance built from public data, not a controlled lab test. Confirm current pricing, availability, and compatibility on Amazon before purchasing.</p>
+    </div>
+  </section>
   {product && <nav class="mt-8 flex flex-wrap gap-3 text-sm font-bold" aria-label="Review navigation">
     <a class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700 hover:underline" href={`/product/${product.slug}/`}>View product profile</a>
     <a class="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 hover:underline" href={`/category/${product.category}/`}>Browse {categoryLabel}</a>
     {relevantGuides.map((guide) => <a class="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 hover:underline" href={`/best/${guide.data.slug}/`}>{guide.data.title}</a>)}
   </nav>}
-  <RelatedProducts products={alternatives} title="Related alternatives" />
+  <RelatedProducts products={alternatives} title="Direct alternatives" />
 </BaseLayout>

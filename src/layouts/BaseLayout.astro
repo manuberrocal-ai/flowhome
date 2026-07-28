@@ -4,7 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import GoogleTranslate from '../components/GoogleTranslate.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
-import AuthGuardModal from '../components/AuthGuardModal.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
@@ -213,6 +212,5 @@ const pageType = Astro.url.pathname.split('/').filter(Boolean)[0] || 'home';
       const supabase = getSupabaseClient();
       if (supabase) createCartSync({ store: getCartStore(), supabase }).start();
     </script>
-    <AuthGuardModal />
 </body>
 </html>

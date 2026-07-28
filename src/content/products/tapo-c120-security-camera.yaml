@@ -8,10 +8,14 @@ discountPct: 20
 category: security-camera
 affiliateUrl: "https://www.amazon.com/dp/B0CH45HPZT?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B0CH45HPZT.01._SCLZZZZZZZ_.jpg"
-rating: 4.4
-reviewCount: 9800
-available: true
+ownerRating: 4.4
+ownerRatingCount: 9800
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Tapo C120"
 wifi: true
 bluetooth: false

@@ -1,40 +1,324 @@
 ﻿---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { trackEvent } from '../lib/analytics';
+import {
+  PRIORITY_QUIZ_OPTIONS,
+  ECOSYSTEM_QUIZ_OPTIONS,
+  BUDGET_QUIZ_OPTIONS,
+  getQuizStepLabel,
+} from '../lib/quiz-recommend';
+
+const canonical = 'https://flowhome.dev/quiz/';
+const products = await getCollection('products');
+const quizCatalog = products
+  .map((entry) => entry.data)
+  .filter((data) => data.catalogActive)
+  .map((data) => ({
+    slug: data.slug,
+    name: data.name,
+    brand: data.brand,
+    price: Number(data.price ?? 0),
+    category: data.category,
+    catalogActive: Boolean(data.catalogActive),
+    ownerRating: Number(data.ownerRating ?? 0),
+    ownerRatingCount: Number(data.ownerRatingCount ?? 0),
+    ratingSource: data.ratingSource,
+    ratingLastChecked: data.ratingLastChecked,
+    amazonUrl: data.affiliateUrl,
+    image: data.image,
+    priority: data.priority,
+    alexaCompatible: Boolean(data.alexaCompatible),
+    googleHomeCompatible: Boolean(data.googleHomeCompatible),
+    appleHomeKit: Boolean(data.appleHomeKit),
+    matter: Boolean(data.matter),
+  }));
+const stepLabels = [getQuizStepLabel(1), getQuizStepLabel(2), getQuizStepLabel(3)];
 ---
-<BaseLayout title="Smart Home Recommendation Quiz | FlowHome" description="Get a simple smart home starter recommendation based on your priority and ecosystem." canonicalURL="https://flowhome.dev/quiz/">
+<BaseLayout title="Smart Home Recommendation Quiz | FlowHome" description="Answer three quick questions and get a curated FlowHome starter shortlist based on your priority, ecosystem, and budget." canonicalURL={canonical}>
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Starter quiz</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950 md:text-5xl">Find your smart home starter path</h1>
-    <p class="mt-3 max-w-2xl text-lg leading-8 text-slate-600">Pick the outcome you care about most. FlowHome will suggest a practical first path instead of throwing a random gadget list at you.</p>
-    <div class="mt-8 grid gap-4 md:grid-cols-3" role="list" aria-label="Smart home starter priorities">
-      <button type="button" class="quiz premium-card min-h-40 rounded-2xl border border-slate-200 p-6 text-left transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100" data-result="security" aria-pressed="false"><strong class="text-lg text-slate-950">Security first</strong><span class="mt-2 block text-slate-600">Cameras, doorbells, locks, sensors.</span></button>
-      <button type="button" class="quiz premium-card min-h-40 rounded-2xl border border-slate-200 p-6 text-left transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100" data-result="comfort" aria-pressed="false"><strong class="text-lg text-slate-950">Comfort and routines</strong><span class="mt-2 block text-slate-600">Speakers, displays, lights, plugs.</span></button>
-      <button type="button" class="quiz premium-card min-h-40 rounded-2xl border border-slate-200 p-6 text-left transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100" data-result="cleaning" aria-pressed="false"><strong class="text-lg text-slate-950">Cleaning automation</strong><span class="mt-2 block text-slate-600">Robot vacuums and maintenance gear.</span></button>
-    </div>
-    <div id="quiz-result" class="mt-6 hidden rounded-2xl bg-blue-50 p-6 font-bold leading-7 text-blue-950 ring-1 ring-blue-100" role="status" aria-live="polite"></div>
+    <p class="mt-3 max-w-2xl text-lg leading-8 text-slate-600">Answer three quick questions. FlowHome narrows the catalog of catalog-active products to a shortlist that matches your priority, ecosystem, and budget.</p>
+
+    <form id="quiz-form" class="mt-8" aria-label="Smart home starter recommendation quiz" novalidate>
+      <fieldset data-quiz-step="1" class="quiz-step rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <legend class="text-sm font-black uppercase tracking-wide text-blue-700">Step 1 — {stepLabels[0]}</legend>
+        <div class="mt-4 grid gap-3 md:grid-cols-3" role="radiogroup" aria-label={stepLabels[0]}>
+          {PRIORITY_QUIZ_OPTIONS.map((option) => (
+            <label class="quiz-option group cursor-pointer rounded-2xl border border-slate-200 p-4 transition hover:border-blue-300 hover:shadow-md focus-within:ring-4 focus-within:ring-blue-100">
+              <input type="radio" name="quiz-priority" value={option.id} class="sr-only quiz-radio" data-quiz-input />
+              <strong class="block text-base text-slate-950">{option.heading}</strong>
+              <span class="mt-1 block text-sm text-slate-600">{option.description}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset data-quiz-step="2" class="quiz-step mt-4 hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" hidden>
+        <legend class="text-sm font-black uppercase tracking-wide text-blue-700">Step 2 — {stepLabels[1]}</legend>
+        <div class="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-4" role="radiogroup" aria-label={stepLabels[1]}>
+          {ECOSYSTEM_QUIZ_OPTIONS.map((option) => (
+            <label class="quiz-option group cursor-pointer rounded-2xl border border-slate-200 p-4 transition hover:border-blue-300 hover:shadow-md focus-within:ring-4 focus-within:ring-blue-100">
+              <input type="radio" name="quiz-ecosystem" value={option.id} class="sr-only quiz-radio" data-quiz-input />
+              <strong class="block text-base text-slate-950">{option.heading}</strong>
+              <span class="mt-1 block text-sm text-slate-600">{option.description}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset data-quiz-step="3" class="quiz-step mt-4 hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" hidden>
+        <legend class="text-sm font-black uppercase tracking-wide text-blue-700">Step 3 — {stepLabels[2]}</legend>
+        <div class="mt-4 grid gap-3 md:grid-cols-3" role="radiogroup" aria-label={stepLabels[2]}>
+          {BUDGET_QUIZ_OPTIONS.map((option) => (
+            <label class="quiz-option group cursor-pointer rounded-2xl border border-slate-200 p-4 transition hover:border-blue-300 hover:shadow-md focus-within:ring-4 focus-within:ring-blue-100">
+              <input type="radio" name="quiz-budget" value={option.id} class="sr-only quiz-radio" data-quiz-input />
+              <strong class="block text-base text-slate-950">{option.heading}</strong>
+              <span class="mt-1 block text-sm text-slate-600">{option.description}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button type="button" id="quiz-back" class="hidden rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100" aria-label="Go back to the previous step">Back</button>
+        <button type="button" id="quiz-next" class="rounded-2xl bg-blue-700 px-5 py-2.5 text-sm font-black text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300" disabled aria-label="Continue to the next step">Continue</button>
+        <button type="button" id="quiz-submit" class="hidden rounded-2xl bg-orange-600 px-5 py-2.5 text-sm font-black text-white transition hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300" disabled aria-label="See your personalized recommendations">See my recommendations</button>
+      </div>
+    </form>
+
+    <section id="quiz-results" class="mt-8 hidden" hidden role="status" aria-live="polite" aria-label="Quiz recommendations">
+      <h2 class="text-2xl font-black text-slate-950">Your starter shortlist</h2>
+      <p id="quiz-results-summary" class="mt-2 max-w-2xl text-sm leading-7 text-slate-600"></p>
+      <p class="mt-1 text-xs text-slate-500">Prices are snapshots and availability changes on Amazon. FlowHome may earn from qualifying purchases.</p>
+      <div id="quiz-results-cards" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+      <button type="button" id="quiz-restart" class="mt-6 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100" aria-label="Start over">Start over</button>
+    </section>
+
+    <p id="quiz-progress" class="mt-4 text-xs font-bold uppercase tracking-wide text-slate-500" aria-live="polite">Step 1 of 3</p>
   </section>
+
+  <script type="application/json" id="quiz-catalog" set:html={JSON.stringify(quizCatalog).replaceAll('<', '\u003c')}></script>
   <script>
+    import { selectRecommendations } from '../lib/quiz-recommend';
     import { trackEvent } from '../lib/analytics';
-    const copy = {
-      security: 'Start with a video doorbell or indoor camera, then add a smart lock only after confirming door compatibility, Wi-Fi coverage, privacy settings, and storage costs.',
-      comfort: 'Start with a smart speaker/display plus compatible plugs or bulbs. This gives fast daily value through routines, timers, lighting control, and voice access.',
-      cleaning: 'Start with a robot vacuum if your floor plan is robot-friendly. Prioritize mapping, dock placement, maintenance costs, and self-empty convenience over marketing suction numbers.'
+
+    const PRIORITY_COPY = {
+      security: 'Security first',
+      comfort: 'Comfort and routines',
+      cleaning: 'Cleaning and chores',
     };
-    const buttons = Array.from(document.querySelectorAll('.quiz'));
-    buttons.forEach((button) => button.addEventListener('click', () => {
-      const result = button.dataset.result;
-      const target = document.getElementById('quiz-result');
-      buttons.forEach((item) => {
-        const selected = item === button;
-        item.setAttribute('aria-pressed', String(selected));
-        item.classList.toggle('border-blue-500', selected);
-        item.classList.toggle('bg-blue-50', selected);
-      });
-      if (target) {
-        target.classList.remove('hidden');
-        target.textContent = copy[result];
+    const ECOSYSTEM_COPY = {
+      alexa: 'Alexa',
+      google: 'Google Home',
+      apple: 'Apple HomeKit',
+      open: 'No ecosystem preference',
+    };
+    const BUDGET_COPY = {
+      under50: 'Up to $50',
+      under150: 'Up to $150',
+      open: 'No budget limit',
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": '&#39;' }[character]));
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replace(/"/g, '"');
+    }
+
+    function formatPrice(value) {
+      return `$${Number(value).toFixed(2)}`;
+    }
+
+    function formatRatingCount(value) {
+      const n = Number(value ?? 0);
+      if (n >= 1000) return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k`;
+      return String(n);
+    }
+
+    const catalogScript = document.getElementById('quiz-catalog');
+    if (!catalogScript || !catalogScript.textContent) {
+      console.error('Quiz catalog missing');
+    } else {
+      const catalog = JSON.parse(catalogScript.textContent);
+      const form = document.getElementById('quiz-form');
+      const steps = Array.from(document.querySelectorAll('[data-quiz-step]')).map((el) => el.getAttribute('data-quiz-step'));
+      const stepEls = Array.from(document.querySelectorAll('[data-quiz-step]'));
+      const backBtn = document.getElementById('quiz-back');
+      const nextBtn = document.getElementById('quiz-next');
+      const submitBtn = document.getElementById('quiz-submit');
+      const restartBtn = document.getElementById('quiz-restart');
+      const progress = document.getElementById('quiz-progress');
+      const resultsSection = document.getElementById('quiz-results');
+      const resultsSummary = document.getElementById('quiz-results-summary');
+      const resultsCards = document.getElementById('quiz-results-cards');
+      let step = 1;
+      let state = { priority: '', ecosystem: '', budget: '' };
+
+      steps.length;
+      function isStepFilled(s) {
+        if (s === 1) return Boolean(state.priority);
+        if (s === 2) return Boolean(state.ecosystem);
+        if (s === 3) return Boolean(state.budget);
+        return false;
       }
-      trackEvent('quiz_complete', { result, questions_answered: 1, page_type: 'quiz' });
-    }));
+
+      function updateProgress() {
+        progress.textContent = `Step ${step} of 3`;
+      }
+
+      function applyStepVisibility() {
+        stepEls.forEach((fieldset) => {
+          const index = Number(fieldset.getAttribute('data-quiz-step'));
+          const visible = index === step;
+          fieldset.classList.toggle('hidden', !visible);
+          if (visible) {
+            fieldset.removeAttribute('hidden');
+            const firstRadio = fieldset.querySelector('.quiz-radio');
+            if (firstRadio) firstRadio.focus();
+          } else {
+            fieldset.setAttribute('hidden', '');
+          }
+        });
+        backBtn.classList.toggle('hidden', step === 1);
+        nextBtn.classList.toggle('hidden', step === 3);
+        submitBtn.classList.toggle('hidden', step !== 3);
+        nextBtn.disabled = !isStepFilled(step);
+        submitBtn.disabled = !isStepFilled(step);
+        updateProgress();
+      }
+
+      function clearSelectedStyles(s) {
+        const fieldset = document.querySelector(`[data-quiz-step="${s}"]`);
+        if (!fieldset) return;
+        fieldset.querySelectorAll('.quiz-option').forEach((label) => {
+          label.classList.remove('border-blue-500', 'bg-blue-50', 'ring-4', 'ring-blue-100');
+        });
+      }
+
+      function selectOptionFor(s, value) {
+        const fieldset = document.querySelector(`[data-quiz-step="${s}"]`);
+        if (!fieldset) return;
+        const input = fieldset.querySelector(`input[value="${value}"]`);
+        if (!input) return;
+        input.checked = true;
+        fieldset.querySelectorAll('.quiz-option').forEach((label) => {
+          const inputEl = label.querySelector('.quiz-radio');
+          label.classList.toggle('border-blue-500', Boolean(inputEl?.checked));
+          label.classList.toggle('bg-blue-50', Boolean(inputEl?.checked));
+          label.classList.toggle('ring-4', Boolean(inputEl?.checked));
+          label.classList.toggle('ring-blue-100', Boolean(inputEl?.checked));
+        });
+      }
+
+      // Listen to radio changes
+      document.addEventListener('change', (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement) || !target.classList.contains('quiz-radio')) return;
+        const name = target.name;
+        const value = target.value;
+        if (name === 'quiz-priority') {
+          state.priority = value;
+          clearSelectedStyles(1);
+          selectOptionFor(1, value);
+        } else if (name === 'quiz-ecosystem') {
+          state.ecosystem = value;
+          clearSelectedStyles(2);
+          selectOptionFor(2, value);
+        } else if (name === 'quiz-budget') {
+          state.budget = value;
+          clearSelectedStyles(3);
+          selectOptionFor(3, value);
+        }
+        nextBtn.disabled = !isStepFilled(step);
+        submitBtn.disabled = !isStepFilled(step);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (!isStepFilled(step)) return;
+        if (step < 3) {
+          step += 1;
+          applyStepVisibility();
+        }
+      });
+
+      backBtn.addEventListener('click', () => {
+        if (step > 1) {
+          step -= 1;
+          applyStepVisibility();
+        }
+      });
+
+      submitBtn.addEventListener('click', () => {
+        if (!isStepFilled(3)) return;
+        const recs = selectRecommendations(state, catalog, 6);
+        if (recs.length === 0) {
+          resultsSummary.textContent = 'No catalog-active matches yet for that combination. Try resetting and widening your filters.';
+          resultsCards.innerHTML = '';
+        } else {
+          const summaryParts = [
+            `Priority: ${PRIORITY_COPY[state.priority] ?? state.priority}.`,
+            `Ecosystem: ${ECOSYSTEM_COPY[state.ecosystem] ?? state.ecosystem}.`,
+            `Budget: ${BUDGET_COPY[state.budget] ?? state.budget}.`,
+          ];
+          resultsSummary.textContent = `Based on ${PRIORITY_COPY[state.priority] ? state.priority : 'your priority'}, ${ECOSYSTEM_COPY[state.ecosystem] ? state.ecosystem : 'your ecosystem'}, and ${BUDGET_COPY[state.budget] ? state.budget : 'your budget'}, here are up to six catalog-active FlowHome picks that could fit. Prices are snapshots and availability changes on Amazon.`;
+          resultsCards.innerHTML = recs.map((p) => {
+            const rating = Number(p.ownerRating ?? 0);
+            const stars = Math.round(rating);
+            const starsHtml = Array.from({ length: 5 }, (_, i) => i < stars ? '\u2605' : '\u2606').join('');
+            const matterBadge = p.matter ? '<span class="rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-black uppercase text-teal-700">Matter</span>' : '';
+            const ratingChecked = p.ratingLastChecked ? `<span>\u00b7 checked ${escapeHtml(p.ratingLastChecked)}</span>` : '';
+            return `
+              <article class="quiz-result-card group relative flex h-full flex-col rounded-[1.6rem] border border-slate-200 bg-slate-50 p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
+                <a href="/product/${encodeURIComponent(p.slug)}/" class="block" aria-label="Read the ${escapeAttribute(p.name)} product profile on FlowHome">
+                  <p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">${escapeHtml(p.brand)}</p>
+                  <h3 class="mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 group-hover:text-blue-700">${escapeHtml(p.name)}</h3>
+                  <p class="mt-1 text-xs font-semibold text-slate-500">Amazon customer rating: ${escapeHtml(String(rating))} / 5 from ${escapeHtml(formatRatingCount(p.ownerRatingCount))} ratings ${ratingChecked}</p>
+                  <div class="mt-1 text-sm" aria-hidden="true">${starsHtml}</div>
+                  ${matterBadge}
+                </a>
+                <div class="mt-auto pt-3">
+                  <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">Price snapshot</div>
+                  <div class="mt-0.5 text-2xl font-black text-slate-950">${escapeHtml(formatPrice(p.price))}</div>
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    <a href="${escapeAttribute(p.amazonUrl)}" target="_blank" rel="nofollow sponsored noopener noreferrer" class="quiz-amazon-cta inline-flex min-h-11 items-center justify-center rounded-2xl bg-orange-600 px-3 py-2 text-center text-xs font-black text-white transition hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300/50" aria-label="View ${escapeAttribute(p.name)} on Amazon" data-quiz-amazon-cta data-product-slug="${escapeAttribute(p.slug)}">Check on Amazon</a>
+                    <a href="/product/${encodeURIComponent(p.slug)}/" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100" aria-label="View ${escapeAttribute(p.name)} details on FlowHome">Details</a>
+                  </div>
+                </div>
+              </article>`;
+          }).join('');
+        }
+        resultsSection.classList.remove('hidden');
+        resultsSection.removeAttribute('hidden');
+        form.classList.add('hidden');
+        form.setAttribute('hidden', '');
+        progress.textContent = 'Recommendations ready';
+        trackEvent('quiz_complete', {
+          priority: state.priority,
+          ecosystem: state.ecosystem,
+          budget: state.budget,
+          result_count: recs.length,
+          page_type: 'quiz',
+        });
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      restartBtn.addEventListener('click', () => {
+        state = { priority: '', ecosystem: '', budget: '' };
+        step = 1;
+        document.querySelectorAll('.quiz-radio').forEach((input) => { input.checked = false; });
+        [1, 2, 3].forEach((s) => clearSelectedStyles(s));
+        resultsSection.classList.add('hidden');
+        resultsSection.setAttribute('hidden', '');
+        form.classList.remove('hidden');
+        form.removeAttribute('hidden');
+        applyStepVisibility();
+      });
+
+      applyStepVisibility();
+    }
   </script>
 </BaseLayout>

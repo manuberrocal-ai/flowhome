@@ -8,10 +8,14 @@ discountPct: 38
 category: robot-vacuum
 affiliateUrl: "https://www.amazon.com/dp/B094NYHTMF?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B094NYHTMF.01._SCLZZZZZZZ_.jpg"
-rating: 4.3
-reviewCount: 9000
-available: true
+ownerRating: 4.3
+ownerRatingCount: 9000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-07-18"
+catalogActive: true
 dateUpdated: "2026-07-18"
+priceLastChecked: "2026-07-18"
+priceSource: "manual"
 model: "iRobot Roomba j7+"
 wifi: true
 bluetooth: false

@@ -1,5 +1,6 @@
 ---
 import { getProductImage, getProductImageAlt } from '../lib/product-art';
+import { getDealStatus, getDealUrgencyCopy } from '../lib/deal-state';
 
 interface Props { deal: any; product?: any; }
 const { deal, product } = Astro.props;
@@ -9,19 +10,31 @@ const imageSource = getProductImage(productData ?? { image: data.image, category
 const imageAlt = getProductImageAlt(productData ?? { image: data.image, category: undefined, name: data.title });
 const productSlug = productData?.slug ?? data.productSlug ?? '';
 const category = productData?.category ?? data.category ?? '';
+const statusInfo = getDealStatus({ start: data.startDate, end: data.endDate });
+const urgency = getDealUrgencyCopy({ start: data.startDate, end: data.endDate });
+const isExpired = statusInfo.status === 'expired';
+const isUnknown = statusInfo.status === 'unknown';
+const canShowEndDate = urgency.canShowCountdown && !isExpired && !isUnknown;
+const dealEndsLabel = canShowEndDate
+  ? new Date(data.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  : null;
+const showPrice = isExpired ? productData?.price ?? data.dealPrice : data.dealPrice;
+const showOriginal = isExpired ? null : data.originalPrice;
 ---
-<article class="premium-card rounded-2xl border border-orange-100 bg-white p-5 shadow-sm">
+<article class:list={["premium-card rounded-2xl border border-orange-100 bg-white p-5 shadow-sm", isExpired && "opacity-90 ring-1 ring-slate-200"]}>
   <div class="flex items-start gap-4">
     <img src={imageSource} alt={imageAlt} class="h-24 w-24 rounded-xl bg-slate-100 object-contain" loading="lazy" decoding="async" fetchpriority="low" width="640" height="480" />
     <div class="min-w-0 flex-1">
-      <div class="deal-badge inline-flex">Save {data.discountPct}%</div>
+      {!isExpired && <div class="deal-badge inline-flex">Save {data.discountPct}%</div>}
+      {isExpired && <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-500">Deal ended</span>}
       <h2 class="mt-2 font-heading text-xl font-extrabold text-slate-950">{data.title}</h2>
-      <p class="mt-1 text-sm text-slate-500">Deal ends {new Date(data.endDate).toLocaleDateString('en-US')}</p>
+      {dealEndsLabel && <p class="mt-1 text-sm text-slate-500">Deal ends {dealEndsLabel}</p>}
+      {isUnknown && <p class="mt-1 text-sm text-slate-500">Price last checked {new Date(productData?.dateUpdated ?? data.startDate).toLocaleDateString('en-US', { timeZone: 'UTC' })}</p>}
       <div class="mt-3 flex items-center gap-3">
-        <span class="text-2xl font-black text-orange-600">${data.dealPrice}</span>
-        <span class="text-slate-400 line-through">${data.originalPrice}</span>
+        <span class:list={["text-2xl font-black", isExpired ? "text-slate-600" : "text-orange-600"]}>${showPrice}</span>
+        {showOriginal && <span class="text-slate-400 line-through">${showOriginal}</span>}
       </div>
-      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="premium-action flow-wave mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={productSlug} data-category={category} data-discount={data.discountPct} data-cta-position="deal_card"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action flow-wave mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={productSlug} data-category={category} data-discount={data.discountPct} data-cta-position="deal_card"><span class="amazon-cta-label">{isExpired ? 'Check current' : 'Check on'} <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
   </div>
 </article>

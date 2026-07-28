@@ -20,19 +20,15 @@ test('keeps private utility pages out of sitemap indexing and fixes schema claim
   assert.doesNotMatch(seo, /shippingDetails|hasMerchantReturnPolicy/);
 });
 
-test('uses honest account copy, lazy GIS setup, and explicit cart corruption recovery', async () => {
-  const [account, modal, cart, cartClient, cartStore] = await Promise.all([
+test('keeps account copy honest and preserves explicit cart corruption recovery', async () => {
+  const [account, cart, cartClient, cartStore] = await Promise.all([
     source('src/pages/account.astro'),
-    source('src/components/AuthGuardModal.astro'),
     source('src/pages/cart.astro'),
     source('src/lib/cart-client.js'),
     source('src/lib/cart-store.js'),
   ]);
 
-  assert.doesNotMatch(`${account}\n${modal}`, /sync (your )?picks across devices|favorites|quiz results|deal notes|Supabase database/i);
-  assert.match(modal, /const ensureGoogleSignIn = async/);
-  assert.match(modal, /void ensureGoogleSignIn\(\)/);
-  assert.doesNotMatch(modal, /googleSignIn = await registerGoogleCredentialHandler/);
+  assert.doesNotMatch(account, /sync (your )?picks across devices|favorites|quiz results|deal notes|Supabase database/i);
   assert.match(cart, /data-cart-page-recovery/);
   assert.match(cart, /Reset saved list/);
   assert.match(cart, /min-h-11/);

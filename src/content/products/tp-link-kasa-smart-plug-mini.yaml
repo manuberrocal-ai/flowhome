@@ -8,10 +8,14 @@ discountPct: 23
 category: smart-plug
 affiliateUrl: "https://www.amazon.com/dp/B091FXQQMQ?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B091FXQQMQ.01._SCLZZZZZZZ_.jpg"
-rating: 4.6
-reviewCount: 78000
-available: true
+ownerRating: 4.6
+ownerRatingCount: 78000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "TP-Link Kasa Smart Plug Mini"
 wifi: true
 bluetooth: false

@@ -7,7 +7,8 @@ const products = (await getCollection('products')).map((product) => ({
   slug: product.data.slug,
   brand: product.data.brand,
   category: product.data.category,
-  rating: product.data.rating,
+  ownerRating: product.data.ownerRating,
+  ratingLastChecked: product.data.ratingLastChecked,
   price: product.data.price,
   image: product.data.image || '/images/product-placeholder.svg',
 }));
@@ -38,7 +39,8 @@ const products = (await getCollection('products')).map((product) => ({
           '<img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.name) + '" class="mx-auto h-32 w-full object-contain rounded-xl bg-slate-100 p-3" loading="lazy" />' +
           '<h2 class="mt-4 text-lg font-extrabold text-slate-950">' + escapeHtml(item.name) + '</h2>' +
           '<p class="mt-1 text-sm text-slate-500">' + escapeHtml(item.brand) + ' · ' + escapeHtml(category) + '</p>' +
-          '<p class="mt-2 font-bold text-blue-700">$' + escapeHtml(item.price) + ' · ' + escapeHtml(item.rating) + '★</p>' +
+          '<p class="mt-2 font-bold text-blue-700">$' + escapeHtml(item.price) + ' · Amazon customer rating ' + escapeHtml(item.ownerRating) + '★</p>' +
+          '<p class="mt-1 text-xs text-slate-500">Rating checked ' + escapeHtml(item.ratingLastChecked) + '</p>' +
           '</a></article>';
       }).join('');
     }

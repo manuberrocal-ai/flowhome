@@ -1,12 +1,19 @@
 ﻿---
 import ProductCard from './ProductCard.astro';
+import { getRelationshipLabel } from '../lib/product-taxonomy';
 interface Props { products: any[]; title?: string; }
 const { products, title = 'Related smart home picks' } = Astro.props;
-const uniqueProducts = [...new Map(products.filter(Boolean).map((product) => [product.data?.slug ?? product.slug, product])).values()];
+const uniqueProducts = [...new Map(products.filter(Boolean).map((item) => {
+  const product = item.product ?? item;
+  return [product.data?.slug ?? product.slug, { product, relationship: item.relationship }];
+})).values()];
 ---
 {uniqueProducts.length > 0 && <section class="mt-10">
   <h2 class="mb-5 text-2xl font-extrabold text-slate-950">{title}</h2>
   <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-    {uniqueProducts.map((product) => <ProductCard product={product} compact />)}
+    {uniqueProducts.map(({ product, relationship }) => <div>
+      {relationship && <p class="mb-2 text-xs font-black uppercase tracking-wide text-blue-700">{relationship.label ?? getRelationshipLabel(relationship.type)}</p>}
+      <ProductCard product={product} compact />
+    </div>)}
   </div>
 </section>}

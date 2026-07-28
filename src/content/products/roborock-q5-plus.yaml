@@ -8,10 +8,14 @@ discountPct: 33
 category: robot-vacuum
 affiliateUrl: "https://www.amazon.com/dp/B09NM549V7?tag=flowhome-20"
 image: "https://cdn.pji.nu/product/standard/800/12935114.jpg"
-rating: 4.4
-reviewCount: 7200
-available: true
+ownerRating: 4.4
+ownerRatingCount: 7200
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-07-18"
+catalogActive: true
 dateUpdated: "2026-07-18"
+priceLastChecked: "2026-07-18"
+priceSource: "manual"
 model: "Roborock Q5+ Robot Vacuum"
 wifi: true
 bluetooth: false

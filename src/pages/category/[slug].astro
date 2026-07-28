@@ -10,8 +10,8 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 const products = (await getCollection('products'))
-  .filter((product) => product.data.category === category.data.slug && product.data.available)
-  .sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
+  .filter((product) => product.data.category === category.data.slug && product.data.catalogActive)
+  .sort((a, b) => (b.data.ownerRating * Math.log10(b.data.ownerRatingCount + 1)) - (a.data.ownerRating * Math.log10(a.data.ownerRatingCount + 1)));
 const [guides, reviews] = await Promise.all([getCollection('best-of'), getCollection('reviews')]);
 const relevantGuides = guides.filter((guide) => guide.data.category === category.data.slug);
 const relevantReviews = reviews.filter((review) => review.data.category === category.data.slug);

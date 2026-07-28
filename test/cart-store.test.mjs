@@ -37,13 +37,33 @@ function createEventTarget() {
 }
 
 test('migrates v1 arrays to a v2 per-ASIN state', () => {
-  const storage = createStorage(JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }]));
+  const storage = createStorage(JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }, { asin: ASIN, quantity: 4, name: 'Duplicate' }]));
   const store = createCartStore({ storage });
-  assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 2, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
+  assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 1, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
   const payload = JSON.parse(storage.value());
   assert.equal(payload.version, CART_STORAGE_VERSION);
   assert.equal(payload.entries[0].clock, 1);
   assert.match(payload.entries[0].deviceId, /^[A-Za-z0-9_-]{8,128}$/);
+});
+
+test('shortlist toggle is unique and counts products rather than units', () => {
+  const store = createCartStore({ storage: createStorage() });
+  const item = { asin: ASIN, quantity: 4, name: 'Product' };
+  assert.deepEqual(store.toggle(item).map(({ asin, quantity }) => ({ asin, quantity })), [{ asin: ASIN, quantity: 1 }]);
+  assert.equal(store.getItems().length, 1);
+  assert.equal(store.toggle(item).length, 0);
+});
+
+test('uses productId or slug identity and ignores non-ASIN entries for Amazon', () => {
+  const items = normalizeCartItems([
+    { productId: ASIN, slug: 'variant-a' },
+    { slug: 'variant-a', name: 'Same product from another source' },
+    { asin: OTHER_ASIN, slug: 'variant-b' },
+  ]);
+  assert.equal(items.length, 2);
+  assert.equal(items.find((item) => item.asin === ASIN).quantity, 2);
+  assert.equal(new URL(buildAmazonCartUrl([{ slug: 'only-local-product' }, { asin: ASIN }])).searchParams.get('ASIN.1'), ASIN);
+  assert.equal(buildAmazonCartUrl([{ slug: 'only-local-product' }]), null);
 });
 
 test('preserves corrupt JSON and never exposes it for synchronization', () => {

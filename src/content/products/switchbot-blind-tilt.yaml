@@ -5,13 +5,17 @@ brand: "SwitchBot"
 price: 69.99
 originalPrice: 69.99
 discountPct: 0
-category: smart-hub
+category: smart-blinds
 affiliateUrl: "https://www.amazon.com/dp/B0B4D95FZW?tag=flowhome-20"
 image: "https://www.switch-bot.com/cdn/shop/products/switchbot-blind-tilt-564574_1200x1200.jpg?v=1720766063"
-rating: 4.1
-reviewCount: 2100
-available: true
+ownerRating: 4.1
+ownerRatingCount: 2100
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "SwitchBot Blind Tilt"
 wifi: true
 bluetooth: true

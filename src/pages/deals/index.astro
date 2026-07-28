@@ -1,17 +1,34 @@
-﻿---
+---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DealCard from '../../components/DealCard.astro';
+import { getDealStatus } from '../../lib/deal-state';
 
-const deals = (await getCollection('deals')).sort((a, b) => b.data.discountPct - a.data.discountPct);
+// Live deals first, then upcoming. Expired deals are intentionally hidden from
+// the promoted deals hub. They may still appear on product pages as historical
+// snapshots (labelled by DealCard), but never with urgency messaging.
+const allDeals = await getCollection('deals');
 const products = await getCollection('products');
+const now = new Date();
+const visibleDeals = allDeals
+  .map((deal) => ({ deal, status: getDealStatus({ start: deal.data.startDate, end: deal.data.endDate }, now).status }))
+  .filter((entry) => entry.status === 'active' || entry.status === 'upcoming')
+  .sort((a, b) => {
+    if (a.status !== b.status) return a.status === 'active' ? -1 : 1;
+    return b.deal.data.discountPct - a.deal.data.discountPct;
+  })
+  .map((entry) => entry.deal);
 ---
 <BaseLayout title="Smart Home Deals | FlowHome" description="Current smart home deals filtered by discount size, product quality, and affiliate sustainability." canonicalURL="https://flowhome.dev/deals/">
   <section class="premium-page-hero">
     <h1 class="text-5xl font-black text-slate-950">Smart home deals</h1>
-    <p class="mt-4 max-w-2xl text-lg text-slate-600">Discounts change fast. Verify final price on Amazon before buying.</p>
+    <p class="mt-4 max-w-2xl text-lg text-slate-600">Discounts change fast. We only promote active offers on this page; expired deals are hidden here and shown as historical snapshots on product pages. Verify final price on Amazon before buying.</p>
   </section>
   <section class="mt-8 grid gap-6 lg:grid-cols-2">
-    {deals.map((deal) => <DealCard deal={deal} product={products.find((p) => p.data.slug === deal.data.productSlug)} />)}
+    {visibleDeals.length === 0 ? (
+      <p class="rounded-2xl bg-slate-50 p-6 text-slate-600">No active deals right now. Saved products stay on this device, and we re-check Amazon pricing regularly.</p>
+    ) : (
+      visibleDeals.map((deal) => <DealCard deal={deal} product={products.find((p) => p.data.slug === deal.data.productSlug)} />)
+    )}
   </section>
 </BaseLayout>

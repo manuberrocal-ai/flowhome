@@ -8,10 +8,14 @@ discountPct: 14
 category: smart-hub
 affiliateUrl: "https://www.amazon.com/dp/B08Y1PJZZH?tag=flowhome-20"
 image: "https://www.aqara.com/wp-content/uploads/2023/04/Hub-M2-Zigbee-supported.jpg"
-rating: 4.3
-reviewCount: 4300
-available: true
+ownerRating: 4.3
+ownerRatingCount: 4300
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "Aqara Hub M2"
 wifi: true
 bluetooth: true

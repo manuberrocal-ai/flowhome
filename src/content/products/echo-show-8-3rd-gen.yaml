@@ -8,10 +8,14 @@ discountPct: 0
 category: smart-display
 affiliateUrl: "https://www.amazon.com/dp/B0BLS3Y632?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B0BLS3Y632.01._SCLZZZZZZZ_.jpg"
-rating: 4.6
-reviewCount: 42000
-available: true
+ownerRating: 4.6
+ownerRatingCount: 42000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Echo Show 8 3rd Gen"
 wifi: true
 bluetooth: true

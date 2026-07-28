@@ -1,5 +1,6 @@
 ﻿---
 import { getCategoryLabel, getProductImage, getProductImageAlt, getProductFallbackImage } from '../lib/product-art';
+import { getCommerceData } from '../lib/commerce-data';
 
 interface Props { product: any; compact?: boolean; }
 const { product, compact = false } = Astro.props;
@@ -9,9 +10,10 @@ const productImage = getProductImage(data);
 const fallbackImage = getProductFallbackImage(data);
 const productImageAlt = getProductImageAlt(data);
 const categoryLabel = getCategoryLabel(data.category);
-const hasDeal = data.discountPct > 0 && data.originalPrice && data.originalPrice > data.price;
+const commerce = getCommerceData(data);
+const hasDeal = commerce.showPromotion;
 const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
-const rating = Number(data.rating ?? 0);
+const rating = Number(data.ownerRating ?? 0);
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
@@ -38,22 +40,23 @@ const roundedStars = Math.round(rating);
     <div>
       <p class="product-card-brand text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">{data.brand}</p>
       <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-700"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
-      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-700">{data.rating} / 5 from {data.reviewCount?.toLocaleString()} ratings</p>}
+      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-700">Amazon customer rating: {data.ownerRating} / 5 from {data.ownerRatingCount?.toLocaleString()} ratings{data.ratingLastChecked ? ` · checked ${data.ratingLastChecked}` : ''}</p>}
     </div>
 
     <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-700">
       <div class="flex items-end justify-between gap-3">
         <div>
-          <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">Amazon price</div>
+          <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">{commerce.priceLabel}</div>
           <div class="mt-0.5 text-2xl font-black leading-none text-slate-950">${data.price}</div>
           {hasDeal && <div class="mt-1 text-xs font-bold text-slate-400 line-through">${data.originalPrice}</div>}
+          {commerce.priceLastCheckedLabel && <div class="mt-1 text-[10px] font-semibold text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</div>}
         </div>
         <div class="product-card-stat-stack min-w-[4.6rem] text-right">
           {hasDeal && <div class="product-card-stat-line product-card-stat-line--deal text-lg font-black text-orange-600">
             <svg class="product-card-stat-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>
             -{data.discountPct}%
           </div>}
-          <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Rated ${data.rating} out of 5`}>
+          <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}>
             <span class="product-card-stars" aria-hidden="true">
               {Array.from({ length: 5 }, (_, index) => {
                 const starNumber = index + 1;
@@ -61,7 +64,7 @@ const roundedStars = Math.round(rating);
                 return <span class:list={["product-card-star", `product-card-star--${state}`]}>{'\u2605'}</span>;
               })}
             </span>
-            <span class="product-card-rating-value">{data.rating}</span>
+            <span class="product-card-rating-value">{data.ownerRating}</span>
           </div>
         </div>
       </div>
@@ -69,14 +72,14 @@ const roundedStars = Math.round(rating);
         {!compact && <a
           href={data.affiliateUrl}
           target="_blank"
-          rel="nofollow sponsored noopener"
+           rel="nofollow sponsored noopener noreferrer"
            data-asin={data.asin}
            data-product-slug={slug}
            data-category={data.category}
            data-discount={data.discountPct}
            data-cta-position="product_card"
           class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50"
-           aria-label={`View ${data.name} on Amazon`} data-fh-amazon-link data-fh-amazon-cta
+            aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta
         >
           <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="amazon-cta-compact-icon" aria-hidden="true"><svg viewBox="0 0 64 18"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>}
@@ -100,12 +103,13 @@ const roundedStars = Math.round(rating);
            data-category={data.category}
            data-cta-position="product_card_list"
            data-fh-track="list_add"
-          data-name={data.name}
+           data-name={data.name}
           data-price={data.price}
           data-image={productImage}
-          data-url={`/product/${slug}/`}
-          aria-label={`Add ${data.name} to FlowHome Amazon list`}
-          title="Add to list"
+           data-url={`/product/${slug}/`}
+           aria-label={`Add ${data.name} to your FlowHome list`}
+           aria-pressed="false"
+           title="Add to list"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span class="product-card-side-action-label" aria-hidden="true">Add to list</span>

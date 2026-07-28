@@ -8,10 +8,14 @@ discountPct: 17
 category: smart-lock
 affiliateUrl: "https://www.amazon.com/dp/B07HXMLCBT?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B07HXMLCBT.01._SCLZZZZZZZ_.jpg"
-rating: 4.5
-reviewCount: 16000
-available: true
+ownerRating: 4.5
+ownerRatingCount: 16000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Encode Smart WiFi Deadbolt"
 wifi: true
 bluetooth: false

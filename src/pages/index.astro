@@ -3,16 +3,21 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import DealCard from '../components/DealCard.astro';
+import { getDealStatus } from '../lib/deal-state';
 import Newsletter from '../components/Newsletter.astro';
 import { getCategoryLabel } from '../lib/product-art';
+import { getCommerceData } from '../lib/commerce-data';
 
-const products = (await getCollection('products')).sort((a, b) => (b.data.rating * Math.log10(b.data.reviewCount + 1) + b.data.discountPct / 20) - (a.data.rating * Math.log10(a.data.reviewCount + 1) + a.data.discountPct / 20));
-const deals = await getCollection('deals');
+const products = (await getCollection('products')).sort((a, b) => (b.data.ownerRating * Math.log10(b.data.ownerRatingCount + 1)) - (a.data.ownerRating * Math.log10(a.data.ownerRatingCount + 1)));
+const allDeals = await getCollection('deals');
+const now = new Date();
+const deals = allDeals.filter((d) => getDealStatus({ start: d.data.startDate, end: d.data.endDate }, now).status === 'active');
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.qualityScore - a.data.qualityScore || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredProducts = products.filter((p) => p.data.available).slice(0, 12);
+const featuredProducts = products.filter((p) => p.data.catalogActive).slice(0, 12);
 const showcaseProducts = featuredProducts.slice(0, 6);
-const dealProducts = products.filter((p) => p.data.discountPct > 0).slice(0, 4);
+const dealProducts = products.filter((p) => getCommerceData(p.data, now).showPromotion).slice(0, 4);
 const topProduct = showcaseProducts[0]?.data;
+const topCommerce = topProduct ? getCommerceData(topProduct, now) : undefined;
 const categories = [...new Set(products.map((p) => p.data.category))].slice(0, 7);
 const reviewCards = reviews.slice(0, 3);
 
@@ -37,6 +42,11 @@ const categoryQuotes: Record<string, string> = {
 };
 
 const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuotes[data.category] || 'This feels like a smart-home upgrade that actually earns its spot.';
+const heroProducts = showcaseProducts.map((product) => {
+  const data = product.data;
+  const commerce = getCommerceData(data, now);
+  return { id: product.id, slug: data.slug, title: data.name, image: data.image, alt: data.name, price: data.price, priceLabel: `$${data.price}`, priceContext: commerce.priceLabel, originalPrice: commerce.showPromotion ? data.originalPrice ?? null : null, ownerRating: data.ownerRating, ownerRatingCount: data.ownerRatingCount, ratingSource: data.ratingSource, badges: commerce.showPromotion ? [`Save ${data.discountPct}%`] : [], detailsUrl: `/product/${data.slug}/`, amazonUrl: data.affiliateUrl, affiliateDisclosure: 'Affiliate link', category: getCategoryLabel(data.category), discountPct: commerce.showPromotion ? data.discountPct : 0, quote: getShopperQuote(data) };
+});
 ---
 <BaseLayout>
   <section class="hero-parallax relative isolate overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-2xl shadow-blue-950/20">
@@ -54,8 +64,8 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
         </div>
         {topProduct && <div class="mt-7 flex max-w-xl flex-wrap gap-2 text-sm">
           <span class="rounded-full bg-white/10 px-3 py-1.5 font-bold text-blue-50 ring-1 ring-white/15">Top pick: {topProduct.name}</span>
-          <span class="rounded-full bg-orange-500/20 px-3 py-1.5 font-bold text-orange-100 ring-1 ring-orange-300/20">From ${topProduct.price}</span>
-          <span class="rounded-full bg-white/10 px-3 py-1.5 font-bold text-blue-50 ring-1 ring-white/15">{topProduct.rating} / 5 rating</span>
+          <span class="rounded-full bg-orange-500/20 px-3 py-1.5 font-bold text-orange-100 ring-1 ring-orange-300/20">{topCommerce?.priceLabel}: ${topProduct.price}</span>
+          <span class="rounded-full bg-white/10 px-3 py-1.5 font-bold text-blue-50 ring-1 ring-white/15">Amazon customer rating: {topProduct.ownerRating} / 5</span>
         </div>}
       </div>
 
@@ -63,73 +73,68 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
         <div class="relative overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-100 p-3 text-slate-950">
           <div class="flex items-center justify-between gap-3 px-2 pb-3">
             <div>
-              <p class="text-[11px] font-black uppercase tracking-[0.2em] text-orange-600">Live shortlist</p>
+              <p class="text-[11px] font-black uppercase tracking-[0.2em] text-orange-600">Editorial shortlist</p>
               <h2 class="text-lg font-black">Featured products</h2>
             </div>
             <a href="/deals/" class="flow-wave rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-sm shadow-orange-300/50 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500">Deals</a>
           </div>
 
-          <div class="hero-showcase relative min-h-[462px]" data-hero-showcase>
-            {showcaseProducts.map((product, index) => {
-              const data = product.data;
-              const categoryLabel = getCategoryLabel(data.category);
-              const hasDeal = data.discountPct > 0 && data.originalPrice && data.originalPrice > data.price;
-              return <article class:list={["hero-slide absolute inset-0 grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-500", index === 0 ? 'is-active opacity-100 translate-x-0' : 'pointer-events-none opacity-0 translate-x-6']} data-hero-slide={index}>
+           <div class="hero-showcase relative min-h-[462px]" data-hero-showcase>
+             {heroProducts[0] && <article class="hero-slide absolute inset-0 grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-500" data-hero-slide tabindex="0">
                 <div class="min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
-                    <p class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-blue-700">{categoryLabel}</p>
+                    <p data-hero-field="category" class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-blue-700">{heroProducts[0].category}</p>
+                    <div data-hero-field="badges" class="flex flex-wrap gap-2">{heroProducts[0].badges.map((badge) => <span>{badge}</span>)}</div>
                   </div>
-                  <h3 class="mt-1.5 max-w-full text-[1.36rem] font-black leading-[1.02] tracking-tight text-slate-950 md:text-[1.52rem]">{data.name}</h3>
+                  <h3 data-hero-field="title" class="mt-1.5 max-w-full text-[1.36rem] font-black leading-[1.02] tracking-tight text-slate-950 md:text-[1.52rem]">{heroProducts[0].title}</h3>
                 </div>
 
                 <div class="hero-product-stage hero-sync-wave relative min-h-[20.25rem] overflow-hidden rounded-[1.25rem] bg-[#f8fafc] p-0 ring-1 ring-slate-200/70 md:min-h-[22rem]">
-                  <a href={`/product/${data.slug}/`} class="hero-product-photo flex h-full min-h-[20.25rem] items-center justify-start rounded-[1.25rem] bg-white md:min-h-[22rem]" aria-label={`View ${data.name}`}>
-                    <img src={data.image} alt={data.name} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchpriority={index === 0 ? 'high' : 'low'} />
+                   <a data-hero-photo-link href={heroProducts[0].detailsUrl} class="hero-product-photo flex h-full min-h-[20.25rem] items-center justify-start rounded-[1.25rem] bg-white md:min-h-[22rem]" aria-label={`View ${heroProducts[0].title}`}>
+                     <img data-hero-image src={heroProducts[0].image} alt={heroProducts[0].alt} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading="eager" decoding="async" fetchpriority="high" />
                   </a>
 
 
-                  {hasDeal && <div class="flow-wave absolute right-4 top-[2.35rem] z-50 flex h-[4.1rem] w-[7.05rem] flex-col items-center justify-center rounded-[1.35rem] bg-gradient-to-br from-blue-950 via-blue-700 to-cyan-500 px-3 py-2 text-center text-white shadow-xl shadow-blue-950/25 ring-1 ring-cyan-200/60">
-                    <span class="text-[9px] font-black uppercase leading-none tracking-[0.14em] text-cyan-100">Save today</span>
-                    <span class="mt-1 text-[1.65rem] font-black leading-none tracking-tight">-{data.discountPct}%</span>
-                  </div>}
+                    <div data-hero-field="discount" class="flow-wave absolute right-4 top-[2.35rem] z-50 rounded-[1.35rem] bg-blue-950 px-3 py-2 text-white" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</div>
 
-                  <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${data.name} price on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="home_hero">
-                    <p class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">Amazon price</p>
+                   <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
+                    <p data-hero-field="price-context" class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">{heroProducts[0].priceContext}</p>
                     <div class="mt-1 flex flex-wrap items-end gap-x-2 gap-y-1">
-                      <p class="text-[1.52rem] font-black leading-none tracking-tight text-white">${data.price}</p>
-                      {hasDeal && <p class="pb-0.5 text-[13px] font-bold text-slate-400 line-through">${data.originalPrice}</p>}
+                       <p data-hero-field="price" class="text-[1.52rem] font-black leading-none tracking-tight text-white">{heroProducts[0].priceLabel}</p>
+                        <p data-hero-field="original-price" class="pb-0.5 text-[13px] font-bold text-slate-400 line-through" hidden={heroProducts[0].originalPrice == null}>{heroProducts[0].originalPrice && `$${heroProducts[0].originalPrice}`}</p>
                     </div>
                     <div class="mt-2.5 flex items-center justify-between gap-2 border-t border-white/10 pt-2.5">
-                      <div class="flex items-center gap-0.5" aria-label={`Rated ${data.rating} out of 5 stars`}>
-                        {Array.from({ length: 5 }).map((_, starIndex) => (
-                          <svg class:list={["hero-star h-3.5 w-3.5", starIndex < Math.round(data.rating) ? "text-amber-300" : "text-slate-600"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                         <div data-hero-rating-stars class="flex items-center gap-0.5" aria-label={`Amazon customer rating ${heroProducts[0].ownerRating} out of 5 stars`}>
+                         {Array.from({ length: 5 }).map((_, starIndex) => (
+                             <svg data-hero-star class:list={["hero-star h-3.5 w-3.5", starIndex < Math.round(heroProducts[0].ownerRating) ? "text-amber-300" : "text-slate-600"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.801 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 0 0 .95-.69l1.07-3.292Z" />
                           </svg>
                         ))}
                       </div>
-                      <span class="text-[11px] font-black text-amber-200">{data.rating}</span>
-                    </div>
+                            <span data-hero-field="rating" class="text-[11px] font-black text-amber-200">{heroProducts[0].ownerRating}</span>
+                             <span data-hero-field="rating-count" class="text-[11px] text-slate-300">({heroProducts[0].ownerRatingCount})</span>
+                     </div><p data-hero-field="rating-source" class="mt-1 text-[9px] text-slate-400">{heroProducts[0].ratingSource}</p>
                     <span class="flow-wave amazon-cta-button mt-2.5 block rounded-xl px-3 py-2 text-center text-xs font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
                   </a>
                 </div>
 
                 <div class="grid gap-1.5">
                   <p class="rounded-2xl border border-sky-100 bg-sky-50/80 px-3.5 py-2 text-sm font-bold italic leading-5">
-                    <span class="bg-clip-text text-transparent [background-image:linear-gradient(90deg,#0f2a52,#06b6d4)]">"{getShopperQuote(data)}"</span>
+                     <span data-hero-field="quote" class="bg-clip-text text-transparent [background-image:linear-gradient(90deg,#0f2a52,#06b6d4)]">"{heroProducts[0].quote}"</span>
                   </p>
                 </div>
-              </article>;
-            })}
-          </div>
+             </article>}
+           </div>
+           <p data-hero-live class="sr-only" aria-live="polite"></p>
 
           <div class="mt-3 flex items-center justify-between gap-4 px-1">
             <div class="flex gap-1" aria-label="Choose featured product">
               {showcaseProducts.map((product, index) => <button class="hero-dot group grid h-11 w-11 place-items-center rounded-full p-0" type="button" data-hero-dot={index} aria-label={`Show ${product.data.name}`} aria-pressed={index === 0 ? 'true' : 'false'} aria-current={index === 0 ? 'true' : 'false'}><span class:list={["block h-2.5 rounded-full transition-all group-focus-visible:opacity-80", index === 0 ? 'w-8 bg-orange-500' : 'w-2.5 bg-slate-300 group-hover:bg-slate-400']}></span></button>)}
             </div>
             <div class="flex items-center gap-2">
-              <a href={showcaseProducts[0] ? `/product/${showcaseProducts[0].data.slug}/` : '/products/'} class="hero-details-link inline-flex h-11 items-center justify-center rounded-full bg-slate-100 px-4 text-xs font-black text-slate-950 hover:bg-slate-200">Details</a>
-              <button type="button" class="hero-prev grid h-11 w-11 place-items-center rounded-full bg-slate-100 font-black text-slate-700 hover:bg-slate-200" aria-label="Previous product"><</button>
-              <button type="button" class="hero-next grid h-11 w-11 place-items-center rounded-full bg-slate-950 font-black text-white hover:bg-slate-800" aria-label="Next product">></button>
+               <a data-hero-details href={heroProducts[0]?.detailsUrl || '/products/'} class="hero-details-link inline-flex h-11 items-center justify-center rounded-full bg-slate-100 px-4 text-xs font-black text-slate-950 hover:bg-slate-200">Details</a>
+               <button type="button" class="hero-prev grid h-11 w-11 place-items-center rounded-full bg-slate-100 font-black text-slate-700 hover:bg-slate-200" aria-label="Previous product"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+               <button type="button" class="hero-next grid h-11 w-11 place-items-center rounded-full bg-slate-950 font-black text-white hover:bg-slate-800" aria-label="Next product"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
             </div>
           </div>
         </div>
@@ -219,70 +224,12 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
 
   <section class="mt-12"><Newsletter source="home" /></section>
 
+  <script type="application/json" id="hero-products" set:html={JSON.stringify(heroProducts).replaceAll('<', '\\u003c')}></script>
   <script>
-    (() => {
-      const root = document.querySelector('[data-hero-showcase]');
-      if (!root) return;
-      const slides = Array.from(root.querySelectorAll('[data-hero-slide]'));
-      const dots = Array.from(document.querySelectorAll('[data-hero-dot]'));
-      const prev = document.querySelector('.hero-prev');
-      const next = document.querySelector('.hero-next');
-      const details = document.querySelector('.hero-details-link');
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let active = 0;
-      let timer;
-
-
-      function markImageRatio(image) {
-        if (!image || !image.naturalWidth || !image.naturalHeight) return;
-        const ratio = image.naturalHeight / image.naturalWidth;
-        image.classList.toggle('is-portrait', ratio >= 1.12);
-        image.classList.toggle('is-wide', ratio <= 0.78);
-        image.classList.toggle('is-squareish', ratio > 0.78 && ratio < 1.12);
-      }
-
-      root.querySelectorAll('.hero-product-image').forEach((image) => {
-        if (image.complete) markImageRatio(image);
-        image.addEventListener('load', () => markImageRatio(image), { once: true });
-      });
-
-      function show(index) {
-        active = (index + slides.length) % slides.length;
-        slides.forEach((slide, i) => {
-          const isActive = i === active;
-          slide.classList.toggle('is-active', isActive);
-          slide.classList.toggle('opacity-100', isActive);
-          slide.classList.toggle('translate-x-0', isActive);
-          slide.classList.toggle('pointer-events-none', !isActive);
-          slide.classList.toggle('opacity-0', !isActive);
-          slide.classList.toggle('translate-x-6', !isActive);
-        });
-        dots.forEach((dot, i) => {
-          const isActive = i === active;
-          const indicator = dot.firstElementChild;
-          indicator?.classList.toggle('w-8', isActive);
-          indicator?.classList.toggle('w-2.5', !isActive);
-          indicator?.classList.toggle('bg-orange-500', isActive);
-          indicator?.classList.toggle('bg-slate-300', !isActive);
-          dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-        });
-        const activeSlide = slides[active];
-        const productLink = activeSlide?.querySelector('a[href^="/product/"]');
-        if (details && productLink) details.setAttribute('href', productLink.getAttribute('href') || '/products/');
-      }
-
-      function restart() {
-        if (timer) window.clearInterval(timer);
-        if (!reduceMotion && slides.length > 1) timer = window.setInterval(() => show(active + 1), 4300);
-      }
-
-      dots.forEach((dot, index) => dot.addEventListener('click', () => { show(index); restart(); }));
-      prev?.addEventListener('click', () => { show(active - 1); restart(); });
-      next?.addEventListener('click', () => { show(active + 1); restart(); });
-      restart();
-
-    })();
+    import { setupHeroCarousel } from '../lib/hero-carousel.js';
+    const root = document.querySelector('[data-hero-showcase]');
+    const payload = document.getElementById('hero-products');
+    if (root && payload) setupHeroCarousel({ root, products: JSON.parse(payload.textContent || '[]') });
   </script>
 
   <script>
@@ -347,6 +294,11 @@ const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuote
       mix-blend-mode: normal !important;
       opacity: 1 !important;
       box-shadow: none !important;
+    }
+
+    .hero-showcase[data-reduced-motion="true"] .hero-slide,
+    .hero-showcase[data-reduced-motion="true"] .hero-dot span {
+      transition: none !important;
     }
 
     .hero-showcase .hero-product-photo {

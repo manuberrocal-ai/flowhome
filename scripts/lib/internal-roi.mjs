@@ -31,8 +31,8 @@ export function estimateCommission(product) {
 
 export function evaluateInternalProduct(product, phase = 'seed') {
   const price = Number(product.price || 0);
-  const rating = Number(product.rating || 0);
-  const reviewCount = Number(product.reviewCount || 0);
+  const ownerRating = Number(product.ownerRating || 0);
+  const ownerRatingCount = Number(product.ownerRatingCount || 0);
   const discountPct = Number(product.discountPct || 0);
   const commission = estimateCommission(product);
   const minCommission = MIN_COMMISSION[phase] ?? MIN_COMMISSION.seed;
@@ -49,11 +49,11 @@ export function evaluateInternalProduct(product, phase = 'seed') {
   if (price >= 80 && price <= 600) { score += 20; reasons.push('healthy ticket size'); }
   else if (price >= 35) { score += 10; reasons.push('acceptable ticket size'); }
 
-  if (rating >= 4.5) { score += 15; reasons.push('strong rating'); }
-  else if (rating >= 4.2) { score += 10; reasons.push('solid rating'); }
+  if (ownerRating >= 4.5) { score += 15; reasons.push('strong Amazon customer rating'); }
+  else if (ownerRating >= 4.2) { score += 10; reasons.push('solid Amazon customer rating'); }
 
-  if (reviewCount >= 10000) { score += 15; reasons.push('high review volume'); }
-  else if (reviewCount >= 2500) { score += 10; reasons.push('meaningful review volume'); }
+  if (ownerRatingCount >= 10000) { score += 15; reasons.push('high Amazon customer rating volume'); }
+  else if (ownerRatingCount >= 2500) { score += 10; reasons.push('meaningful Amazon customer rating volume'); }
 
   if (discountPct >= 30) { score += 10; reasons.push('strong deal angle'); }
   else if (discountPct >= 15) { score += 5; reasons.push('moderate deal angle'); }
@@ -63,7 +63,7 @@ export function evaluateInternalProduct(product, phase = 'seed') {
     reasons.push('clear ecosystem compatibility');
   }
 
-  const approved = commission >= minCommission && rating >= 4.1 && reviewCount >= 1000;
+  const approved = commission >= minCommission && ownerRating >= 4.1 && ownerRatingCount >= 1000;
   const tier = score >= 80 ? 'lead' : score >= 65 ? 'test' : score >= 50 ? 'watchlist' : 'reject';
 
   return {
@@ -71,8 +71,8 @@ export function evaluateInternalProduct(product, phase = 'seed') {
     name: product.name,
     category: product.category,
     price,
-    rating,
-    reviewCount,
+    ownerRating,
+    ownerRatingCount,
     discountPct,
     estimatedCommission: commission,
     phase,

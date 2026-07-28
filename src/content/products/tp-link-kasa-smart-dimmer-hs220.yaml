@@ -8,10 +8,14 @@ discountPct: 17
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B079775ZZQ?tag=flowhome-20"
 image: "https://m.media-amazon.com/images/P/B079775ZZQ.01._SCLZZZZZZZ_.jpg"
-rating: 4.6
-reviewCount: 28000
-available: true
+ownerRating: 4.6
+ownerRatingCount: 28000
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "HS220"
 wifi: true
 bluetooth: false

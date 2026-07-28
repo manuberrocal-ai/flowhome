@@ -8,10 +8,14 @@ discountPct: 25
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B08WZN4JW2?tag=flowhome-20"
 image: "https://www.wyze.com/cdn/shop/files/wyze-bulb-color-wyze-labs-inc-733750.png?v=1762447654"
-rating: 4.4
-reviewCount: 9800
-available: true
+ownerRating: 4.4
+ownerRatingCount: 9800
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-28"
+catalogActive: true
 dateUpdated: "2026-06-28"
+priceLastChecked: "2026-06-28"
+priceSource: "manual"
 model: "Wyze Bulb Color"
 wifi: true
 bluetooth: true

@@ -1,6 +1,4 @@
-﻿/**
- * SEO Utilities - Meta tags, Schema.org JSON-LD, sitemap helpers
- */
+﻿import { getCommerceData } from './commerce-data.ts';
 
 export interface SEOConfig {
   title: string;
@@ -47,12 +45,21 @@ export function generateMetaTags(config: SEOConfig) {
   ];
 }
 
-export function generateProductSchema(product: any) {
+export function generateProductSchema(product: any, now = new Date()) {
   const SITE = 'https://flowhome.dev';
   const toAbsolute = (url: string) => {
     if (!url) return '';
     return url.startsWith('http') ? url : new URL(url, SITE).href;
   };
+  const commerce = getCommerceData(product, now);
+  const offer = commerce.hasOffer ? {
+    '@type': 'Offer',
+    price: product.price,
+    priceCurrency: 'USD',
+    url: product.affiliateUrl,
+    ...(commerce.priceValidUntil ? { priceValidUntil: commerce.priceValidUntil } : {}),
+    ...(commerce.availability ? { availability: commerce.availability } : {}),
+  } : undefined;
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -63,38 +70,44 @@ export function generateProductSchema(product: any) {
       name: product.brand || 'Unknown',
     },
     image: toAbsolute(product.image || '/images/og-default.svg'),
-    offers: {
-      '@type': 'Offer',
-      price: product.price,
-      priceCurrency: 'USD',
-      availability: product.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: product.affiliateUrl,
-    },
-    ...(product.rating ? {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount || 0,
-      },
-    } : {}),
+    ...(product.slug ? { url: `https://flowhome.dev/product/${product.slug}/` } : {}),
+    ...(offer ? { offers: offer } : {}),
   };
 }
 
-export function generateReviewSchema(review: any, product: any) {
+export function generateReviewSchema(review: any, product: any, now = new Date()) {
+  const rating = Number(review.editorialRating);
+  const scale = Number(review.editorialRatingScale ?? 5);
+  const hasEditorialRating = Number.isFinite(rating) && Number.isFinite(scale) && scale > 0 && rating > 0 && rating <= scale;
+  const { '@context': _context, ...itemReviewed } = generateProductSchema(product, now);
   return {
     '@context': 'https://schema.org',
     '@type': 'Review',
-    itemReviewed: generateProductSchema(product),
+    itemReviewed,
     author: {
       '@type': 'Organization',
-      name: 'FlowHome',
+      name: 'FlowHome Editorial Team',
     },
-    reviewRating: {
+    ...(hasEditorialRating ? { reviewRating: {
       '@type': 'Rating',
-      ratingValue: product.rating || 4.5,
-      bestRating: '5',
-    },
+      ratingValue: rating,
+      bestRating: String(scale),
+    } } : {}),
     datePublished: review.pubDate,
+  };
+}
+
+export function generateItemListSchema(products: any[], url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `https://flowhome.dev/product/${product.slug}/`,
+      name: product.name,
+    })),
+    url,
   };
 }
 

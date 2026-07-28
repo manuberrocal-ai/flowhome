@@ -8,10 +8,14 @@ discountPct: 8
 category: smart-lock
 affiliateUrl: "https://www.amazon.com/dp/B0CPLS7F28?tag=flowhome-20"
 image: "https://images.thdstatic.com/productImages/a1a306c9-bf7e-426c-820b-195ed60ce0f8/svn/yale-electronic-deadbolts-yrd420-wf1-619-64_600.jpg"
-rating: 4.3
-reviewCount: 7600
-available: true
+ownerRating: 4.3
+ownerRatingCount: 7600
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Assure Lock 2 Wi-Fi"
 wifi: true
 bluetooth: true

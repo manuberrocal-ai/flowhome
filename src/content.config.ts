@@ -1,5 +1,6 @@
 ﻿import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { CANONICAL_CATEGORIES, RELATIONSHIP_TYPES } from './lib/product-taxonomy';
 
 const productsCollection = defineCollection({
   loader: glob({ base: './src/content/products', pattern: '**/*.{yaml,yml}' }),
@@ -11,12 +12,27 @@ const productsCollection = defineCollection({
     price: z.number(),
     originalPrice: z.number().optional(),
     discountPct: z.number().default(0),
-    category: z.string(),
+    category: z.enum(CANONICAL_CATEGORIES),
+    relationships: z.array(z.object({
+      type: z.enum(RELATIONSHIP_TYPES),
+      targetSlug: z.string(),
+      label: z.string().optional(),
+      source: z.string().optional(),
+      verifiedAt: z.string().optional(),
+    })).default([]),
     affiliateUrl: z.string(),
     image: z.string().optional(),
-    rating: z.number().default(0),
-    reviewCount: z.number().default(0),
-    available: z.boolean().default(true),
+    ownerRating: z.number().default(0),
+    ownerRatingCount: z.number().default(0),
+    ratingSource: z.string(),
+    ratingLastChecked: z.string(),
+    catalogActive: z.boolean().default(true),
+    priceLastChecked: z.string(),
+    priceSource: z.enum(['manual', 'amazon-creators-api', 'affiliate-feed']),
+    priceValidUntil: z.string().optional(),
+    availabilityStatus: z.enum(['in-stock', 'out-of-stock', 'preorder', 'discontinued']).optional(),
+    availabilityLastChecked: z.string().optional(),
+    availabilitySource: z.string().optional(),
     dateUpdated: z.string(),
 
     // General
@@ -96,6 +112,8 @@ const reviewsCollection = defineCollection({
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     qualityScore: z.number().default(0),
+    editorialRating: z.number().optional(),
+    editorialRatingScale: z.number().optional(),
   }),
 });
 

@@ -5,13 +5,17 @@ brand: "Aqara"
 price: 24.99
 originalPrice: 24.99
 discountPct: 0
-category: smart-hub
+category: motion-sensor
 affiliateUrl: "https://www.amazon.com/dp/B09QXPBRM2?tag=flowhome-20"
 image: "https://us.aqara.com/cdn/shop/files/Aqara_Motion_Sensor_P1.webp?v=1728699321"
-rating: 4.4
-reviewCount: 4200
-available: true
+ownerRating: 4.4
+ownerRatingCount: 4200
+ratingSource: "Amazon customer ratings"
+ratingLastChecked: "2026-06-29"
+catalogActive: true
 dateUpdated: "2026-06-29"
+priceLastChecked: "2026-06-29"
+priceSource: "manual"
 model: "Motion Sensor P1"
 wifi: false
 bluetooth: false

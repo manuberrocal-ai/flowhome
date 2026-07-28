@@ -16,8 +16,8 @@ export interface Product {
   price: number;
   originalPrice?: number;
   category: string;
-  rating: number;
-  reviewCount: number;
+  ownerRating: number;
+  ownerRatingCount: number;
   discountPct?: number;
   trendScore?: number;
 }
@@ -54,15 +54,15 @@ export function evaluateProduct(
   if (discountPct > 30) score += 20;
   else if (discountPct > 20) score += 10;
 
-  if (product.rating > 4.5) score += 15;
-  else if (product.rating > 4.0) score += 8;
+  if (product.ownerRating > 4.5) score += 15;
+  else if (product.ownerRating > 4.0) score += 8;
 
   const trendScore = product.trendScore || 0;
   if (trendScore > 70) score += 25;
   else if (trendScore > 40) score += 12;
 
-  if (product.reviewCount > 1000) score += 10;
-  else if (product.reviewCount > 500) score += 5;
+  if (product.ownerRatingCount > 1000) score += 10;
+  else if (product.ownerRatingCount > 500) score += 5;
 
   if (product.price >= 200 && product.price <= 600) score += 20;
   else if (product.price >= 100 && product.price < 200) score += 10;
