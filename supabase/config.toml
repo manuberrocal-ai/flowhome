@@ -1,0 +1,8 @@
+[functions.lifecycle-worker]
+verify_jwt = false
+
+[functions.lifecycle-webhook]
+verify_jwt = false
+
+[functions.lifecycle-unsubscribe]
+verify_jwt = false

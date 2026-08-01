@@ -11,12 +11,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p>We use local storage for your FlowHome cart, account and authentication state, and this versioned consent preference. These features are necessary to keep your list and chosen settings working on this device.</p>
       <h2>Optional analytics</h2>
       <p>If you accept, FlowHome loads GTM and Microsoft Clarity to measure site interactions such as Amazon outbound clicks, comparison opens, quiz choices, calculator use, and RSS follows. They are not loaded and no analytics events are sent before acceptance. Rejecting or revoking consent stops FlowHome from sending further optional analytics events.</p>
+      <h2>Optional lifecycle email</h2>
+      <p>Email preferences are separate from analytics consent. FlowHome only stores lifecycle preferences after explicit email consent, and an email preference never enables GTM or Clarity. You can unsubscribe immediately, export, or delete lifecycle data from <a href="/preferences/">email preferences</a>. RSS remains available without an account or email.</p>
       <h2>Amazon links</h2>
       <p>Some links take you to Amazon. Amazon may set or read its own cookies under its privacy policy. FlowHome may earn from qualifying purchases, at no extra cost to you.</p>
     </div>
     <div class="mt-8 flex flex-wrap gap-3">
-      <button type="button" class="min-h-11 rounded-xl bg-slate-950 px-4 py-2 font-bold text-white" data-consent-action="accept">Accept optional analytics</button>
-      <button type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 font-bold text-slate-800" data-consent-action="reject">Reject optional analytics</button>
+      <button type="button" class="min-h-11 rounded-xl bg-slate-950 px-4 py-2 font-bold text-white" data-consent-action="accepted">Accept optional analytics</button>
+      <button type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 font-bold text-slate-800" data-consent-action="rejected">Reject optional analytics</button>
       <button type="button" class="min-h-11 rounded-xl border border-red-200 px-4 py-2 font-bold text-red-800" data-consent-action="revoke">Revoke consent</button>
     </div>
   </article>

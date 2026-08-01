@@ -1,4 +1,18 @@
 ﻿User-agent: *
 Allow: /
+Disallow: /account/
+Disallow: /cart/
+Disallow: /search/
+
+# Search assistants may cite the same public pages as other crawlers.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /account/
+Disallow: /cart/
+Disallow: /search/
+
+# GPTBot is not part of FlowHome's current assistant-crawling decision.
+User-agent: GPTBot
+Disallow: /
 
 Sitemap: https://flowhome.dev/sitemap-index.xml

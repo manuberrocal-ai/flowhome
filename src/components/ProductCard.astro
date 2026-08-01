@@ -17,16 +17,22 @@ const rating = Number(data.ownerRating ?? 0);
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
+type StarState = 'full' | 'half' | 'empty';
+const stars = Array.from({ length: 5 }, (_, index) => {
+  const starNumber = index + 1;
+  const state: StarState = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty'));
+  return { index, state };
+});
 ---
-<article class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
-  <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-700" aria-label={`Read the ${data.name} product profile`}>
+<article class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
+  <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-200" aria-label={`Read the ${data.name} product profile`}>
     <div class="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</div>
     {!hasDeal && data.priority === 'featured' && <div class="absolute right-3 top-3 z-10 rounded-full bg-blue-600 px-3 py-1 text-xs font-black text-white shadow-lg shadow-blue-200">Top pick</div>}
     <div class="product-card-media flex h-44 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white p-1 shadow-inner shadow-slate-100 ring-1 ring-white/80">
       <img
         src={productImage}
         alt={productImageAlt}
-        class="product-card-image h-full max-h-none w-full object-contain drop-shadow-sm transition duration-[1150ms] ease-out"
+        class="product-card-image h-full max-h-none w-full object-contain drop-shadow-sm transition duration-200 ease-out"
         loading="lazy"
         decoding="async"
         fetchpriority="low"
@@ -36,14 +42,14 @@ const roundedStars = Math.round(rating);
       />
     </div>
   </a>
-  <div class="product-card-body flex flex-1 flex-col space-y-3 p-4 pt-3 transition-all duration-700">
+  <div class="product-card-body flex flex-1 flex-col space-y-3 p-4 pt-3 transition-all duration-200">
     <div>
       <p class="product-card-brand text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">{data.brand}</p>
-      <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-700"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
-      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-700">Amazon customer rating: {data.ownerRating} / 5 from {data.ownerRatingCount?.toLocaleString()} ratings{data.ratingLastChecked ? ` · checked ${data.ratingLastChecked}` : ''}</p>}
+      <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-200"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
+      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-200">Amazon customer rating: {data.ownerRating} / 5 from {data.ownerRatingCount?.toLocaleString()} ratings{data.ratingLastChecked ? ` · checked ${data.ratingLastChecked}` : ''}</p>}
     </div>
 
-    <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-700">
+    <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-200">
       <div class="flex items-end justify-between gap-3">
         <div>
           <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">{commerce.priceLabel}</div>
@@ -58,11 +64,7 @@ const roundedStars = Math.round(rating);
           </div>}
           <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}>
             <span class="product-card-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, index) => {
-                const starNumber = index + 1;
-                const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty'));
-                return <span class:list={["product-card-star", `product-card-star--${state}`]}>{'\u2605'}</span>;
-              })}
+              {stars.map(({ index, state }) => <span data-star-index={index} class:list={["product-card-star", `product-card-star--${state}`]}>{'\u2605'}</span>)}
             </span>
             <span class="product-card-rating-value">{data.ownerRating}</span>
           </div>

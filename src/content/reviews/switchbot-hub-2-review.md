@@ -19,7 +19,7 @@ This is an editorial interpretation of FlowHome's product data rather than an in
 
 The SwitchBot Hub 2 profile names the model Hub 2 and lists Wi-Fi and Bluetooth connectivity. It lists Matter as supported and Zigbee as not supported. The profile also lists Alexa, Google Home, Apple HomeKit, and app control. Those facts make protocol selection the most important part of evaluating this hub.
 
-The catalog record lists an original price and current price of $69.99, a zero percent discount, and availability marked true. It does not list energy monitoring, night vision, two-way audio, mopping, LiDAR mapping, RGB, or dimming. It also lists no subscription requirement. Those fields help define what this structured record does and does not claim; they are not a substitute for checking the manufacturer's current documentation for a specific device pairing.
+The catalog record lists an original price and current price of $69.99 with a zero percent discount. It does not list energy monitoring, night vision, two-way audio, mopping, LiDAR mapping, RGB, or dimming. It also lists no subscription requirement. Those fields help define what this structured record does and does not claim; they are not a substitute for checking the manufacturer's current documentation for a specific device pairing.
 
 ## Pros and cons
 

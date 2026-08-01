@@ -10,7 +10,9 @@ export async function getStaticPaths() {
 
 const { list } = Astro.props;
 const products = await getCollection('products');
-const selected = list.data.productSlugs.map((slug) => products.find((p) => p.data.slug === slug)).filter(Boolean);
+const selected = list.data.productSlugs
+  .map((slug) => products.find((product) => product.data.slug === slug))
+  .filter((product): product is (typeof products)[number] => Boolean(product));
 const reviews = await getCollection('reviews');
 const relevantReviews = reviews.filter((review) => review.data.category === list.data.category || selected.some((product) => product.data.slug === review.data.productSlug));
 ---

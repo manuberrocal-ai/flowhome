@@ -1,12 +1,14 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { getProductImage, getProductImageAlt, getCategoryLabel } from '../lib/product-art';
-import { generateReviewSchema, generateBreadcrumbSchema } from '../lib/seo';
+import { getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../lib/product-art';
+import { generateReviewSchema, generateBreadcrumbSchema, getValidEditorialRating } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 import { getCollection } from 'astro:content';
 import RelatedProducts from '../components/RelatedProducts.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { selectDirectAlternatives } from '../lib/product-taxonomy';
 import { getCommerceData } from '../lib/commerce-data';
+import { getEditorialMetadata, EDITORIAL_TEAM } from '../lib/editorial';
 
 interface Props {
   review: any;
@@ -16,19 +18,24 @@ interface Props {
 const { review, product } = Astro.props;
 const productImage = product ? getProductImage(product) : undefined;
 const productAlt = product ? getProductImageAlt(product) : review.title;
+const productFallback = product ? getProductFallbackImage(product) : undefined;
 const categoryLabel = getCategoryLabel(review.category ?? product?.category);
 const reviewDate = review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const updatedDate = review.updatedDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const editorial = getEditorialMetadata({ authorId: review.authorId, reviewedBy: review.reviewedBy, humanReviewedDate: review.humanReviewedDate, sources: review.sources });
+const editorialRating = getValidEditorialRating(review);
 const reviewSchema = product ? generateReviewSchema(review, product) : undefined;
 const commerce = product ? getCommerceData(product) : undefined;
 const allProducts = product ? await getCollection('products') : [];
 const alternatives = product ? selectDirectAlternatives(product, allProducts, 4) : [];
 const allGuides = product ? await getCollection('best-of') : [];
 const relevantGuides = allGuides.filter((guide) => guide.data.category === (product?.category ?? review.category));
-const breadcrumbSchema = generateBreadcrumbSchema([
-  { name: 'Home', url: 'https://flowhome.dev/' },
-  { name: 'Reviews', url: 'https://flowhome.dev/reviews/' },
+const breadcrumbItems = [
+  { name: 'Home', href: '/', url: 'https://flowhome.dev/' },
+  { name: 'Reviews', href: '/reviews/', url: 'https://flowhome.dev/reviews/' },
   { name: review.title, url: `https://flowhome.dev/review/${review.slug}/` },
-]);
+];
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, url }) => ({ name, url })));
 ---
 
 <BaseLayout
@@ -40,6 +47,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 >
   {reviewSchema && <script type="application/ld+json" set:html={serializeJsonLd(reviewSchema)} />}
   <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
+  <Breadcrumbs items={breadcrumbItems.map(({ name, href }) => ({ name, href }))} />
   <header class="premium-page-hero">
     <div class="grid items-center gap-8 lg:grid-cols-[1.35fr_0.65fr]">
       <div>
@@ -47,7 +55,11 @@ const breadcrumbSchema = generateBreadcrumbSchema([
         <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{review.title}</h1>
         <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{review.description}</p>
         <div class="mt-6 flex flex-wrap items-center gap-3 text-sm font-bold text-slate-600">
+          {editorial.author && <a href={editorial.author.profileUrl} class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">By {editorial.author.name}</a>}
           {reviewDate && <span class="rounded-full border border-slate-200 bg-white px-4 py-2">Published {reviewDate}</span>}
+          {updatedDate && <span class="rounded-full border border-slate-200 bg-white px-4 py-2">Content updated {updatedDate}</span>}
+           {editorial.humanReviewedDate && <span class="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-emerald-700">Human reviewed {new Date(editorial.humanReviewedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+          {editorialRating && <span class="rounded-full border border-violet-100 bg-violet-50 px-4 py-2 text-violet-700">Editorial rating: {editorialRating.rating}/{editorialRating.scale}</span>}
           <span class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">Editorial buying guide</span>
           <span class="rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-amber-700">Affiliate disclosure included</span>
         </div>
@@ -55,7 +67,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
       {product && (
         <aside class="premium-card p-5">
           <div class="rounded-3xl bg-slate-50 p-4">
-            <img src={productImage} alt={productAlt} class="mx-auto h-48 w-full object-contain" width="640" height="480" loading="eager" decoding="async" fetchpriority="high" />
+            <img src={productImage} alt={productAlt} class="mx-auto h-48 w-full object-contain" width="640" height="480" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={productFallback} />
           </div>
           <p class="mt-4 text-xs font-black uppercase tracking-wide text-slate-500">Product covered</p>
           <h2 class="mt-1 font-heading text-2xl font-black text-slate-950">{product.name}</h2>
@@ -69,7 +81,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
               <p class="mt-1 text-2xl font-black text-slate-950">{product.ownerRating}/5</p>
             </div>
           </div>
-          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action flow-wave mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="review_summary">
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="review_summary">
             <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
           </a>
            <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">{commerce?.priceLastCheckedLabel ? `Price last checked ${commerce.priceLastCheckedLabel}. ` : ''}Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
@@ -87,10 +99,13 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   <section class="premium-card mt-8 rounded-3xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="review-methodology">
     <h2 id="review-methodology" class="text-2xl font-black text-slate-950">Editorial methodology</h2>
     <div class="mt-3 text-sm leading-7 text-slate-700">
-      <p><strong>Author:</strong> FlowHome Editorial Team.</p>
+       <p><strong>Author:</strong> <a href={editorial.author.profileUrl}>{editorial.author.name}</a> ({editorial.author.role}).</p>
+       {editorial.reviewedBy && <p class="mt-2"><strong>Human reviewer:</strong> {editorial.reviewedBy}{editorial.humanReviewedDate ? `, reviewed ${new Date(editorial.humanReviewedDate).toLocaleDateString('en-US')}` : ''}.</p>}
       <p class="mt-2"><strong>Ratings source:</strong> {product ? `${product.ratingSource ?? 'Amazon customer ratings'}` : 'Amazon customer ratings'}. Ratings and counts are snapshots checked on {product ? `${product.ratingLastChecked ?? 'the publication date'}` : 'the publication date'}; they reflect Amazon customer feedback, not FlowHome editorial opinions. FlowHome does not run controlled lab tests.</p>
       <p class="mt-2"><strong>Price source:</strong> {commerce ? `${commerce.priceSourceLabel}` : 'Historical snapshots'}. Prices are snapshots checked on the dates shown above. Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
-      <p class="mt-2"><strong>How to read this review:</strong> Treat each section as buying guidance built from public data, not a controlled lab test. Confirm current pricing, availability, and compatibility on Amazon before purchasing.</p>
+       <p class="mt-2"><strong>How to read this review:</strong> Treat each section as buying guidance built from public data, not a controlled lab test. Confirm current pricing, availability, and compatibility on Amazon before purchasing.</p>
+       <p class="mt-2"><strong>Disclosure:</strong> {EDITORIAL_TEAM.disclosure}</p>
+       {editorial.sources.length > 0 && <div class="mt-2"><strong>Sources:</strong><ul>{editorial.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a>{source.accessedAt ? ` (accessed ${source.accessedAt})` : ''}</li>)}</ul></div>}
     </div>
   </section>
   {product && <nav class="mt-8 flex flex-wrap gap-3 text-sm font-bold" aria-label="Review navigation">

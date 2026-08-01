@@ -6,6 +6,7 @@ export function normalizeProduct(product) {
     slug: String(product.slug),
     title: String(product.title ?? product.name ?? ''),
     image: String(product.image ?? ''),
+    fallbackImage: String(product.fallbackImage ?? '/images/product-placeholder.svg'),
     alt: String(product.alt ?? product.title ?? product.name ?? ''),
     price: product.price,
     priceLabel: String(product.priceLabel ?? `$${product.price}`),
@@ -36,6 +37,7 @@ export function applyProduct(root, product, index = 0) {
   if (image) {
     image.src = item.image;
     image.alt = item.alt;
+    image.dataset.fallbackSrc = item.fallbackImage;
   }
   const photoLink = root.querySelector('[data-hero-photo-link]');
   if (photoLink) { photoLink.href = item.detailsUrl; photoLink.setAttribute('aria-label', `View ${item.title}`); }
@@ -85,6 +87,9 @@ export function applyProduct(root, product, index = 0) {
   return item;
 }
 
+/**
+ * @param {{ root?: HTMLElement | null, products?: Array<Record<string, unknown>>, windowRef?: Window, documentRef?: Document }} options
+ */
 export function setupHeroCarousel({ root, products, windowRef = globalThis.window, documentRef = globalThis.document } = {}) {
   if (!root || !products?.length) return () => {};
   instances.get(root)?.();
@@ -97,9 +102,15 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
   let active = 0;
   let timer = null;
   let interacted = false;
+  let inViewport = true;
+  let observer = null;
 
   const stop = () => {
     interacted = true;
+    if (timer) windowRef.clearInterval(timer);
+    timer = null;
+  };
+  const pause = () => {
     if (timer) windowRef.clearInterval(timer);
     timer = null;
   };
@@ -122,7 +133,7 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
     }
   };
   const start = () => {
-    if (!interacted && !media.matches && documentRef.visibilityState !== 'hidden' && items.length > 1 && !timer) {
+    if (!interacted && !media.matches && documentRef.visibilityState !== 'hidden' && inViewport && items.length > 1 && !timer) {
       timer = windowRef.setInterval(() => render(active + 1), 4300);
     }
   };
@@ -142,12 +153,24 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
   });
   listen(article, 'pointerdown', stop);
   listen(article, 'focusin', stop);
-  listen(documentRef, 'visibilitychange', () => { if (documentRef.visibilityState === 'hidden') { if (timer) windowRef.clearInterval(timer); timer = null; } else start(); });
-  listen(media, 'change', () => { root.dataset.reducedMotion = String(media.matches); if (media.matches && timer) { windowRef.clearInterval(timer); timer = null; } else start(); });
+  listen(documentRef, 'visibilitychange', () => { if (documentRef.visibilityState === 'hidden') { pause(); } else start(); });
+  listen(media, 'change', () => { root.dataset.reducedMotion = String(media.matches); if (media.matches && timer) { pause(); } else start(); });
+  if (typeof windowRef.IntersectionObserver === 'function') {
+    observer = new windowRef.IntersectionObserver((entries = []) => {
+      const entry = entries[0];
+      inViewport = entry ? (entry.isIntersecting ?? (entry.intersectionRatio ?? 0) > 0) : true;
+      if (!inViewport) {
+        pause();
+        return;
+      }
+      start();
+    });
+    observer.observe(root);
+  }
   root.dataset.reducedMotion = String(media.matches);
   start();
 
-  const cleanup = () => { if (timer) windowRef.clearInterval(timer); listeners.splice(0).forEach((remove) => remove()); instances.delete(root); };
+  const cleanup = () => { if (timer) windowRef.clearInterval(timer); observer?.disconnect(); listeners.splice(0).forEach((remove) => remove()); instances.delete(root); };
   instances.set(root, cleanup);
   return cleanup;
 }

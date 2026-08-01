@@ -20,7 +20,7 @@ export function generateMetaTags(config: SEOConfig) {
     type = 'website',
     publishedDate,
     modifiedDate,
-    author = 'FlowHome Team',
+    author = 'FlowHome Editorial Team',
   } = config;
 
   return [
@@ -76,10 +76,14 @@ export function generateProductSchema(product: any, now = new Date()) {
 }
 
 export function generateReviewSchema(review: any, product: any, now = new Date()) {
-  const rating = Number(review.editorialRating);
-  const scale = Number(review.editorialRatingScale ?? 5);
-  const hasEditorialRating = Number.isFinite(rating) && Number.isFinite(scale) && scale > 0 && rating > 0 && rating <= scale;
+  const editorialRating = getValidEditorialRating(review);
+  const hasEditorialRating = Boolean(editorialRating);
   const { '@context': _context, ...itemReviewed } = generateProductSchema(product, now);
+  const reviewRating = hasEditorialRating && editorialRating ? {
+    '@type': 'Rating',
+    ratingValue: editorialRating.rating,
+    bestRating: String(editorialRating.scale),
+  } : undefined;
   return {
     '@context': 'https://schema.org',
     '@type': 'Review',
@@ -88,13 +92,17 @@ export function generateReviewSchema(review: any, product: any, now = new Date()
       '@type': 'Organization',
       name: 'FlowHome Editorial Team',
     },
-    ...(hasEditorialRating ? { reviewRating: {
-      '@type': 'Rating',
-      ratingValue: rating,
-      bestRating: String(scale),
-    } } : {}),
+    ...(reviewRating ? { reviewRating } : {}),
     datePublished: review.pubDate,
   };
+}
+
+export function getValidEditorialRating(review: any) {
+  const rating = Number(review?.editorialRating);
+  const scale = Number(review?.editorialRatingScale ?? 5);
+  return Number.isFinite(rating) && Number.isFinite(scale) && scale > 0 && rating > 0 && rating <= scale
+    ? { rating, scale }
+    : undefined;
 }
 
 export function generateItemListSchema(products: any[], url: string) {
@@ -147,10 +155,6 @@ export function generateOrganizationSchema() {
     url: 'https://flowhome.dev',
     logo: 'https://flowhome.dev/images/flowhome-logo.svg',
     description: 'Smart home product reviews, comparisons, and deals',
-    sameAs: [
-      'https://dev.to/flowhome',
-      'https://hashnode.com/@flowhome',
-    ],
   };
 }
 

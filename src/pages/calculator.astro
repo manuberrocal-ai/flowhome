@@ -12,17 +12,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <label class="font-bold text-slate-800">Electricity $/kWh<span class="mt-1 block text-xs font-semibold text-slate-500">Local utility rate</span><input id="rate" name="rate" type="number" value="0.17" min="0" step="0.01" inputmode="decimal" class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 p-3 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" /></label>
       <label class="font-bold text-slate-800">Device cost<span class="mt-1 block text-xs font-semibold text-slate-500">Final price paid</span><input id="cost" name="cost" type="number" value="25" min="0" step="0.01" inputmode="decimal" class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 p-3 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" /></label>
       <div class="md:col-span-4">
-        <button id="calc" type="submit" class="premium-action flow-wave mt-2 min-h-12 rounded-2xl px-6 py-3 font-black text-white">Calculate savings</button>
+        <button id="calc" type="submit" class="premium-action mt-2 min-h-12 rounded-2xl px-6 py-3 font-black text-white">Calculate savings</button>
       </div>
     </form>
     <div id="result" class="mt-6 rounded-2xl bg-blue-50 p-5 text-lg font-black text-blue-950 ring-1 ring-blue-100" role="status" aria-live="polite">Estimated savings will appear here.</div>
   </section>
   <script>
     import { trackEvent } from '../lib/analytics';
-    const form = document.getElementById('savings-form');
-    const resultBox = document.getElementById('result');
-    const readNumber = (id) => Math.max(0, Number(document.getElementById(id)?.value || 0));
-    form?.addEventListener('submit', (event) => {
+    const requiredElement = <T extends Element>(selector: string): T => {
+      const element = document.querySelector<T>(selector);
+      if (!element) throw new Error(`Calculator page is missing required element: ${selector}`);
+      return element;
+    };
+    const form = requiredElement<HTMLFormElement>('#savings-form');
+    const resultBox = requiredElement<HTMLElement>('#result');
+    const readNumber = (id: string) => Math.max(0, Number(document.querySelector<HTMLInputElement>(`#${id}`)?.value || 0));
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       const watts = readNumber('watts');
       const hours = Math.min(24, readNumber('hours'));
@@ -34,7 +39,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const message = monthly > 0
         ? `Estimated monthly savings: $${monthly.toFixed(2)}. Estimated annual savings: $${annual.toFixed(2)}. Payback period: ${payback.toFixed(1)} months.`
         : 'Enter a wattage, saved runtime, and electricity rate above zero to estimate savings.';
-      if (resultBox) resultBox.textContent = message;
+      resultBox.textContent = message;
       trackEvent('calculator_used', { device_type: 'manual', estimated_savings: monthly, page_type: 'calculator' });
     });
   </script>

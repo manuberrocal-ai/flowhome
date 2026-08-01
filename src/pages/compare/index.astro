@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const comparisons = [
+  { slugs: ['amazon-smart-thermostat', 'ecobee-smart-thermostat-premium'], title: 'Amazon Smart Thermostat vs ecobee Smart Thermostat Premium', guidance: 'Use the Amazon model when Alexa compatibility is the deciding filter. Consider the ecobee profile when Google Home or Apple HomeKit compatibility is more important, then verify the current listing details before buying.' },
+  { slugs: ['roborock-q5-plus', 'irobot-roomba-j7-plus'], title: 'Roborock Q5+ vs iRobot Roomba j7+', guidance: 'Compare dock space, app routines, price, rating, review count, and ecosystem compatibility for your setup.' },
+  { slugs: ['august-wifi-smart-lock', 'schlage-encode-smart-wifi-deadbolt', 'yale-assure-lock-2-wifi'], title: 'August vs Schlage vs Yale Smart Locks', guidance: 'Start with the voice platform and compatibility flags that match your home. Use price, rating, and review count as supporting context rather than a standalone verdict.' },
+  { slugs: ['blink-outdoor-4', 'arlo-essential-outdoor-camera'], title: 'Blink Outdoor 4 vs Arlo Essential Outdoor Camera', guidance: 'Check night vision and two-way audio first, then use the compatibility flags for your preferred voice platform.' },
+  { slugs: ['eufy-security-indoor-cam-c120', 'tapo-c120-security-camera'], title: 'Eufy Security Indoor Cam C120 vs Tapo C120', guidance: 'Use night vision and two-way audio to narrow the feature fit, then check Alexa, Google Home, and Apple HomeKit flags.' },
+  { slugs: ['echo-dot-5th-gen', 'echo-show-8-3rd-gen'], title: 'Echo Dot 5th Gen vs Echo Show 8 3rd Gen', guidance: 'Choose based on the product format your room needs, then use price and owner feedback as secondary filters.' },
+  { slugs: ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'], title: 'Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec SmartThings Hub', guidance: 'Prioritize the Matter and connectivity fields your devices require, then compare voice-platform support.' },
+  { slugs: ['philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'], title: 'Philips Hue vs Govee RGBIC vs Wyze Bulb Color', guidance: 'Start with whether RGB and dimming are required, then match ecosystem compatibility to your setup.' },
+];
+const products = await getCollection('products');
+const available = comparisons.flatMap((comparison) => {
+  const comparisonProducts = comparison.slugs.flatMap((slug) => {
+    const product = products.find((entry) => entry.data.slug === slug);
+    return product ? [product.data] : [];
+  });
+  return comparisonProducts.length === comparison.slugs.length ? [{ ...comparison, products: comparisonProducts }] : [];
+});
+---
+<BaseLayout title="Smart Home Product Comparisons | FlowHome" description="Compare curated smart home products by documented compatibility, feature, price snapshot, and Amazon customer-feedback context." canonicalURL="https://flowhome.dev/compare/">
+  <section class="premium-page-hero">
+    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Compare</p>
+    <h1 class="mt-2 text-4xl font-black text-slate-950 md:text-5xl">Smart home product comparisons</h1>
+    <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">Use these curated side-by-sides to inspect documented compatibility, product format, price snapshots, and Amazon customer-feedback context before checking a current listing.</p>
+  </section>
+  <section class="mt-8 grid gap-6 md:grid-cols-2" aria-label="Curated comparisons">
+    {available.map((comparison) => <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h2 class="text-2xl font-black text-slate-950"><a class="hover:text-blue-700 hover:underline" href={`/compare/${comparison.slugs.join('-vs-')}/`}>{comparison.title}</a></h2>
+      <ul class="mt-4 flex flex-wrap gap-2 text-sm font-bold text-blue-700">{comparison.products.map((product) => <li><a class="rounded-full bg-blue-50 px-3 py-1.5 hover:underline" href={`/product/${product.slug}/`}>{product.name}</a></li>)}</ul>
+      <p class="mt-4 leading-7 text-slate-600">{comparison.guidance}</p>
+      <a class="mt-5 inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/compare/${comparison.slugs.join('-vs-')}/`}>Open comparison →</a>
+    </article>)}
+  </section>
+</BaseLayout>

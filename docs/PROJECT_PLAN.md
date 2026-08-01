@@ -18,3 +18,7 @@ FlowHome is an automated smart-home affiliate website for the US/Canada market.
 
 ## Content frequency
 Start with 2-3 useful reviews per week. Do not publish thin scaled content.
+
+## Program baseline and roadmap
+- [Baseline scorecard](BASELINE_SCORECARD.md): truthful before/current evidence and status model.
+- [Phases 0–6 roadmap](ROADMAP_PHASES_0_6.md): ownership, dependencies, gates, and provisional validation protocol.

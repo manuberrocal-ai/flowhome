@@ -1,11 +1,16 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
+import ts from 'typescript';
 import { createCartStore } from '../src/lib/cart-store.js';
 
 async function loadCartSync() {
   const source = await readFile(new URL('../src/lib/cart-sync.ts', import.meta.url), 'utf8');
-  return import(`data:text/javascript,${encodeURIComponent(source)}`);
+  const { outputText } = ts.transpileModule(source, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
+    fileName: 'cart-sync.ts',
+  });
+  return import(`data:text/javascript,${encodeURIComponent(outputText)}`);
 }
 
 function createTarget() {

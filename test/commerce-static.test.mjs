@@ -30,3 +30,36 @@ test('removes legacy commercial fields and centralizes availability schema mappi
     assert.match(text, /^catalogActive:/m, file);
   }
 });
+
+test('translation is absent until there are real localized routes', async () => {
+  const base = await readFile(path.join(src, 'layouts', 'BaseLayout.astro'), 'utf8');
+  const footer = await readFile(path.join(src, 'components', 'Footer.astro'), 'utf8');
+  assert.doesNotMatch(base, /GoogleTranslate|language-options|googtrans/);
+  assert.doesNotMatch(footer, /translated-ltr|translated-rtl/);
+});
+
+test('search and legacy product details preserve freshness and compatibility truthfulness', async () => {
+  const search = await readFile(path.join(src, 'pages', 'search.astro'), 'utf8');
+  const product = await readFile(path.join(src, 'pages', 'product', '[slug].astro'), 'utf8');
+  assert.match(search, /const commerce = getCommerceData\(product\.data\)/);
+  assert.match(search, /priceLabel: commerce\.priceLabel/);
+  assert.match(search, /escapeHtml\(item\.priceLabel\)/);
+  assert.match(product, /data\.wifi && 'Wi-Fi'/);
+  assert.match(product, /data\.alexaCompatible && 'Alexa'/);
+  assert.doesNotMatch(product, /\['Wi-Fi', data\.bluetooth/);
+  assert.doesNotMatch(product, /\['Alexa', data\.googleHomeCompatible/);
+});
+
+test('visible reviews do not assert unsupported catalog availability', async () => {
+  for (const review of ['aqara-hub-m2-review.md', 'aeotec-smartthings-hub-review.md', 'switchbot-hub-2-review.md']) {
+    const source = await readFile(path.join(src, 'content', 'reviews', review), 'utf8');
+    assert.doesNotMatch(source, /product as available|availability marked true/i);
+  }
+});
+
+test('commercial content loaders accept both .yaml and .yml files', async () => {
+  const config = await readFile(path.join(src, 'content.config.ts'), 'utf8');
+  for (const directory of ['products', 'deals', 'best-of', 'categories']) {
+    assert.match(config, new RegExp(`glob\\(\\{ base: './src/content/${directory}', pattern: '\\*\\*/\\*\\.\\{yaml,yml\\}' \\}\\)`));
+  }
+});

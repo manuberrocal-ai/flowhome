@@ -46,6 +46,7 @@ test('applying a product updates every field without mixing products', () => {
   assert.equal(root.map['[data-hero-field="title"]'].textContent, 'Second');
   assert.equal(root.map['[data-hero-image]'].src, '/two.jpg');
   assert.equal(root.map['[data-hero-image]'].alt, 'Second alt');
+  assert.equal(root.map['[data-hero-image]'].dataset.fallbackSrc, '/images/product-placeholder.svg');
   assert.equal(root.map['[data-hero-field="price"]'].textContent, '$20');
   assert.equal(root.map['[data-hero-field="price-context"]'].textContent, 'Historical price snapshot');
   assert.equal(root.map['[data-hero-field="original-price"]'].textContent, '$40');

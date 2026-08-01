@@ -24,7 +24,6 @@ test('C1 - Hero carousel swaps products atomically with single article, not stac
   assert.match(hero, /normalizeProduct/);
   assert.match(hero, /prefers-reduced-motion: reduce/);
   assert.match(index, /data-hero-slide/);
-  const slideMatches = index.match(/data-hero-slide[^]*?(?=data-hero-slide|$)/g) ?? [];
   assert.equal((index.match(/<article[^>]*data-hero-slide/g) ?? []).length, 1, 'only one hero article rendered SSR');
   assert.match(index, /data-hero-dot=\{index\}/, 'hero dots generated dynamically via Astro map');
   assert.match(index, /showcaseProducts = featuredProducts\.slice\(0,\s*6\)/, 'six showcase products come from featuredProducts.slice(0, 6)');
@@ -40,12 +39,13 @@ test('C1b - Hero respects reduced motion, pausing setInterval on interaction and
 // P0#2 Shortlist único
 test('C2 - Cart store idempotently keeps unique items (no quantity stacking)', () => {
   const store = read(src('lib/cart-store.js'));
-  assert.match(store, /add\(item,\s*\{\s*multiply\s*=\s*false\s*\}\s*=\s*\{\s*\}\)/, 'add helper signature restricts duplicate stacking by default');
+  assert.match(store, /add\(item\)/, 'add accepts no quantity options');
+  assert.ok(!/multiply|increment\(|decrement\(|getCartQuantity/.test(store), 'quantity APIs must not be public');
   assert.match(store, /return\s*\{\s*\.\.\.existing\s*\};/);
   assert.match(store, /getUniqueItemCount/);
   assert.match(store, /hasItem/);
   assert.match(store, /toggle\(item\)/);
-  assert.ok(/unique ident/i.test(store) || /idempot/i.test(store) || /By default the shortlist is a SET of unique products/i.test(store), 'cart-store must mark add() as idempotent');
+  assert.ok(/unique ident/i.test(store) || /idempot/i.test(store) || /presence marker/i.test(store), 'cart-store must mark add() as idempotent');
 });
 
 // P0#3 Login eliminado
@@ -118,17 +118,31 @@ test('C7 - Availability only appears in JSON-LD when fresh source + status + tim
 });
 
 // P1#8 Quiz real
-test('C8 - Quiz has three-question flow driven by catalog-active products', () => {
+test('C8 - Quiz has five-question flow, URL state, save actions, and at most four catalog-driven results', () => {
   const q = read(src('lib/quiz-recommend.ts'));
   assert.match(q, /export function selectRecommendations/);
-  assert.match(q, /PRIORITY_QUIZ_OPTIONS/);
+  assert.match(q, /GOAL_QUIZ_OPTIONS/);
   assert.match(q, /ECOSYSTEM_QUIZ_OPTIONS/);
   assert.match(q, /BUDGET_QUIZ_OPTIONS/);
+  assert.match(q, /INSTALLATION_QUIZ_OPTIONS/);
+  assert.match(q, /EXTRA_PRIORITY_QUIZ_OPTIONS/);
+  assert.match(q, /selectRecommendationResult/);
+  assert.match(q, /serializeQuizState/);
+  assert.match(q, /parseQuizState/);
   assert.match(q, /catalogActive/);
+  assert.match(q, /Math\.min\(4,/);
   const page = read(src('pages/quiz.astro'));
-  assert.match(page, /data-quiz-step="1"/);
-  assert.match(page, /data-quiz-step="2"/);
-  assert.match(page, /data-quiz-step="3"/);
+  assert.match(page, /optionGroups\.map/);
+  assert.match(page, /data-quiz-step=\{index \+ 1\}/);
+  for (const group of ['GOAL_QUIZ_OPTIONS', 'ECOSYSTEM_QUIZ_OPTIONS', 'BUDGET_QUIZ_OPTIONS', 'INSTALLATION_QUIZ_OPTIONS', 'EXTRA_PRIORITY_QUIZ_OPTIONS']) assert.match(page, new RegExp(group));
+  assert.match(page, /Why this matches/);
+  assert.match(page, /Save/);
+  assert.match(page, /history\.replaceState/);
+  assert.match(page, /quiz_start/);
+  assert.match(page, /Price source:/);
+  assert.match(page, /quizStarted = false/);
+  assert.match(page, /popstate[\s\S]*isCompleteQuizState\(state\)[\s\S]*renderResults\(false\)/);
+  assert.ok(!/Step \$\{step\} of 3/.test(page), 'quiz must not retain the former three-step progress copy');
 });
 
 // P1#9 Comparaciones honestas
@@ -145,13 +159,21 @@ test('C9 - Comparison pages have eight definitions with unique SEO guidance + Ho
 test('C10 - Product, review and comparison pages expose an Editorial methodology section with author and source declarations', () => {
   const product = read(src('pages/product/[slug].astro'));
   assert.match(product, /Editorial methodology/);
-  assert.match(product, /FlowHome Editorial Team/);
+  assert.match(product, /getEditorialMetadata/);
+  assert.match(product, /editorial\.author\.name/);
   assert.match(product, /Ratings source:/);
   assert.match(product, /Price source:/);
   assert.match(product, /Specs source:/);
   const review = read(src('layouts/ReviewLayout.astro'));
   assert.match(review, /Editorial methodology/);
-  assert.match(review, /FlowHome Editorial Team/);
+  assert.match(review, /getEditorialMetadata/);
+  assert.match(review, /editorial\.author\.name/);
+  assert.match(read(src('lib/editorial.ts')), /name: 'FlowHome Editorial Team'/);
+  assert.match(review, /Content updated/);
+  assert.match(review, /Human reviewed/);
+  assert.match(product, /Product data updated/);
+  assert.match(product, /not a human review/);
+  assert.match(read(src('pages/about.astro')), /not an individual person/);
 });
 
 // P1#11 Specs irrelevantes
@@ -165,18 +187,18 @@ test('C11 - Product specs are scoped by category via product-specs matrix (no Ni
 });
 
 // P2#12 Motion respeta reduceMotion
-test('C12 - All motion handlers are guarded by prefers-reduced-motion and use passive scroll', () => {
+test('C12 - Non-essential motion is finite, interactive, and reduced-motion safe', () => {
   const base = read(src('layouts/BaseLayout.astro'));
   assert.match(base, /prefers-reduced-motion: reduce/);
-  assert.match(base, /if \(!reduceMotion\) setupFlowWave\(\);/);
   assert.match(base, /if \(!reduceMotion\) setupProductZoom\(\);/);
-  assert.match(base, /'scroll', queueSync, \{ passive: true \}/);
+  assert.doesNotMatch(base, /requestAnimationFrame|addEventListener\(['"]scroll|flow-wave/);
   const footer = read(src('components/Footer.astro'));
-  assert.match(footer, /prefers-reduced-motion: reduce/);
-  assert.match(footer, /if \(!footer \|\| reduceMotion\) return/);
+  assert.doesNotMatch(footer, /parallax|requestAnimationFrame|addEventListener\(['"]scroll|background-attachment\s*:\s*fixed/i);
   const index = read(src('pages/index.astro'));
-  assert.match(index, /prefers-reduced-motion: reduce/);
-  assert.match(index, /if \(!parallaxSections\.length \|\| reduceMotion\) return/);
+  assert.doesNotMatch(index, /parallax|requestAnimationFrame|addEventListener\(['"]scroll|background-attachment\s*:\s*fixed/i);
+  const styles = read(src('styles/global.css'));
+  assert.doesNotMatch(`${base}\n${footer}\n${index}\n${styles}`, /animation:[^;]*infinite|animation-iteration-count\s*:\s*infinite|animate-(pulse|bounce|spin)/i);
+  assert.match(`${footer}\n${styles}`, /(?:150|180|220)ms/);
 });
 
 // P2#13 Botones distinguibles
@@ -198,14 +220,21 @@ test('C13b - Hero controls use SVG arrows with aria-label on the button, not raw
 });
 
 // P2#14 Reveal/lazy load
-test('C14 - Images use loading=lazy/fetchpriority consistently and content-visibility on heavy sections', () => {
+test('C14 - Essential content renders by default while critical and below-fold images have explicit loading contracts', () => {
   const card = read(src('components/ProductCard.astro'));
   assert.match(card, /loading="lazy"/);
   assert.match(card, /fetchpriority="low"/);
   const product = read(src('pages/product/[slug].astro'));
+  assert.match(product, /loading="eager"/);
+  assert.match(product, /fetchpriority="high"/);
   assert.match(product, /data-fallback-src/);
   const index = read(src('pages/index.astro'));
-  assert.match(index, /content-visibility:\s*auto/);
+  assert.match(index, /preloadImage=\{heroProducts\[0\]\?\.image\}/);
+  assert.match(index, /data-hero-image[\s\S]*loading="eager"[\s\S]*fetchpriority="high"[\s\S]*data-fallback-src/);
+  assert.doesNotMatch(index, /content-visibility:\s*auto|data-reveal/);
+  const base = read(src('layouts/BaseLayout.astro'));
+  assert.match(base, /safePreloadImage && <link rel="preload" as="image" href=\{safePreloadImage\} fetchpriority="high"/);
+  assert.doesNotMatch(base, /preloadImage && <link rel="preload"/);
 });
 
 // P2#15 Responsive / touch targets
@@ -213,6 +242,17 @@ test('C15 - Style system keeps 44px touch targets on hero carousel + mobile menu
   assert.ok(fileExists(join(testDir, 'style-system.test.mjs')));
   const css = read(src('styles/global.css'));
   assert.match(css, /min-h-11|min-height:\s*2\.75rem|44px/);
+  const home = read(src('pages/index.astro'));
+  assert.match(home, /grid min-w-0 grid-cols-\[minmax\(0,1fr\)\]/);
+  assert.match(home, /max-w-full flex-wrap gap-1/);
+  const consent = read(src('components/ConsentBanner.astro'));
+  assert.doesNotMatch(consent, /class="fixed/);
+  const base = read(src('layouts/BaseLayout.astro'));
+  assert.doesNotMatch(base, /GoogleTranslate|language-options|googtrans/);
+  assert.doesNotMatch(base, /floating-language-switcher/);
+  assert.doesNotMatch(base, /ExitIntentPopup/);
+  const exitIntent = read(src('components/ExitIntentPopup.astro'));
+  assert.doesNotMatch(exitIntent, /fixed|mouseleave|sessionStorage/i);
 });
 
 // Extras de integridad de datos y no-regresión

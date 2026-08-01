@@ -77,7 +77,6 @@ export function validateRows(rows) {
   if (missing.length > 0) throw new Error(`Missing required columns: ${missing.join(', ')}`);
   if (new Set(headers).size !== headers.length) throw new Error('Duplicate CSV columns are not allowed.');
 
-  const positions = Object.fromEntries(headers.map((header, index) => [header, index]));
   return rows.slice(1).map((values, rowIndex) => {
     if (values.length !== headers.length) throw new Error(`Row ${rowIndex + 2} has ${values.length} fields; expected ${headers.length}.`);
     const record = Object.fromEntries(headers.map((header, index) => [header, values[index]]));

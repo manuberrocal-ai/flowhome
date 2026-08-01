@@ -33,7 +33,10 @@ test('marks stale, unknown, future, and non-UTC price snapshots as historical', 
 
 test('uses priceValidUntil only when it is strict UTC and in the future', () => {
   assert.equal(getCommerceData(product({ priceValidUntil: '2026-07-27T12:00:00Z' }), now).priceValidUntil, '2026-07-27T12:00:00.000Z');
-  assert.equal(getCommerceData(product({ priceValidUntil: '2026-07-26T12:00:00Z' }), now).priceValidUntil, undefined);
+  const expired = getCommerceData(product({ priceValidUntil: '2026-07-26T12:00:00Z' }), now);
+  assert.equal(expired.priceValidUntil, undefined);
+  assert.equal(expired.showPromotion, false);
+  assert.equal(expired.hasOffer, false);
   assert.equal(getCommerceData(product({ priceValidUntil: '2026-07-27T12:00:00+01:00' }), now).priceValidUntil, undefined);
 });
 

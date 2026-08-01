@@ -29,19 +29,30 @@ test('global stylesheet keeps the FlowHome token system and valid comments', asy
 test('global stylesheet has a bounded override budget and critical component touch targets', async () => {
   const css = await stylesheet();
   assert.ok((css.match(/!important/g) || []).length <= 30, 'third-party CSS exceptions must remain bounded');
-  for (const selector of ['.product-card-amazon-action', '.flow-cart-dock__review', '.flow-cart-page-qty']) {
+  for (const selector of ['.product-card-amazon-action', '.flow-cart-dock__review', '.flow-cart-page-remove']) {
     assert.match(css, new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^{]*\\{[^}]*min-(?:height|width): 2\\.75rem`, 's'));
   }
   assert.match(css, /:where\(a, button, input, select, textarea\):focus-visible/);
   assert.match(css, /prefers-reduced-motion/);
 });
 
+test('global control states distinguish enabled, disabled, loading, selected, and error feedback', async () => {
+  const css = await stylesheet();
+  assert.match(css, /button, \[role="button"\]\) \{ min-width: 2\.75rem; min-height: 2\.75rem/);
+  assert.match(css, /:not\(:disabled\):not\(\[aria-disabled="true"\]\) \{ cursor: pointer/);
+  assert.match(css, /aria-disabled="true"\] \{ cursor: not-allowed/);
+  assert.match(css, /aria-busy="true"\] \{ cursor: progress/);
+  assert.match(css, /data-quiz-save\]\)\[aria-pressed="true"\]/);
+  assert.match(css, /aria-invalid="true"/);
+});
+
 test('cart dock reserves content space only while the dock is visible', async () => {
   const [css, cartClient] = await Promise.all([stylesheet(), source(cartClientPath)]);
-  assert.match(css, /body\[data-flow-cart-dock-visible="true"\] main\s*\{[^}]*padding-bottom: calc\(2rem \+ 6\.5rem \+ env\(safe-area-inset-bottom\)\)/s);
-  assert.match(css, /@media \(max-width: 640px\)\s*\{[\s\S]*body\[data-flow-cart-dock-visible="true"\] main\s*\{[^}]*padding-bottom: calc\(2rem \+ 9\.5rem \+ env\(safe-area-inset-bottom\)\)/);
-  assert.match(cartClient, /flowCartDockVisible = String\(Boolean\(dock && quantity > 0\)\)/);
-  assert.doesNotMatch(css, /body\s*\{[^}]*padding-bottom:/s);
+  assert.match(css, /body\[data-flow-cart-dock-visible="true"\]\s*\{[^}]*padding-bottom: calc\(6\.5rem \+ env\(safe-area-inset-bottom\)\)/s);
+  assert.match(css, /@media \(max-width: 640px\)\s*\{[\s\S]*body\[data-flow-cart-dock-visible="true"\]\s*\{[^}]*padding-bottom: calc\(9\.5rem \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(cartClient, /if \(visible\) document\.body\.dataset\.flowCartDockVisible = 'true';/);
+  assert.match(cartClient, /else delete document\.body\.dataset\.flowCartDockVisible;/);
+  assert.doesNotMatch(css, /body\[data-flow-cart-dock-visible="true"\] main/);
 });
 
 test('hero carousel and mobile menu retain 44px interaction targets', async () => {

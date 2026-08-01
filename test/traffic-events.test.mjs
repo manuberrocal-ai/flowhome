@@ -64,7 +64,12 @@ test('acquisition events use the central dispatcher and CTA contract', async () 
     assert.match(await read(path), /data-fh-amazon-cta/);
   }
   assert.match(await read('src/pages/index.astro'), /data-fh-track="compare_open"/);
-  assert.match(await read('src/pages/quiz.astro'), /trackEvent\('quiz_complete'/);
+  const [quiz, quizAnalytics] = await Promise.all([read('src/pages/quiz.astro'), read('src/lib/quiz-analytics.ts')]);
+  assert.match(quiz, /import \{ queueQuizCompletion, resetQuizCompletionDedupe \} from '..\/lib\/quiz-analytics';/);
+  assert.match(quiz, /queueQuizCompletion\(\{ \.\.\.state, result_count: result\.recommendations\.length, page_type: 'quiz' \}\)/);
+  assert.doesNotMatch(quiz, /trackEvent\(['"]quiz_complete/);
+  assert.match(quizAnalytics, /queuedCompletionKeys\.has\(key\) \|\| stored\.has\(key\)\) return false;/);
+  assert.match(quizAnalytics, /queueEvent\('quiz_complete', \{ \.\.\.parameters, dedupe_key: key \}\)\.status !== 'queued'\) return false;/);
   assert.match(await read('src/pages/calculator.astro'), /trackEvent\('calculator_used'/);
 });
 

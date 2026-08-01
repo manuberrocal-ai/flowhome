@@ -10,6 +10,7 @@ const MAX_URL_LENGTH = 2_000;
 
 function cleanText(value, fallback = '') {
   if (typeof value !== 'string' && typeof value !== 'number') return fallback;
+  // eslint-disable-next-line no-control-regex -- Storage input must reject ASCII control characters.
   return String(value).replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, MAX_TEXT_LENGTH) || fallback;
 }
 
@@ -34,14 +35,9 @@ function cleanSlug(value) {
   return cleanText(value).replace(/^\/+|\/+$/g, '');
 }
 
-function cleanQuantity(value) {
-  const quantity = Number(value);
-  return Number.isFinite(quantity) && quantity >= 1 ? Math.floor(quantity) : 1;
-}
-
 function cleanTombstoneQuantity(value) {
   const quantity = Number(value);
-  return Number.isFinite(quantity) && Number.isInteger(quantity) && quantity >= 0 ? quantity : null;
+  return Number.isSafeInteger(quantity) && quantity >= 0 ? (quantity === 0 ? 0 : 1) : null;
 }
 
 function cleanClock(value) {
@@ -76,7 +72,6 @@ export function normalizeCartItem(value) {
 
   return {
     asin,
-    quantity: cleanQuantity(value.quantity),
     slug,
     name: cleanText(value.name, asin),
     price: cleanPrice(value.price),
@@ -111,15 +106,14 @@ export function normalizeCartItems(values) {
     if (!item) return;
     const key = matchingItemKey(itemsByIdentity, item);
     const existing = itemsByIdentity.get(key);
-    if (existing) existing.quantity += item.quantity;
-    else itemsByIdentity.set(key, item);
+    if (!existing) itemsByIdentity.set(key, item);
   });
   return [...itemsByIdentity.values()];
 }
 
 function normalizeEntry(value, fallbackDeviceId = '') {
   if (!value || typeof value !== 'object') return null;
-  const item = normalizeCartItem({ ...value, quantity: value.quantity || 1 });
+  const item = normalizeCartItem(value);
   const quantity = cleanTombstoneQuantity(value.quantity);
   const clock = cleanClock(value.clock);
   const deviceId = cleanDeviceId(value.deviceId, fallbackDeviceId);
@@ -159,7 +153,7 @@ function normalizeState(value, fallbackDeviceId = createDeviceId()) {
 }
 
 function stateItems(state) {
-  return state.entries.filter((entry) => entry.quantity > 0).map(({ clock, deviceId, ...item }) => item);
+  return state.entries.filter((entry) => entry.quantity > 0).map(({ quantity: _presence, clock: _clock, deviceId: _deviceId, ...item }) => item);
 }
 
 function statesEqual(left, right) {
@@ -201,20 +195,16 @@ export function serializeCartPayload(items) {
   return JSON.stringify(state);
 }
 
-export function getCartQuantity(items) {
-  return normalizeCartItems(items).reduce((total, item) => total + item.quantity, 0);
-}
-
 /**
  * Number of unique product identifiers in the shortlist. Used by the dock and
  * ProductCard counters so two clicks never inflate the displayed number.
  */
 export function getUniqueItemCount(items) {
-  return normalizeCartItems(items).filter((item) => item.quantity > 0).length;
+  return normalizeCartItems(items).length;
 }
 
 export function getCartSubtotal(items) {
-  return normalizeCartItems(items).reduce((total, item) => total + item.price * item.quantity, 0);
+  return normalizeCartItems(items).reduce((total, item) => total + item.price, 0);
 }
 
 export function buildAmazonCartUrl(items, associateTag = 'flowhome-20') {
@@ -224,7 +214,7 @@ export function buildAmazonCartUrl(items, associateTag = 'flowhome-20') {
   normalizedItems.forEach((item, index) => {
     const position = index + 1;
     params.set(`ASIN.${position}`, item.asin);
-    params.set(`Quantity.${position}`, String(item.quantity));
+    params.set(`Quantity.${position}`, '1');
   });
   return `https://www.amazon.com/gp/aws/cart/add.html?${params.toString()}`;
 }
@@ -346,6 +336,7 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
     const state = load();
     if (hasCorruptSavedList) return stateItems(state);
     const next = mutator(clone(state));
+    if (statesEqual(state, next)) return stateItems(state);
     return persist(next);
   };
 
@@ -353,9 +344,10 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
     const entries = new Map(state.entries.map((entry) => [itemIdentity(entry), entry]));
     const key = matchingItemKey(entries, item);
     const existing = entries.get(key);
+    const next = updater(existing);
+    if (!next || (existing && statesEqual(existing, next))) return state;
     const clock = Math.max(state.clock, ...state.entries.map((entry) => entry.clock), 0) + 1;
-    const next = updater(existing, clock);
-    if (next) entries.set(key, { ...next, clock, deviceId: state.deviceId });
+    entries.set(key, { ...next, clock, deviceId: state.deviceId });
     return { ...state, clock, entries: [...entries.values()].sort((a, b) => itemIdentity(a).localeCompare(itemIdentity(b))) };
   };
 
@@ -409,17 +401,13 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
       const merged = mergeCartStates(local, remote);
       return persist(merged);
     },
-    add(item, { multiply = false } = {}) {
+    add(item) {
       const normalized = normalizeCartItem(item);
       if (!normalized) return this.getItems();
       return mutate((state) => updateEntry(state, normalized, (existing) => {
-        // By default the shortlist is a SET of unique products. Two clicks on
-        // the same ProductCard "Add" button must never duplicate an entry or
-        // inflate the counter; the UI uses toggle() for that. multiply=true
-        // preserves legacy quantity stacking (used only when intentionally
-        // adding more units from the dedicated list page).
-        if (existing && existing.quantity > 0 && !multiply) return { ...existing };
-        return { ...normalized, quantity: (existing?.quantity || 0) + normalized.quantity };
+        // quantity is wire-state presence marker only: 0=tombstone, 1=present.
+        if (existing && existing.quantity === 1) return { ...existing };
+        return { ...normalized, quantity: 1 };
       }));
     },
     toggle(item) {
@@ -435,16 +423,6 @@ export function createCartStore({ storage = null, eventTarget = null } = {}) {
       const state = load();
       const key = matchingItemKey(new Map(state.entries.map((entry) => [itemIdentity(entry), entry])), item);
       return Boolean(state.entries.find((entry) => itemIdentity(entry) === key && entry.quantity > 0));
-    },
-    increment(asin) {
-      const item = normalizeActionItem(asin);
-      if (!item) return this.getItems();
-       return mutate((state) => updateEntry(state, item, (existing) => existing ? { ...existing, quantity: existing.quantity + 1 } : null));
-    },
-    decrement(asin) {
-      const item = normalizeActionItem(asin);
-      if (!item) return this.getItems();
-       return mutate((state) => updateEntry(state, item, (existing) => existing ? { ...existing, quantity: Math.max(0, existing.quantity - 1) } : null));
     },
     remove(asin) {
       const item = normalizeActionItem(asin);

@@ -44,11 +44,13 @@ test('consent banner only speaks accepted/rejected to the setter and keeps revok
   assert.match(bannerSource, /data-consent-action="accepted"/);
   assert.doesNotMatch(bannerSource, /data-consent-action="reject"/);
   assert.doesNotMatch(bannerSource, /data-consent-action="accept"/);
-  assert.match(bannerSource, /querySelector<HTMLElement>\('\[data-consent-action="rejected"\]'\)\?\.focus\(\);/);
+  assert.match(bannerSource, /showBanner = \(focusChoice = false\)/);
+  assert.match(bannerSource, /if \(focusChoice\) banner\.querySelector<HTMLElement>/);
+  assert.doesNotMatch(bannerSource, /class="fixed/);
   assert.match(bannerSource, /if \(action === 'accepted' \|\| action === 'rejected'\) \{/);
-  assert.match(bannerSource, /if \(setConsentPreference\(action\) !== action\) return;\n\s+hideBanner\(\);\n\s+window\.dispatchEvent\(new CustomEvent\('flowhome:consent-change'\)\);/);
+  assert.match(bannerSource, /if \(setConsentPreference\(action\) !== action\) return;\n\s+setBannerPreference\(action\);\n\s+hideBanner\(\);\n\s+window\.dispatchEvent\(new CustomEvent\('flowhome:consent-change'\)\);/);
   assert.match(bannerSource, /if \(action === 'revoke'\) \{/);
-  assert.match(bannerSource, /if \(target\?\.closest\('\[data-consent-open\]'\)\) showBanner\(\);/);
+  assert.match(bannerSource, /if \(target\?\.closest\('\[data-consent-open\]'\)\) showBanner\(true\);/);
 });
 
 test('reload is required only once when an accepted optional runtime was loaded', () => {

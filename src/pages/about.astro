@@ -1,5 +1,6 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { EDITORIAL_POLICY } from '../lib/editorial';
 ---
 <BaseLayout title="About FlowHome" description="How FlowHome reviews smart home products, handles affiliate links, and keeps automation quality controlled." canonicalURL="https://flowhome.dev/about/">
   <section class="premium-page-hero">
@@ -14,6 +15,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <article class="premium-card prose prose-lg mt-8 max-w-4xl p-6 prose-headings:font-heading prose-headings:text-slate-950 prose-a:text-blue-600 md:p-8">
+    <h2 id="editorial-team">FlowHome Editorial Team</h2>
+    <p><strong>FlowHome Editorial Team</strong> is an editorial organization, not an individual person. It has no personal degree, certification, or other credential to claim. No hands-on testing is implied unless a page explicitly says so.</p>
+    <p><strong>Role:</strong> editorial research and buying guidance. <strong>Methodology:</strong> we use documented product information, compatibility and setup details, public owner feedback, price snapshots, and explicit tradeoffs. We do not run controlled lab tests.</p>
+    <p><strong>Sources policy:</strong> source links are shown when they are recorded for a page; source URLs must use HTTPS. Missing sources are not replaced with invented citations.</p>
+    <p><strong>Corrections:</strong> if a fact, date, price, or compatibility detail is wrong, contact FlowHome with the page and evidence so the record can be reviewed and corrected.</p>
+
+    <h2>Evidence levels and sensitive claims</h2>
+    <p>FlowHome labels the basis for a claim honestly: <strong>hands-on tested</strong> only when documented physical testing exists; <strong>research verified</strong> when current sources support the claim; <strong>data evaluated</strong> for structured product or price data; otherwise the claim is <strong>not verified</strong>. No label implies a credential or personal experience.</p>
+    <p>{EDITORIAL_POLICY.sensitiveClaims}</p>
+
+    <h2>Market and localization</h2>
+    <p>{EDITORIAL_POLICY.geographicScope}</p>
+    <p>{EDITORIAL_POLICY.localization}</p>
+
+    <h2>Corrections process</h2>
+    <p>{EDITORIAL_POLICY.corrections}</p>
+
     <h2>What FlowHome optimizes for</h2>
     <p>Smart-home shopping is easy to get wrong because the best product on paper is not always the best product for a real household. FlowHome prioritizes the questions that prevent bad buys: does it fit your ecosystem, does it solve a daily problem, is setup realistic, and does the final price make sense?</p>
 
@@ -29,4 +47,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>Important limitations</h2>
     <p>Prices, discounts, stock, bundles, and Amazon availability can change quickly. Always confirm the final product listing, return policy, compatibility details, and delivered price on Amazon before checkout.</p>
   </article>
+  <section class="premium-card mt-8 rounded-3xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="about-faq">
+    <h2 id="about-faq" class="text-2xl font-black text-slate-950">Common questions</h2>
+    <dl class="mt-4 space-y-4 text-slate-700">
+      <div><dt class="font-bold">Does FlowHome run lab tests?</dt><dd class="mt-1">No. A page must explicitly document hands-on testing; otherwise guidance uses research or structured data.</dd></div>
+      <div><dt class="font-bold">Can prices or availability be guaranteed?</dt><dd class="mt-1">No. Price and availability are market-specific snapshots and must be confirmed at the retailer.</dd></div>
+    </dl>
+  </section>
 </BaseLayout>

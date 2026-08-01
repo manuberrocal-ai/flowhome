@@ -19,7 +19,7 @@ This is a profile-based buying guide, not a physical evaluation. The catalog lis
 
 The Aqara Hub M2 profile identifies the model as Aqara Hub M2 and lists Wi-Fi, Bluetooth, and Zigbee connectivity. For platform control, it lists Alexa, Google Home, Apple HomeKit, and app control. The profile marks Matter as false. It also marks energy monitoring, night vision, two-way audio, mopping, LiDAR mapping, RGB, and dimming as false; those fields describe the structured product record, not missing capabilities beyond its scope.
 
-The profile lists a $69.99 original price and a 14% discount, with a current catalog price of $59.99 when the record was updated. It also lists the product as available and subscription-free in the catalog. Treat those values as dated reference points rather than guarantees.
+The profile lists a $69.99 original price and a 14% discount, with a current catalog price of $59.99 when the record was updated. It lists no required subscription. Treat those values as dated reference points rather than guarantees.
 
 ## Pros and cons
 

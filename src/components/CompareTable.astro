@@ -1,30 +1,54 @@
 ﻿---
-interface Props { products: any[]; }
 import { getCommerceData } from '../lib/commerce-data';
+import type { CommerceProduct } from '../lib/commerce-data';
+
+interface ComparisonProduct extends CommerceProduct {
+  slug: string;
+  name: string;
+  ownerRating?: number;
+  ownerRatingCount?: number;
+  ratingLastChecked?: string;
+  matter?: boolean;
+  alexaCompatible?: boolean;
+  googleHomeCompatible?: boolean;
+  appleHomeKit?: boolean;
+  energyMonitoring?: boolean;
+  category?: string;
+  affiliateUrl?: string;
+  compatibilityVerificationEnabled?: boolean;
+}
+
+interface Props { products: ComparisonProduct[]; }
+type ComparisonRow = readonly [string, (product: ComparisonProduct) => string];
+
 const { products } = Astro.props;
 const commerceBySlug = new Map(products.map((p) => [p.slug, getCommerceData(p)]));
-const rows = [
-  ['Price', (p:any) => {
+function compatibilityLabel(product: ComparisonProduct, field: 'matter' | 'alexaCompatible' | 'googleHomeCompatible' | 'appleHomeKit'): string {
+  if (product.compatibilityVerificationEnabled && product[field] === undefined) return 'Unknown';
+  return product[field] ? 'Yes' : 'No';
+}
+const rows: ComparisonRow[] = [
+  ['Price', (p) => {
     const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
     return `${c.priceLabel}: $${p.price}${c.priceLastCheckedLabel ? ` (checked ${c.priceLastCheckedLabel})` : ''}`;
   }],
-  ['Price source', (p:any) => {
+  ['Price source', (p) => {
     const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
     return c.priceSourceLabel;
   }],
-  ['Amazon customer rating', (p:any) => `${p.ownerRating} / 5`],
-  ['Amazon rating count', (p:any) => `${p.ownerRatingCount?.toLocaleString?.() ?? p.ownerRatingCount}`],
-  ['Rating checked', (p:any) => p.ratingLastChecked ?? 'Not recorded'],
-  ['Matter', (p:any) => p.matter ? 'Yes' : 'No'],
-  ['Alexa', (p:any) => p.alexaCompatible ? 'Yes' : 'No'],
-  ['Google Home', (p:any) => p.googleHomeCompatible ? 'Yes' : 'No'],
-  ['Apple HomeKit', (p:any) => p.appleHomeKit ? 'Yes' : 'No'],
-  ['Energy monitoring', (p:any) => p.energyMonitoring ? 'Yes' : 'No'],
+  ['Amazon customer rating', (p) => `${p.ownerRating} / 5`],
+  ['Amazon rating count', (p) => `${p.ownerRatingCount?.toLocaleString() ?? p.ownerRatingCount}`],
+  ['Rating checked', (p) => p.ratingLastChecked ?? 'Not recorded'],
+  ['Matter', (p) => compatibilityLabel(p, 'matter')],
+  ['Alexa', (p) => compatibilityLabel(p, 'alexaCompatible')],
+  ['Google Home', (p) => compatibilityLabel(p, 'googleHomeCompatible')],
+  ['Apple HomeKit', (p) => compatibilityLabel(p, 'appleHomeKit')],
+  ['Energy monitoring', (p) => p.energyMonitoring ? 'Yes' : 'No'],
 ];
 ---
 <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
   <table class="compare-table min-w-full text-sm">
-    <caption class="sr-only">Side-by-side product data comparison</caption>
+    <caption>Side-by-side verified product data comparison; horizontal scrolling is available on narrow screens.</caption>
     <thead>
       <tr>
         <th scope="col">Feature</th>

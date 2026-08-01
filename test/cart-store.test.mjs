@@ -39,7 +39,7 @@ function createEventTarget() {
 test('migrates v1 arrays to a v2 per-ASIN state', () => {
   const storage = createStorage(JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }, { asin: ASIN, quantity: 4, name: 'Duplicate' }]));
   const store = createCartStore({ storage });
-  assert.deepEqual(store.initialize(), [{ asin: ASIN, quantity: 1, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
+  assert.deepEqual(store.initialize(), [{ asin: ASIN, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
   const payload = JSON.parse(storage.value());
   assert.equal(payload.version, CART_STORAGE_VERSION);
   assert.equal(payload.entries[0].clock, 1);
@@ -47,10 +47,16 @@ test('migrates v1 arrays to a v2 per-ASIN state', () => {
 });
 
 test('shortlist toggle is unique and counts products rather than units', () => {
-  const store = createCartStore({ storage: createStorage() });
+  const storage = createStorage();
+  const store = createCartStore({ storage });
   const item = { asin: ASIN, quantity: 4, name: 'Product' };
-  assert.deepEqual(store.toggle(item).map(({ asin, quantity }) => ({ asin, quantity })), [{ asin: ASIN, quantity: 1 }]);
+  assert.deepEqual(store.add(item), [{ asin: ASIN, slug: '', name: 'Product', price: 0, image: '', url: '' }]);
   assert.equal(store.getItems().length, 1);
+  const writesAfterFirstAdd = storage.writes();
+  const clockAfterFirstAdd = store.getSyncPayload().clock;
+  assert.equal(store.add(item).length, 1);
+  assert.equal(storage.writes(), writesAfterFirstAdd, 'duplicate add must not persist again');
+  assert.equal(store.getSyncPayload().clock, clockAfterFirstAdd, 'duplicate add must not advance the sync clock');
   assert.equal(store.toggle(item).length, 0);
 });
 
@@ -61,7 +67,7 @@ test('uses productId or slug identity and ignores non-ASIN entries for Amazon', 
     { asin: OTHER_ASIN, slug: 'variant-b' },
   ]);
   assert.equal(items.length, 2);
-  assert.equal(items.find((item) => item.asin === ASIN).quantity, 2);
+  assert.equal('quantity' in items.find((item) => item.asin === ASIN), false);
   assert.equal(new URL(buildAmazonCartUrl([{ slug: 'only-local-product' }, { asin: ASIN }])).searchParams.get('ASIN.1'), ASIN);
   assert.equal(buildAmazonCartUrl([{ slug: 'only-local-product' }]), null);
 });
@@ -80,22 +86,22 @@ test('preserves corrupt JSON and never exposes it for synchronization', () => {
 
 test('uses deterministic clock and device ID conflict winners', () => {
   const low = { asin: ASIN, quantity: 1, clock: 4, deviceId: 'device-aaa', name: 'Low' };
-  const highClock = { ...low, quantity: 2, clock: 5, deviceId: 'device-aaa' };
-  const highDevice = { ...low, quantity: 3, deviceId: 'device-zzz' };
-  assert.equal(chooseCartEntry(low, highClock).quantity, 2);
-  assert.equal(chooseCartEntry(low, highDevice).quantity, 3);
+  const highClock = { ...low, quantity: 0, clock: 5, deviceId: 'device-aaa' };
+  const highDevice = { ...low, quantity: 0, deviceId: 'device-zzz' };
+  assert.equal(chooseCartEntry(low, highClock).quantity, 0);
+  assert.equal(chooseCartEntry(low, highDevice).quantity, 0);
   const merged = mergeCartStates({ version: 2, deviceId: 'device-local', clock: 4, entries: [low] }, { version: 2, deviceId: 'device-remote', clock: 4, entries: [highDevice] });
-  assert.equal(merged.entries[0].quantity, 3);
+  assert.equal(merged.entries[0].quantity, 0);
 });
 
 test('keeps zero-quantity tombstones out of the UI while retaining sync state', () => {
   const store = createCartStore({ storage: createStorage() });
   store.add({ asin: ASIN });
-  store.decrement(ASIN);
+  store.remove(ASIN);
   assert.deepEqual(store.getItems(), []);
   assert.equal(store.getSyncPayload().entries[0].quantity, 0);
   store.add({ asin: ASIN, quantity: 2 });
-  assert.equal(store.getItems()[0].quantity, 2);
+  assert.equal('quantity' in store.getItems()[0], false);
 });
 
 test('keeps anonymous and authenticated namespaces separate and merges once', () => {
@@ -113,16 +119,15 @@ test('keeps anonymous and authenticated namespaces separate and merges once', ()
 });
 
 test('normalizes invalid values and retains existing cart interactions', () => {
-  assert.deepEqual(normalizeCartItems([{ asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' }]), [{ asin: ASIN, quantity: 1, slug: '', name: 'Name', price: 0, image: '', url: '' }]);
+  assert.deepEqual(normalizeCartItems([{ asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' }]), [{ asin: ASIN, slug: '', name: 'Name', price: 0, image: '', url: '' }]);
   const target = createEventTarget();
   const store = createCartStore({ storage: createStorage(), eventTarget: target });
   const notifications = [];
   store.subscribe((items) => notifications.push(items));
   store.add({ asin: ASIN });
-  store.increment(ASIN);
   store.remove(ASIN);
   assert.equal(store.getItems().length, 0);
-  assert.equal(notifications.length, 3);
+  assert.equal(notifications.length, 2);
 });
 
 test('keeps an in-memory cart when storage is unavailable', () => {
@@ -143,7 +148,7 @@ test('builds an Amazon cart URL only for a non-empty cart', () => {
   assert.equal(buildAmazonCartUrl([]), null);
   const url = new URL(buildAmazonCartUrl([{ asin: ASIN, quantity: 2 }, { asin: OTHER_ASIN, quantity: 1 }]));
   assert.equal(url.searchParams.get('ASIN.1'), ASIN);
-  assert.equal(url.searchParams.get('Quantity.1'), '2');
+  assert.equal(url.searchParams.get('Quantity.1'), '1');
 });
 
 test('serializes JSON-LD without executable script delimiters', () => {

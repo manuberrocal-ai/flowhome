@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "purpose": "Block 8 test fixtures. NOT production data. Synthetic ids and timestamps designed for deterministic scoring and ingestion tests.",
+    "version": 1,
+    "createdAt": "2026-07-30T12:00:00Z",
+    "notes": "All timestamps are strict UTC ISO-8601. Prices are whole dollars and unrelated to any real retailer listing."
+  },
+  "merchants": [
+    { "id": "m_amazon_us", "name": "Amazon US (fixture)", "domain": "amazon.com", "market": "US", "currency": "USD", "affiliateTag": "flowhome-20", "authorised": true },
+    { "id": "m_unauth", "name": "Unauthorised fixture merchant", "domain": null, "market": "US", "currency": "USD", "affiliateTag": null, "authorised": false }
+  ],
+  "variants": [
+    { "id": "v_smartplug_a", "productId": "p_smartplug", "marketplaceId": "B0FIXTURE01", "marketplaceIdType": "asin", "title": "Fixture Smart Plug A", "market": "US", "currency": "USD", "category": "smart-plug" },
+    { "id": "v_smartplug_b", "productId": "p_smartplug", "marketplaceId": "B0FIXTURE02", "marketplaceIdType": "asin", "title": "Fixture Smart Plug B", "market": "US", "currency": "USD", "category": "smart-plug" },
+    { "id": "v_unknownid", "productId": "p_unknown", "marketplaceId": null, "marketplaceIdType": "unknown", "title": "Missing id fixture", "market": "US", "currency": "USD", "category": null }
+  ],
+  "trendTopics": [
+    { "id": "t_smart_plugs", "slug": "smart-plugs", "market": "US", "label": "Smart plug fixture trend", "eligible": true }
+  ],
+  "snapshots": [
+    { "id": "ps_hist_1", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "price": 120, "listPrice": 140, "currency": "USD", "market": "US", "source": "manual", "capturedAt": "2026-06-30T12:00:00Z", "idempotencyKey": "ps:hist1", "anomaly": false, "affiliateUrl": "https://example.test/asin/B0FIXTURE01?tag=fixture" },
+    { "id": "ps_hist_2", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "price": 115, "listPrice": 140, "currency": "USD", "market": "US", "source": "manual", "capturedAt": "2026-07-15T12:00:00Z", "idempotencyKey": "ps:hist2", "anomaly": false, "affiliateUrl": "https://example.test/asin/B0FIXTURE01?tag=fixture" },
+    { "id": "ps_hist_3", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "price": 110, "listPrice": 140, "currency": "USD", "market": "US", "source": "manual", "capturedAt": "2026-07-24T12:00:00Z", "idempotencyKey": "ps:hist3", "anomaly": false, "affiliateUrl": "https://example.test/asin/B0FIXTURE01?tag=fixture" },
+    { "id": "ps_anomaly", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "price": 5, "listPrice": 140, "currency": "USD", "market": "US", "source": "manual", "capturedAt": "2026-07-28T12:00:00Z", "idempotencyKey": "ps:anom", "anomaly": true, "affiliateUrl": null }
+  ],
+  "offers": [
+    { "id": "o_fresh_lowest", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 100, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-07-29T12:00:00Z", "shipping": { "cost": null, "freeShipping": true, "conditions": "free shipping on orders $25+", "etaDays": 2 }, "coupons": [], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-07-29T12:00:00Z", "expiresAt": "2026-08-05T12:00:00Z", "lastSnapshotId": null, "lifecycle": "pending_review", "review": "unknown", "confidence": "low" },
+    { "id": "o_stale", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 90, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-06-01T12:00:00Z", "shipping": { "cost": 0, "freeShipping": true, "conditions": null, "etaDays": null }, "coupons": [], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-06-01T12:00:00Z", "expiresAt": null, "lastSnapshotId": null, "lifecycle": "suppressed", "review": "unknown", "confidence": "unknown" },
+    { "id": "o_expired", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 95, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-07-28T12:00:00Z", "shipping": { "cost": 5, "freeShipping": false, "conditions": "$5 standard", "etaDays": 5 }, "coupons": [], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-07-28T12:00:00Z", "expiresAt": "2026-07-15T12:00:00Z", "lastSnapshotId": null, "lifecycle": "suppressed", "review": "unknown", "confidence": "unknown" },
+    { "id": "o_couponed", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 105, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-07-29T12:00:00Z", "shipping": { "cost": null, "freeShipping": true, "conditions": null, "etaDays": null }, "coupons": [{ "id": "c1", "code": "WELCOME10", "amountOff": null, "pctOff": 10, "minSubtotal": 50, "conditions": "10% off code WELCOME10 on $50+", "conditionsSatisfied": true, "expiresAt": "2026-08-15T12:00:00Z" }], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-07-29T12:00:00Z", "expiresAt": "2026-08-05T12:00:00Z", "lastSnapshotId": null, "lifecycle": "pending_review", "review": "unknown", "confidence": "low" }
+   ,{ "id": "o_active_reviewed", "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 102, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-07-29T12:00:00Z", "shipping": { "cost": null, "freeShipping": true, "conditions": null, "etaDays": 2 }, "coupons": [], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-07-29T12:00:00Z", "expiresAt": "2026-08-05T12:00:00Z", "lastSnapshotId": null, "lifecycle": "active", "review": "approved", "confidence": "medium" }],
+  "trendSignals": [
+    { "id": "ts_r1", "topicId": "t_smart_plugs", "source": "manual", "delta": 0.2, "weight": 0.9, "capturedAt": "2026-07-27T12:00:00Z", "idempotencyKey": "ts:r1", "anomaly": false },
+    { "id": "ts_r2", "topicId": "t_smart_plugs", "source": "manual", "delta": 0.15, "weight": 0.7, "capturedAt": "2026-07-28T12:00:00Z", "idempotencyKey": "ts:r2", "anomaly": false },
+    { "id": "ts_f1", "topicId": "t_smart_plugs", "source": "manual", "delta": -0.1, "weight": 0.5, "capturedAt": "2026-07-20T12:00:00Z", "idempotencyKey": "ts:f1", "anomaly": false },
+    { "id": "ts_anom", "topicId": "t_smart_plugs", "source": "manual", "delta": 5, "weight": 0.3, "capturedAt": "2026-07-29T12:00:00Z", "idempotencyKey": "ts:anom", "anomaly": true }
+  ],
+  "ingestionInputs": {
+    "snapshots": [
+      { "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "price": 88, "listPrice": 140, "currency": "USD", "market": "US", "source": "manual", "capturedAt": "2026-07-30T12:00:00Z", "affiliateUrl": null }
+    ],
+    "offers": [
+      { "variantId": "v_smartplug_a", "merchantId": "m_amazon_us", "market": "US", "currency": "USD", "price": 88, "listPrice": 140, "availability": "in-stock", "availabilityCapturedAt": "2026-07-30T12:00:00Z", "shipping": { "freeShipping": true }, "coupons": [], "affiliateUrl": "https://example.test/dp/B0FIXTURE01?tag=flowhome-20", "source": "manual", "capturedAt": "2026-07-30T12:00:00Z", "expiresAt": "2026-08-06T12:00:00Z" },
+      { "variantId": "v_smartplug_a", "merchantId": "m_unauth", "market": "US", "currency": "USD", "price": 10, "source": "manual", "capturedAt": "2026-07-30T12:00:00Z", "availabilityCapturedAt": "2026-07-30T12:00:00Z" }
+    ],
+    "trendSignals": [
+      { "topicId": "t_smart_plugs", "source": "manual", "delta": 0.05, "weight": 0.6, "capturedAt": "2026-07-29T12:00:00Z" },
+      { "topicId": "t_smart_plugs", "source": "manual", "delta": 2, "weight": 0.5, "capturedAt": "2026-07-29T12:00:00Z" }
+    ]
+  },
+  "expectedAtNow": "2026-07-30T12:00:00Z"
+}

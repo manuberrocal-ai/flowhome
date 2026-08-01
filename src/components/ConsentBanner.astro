@@ -1,5 +1,5 @@
-<aside class="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-950/20" data-consent-banner role="dialog" aria-label="Privacy choices" aria-live="polite" hidden>
-  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<aside class="border-b border-slate-200 bg-white" data-consent-banner role="region" aria-label="Privacy choices" aria-live="polite">
+  <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
     <p class="text-sm leading-6 text-slate-700">We use optional analytics only if you agree. Essential storage keeps your cart, account session, and privacy choice working. <a class="font-bold text-blue-700 underline" href="/privacy/">Privacy details</a></p>
     <div class="flex shrink-0 gap-2">
       <button type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-800" data-consent-action="rejected">Reject</button>
@@ -9,30 +9,49 @@
 </aside>
 
 <script>
-  import { getConsentPreference, setConsentPreference, revokeConsent } from '../lib/consent';
+  import { CONSENT_STORAGE_KEY, getConsentPreference, setConsentPreference, revokeConsent } from '../lib/consent';
 
   const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
-  const showBanner = () => {
-    if (!banner) return;
-    banner.hidden = false;
-    banner.querySelector<HTMLElement>('[data-consent-action="rejected"]')?.focus();
+  const setBannerPreference = (preference: 'accepted' | 'rejected' | 'unset') => {
+    document.documentElement.dataset.flowhomeConsent = preference;
   };
-  const hideBanner = () => { if (banner) banner.hidden = true; };
+  const showBanner = (focusChoice = false) => {
+    if (!banner) return;
+    banner.dataset.consentBannerOpen = 'true';
+    banner.hidden = false;
+    if (focusChoice) banner.querySelector<HTMLElement>('[data-consent-action="rejected"]')?.focus();
+  };
+  const hideBanner = () => {
+    if (!banner) return;
+    delete banner.dataset.consentBannerOpen;
+    banner.hidden = true;
+  };
 
-  if (getConsentPreference() === 'unset') showBanner();
+  const preference = getConsentPreference();
+  setBannerPreference(preference);
+  if (preference === 'unset') showBanner(); else hideBanner();
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;
     const action = target?.closest<HTMLElement>('[data-consent-action]')?.dataset.consentAction;
     if (action === 'accepted' || action === 'rejected') {
       if (setConsentPreference(action) !== action) return;
+      setBannerPreference(action);
       hideBanner();
       window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
     }
     if (action === 'revoke') {
       if (revokeConsent() !== 'rejected') return;
+      setBannerPreference('rejected');
       showBanner();
       window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
     }
-    if (target?.closest('[data-consent-open]')) showBanner();
+    if (target?.closest('[data-consent-open]')) showBanner(true);
+  });
+  window.addEventListener('storage', (event) => {
+    if (event.key !== CONSENT_STORAGE_KEY || event.storageArea !== window.localStorage) return;
+    const updated = getConsentPreference();
+    setBannerPreference(updated);
+    if (updated === 'unset') showBanner(); else hideBanner();
+    window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
   });
 </script>

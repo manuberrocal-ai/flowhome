@@ -3,17 +3,17 @@ const year = new Date().getFullYear();
 const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=10&data=https%3A%2F%2Fflowhome.dev%2Fquiz%2F';
 ---
 
-<footer class="footer-parallax relative isolate mt-16 overflow-hidden border-t border-slate-800 bg-slate-950 text-slate-300">
+<footer class="footer-surface relative isolate mt-16 overflow-hidden border-t border-slate-800 bg-slate-950 text-slate-300">
   <div class="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-9 lg:px-8">
-    <div class="footer-parallax-orb footer-parallax-orb-a pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
-    <div class="footer-parallax-orb footer-parallax-orb-b pointer-events-none absolute -bottom-24 left-10 h-72 w-72 rounded-full bg-blue-700/20 blur-3xl"></div>
-    <div class="footer-parallax-orb footer-parallax-orb-c pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-400/5 blur-3xl"></div>
+    <div class="footer-surface-orb pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
+    <div class="footer-surface-orb pointer-events-none absolute -bottom-24 left-10 h-72 w-72 rounded-full bg-blue-700/20 blur-3xl"></div>
+    <div class="footer-surface-orb pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-400/5 blur-3xl"></div>
 
     <div class="relative grid gap-5 lg:grid-cols-[1.35fr_0.85fr] lg:gap-6">
-      <section class="footer-parallax-panel footer-parallax-panel-a rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-slate-950/30 sm:p-6">
+      <section class="footer-surface-panel rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-slate-950/30 sm:p-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <a href="/" class="flex items-center gap-3" aria-label="FlowHome home">
-            <img src="/images/flowhome-logo.png" alt="FlowHome" class="h-10 w-auto" width="190" height="48" loading="lazy" decoding="async" />
+            <img src="/images/flowhome-logo.svg" alt="FlowHome" class="h-10 w-auto" width="190" height="48" loading="lazy" decoding="async" />
           </a>
           <span class="inline-flex w-fit rounded-full border border-orange-400/30 bg-orange-400/10 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-orange-200">Deal-aware guides</span>
         </div>
@@ -41,7 +41,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
         </div>
       </section>
 
-      <section class="footer-parallax-panel footer-parallax-panel-b footer-qr-card flex min-h-full flex-col justify-between rounded-[1.75rem] border border-cyan-200/10 bg-gradient-to-br from-white/[0.075] via-white/[0.04] to-cyan-400/[0.055] p-5 shadow-2xl shadow-slate-950/30">
+      <section class="footer-surface-panel footer-qr-card flex min-h-full flex-col justify-between rounded-[1.75rem] border border-cyan-200/10 bg-gradient-to-br from-white/[0.075] via-white/[0.04] to-cyan-400/[0.055] p-5 shadow-2xl shadow-slate-950/30">
         <div class="footer-qr-main flex flex-col gap-4 sm:flex-row sm:items-center">
           <div class="footer-qr-media relative mx-auto shrink-0 sm:mx-0">
             <div class="absolute inset-0 rounded-[1.8rem] bg-cyan-400/20 blur-xl"></div>
@@ -80,7 +80,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       </section>
     </div>
 
-    <div class="footer-parallax-panel footer-parallax-panel-c relative mx-auto mt-7 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+    <div class="footer-surface-panel relative mx-auto mt-7 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
       <div>
         <h2 class="footer-heading"><span class="footer-heading-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></span>Shop</h2>
         <ul class="mt-2 space-y-1.5 text-sm">
@@ -113,7 +113,8 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
         <ul class="mt-2 space-y-1.5 text-sm">
            <li><a href="/about/" class="footer-link">About FlowHome</a></li>
            <li><a href="/about/#affiliate-policy" class="footer-link">Affiliate policy</a></li>
-           <li><a href="/privacy/" class="footer-link">Privacy choices</a></li>
+            <li><a href="/privacy/" class="footer-link">Privacy choices</a></li>
+            <li><a href="/preferences/" class="footer-link">Email preferences</a></li>
            <li><button type="button" class="footer-link min-h-11 text-left" data-consent-open>Manage analytics choices</button></li>
            <li><a href="/sitemap-index.xml" class="footer-link">Sitemap</a></li>
         </ul>
@@ -142,45 +143,14 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       }
     });
 
-    const footer = document.querySelector('.footer-parallax');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!footer || reduceMotion) return;
-
-    let ticking = false;
-    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-    const updateParallax = () => {
-      const rect = footer.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      const footerCenter = rect.top + rect.height / 2;
-      const offset = clamp((viewportCenter - footerCenter) / 18, -22, 22);
-      footer.style.setProperty('--footer-parallax-near', `${offset * -0.34}px`);
-      footer.style.setProperty('--footer-parallax-mid', `${offset * 0.52}px`);
-      footer.style.setProperty('--footer-parallax-far', `${offset * -0.82}px`);
-      const progress = clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0, 1);
-      const bgShift = (progress - 0.5) * 180;
-      footer.style.setProperty('--footer-bg-y', `${bgShift}px`);
-      ticking = false;
-    };
-    const requestParallax = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(updateParallax);
-    };
-    updateParallax();
-    window.addEventListener('scroll', requestParallax, { passive: true });
-    window.addEventListener('resize', requestParallax);
   })();
 </script>
 
 <style is:global>
-  .footer-parallax {
-    --footer-parallax-near: 0px;
-    --footer-parallax-mid: 0px;
-    --footer-parallax-far: 0px;
-    --footer-bg-y: 0px;
+  .footer-surface {
     background: #020617;
   }
-  .footer-parallax::before {
+  .footer-surface::before {
     content: "";
     position: absolute;
     inset: -32% -12%;
@@ -192,10 +162,9 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       radial-gradient(circle at 52% 42%, rgba(20,184,166,0.18), transparent 34%),
       linear-gradient(135deg, #020617 0%, #030712 42%, #08233b 72%, #020617 100%);
     background-size: 135% 135%;
-    transform: translate3d(0, var(--footer-bg-y), 0) scale(1.08);
-    will-change: transform;
+    transform: scale(1.08);
   }
-  .footer-parallax::after {
+  .footer-surface::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -206,32 +175,8 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       linear-gradient(90deg, rgba(125,211,252,0.045) 1px, transparent 1px);
     background-size: 42px 42px;
     opacity: 0.32;
-    transform: translate3d(0, calc(var(--footer-bg-y) * -0.22), 0);
-    will-change: transform;
   }
 
-  .footer-parallax-orb,
-  .footer-parallax-panel {
-    will-change: transform;
-  }
-  .footer-parallax-orb-a {
-    transform: translate3d(0, var(--footer-parallax-far), 0);
-  }
-  .footer-parallax-orb-b {
-    transform: translate3d(0, var(--footer-parallax-mid), 0);
-  }
-  .footer-parallax-orb-c {
-    transform: translate3d(-50%, calc(-50% + var(--footer-parallax-near)), 0);
-  }
-  .footer-parallax-panel-a {
-    transform: translate3d(0, var(--footer-parallax-near), 0);
-  }
-  .footer-parallax-panel-b {
-    transform: translate3d(0, var(--footer-parallax-mid), 0);
-  }
-  .footer-parallax-panel-c {
-    transform: translate3d(0, var(--footer-parallax-far), 0);
-  }
   .footer-qr-main {
     flex-wrap: wrap;
   }
@@ -261,7 +206,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
     max-width: 16.5rem;
   }
   .footer-qr-button {
-    min-height: 2.45rem;
+    min-height: 2.75rem;
     max-width: 12rem;
     white-space: normal;
     line-height: 1.2;
@@ -324,25 +269,6 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
     height: 0.72rem;
     width: 0.72rem;
   }
-  html.translated-ltr .footer-qr-main,
-  html.translated-rtl .footer-qr-main {
-    align-items: center;
-  }
-  html.translated-ltr .footer-qr-copy,
-  html.translated-rtl .footer-qr-copy {
-    flex-basis: 15rem;
-    min-width: 15rem;
-  }
-  html.translated-ltr .footer-qr-title,
-  html.translated-rtl .footer-qr-title {
-    font-size: 1.1rem;
-    line-height: 1.14;
-  }
-  html.translated-ltr .footer-proof-label,
-  html.translated-rtl .footer-proof-label {
-    letter-spacing: 0.06em;
-    font-size: 0.58rem;
-  }
   .footer-heading {
     display: inline-flex;
     align-items: center;
@@ -369,13 +295,6 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
     line-height: 1.35;
     transition: color 150ms ease, padding-left 150ms ease;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .footer-parallax-orb,
-    .footer-parallax-panel {
-      transform: none !important;
-    }
-  }
-
   .footer-link:hover {
     color: #ffffff;
     padding-left: 0.15rem;

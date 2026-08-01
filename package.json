@@ -2,12 +2,16 @@
   "name": "flowhome",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test test/**/*.test.mjs",
+    "qa:browser": "node scripts/qa/browser-smoke.mjs",
     "diff-check": "git diff --check",
     "discover:products": "node scripts/discovery/product-discovery.mjs",
     "quality:check": "node scripts/content/quality-check.mjs",
@@ -21,16 +25,30 @@
     "deploy:cloudflare": "npx wrangler pages deploy dist --project-name flowhome --branch main",
     "package:artifacts": "node scripts/deploy/package-artifacts.mjs",
     "indexnow:submit": "node scripts/deploy/indexnow-submit.mjs",
-    "websub:publish": "node scripts/deploy/websub-publish.mjs"
+    "websub:publish": "node scripts/deploy/websub-publish.mjs",
+    "lint": "eslint \"src/**/*.{astro,js,ts}\" \"scripts/**/*.mjs\" \"test/**/*.mjs\" \"astro.config.mjs\" \"eslint.config.js\"",
+    "typecheck": "astro check",
+    "seo:audit": "node scripts/qa/seo-audit.mjs",
+    "lighthouse:mobile": "node scripts/qa/lighthouse-mobile.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.0",
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@supabase/supabase-js": "^2.110.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.1",
-    "astro": "^7.0.3",
+    "astro": "^7.1.6",
     "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "eslint-plugin-astro": "^3.0.1",
+    "globals": "^17.8.0",
+    "lighthouse": "^13.4.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0"
   }
 }

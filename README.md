@@ -38,3 +38,10 @@ Affiliate links use Amazon Associates tag `flowhome-20`. Keep platform credentia
 ## Launch report
 
 See docs/LAUNCH_REPORT.md for production status, verification, and operating cadence.
+
+## Program documents
+
+- [Baseline scorecard](docs/BASELINE_SCORECARD.md)
+- [Phases 0–6 roadmap](docs/ROADMAP_PHASES_0_6.md)
+- [Analytics event contract](docs/ANALYTICS_EVENT_CONTRACT.md)
+- [Commercial link runbook](docs/COMMERCIAL_LINK_RUNBOOK.md)

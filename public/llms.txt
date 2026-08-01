@@ -1,6 +1,6 @@
 # FlowHome
 
-FlowHome is a smart home product research, comparison, and deals website for US/Canada readers.
+FlowHome is a smart home product research, comparison, and deals website for US readers. Prices are USD snapshots unless a page explicitly states otherwise.
 
 Production: https://flowhome.dev
 Products: https://flowhome.dev/products/

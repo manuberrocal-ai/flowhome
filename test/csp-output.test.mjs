@@ -55,7 +55,13 @@ test('Astro source has no executable inline scripts or event-handler attributes'
   const sources = await Promise.all(files.map((file) => readFile(file, 'utf8')));
 
   for (const [index, source] of sources.entries()) {
-    assert.doesNotMatch(source, /<script\b[^>]*\bis:inline\b/i, `${files[index]} has an inline script`);
+    for (const match of source.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+      const [, attributes, body] = match;
+      if (!/\bis:inline\b/i.test(attributes)) continue;
+      const src = attributes.match(/\bsrc\s*=\s*["']([^"']+)["']/i)?.[1];
+      assert.ok(src && /^\/(?!\/)/.test(src), `${files[index]} has is:inline without a same-origin src`);
+      assert.equal(body.trim(), '', `${files[index]} has executable content in an is:inline script`);
+    }
     assert.doesNotMatch(source, /\son[a-z]+\s*=/i, `${files[index]} has an inline event handler`);
   }
 });

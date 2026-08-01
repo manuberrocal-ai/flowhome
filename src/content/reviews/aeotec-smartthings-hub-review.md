@@ -19,7 +19,7 @@ This review uses catalog facts and comparison context, not a physical evaluation
 
 The product profile names Aeotec SmartThings Hub and lists Wi-Fi, Bluetooth, Zigbee, and Matter. It also lists app control, Alexa compatibility, and Google Home compatibility. Apple HomeKit is false in the profile. That combination makes the hub notable for buyers who want both major protocol entries represented in one catalog record, while making it a less obvious fit for an Apple HomeKit-first selection.
 
-The catalog record lists a current price and original price of $134.99, no discount, and availability marked true. It lists no subscription requirement. The structured fields mark energy monitoring, night vision, two-way audio, mopping, LiDAR mapping, RGB, and dimming as false. Those entries keep the review within the evidence available in the product YAML and should not be expanded into unsupported feature claims.
+The catalog record lists a current price and original price of $134.99 with no discount. It lists no subscription requirement. The structured fields mark energy monitoring, night vision, two-way audio, mopping, LiDAR mapping, RGB, and dimming as false. Those entries keep the review within the evidence available in the product YAML and should not be expanded into unsupported feature claims.
 
 ## Pros and cons
 

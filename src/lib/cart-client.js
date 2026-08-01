@@ -1,4 +1,4 @@
-import { buildAmazonCartUrl, getCartQuantity, getUniqueItemCount, getCartStore, getCartSubtotal } from './cart-store.js';
+import { buildAmazonCartUrl, getUniqueItemCount, getCartStore, getCartSubtotal } from './cart-store.js';
 
 export function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
@@ -15,7 +15,7 @@ const cartDockSetups = new WeakMap();
 const cartPageSetups = new WeakMap();
 
 export function syncProductButtons(items, root = document) {
-  const savedIds = new Set(items.filter((item) => item.quantity > 0).flatMap((item) => [item.asin, item.slug].filter(Boolean)));
+  const savedIds = new Set(items.flatMap((item) => [item.asin, item.slug].filter(Boolean)));
   root.querySelectorAll('[data-flow-cart-add]').forEach((button) => {
     const asin = button.dataset.asin?.toUpperCase();
     const isSaved = Boolean((asin && savedIds.has(asin)) || (button.dataset.slug && savedIds.has(button.dataset.slug)));
@@ -47,13 +47,25 @@ export function setupCartDock() {
   const dock = document.querySelector('[data-flow-cart-dock]');
   const count = document.querySelector('[data-flow-cart-count]');
   const clearButton = document.querySelector('[data-flow-cart-clear]');
+  let lastVisibility = Boolean(dock && !dock.hidden);
+  let lastButtonSignature = '';
   const sync = (items) => {
-    const quantity = getUniqueItemCount(items);
-    if (count) count.textContent = String(quantity);
-    if (dock) dock.hidden = quantity === 0;
-    document.body.dataset.flowCartDockVisible = String(Boolean(dock && quantity > 0));
-    document.dispatchEvent(new CustomEvent('flowhome:cart-dock-visibility', { detail: { visible: Boolean(dock && quantity > 0) } }));
-    syncProductButtons(items);
+    const itemCount = getUniqueItemCount(items);
+    const visible = Boolean(dock && itemCount > 0);
+    const buttonSignature = items.map((item) => `${item.asin || ''}:${item.slug || ''}`).sort().join('|');
+
+    if (count && count.textContent !== String(itemCount)) count.textContent = String(itemCount);
+    if (visible !== lastVisibility) {
+      if (dock && dock.hidden === visible) dock.hidden = !visible;
+      if (visible) document.body.dataset.flowCartDockVisible = 'true';
+      else delete document.body.dataset.flowCartDockVisible;
+      document.dispatchEvent(new CustomEvent('flowhome:cart-dock-visibility', { detail: { visible } }));
+      lastVisibility = visible;
+    }
+    if (buttonSignature !== lastButtonSignature) {
+      syncProductButtons(items);
+      lastButtonSignature = buttonSignature;
+    }
   };
 
   // Toggle is the single state transition for shortlist buttons.
@@ -99,14 +111,13 @@ export function setupCartPage() {
   const resetSavedList = document.querySelector('[data-cart-page-reset-saved-list]');
 
   const render = (items) => {
-    const totalQuantity = getCartQuantity(items);
     const uniqueCount = getUniqueItemCount(items);
     if (count) count.textContent = String(uniqueCount);
     if (total) total.textContent = formatMoney(getCartSubtotal(items));
     if (empty) empty.hidden = items.length > 0;
     if (recovery) recovery.hidden = !store.getRecoveryState().hasCorruptSavedList;
     if (feedback) feedback.textContent = items.length
-      ? `${uniqueCount} product${uniqueCount === 1 ? '' : 's'}${totalQuantity > uniqueCount ? ` (${totalQuantity} units)` : ''} ready to open on Amazon.`
+      ? `${uniqueCount} product${uniqueCount === 1 ? '' : 's'} ready to open on Amazon.`
       : 'Your list is empty. Add products before opening Amazon.';
     if (buy instanceof HTMLAnchorElement) {
       const destination = buildAmazonCartUrl(items);
@@ -126,18 +137,15 @@ export function setupCartPage() {
     list.innerHTML = items.map((item) => {
       const productUrl = item.url || `/product/${item.slug}/`;
       return `<article class="flow-cart-page-item" data-asin="${escapeHtml(item.asin || item.slug)}">
-        <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__image"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async"></a>
+        <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__image"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" width="88" height="88" loading="lazy" decoding="async" data-fallback-src="/images/product-placeholder.svg"></a>
         <div class="min-w-0">
           <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__name">${escapeHtml(item.name)}</a>
-          <p class="mt-1 text-sm font-bold text-slate-500">${formatMoney(item.price)} each</p>
+          <p class="mt-1 text-sm font-bold text-slate-500">${formatMoney(item.price)}</p>
           <div class="flow-cart-page-item__controls mt-3">
-            <button type="button" class="flow-cart-page-qty" data-cart-page-decrease aria-label="Decrease quantity">&minus;</button>
-            <span class="flow-cart-page-qty-value" aria-label="Quantity ${item.quantity}">${item.quantity}</span>
-            <button type="button" class="flow-cart-page-qty" data-cart-page-increase aria-label="Increase quantity">+</button>
             <button type="button" class="flow-cart-page-remove" data-cart-page-remove>Remove</button>
           </div>
         </div>
-        <strong class="flow-cart-page-item__line">${formatMoney(item.price * item.quantity)}</strong>
+        <strong class="flow-cart-page-item__line">${formatMoney(item.price)}</strong>
       </article>`;
     }).join('');
   };
@@ -146,9 +154,7 @@ export function setupCartPage() {
     const target = event.target.closest('button');
     const asin = target?.closest('[data-asin]')?.dataset.asin;
     if (!target || !asin) return;
-    if (target.matches('[data-cart-page-increase]')) store.increment(asin);
-    else if (target.matches('[data-cart-page-decrease]')) store.decrement(asin);
-    else if (target.matches('[data-cart-page-remove]')) store.remove(asin);
+    if (target.matches('[data-cart-page-remove]')) store.remove(asin);
   };
   list?.addEventListener('click', onListClick);
   const onClear = () => store.clear();

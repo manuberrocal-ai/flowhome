@@ -33,7 +33,7 @@ export interface DealStatusInfo {
 const ISO_REGEX =
   /^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/;
 
-function toDate(value: string | Date | null | undefined, reference: Date): Date | null {
+function toDate(value: string | Date | null | undefined): Date | null {
   if (value instanceof Date) {
     return Number.isNaN(value.getTime()) ? null : value;
   }
@@ -62,8 +62,8 @@ export function getDealStatus(
 ): DealStatusInfo {
   const reference = now instanceof Date ? now : new Date(now);
   const referenceIso = reference.toISOString();
-  const start = toDate(window?.start ?? null, reference);
-  const end = toDate(window?.end ?? null, reference);
+  const start = toDate(window?.start ?? null);
+  const end = toDate(window?.end ?? null);
 
   if (!start && !end) {
     return { status: 'unknown', referenceIso, startIso: null, endIso: null, msToNext: NaN };
@@ -147,7 +147,7 @@ export function getDealUrgencyCopy(window: DealWindow | null | undefined, now?: 
  */
 export function formatPriceLastChecked(date?: Date | string | null): string | null {
   if (!date) return null;
-  const parsed = date instanceof Date ? date : toDate(date, new Date());
+  const parsed = date instanceof Date ? date : toDate(date);
   if (!parsed) return null;
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', `Oct`, 'Nov', 'Dec'];
   return `Price last checked ${months[parsed.getUTCMonth()]} ${parsed.getUTCDate()}, ${parsed.getUTCFullYear()}`;

@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard.astro';
 import DealCard from '../components/DealCard.astro';
 import { getDealStatus } from '../lib/deal-state';
 import Newsletter from '../components/Newsletter.astro';
-import { getCategoryLabel } from '../lib/product-art';
+import { getCategoryLabel, getProductFallbackImage } from '../lib/product-art';
 import { getCommerceData } from '../lib/commerce-data';
 
 const products = (await getCollection('products')).sort((a, b) => (b.data.ownerRating * Math.log10(b.data.ownerRatingCount + 1)) - (a.data.ownerRating * Math.log10(a.data.ownerRatingCount + 1)));
@@ -13,13 +13,14 @@ const allDeals = await getCollection('deals');
 const now = new Date();
 const deals = allDeals.filter((d) => getDealStatus({ start: d.data.startDate, end: d.data.endDate }, now).status === 'active');
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.qualityScore - a.data.qualityScore || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredProducts = products.filter((p) => p.data.catalogActive).slice(0, 12);
+const featuredProducts = products.filter((p) => p.data.catalogActive).slice(0, 8);
 const showcaseProducts = featuredProducts.slice(0, 6);
 const dealProducts = products.filter((p) => getCommerceData(p.data, now).showPromotion).slice(0, 4);
 const topProduct = showcaseProducts[0]?.data;
 const topCommerce = topProduct ? getCommerceData(topProduct, now) : undefined;
 const categories = [...new Set(products.map((p) => p.data.category))].slice(0, 7);
 const reviewCards = reviews.slice(0, 3);
+type ProductData = (typeof products)[number]['data'];
 
 const shopperQuotes: Record<string, string> = {
   'tp-link-kasa-smart-plug-mini': 'This little plug feels like a hidden gem for everyday routines.',
@@ -41,25 +42,25 @@ const categoryQuotes: Record<string, string> = {
   'robot-vacuum': 'It quietly buys back time every week.',
 };
 
-const getShopperQuote = (data: any) => shopperQuotes[data.slug] || categoryQuotes[data.category] || 'This feels like a smart-home upgrade that actually earns its spot.';
+const getShopperQuote = (data: ProductData) => shopperQuotes[data.slug] || categoryQuotes[data.category] || 'This feels like a smart-home upgrade that actually earns its spot.';
 const heroProducts = showcaseProducts.map((product) => {
   const data = product.data;
   const commerce = getCommerceData(data, now);
-  return { id: product.id, slug: data.slug, title: data.name, image: data.image, alt: data.name, price: data.price, priceLabel: `$${data.price}`, priceContext: commerce.priceLabel, originalPrice: commerce.showPromotion ? data.originalPrice ?? null : null, ownerRating: data.ownerRating, ownerRatingCount: data.ownerRatingCount, ratingSource: data.ratingSource, badges: commerce.showPromotion ? [`Save ${data.discountPct}%`] : [], detailsUrl: `/product/${data.slug}/`, amazonUrl: data.affiliateUrl, affiliateDisclosure: 'Affiliate link', category: getCategoryLabel(data.category), discountPct: commerce.showPromotion ? data.discountPct : 0, quote: getShopperQuote(data) };
+  return { id: product.id, slug: data.slug, title: data.name, image: data.image, fallbackImage: getProductFallbackImage(data), alt: data.name, price: data.price, priceLabel: `$${data.price}`, priceContext: commerce.priceLabel, originalPrice: commerce.showPromotion ? data.originalPrice ?? null : null, ownerRating: data.ownerRating, ownerRatingCount: data.ownerRatingCount, ratingSource: data.ratingSource, badges: commerce.showPromotion ? [`Save ${data.discountPct}%`] : [], detailsUrl: `/product/${data.slug}/`, amazonUrl: data.affiliateUrl, affiliateDisclosure: 'Affiliate link', category: getCategoryLabel(data.category), discountPct: commerce.showPromotion ? data.discountPct : 0, quote: getShopperQuote(data), starStates: Array.from({ length: 5 }, (_, starIndex) => starIndex < Math.round(data.ownerRating)) };
 });
 ---
-<BaseLayout>
-  <section class="hero-parallax relative isolate overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-2xl shadow-blue-950/20">
+<BaseLayout preloadImage={heroProducts[0]?.image}>
+  <section class="hero-surface relative isolate overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-2xl shadow-blue-950/20">
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(249,115,22,0.38),transparent_24%),radial-gradient(circle_at_12%_0%,rgba(37,99,235,0.82),transparent_36%),linear-gradient(135deg,#020617_0%,#172554_43%,#0369a1_100%)]"></div>
     <div class="absolute right-0 top-0 -z-10 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08))]"></div>
 
-    <div class="grid gap-8 p-6 md:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:p-10">
-      <div>
-        <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
-        <h1 class="mt-5 max-w-4xl text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Buy smart home gear that actually fits your home.</h1>
-        <p class="mt-5 max-w-2xl text-base leading-7 text-blue-50 md:text-lg">FlowHome turns messy Amazon research into a clean shortlist: useful devices, strong owner feedback, ecosystem fit, and clear deal context.</p>
+    <div class="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:p-10">
+      <div class="min-w-0">
+        <p class="inline-flex max-w-full whitespace-normal break-words rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
+        <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Buy smart home gear that actually fits your home.</h1>
+        <p class="mt-5 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">FlowHome turns messy Amazon research into a clean shortlist: useful devices, strong owner feedback, ecosystem fit, and clear deal context.</p>
         <div class="mt-7 flex flex-wrap gap-3">
-          <a href="/quiz/" class="flow-wave inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
+           <a href="/quiz/" data-fh-home-primary-cta class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
           <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Shop picks</a>
         </div>
         {topProduct && <div class="mt-7 flex max-w-xl flex-wrap gap-2 text-sm">
@@ -69,18 +70,18 @@ const heroProducts = showcaseProducts.map((product) => {
         </div>}
       </div>
 
-      <div class="relative" aria-label="Featured smart home product showcase">
-        <div class="relative overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-100 p-3 text-slate-950">
+      <div class="relative min-w-0" aria-label="Featured smart home product showcase">
+        <div class="relative min-w-0 overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-100 p-3 text-slate-950">
           <div class="flex items-center justify-between gap-3 px-2 pb-3">
             <div>
               <p class="text-[11px] font-black uppercase tracking-[0.2em] text-orange-600">Editorial shortlist</p>
               <h2 class="text-lg font-black">Featured products</h2>
             </div>
-            <a href="/deals/" class="flow-wave rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-sm shadow-orange-300/50 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500">Deals</a>
+             <a href="/deals/" class="rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-sm shadow-orange-300/50 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500">Deals</a>
           </div>
 
            <div class="hero-showcase relative min-h-[462px]" data-hero-showcase>
-             {heroProducts[0] && <article class="hero-slide absolute inset-0 grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-500" data-hero-slide tabindex="0">
+             {heroProducts[0] && <article class="hero-slide absolute inset-0 grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-200" data-hero-slide tabindex="0">
                 <div class="min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
                     <p data-hero-field="category" class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-blue-700">{heroProducts[0].category}</p>
@@ -91,11 +92,11 @@ const heroProducts = showcaseProducts.map((product) => {
 
                 <div class="hero-product-stage hero-sync-wave relative min-h-[20.25rem] overflow-hidden rounded-[1.25rem] bg-[#f8fafc] p-0 ring-1 ring-slate-200/70 md:min-h-[22rem]">
                    <a data-hero-photo-link href={heroProducts[0].detailsUrl} class="hero-product-photo flex h-full min-h-[20.25rem] items-center justify-start rounded-[1.25rem] bg-white md:min-h-[22rem]" aria-label={`View ${heroProducts[0].title}`}>
-                     <img data-hero-image src={heroProducts[0].image} alt={heroProducts[0].alt} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading="eager" decoding="async" fetchpriority="high" />
+                     <img data-hero-image src={heroProducts[0].image} alt={heroProducts[0].alt} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={heroProducts[0].fallbackImage} />
                   </a>
 
 
-                    <div data-hero-field="discount" class="flow-wave absolute right-4 top-[2.35rem] z-50 rounded-[1.35rem] bg-blue-950 px-3 py-2 text-white" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</div>
+                    <div data-hero-field="discount" class="absolute right-4 top-[2.35rem] z-50 rounded-[1.35rem] bg-blue-950 px-3 py-2 text-white" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</div>
 
                    <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
                     <p data-hero-field="price-context" class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">{heroProducts[0].priceContext}</p>
@@ -105,8 +106,8 @@ const heroProducts = showcaseProducts.map((product) => {
                     </div>
                     <div class="mt-2.5 flex items-center justify-between gap-2 border-t border-white/10 pt-2.5">
                          <div data-hero-rating-stars class="flex items-center gap-0.5" aria-label={`Amazon customer rating ${heroProducts[0].ownerRating} out of 5 stars`}>
-                         {Array.from({ length: 5 }).map((_, starIndex) => (
-                             <svg data-hero-star class:list={["hero-star h-3.5 w-3.5", starIndex < Math.round(heroProducts[0].ownerRating) ? "text-amber-300" : "text-slate-600"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          {heroProducts[0].starStates.map((isFilled) => (
+                              <svg data-hero-star class:list={["hero-star h-3.5 w-3.5", isFilled ? "text-amber-300" : "text-slate-600"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.801 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 0 0 .95-.69l1.07-3.292Z" />
                           </svg>
                         ))}
@@ -114,7 +115,7 @@ const heroProducts = showcaseProducts.map((product) => {
                             <span data-hero-field="rating" class="text-[11px] font-black text-amber-200">{heroProducts[0].ownerRating}</span>
                              <span data-hero-field="rating-count" class="text-[11px] text-slate-300">({heroProducts[0].ownerRatingCount})</span>
                      </div><p data-hero-field="rating-source" class="mt-1 text-[9px] text-slate-400">{heroProducts[0].ratingSource}</p>
-                    <span class="flow-wave amazon-cta-button mt-2.5 block rounded-xl px-3 py-2 text-center text-xs font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+                         <span class="amazon-cta-button mt-2.5 block rounded-xl px-3 py-2 text-center text-xs font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
                   </a>
                 </div>
 
@@ -127,11 +128,11 @@ const heroProducts = showcaseProducts.map((product) => {
            </div>
            <p data-hero-live class="sr-only" aria-live="polite"></p>
 
-          <div class="mt-3 flex items-center justify-between gap-4 px-1">
-            <div class="flex gap-1" aria-label="Choose featured product">
+          <div class="mt-3 grid min-w-0 gap-2 px-1 sm:flex sm:items-center sm:justify-between sm:gap-4">
+            <div class="flex min-w-0 max-w-full flex-wrap gap-1" aria-label="Choose featured product">
               {showcaseProducts.map((product, index) => <button class="hero-dot group grid h-11 w-11 place-items-center rounded-full p-0" type="button" data-hero-dot={index} aria-label={`Show ${product.data.name}`} aria-pressed={index === 0 ? 'true' : 'false'} aria-current={index === 0 ? 'true' : 'false'}><span class:list={["block h-2.5 rounded-full transition-all group-focus-visible:opacity-80", index === 0 ? 'w-8 bg-orange-500' : 'w-2.5 bg-slate-300 group-hover:bg-slate-400']}></span></button>)}
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex shrink-0 items-center justify-end gap-2">
                <a data-hero-details href={heroProducts[0]?.detailsUrl || '/products/'} class="hero-details-link inline-flex h-11 items-center justify-center rounded-full bg-slate-100 px-4 text-xs font-black text-slate-950 hover:bg-slate-200">Details</a>
                <button type="button" class="hero-prev grid h-11 w-11 place-items-center rounded-full bg-slate-100 font-black text-slate-700 hover:bg-slate-200" aria-label="Previous product"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
                <button type="button" class="hero-next grid h-11 w-11 place-items-center rounded-full bg-slate-950 font-black text-white hover:bg-slate-800" aria-label="Next product"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
@@ -142,14 +143,14 @@ const heroProducts = showcaseProducts.map((product) => {
     </div>
   </section>
 
-  {dealProducts.length > 0 && <section class="home-parallax-bg mt-8 rounded-[1.75rem] bg-slate-950 text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden" data-dark-parallax>
+  {dealProducts.length > 0 && <section class="home-surface mt-8 rounded-[1.75rem] bg-slate-950 text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
     <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
       <div><p class="text-xs font-black uppercase tracking-[0.2em] text-orange-400">Deal radar</p><h2 class="mt-1 text-2xl font-black">Discounts that deserve attention</h2></div>
-      <a href="/deals/" class="premium-action flow-wave rounded-full px-4 py-2 text-sm font-black text-white">See all deals</a>
+       <a href="/deals/" class="premium-action rounded-full px-4 py-2 text-sm font-black text-white">See all deals</a>
     </div>
     <div class="relative z-10 mx-5 mb-5 grid gap-3 md:grid-cols-4">
       {dealProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="group flex items-center gap-3 rounded-2xl bg-slate-900/60 p-3 ring-1 ring-white/10 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-slate-900 hover:ring-orange-500/20">
-        <img src={product.data.image} alt={product.data.name} class="h-16 w-16 rounded-xl bg-slate-800 object-contain p-1" loading="lazy" decoding="async" fetchpriority="low" />
+        <img src={product.data.image} alt={product.data.name} class="h-16 w-16 rounded-xl bg-slate-800 object-contain p-1" loading="lazy" decoding="async" fetchpriority="low" width="64" height="64" data-fallback-src={getProductFallbackImage(product.data)} />
         <div class="min-w-0"><p class="truncate text-sm font-black">{product.data.name}</p><p class="text-lg font-black text-orange-400">-{product.data.discountPct}% <span class="text-sm text-slate-300">${product.data.price}</span></p></div>
       </a>)}
     </div>
@@ -167,7 +168,7 @@ const heroProducts = showcaseProducts.map((product) => {
 
   <section class="mt-16 rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
     <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-    <div class="home-parallax-bg min-h-full rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10" data-dark-parallax>
+    <div class="home-surface min-h-full rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10">
       <div class="relative z-10">
         <p class="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">Shortlist confidence</p>
         <h2 class="mt-2 text-3xl font-black leading-tight">More signal before you click Amazon.</h2>
@@ -205,7 +206,7 @@ const heroProducts = showcaseProducts.map((product) => {
         <p class="mt-3 max-w-2xl text-slate-600">Create an account with Google or email to keep your signed-in shortlist synced across devices.</p>
       </div>
       <div class="flex flex-wrap gap-3 lg:justify-end">
-        <a href="/account/" class="flow-wave inline-flex min-h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-black text-white shadow-lg shadow-slate-950/15">Create account</a>
+         <a href="/account/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-black text-white shadow-lg shadow-slate-950/15">Create account</a>
         <a href="/quiz/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-5 py-3 font-black text-slate-950 ring-1 ring-slate-200 hover:bg-slate-50">Start with quiz</a>
       </div>
     </div>
@@ -218,7 +219,7 @@ const heroProducts = showcaseProducts.map((product) => {
 
   <section class="mt-12 grid gap-6 md:grid-cols-3">
     <a href="/calculator/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md"><h2 class="text-2xl font-extrabold">Energy savings calculator</h2><p class="mt-2 text-slate-600">Estimate simple monthly savings from plugs, thermostats, lights, and sensors.</p></a>
-    <a href="/compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md" data-fh-track="compare_open" data-cta-position="home_tools"><h2 class="text-2xl font-extrabold">Compare products</h2><p class="mt-2 text-slate-600">Side-by-side specs for popular starter devices.</p></a>
+    <a href="/compare/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md" data-fh-track="compare_open" data-cta-position="home_tools"><h2 class="text-2xl font-extrabold">Compare products</h2><p class="mt-2 text-slate-600">Side-by-side specs for curated smart home decisions.</p></a>
     <a href="/quiz/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md"><h2 class="text-2xl font-extrabold">Get a recommendation</h2><p class="mt-2 text-slate-600">Answer a few questions and pick a practical smart home path.</p></a>
   </section>
 
@@ -227,43 +228,12 @@ const heroProducts = showcaseProducts.map((product) => {
   <script type="application/json" id="hero-products" set:html={JSON.stringify(heroProducts).replaceAll('<', '\\u003c')}></script>
   <script>
     import { setupHeroCarousel } from '../lib/hero-carousel.js';
-    const root = document.querySelector('[data-hero-showcase]');
-    const payload = document.getElementById('hero-products');
+    const root = document.querySelector<HTMLElement>('[data-hero-showcase]');
+    const payload = document.querySelector<HTMLScriptElement>('#hero-products');
     if (root && payload) setupHeroCarousel({ root, products: JSON.parse(payload.textContent || '[]') });
   </script>
 
-  <script>
-    (() => {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const parallaxSections = Array.from(document.querySelectorAll('[data-dark-parallax]'));
-      if (!parallaxSections.length || reduceMotion) return;
-
-      let ticking = false;
-      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-      const updateParallax = () => {
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-        parallaxSections.forEach((section) => {
-          const rect = section.getBoundingClientRect();
-          const progress = clamp((viewportHeight - rect.top) / (viewportHeight + rect.height), 0, 1);
-          const shift = Math.round((progress - 0.5) * 150);
-          const glow = Math.round((progress - 0.5) * 42);
-          section.style.setProperty('--home-bg-y', `${shift}px`);
-          section.style.setProperty('--home-glow-x', `${glow}px`);
-        });
-        ticking = false;
-      };
-      const requestParallax = () => {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(updateParallax);
-      };
-      updateParallax();
-      window.addEventListener('scroll', requestParallax, { passive: true });
-      window.addEventListener('resize', requestParallax);
-    })();
-  </script>
-
-  <style is:global>
+  <style is:inline>
     body {
       background: #f1f5f9;
     }
@@ -272,7 +242,7 @@ const heroProducts = showcaseProducts.map((product) => {
       background: radial-gradient(circle at 50% 0%, rgba(219,234,254,0.55), transparent 34%), #f1f5f9;
     }
 
-    .hero-parallax {
+    .hero-surface {
       background-image:
         radial-gradient(circle at 80% 18%, rgba(20,184,166,0.24), transparent 24%),
         radial-gradient(circle at 12% 8%, rgba(37,99,235,0.55), transparent 34%),
@@ -356,44 +326,9 @@ const heroProducts = showcaseProducts.map((product) => {
       z-index: 1;
     }
 
-    .featured-products,
-    .home-parallax-bg,
-    .product-card {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 520px;
-    }
-
-    .hero-star {
-      opacity: 0;
-      transform: translateY(2px) scale(0.7);
-      transform-origin: center;
-      animation: heroStarPop 3.8s ease-in-out infinite;
-    }
-
-    .hero-star:nth-child(1) { animation-delay: 0.05s; }
-    .hero-star:nth-child(2) { animation-delay: 0.18s; }
-    .hero-star:nth-child(3) { animation-delay: 0.31s; }
-    .hero-star:nth-child(4) { animation-delay: 0.44s; }
-    .hero-star:nth-child(5) { animation-delay: 0.57s; }
-
-    @keyframes heroStarPop {
-      0% { opacity: 0; transform: translateY(2px) scale(0.7); }
-      8% { opacity: 1; transform: translateY(-1px) scale(1.18); }
-      14% { opacity: 1; transform: translateY(0) scale(1); }
-      76% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(2px) scale(0.86); }
-    }
-
-
     @media (prefers-reduced-motion: reduce) {
-      .hero-star {
-        animation: none;
-      }
-
-      .hero-star {
-        opacity: 1;
-        transform: none;
-      }
+      .hero-showcase .hero-slide,
+      .hero-showcase .hero-dot span { transition: none !important; }
     }
 
   </style>

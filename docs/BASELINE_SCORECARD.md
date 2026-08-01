@@ -1,0 +1,42 @@
+# FlowHome Baseline Scorecard
+
+Date: 2026-07-29
+
+This is a truthful, reproducible program baseline. It distinguishes local implementation evidence from external or time-dependent evidence; it does not claim business success. The source-specific organic records remain in [`data/organic-growth-scorecard.csv`](../data/organic-growth-scorecard.csv) and are not replaced by this program view.
+
+## Artifact
+
+- Program scorecard: [`data/program-baseline-scorecard.csv`](../data/program-baseline-scorecard.csv)
+- Roadmap and ownership: [`ROADMAP_PHASES_0_6.md`](ROADMAP_PHASES_0_6.md)
+- Organic measurement procedure: [`ORGANIC_GROWTH_RUNBOOK.md`](ORGANIC_GROWTH_RUNBOOK.md)
+- P2 evidence: [`P2_COMPLETION_REPORT.md`](P2_COMPLETION_REPORT.md)
+- Dependency security evidence: [`DEPENDENCY_SECURITY.md`](DEPENDENCY_SECURITY.md)
+
+## Reading rules
+
+`before` is the prior observable state when the repository records one; `current` is the latest stated evidence in this block. `Unknown` means that no defensible value was observed, never zero. Every row cites a repository path and line range or a reproducible command in `source`/`evidence`. Status is restricted to `implemented`, `technically_tested`, `externally_blocked`, and `time_volume_dependent`.
+
+The 2026-07-16/17 GSC, GA4, Bing, and Amazon values are dated baselines, not current business outcomes. Amazon's 30-day context is explicitly retained as context and is not merged with its 7-day value. Existing P1 editorial/decision contracts and P2 responsive contracts are technically tested, not user-validated. The configured CI workflow has no observed remote run in this block.
+
+## Evidence boundaries
+
+- Local evidence: current Block 3 `npm.cmd test` (2026-07-29) is 194/194, with lint pass and typecheck 0 errors/0 warnings. Final Block 3 `npm.cmd run qa:browser` is 16/16 Brave cases across 320/375/768/1024/1440, including anonymous save, direct CTA, and consent-event contracts alongside runtime, JSON-LD, 44px, overflow, and dock checks. Block 3 added analytics, link, pathname, and privacy contracts plus three browser commercial cases. Historical progression remains explicit: the P2 report recorded 182/182, and Block 2 recorded 186/186 after adding 4 documentation/roadmap contract tests; those historical reports remain unchanged ([`P2_COMPLETION_REPORT.md`](P2_COMPLETION_REPORT.md):35-45).
+- Security evidence: `npm.cmd audit --omit=dev` reports zero production vulnerabilities ([`DEPENDENCY_SECURITY.md`](DEPENDENCY_SECURITY.md):20-23).
+- External evidence: GSC 96 impressions, 0 clicks, average position 39.8; GA4 15 sessions and 10 engaged sessions, with organic 1 session and 0 engaged; Bing 45 impressions, 1 click, 2.22% CTR; Amazon 0 affiliate clicks in 7 days and 26 clicks in 30-day context. These are preserved in the organic source scorecard and its runbook.
+- Block 4 final local evidence is 203/203 tests, lint PASS, typecheck 0 errors/0 warnings (155 non-failing hints), build 87 pages, `seo:audit` 87 content pages with 0 errors/0 warnings, `links:check` 0 stale/5 unknown and pass, production dependency audit 0 vulnerabilities, and `diff-check` pass with LF/CRLF warnings only. Lighthouse 13.4.1 local three-sample medians pass all 90/95/95/95 and LCP/CLS/TBT gates; all 12 samples were complete with finite required metrics (`%TEMP%\flowhome-lighthouse-2026-07-30T00-06-39-646Z\summary.json`). Final browser QA is 16/16 Brave cases with 0 failures/setup/cleanup errors and four passing loopback status checks (home/robots/sitemap 200; missing path 404). Field CWV and deployed Cloudflare redirect, 404, and header behavior remain `Unknown` or external. See [`SEO_PERFORMANCE_AUDIT.md`](SEO_PERFORMANCE_AUDIT.md) and [`BLOCK4_COMPLETION_REPORT.md`](BLOCK4_COMPLETION_REPORT.md).
+- Block 5 boundary evidence is 204/204, with the same local gate pattern preserved and no new external claims.
+- Block 6 final local evidence is 217/217, lint PASS, typecheck 0 errors/0 warnings (126 files, 155 hints), build 87, `links:check` 0 stale/5 unknown, `seo:audit` 87/0/0, `npm.cmd audit --omit=dev` 0 vulnerabilities, browser 17/17, and `diff-check` pass with LF/CRLF warnings only.
+- Block 6 experiment evidence remains draft: flags are off, assignment is session-ID based, and conversion conclusions stay Unknown.
+- Block 7 lifecycle implementation is local/mock-only. Delivery, open, click, and conversion remain Unknown; no provider, account, email, deployment, or source metric has been activated.
+- Block 7 final local evidence (2026-07-30) is 231/231 tests, lint PASS, typecheck 0 errors/0 warnings (142 files, 155 non-failing hints), build 88, `links:check` 0 stale/5 unknown, `seo:audit` 88/0/0, `npm.cmd audit --omit=dev` 0 vulnerabilities, browser 19/19 with 0 failures/setup errors, and `diff-check` PASS with LF/CRLF warnings only. Migration/RLS and Edge Functions are locally prepared but not applied/deployed; provider, credentials, DNS/SPF/DKIM/DMARC, privacy/retention, and activation remain blocked. See [`BLOCK7_COMPLETION_REPORT.md`](BLOCK7_COMPLETION_REPORT.md).
+- Block 9 final local evidence (2026-08-01) is 404/404 tests (including 107/107 focused Block 9/surface cases and 13/13 product-page cases), lint PASS, typecheck 0 errors/0 warnings (173 files, 155 non-failing hints), build 88, `links:check` 0 stale/5 unknown, `seo:audit` 88/0/0, `npm.cmd audit --omit=dev` 0 vulnerabilities, browser 19/19 with 0 failures/setup errors, and `diff-check` PASS with LF/CRLF warnings only. The compatibility graph, Claim Ledger, contradiction/expiry checks, audited review contract, and verified quiz/comparison/alternatives/product-page integration are technically tested with synthetic fixtures. `PUBLIC_COMPATIBILITY_V1` remains off; no production graph, source connector, source claim, deployment, or outcome is claimed. See [`BLOCK9_COMPLETION_REPORT.md`](BLOCK9_COMPLETION_REPORT.md).
+- Block 11 local/mock technical evidence (2026-08-01) is 18/18 focused total (11 code + 7 docs), independent verifier APPROVE, global 469/469 tests, lint PASS, typecheck 197 files with 0 errors/0 warnings and 155 hints, build 88, `links:check` 0 stale/5 unknown, `npm audit --omit=dev` 0 vulnerabilities, and `diff-check` PASS with LF/CRLF warnings only. Browser QA is N/A because Block 11 has no UI or public runtime. The acquisition contracts, synthetic fixtures, and mock-only adapters are technically closed locally; accounts, permissions, approvals, publication, sends, spend, deployment, and outcomes remain Unknown/unapproved/None. See [`BLOCK11_ACQUISITION_RUNBOOK.md`](BLOCK11_ACQUISITION_RUNBOOK.md) and [`BLOCK11_COMPLETION_REPORT.md`](BLOCK11_COMPLETION_REPORT.md).
+- Block 12 current local technical evidence (2026-08-01) is focused 6/6, relevant cross-block subset 21/21, global 475/475 tests, lint PASS, typecheck 202 files with 0 errors/0 warnings and 155 non-failing hints, build 88 pages, quality check PASS over 15 review files, `links:check` 0 stale/5 unknown, `npm audit --omit=dev` 0 vulnerabilities, and `seo:audit` 88/0/0 PASS. Browser QA and Lighthouse are N/A because this Block 12 change only affects TypeScript contracts not connected to runtime, docs, and tests; diff-check PASS with LF/CRLF warnings only. Technical gates pass; the 90-day gate, users/real data, field CWV, remote execution, accounts, and external monitoring remain pending, externally blocked, or time/volume dependent. No historical baseline is converted into validation. See [`BLOCK12_FINAL_REPORT.md`](BLOCK12_FINAL_REPORT.md).
+
+## Ownership state
+
+Roles are intentionally unassigned. Assignments require a human decision; no person, credential, account, or external operation is implied by this document. The full role-to-work matrix and cadence are in [`ROADMAP_PHASES_0_6.md`](ROADMAP_PHASES_0_6.md).
+
+## Post-audit verification (2026-08-01)
+
+The cross-block local technical audit for Blocks 0–9 is complete. Current aggregate evidence and the Judgment Day methodology are recorded in [`BLOCKS_0_9_AUDIT_REPORT.md`](BLOCKS_0_9_AUDIT_REPORT.md). External, provider/source, deployment, remote-CI, and time/volume-dependent states remain `Unknown` or blocked; historical dated counts above are preserved.

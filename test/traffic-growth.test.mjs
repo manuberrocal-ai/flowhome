@@ -61,10 +61,12 @@ test('comparison pages have unique SEO guidance and substantive safe content con
   assert.equal(new Set(descriptions).size, 8);
   assert.equal(new Set(guidance).size, 8);
   assert.match(layout, /Quick decision framework/);
+  for (const section of ['Key tradeoffs', 'Who should buy each option', 'Best fit by verified signal', 'Final recommendation', 'Evidence limits']) assert.match(layout, new RegExp(section));
+  assert.match(layout, /source data dates/);
   assert.match(layout, /href=\{`\/product\/\$\{product\.slug\}/);
   assert.match(layout, /href=\{`\/category\/\$\{product\.category\}/);
   assert.match(layout, /href=\{`\/compare\/\$\{comparison\.slugs\.join\('-vs-'\)\}/);
-  assert.doesNotMatch(`${page}\n${layout}`, /hands-on|live price|shipping|returns|Canada availability|guaranteed winner|we tested/i);
+  assert.doesNotMatch(`${page}\n${layout}`, /hands-on|live price|shipping|returns|Canada availability|guaranteed winner|universal winner|we tested/i);
 });
 
 test('comparison data and table semantics stay consistent', () => {
@@ -84,6 +86,8 @@ test('comparison data and table semantics stay consistent', () => {
   assert.match(page, /both.*vacuum-only/i);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">\{label\}<\/th>/);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">Listing link<\/th>/);
+  assert.match(table, /<caption>Side-by-side verified product data comparison/);
+  assert.match(table, /<th scope="col">Feature<\/th>/);
 });
 
 test('robot vacuum editorial cluster has optional guide fields and exact links', () => {
@@ -147,7 +151,7 @@ test('smart-hub editorial cluster has exact products, reviews, comparison, and h
   const all = `${guide}\n${reviews.join('\n')}`;
   const slugs = ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'];
   const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
-  assert.deepEqual([...productBlock.matchAll(/^  - ([\w-]+)$/gm)].map((match) => match[1]), slugs);
+  assert.deepEqual([...productBlock.matchAll(/^ {2}- ([\w-]+)$/gm)].map((match) => match[1]), slugs);
   assert.match(guide, /comparisonSlug: "aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub"/);
   assert.deepEqual(reviews.map((review) => review.match(/^productSlug: ([\w-]+)$/m)?.[1]), slugs);
   assert.match(comparison, /'aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'/);
@@ -174,14 +178,14 @@ test('smart-lighting room-control guide has exact editorial links and source-bac
   const bestPage = read('src/pages/best/[slug].astro');
   const rss = read('src/pages/rss.xml.js');
   const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
-  assert.deepEqual([...productBlock.matchAll(/^  - ([\w-]+)$/gm)].map((match) => match[1]), [
+  assert.deepEqual([...productBlock.matchAll(/^ {2}- ([\w-]+)$/gm)].map((match) => match[1]), [
     'philips-hue-white-color-starter-kit',
     'govee-rgbic-led-strip-lights',
     'wyze-bulb-color',
   ]);
   assert.match(guide, /comparisonSlug: "philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color"/);
-  assert.deepEqual([...guide.matchAll(/^  - ([\w-]+-review)$/gm)].map((match) => match[1]), ['philips-hue-white-color-starter-kit-review']);
-  assert.ok((guide.match(/^  - label:/gm) ?? []).length >= 3, 'Guide should have substantive buying considerations');
+  assert.deepEqual([...guide.matchAll(/^ {2}- ([\w-]+-review)$/gm)].map((match) => match[1]), ['philips-hue-white-color-starter-kit-review']);
+  assert.ok((guide.match(/^ {2}- label:/gm) ?? []).length >= 3, 'Guide should have substantive buying considerations');
   assert.match(guide, /Bulb or strip installation/);
   assert.match(guide, /Wall-switch and always-powered behavior/);
   assert.match(guide, /Ecosystem and app control/);

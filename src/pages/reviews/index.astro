@@ -1,7 +1,7 @@
 ﻿---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getProductImage, getProductImageAlt, getCategoryLabel } from '../../lib/product-art';
+import { getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../../lib/product-art';
 import { getCommerceData } from '../../lib/commerce-data';
 
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -25,10 +25,11 @@ const guides = await getCollection('best-of');
       const productData = product?.data;
       const imageSource = productData ? getProductImage(productData) : undefined;
       const imageAlt = productData ? getProductImageAlt(productData) : review.data.title;
-      return <article class="premium-card group flex h-full flex-col overflow-hidden p-5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+      const fallbackImage = productData ? getProductFallbackImage(productData) : '/images/product-placeholder.svg';
+      return <article class="premium-card group flex h-full flex-col overflow-hidden p-5 transition duration-200 hover:-translate-y-1 hover:shadow-xl">
         {productData && <div class="flex gap-4">
           <div class="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-slate-50 p-2">
-            <img src={imageSource} alt={imageAlt} class="h-full w-full object-contain" loading="lazy" decoding="async" fetchpriority="low" width="320" height="320" />
+            <img src={imageSource} alt={imageAlt} class="h-full w-full object-contain" loading="lazy" decoding="async" fetchpriority="low" width="320" height="320" data-fallback-src={fallbackImage} />
           </div>
           <div class="min-w-0">
             <p class="text-xs font-black uppercase tracking-wide text-blue-700">{getCategoryLabel(review.data.category)}</p>

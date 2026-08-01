@@ -2,7 +2,7 @@
 interface Props { source?: string; }
 const { source = 'site' } = Astro.props;
 ---
-<section class="home-parallax-bg relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 md:p-8" data-dark-parallax>
+<section class="relative isolate overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 md:p-8">
   <div class="relative z-10 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-center">
     <div>
       <p class="inline-flex rounded-full bg-cyan-300/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-cyan-100 ring-1 ring-cyan-200/20">Weekly brief</p>
@@ -11,7 +11,7 @@ const { source = 'site' } = Astro.props;
     </div>
     <div class="grid gap-3">
       <p class="text-sm leading-6 text-slate-300">We do not collect email addresses. Follow the RSS feed in your reader for new guides and deal updates.</p>
-      <a href="/rss.xml" class="premium-action flow-wave inline-flex min-h-12 w-fit items-center justify-center rounded-2xl px-5 py-3 font-black text-white" data-fh-track="feed_follow" data-cta-position={`newsletter_${source}`}>Follow via RSS</a>
+      <a href="/rss.xml" class="premium-action inline-flex min-h-12 w-fit items-center justify-center rounded-2xl px-5 py-3 font-black text-white" data-fh-track="feed_follow" data-cta-position={`newsletter_${source}`}>Follow via RSS</a>
     </div>
   </div>
 </section>

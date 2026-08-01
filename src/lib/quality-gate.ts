@@ -16,7 +16,7 @@ export interface QualityGateResult {
   issues: string[];
 }
 
-export function runQualityGate(content: string, productData?: any): QualityGateResult {
+export function runQualityGate(content: string, _productData?: any): QualityGateResult {
   const checks: QualityCheck[] = [];
 
   // 1. Word count >= 1200

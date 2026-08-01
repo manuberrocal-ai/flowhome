@@ -40,7 +40,7 @@ const navItems = [
     featured: 'Compare, calculate, and choose faster',
     children: [
       { label: 'Savings calculator', href: '/calculator/' },
-      { label: 'Product comparison', href: '/compare/echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/' },
+      { label: 'Product comparison', href: '/compare/' },
       { label: 'Smart home quiz', href: '/quiz/' },
       { label: 'Search FlowHome', href: '/search/' },
     ],
@@ -53,7 +53,7 @@ const navItems = [
 <header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl" data-supabase-url={supabaseUrl} data-supabase-anon-key={supabaseAnonKey}>
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
     <a href="/" class="flex min-w-0 items-center" aria-label="FlowHome home">
-      <img src="/images/flowhome-logo.png" alt="FlowHome" class="h-9 w-auto max-w-[260px] object-contain sm:h-11" width="420" height="96" decoding="async" fetchpriority="high" />
+      <img src="/images/flowhome-logo.svg" alt="FlowHome" class="h-9 w-auto max-w-[260px] object-contain sm:h-11" width="420" height="96" decoding="async" fetchpriority="high" />
     </a>
 
     <nav class="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
@@ -87,7 +87,7 @@ const navItems = [
           <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="2" />
           <path d="M5.75 20a6.25 6.25 0 0 1 12.5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
-        <img class="data-header-avatar-img absolute inset-0 h-full w-full rounded-full object-cover" alt="" hidden />
+        <img class="data-header-avatar-img absolute inset-0 h-full w-full rounded-full object-cover" alt="" width="44" height="44" loading="lazy" decoding="async" hidden />
         <span class="data-header-avatar-initials text-sm font-black" aria-hidden="true" hidden></span>
       </a>
       <a href="/deals/" class="today-deals-link hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-2 text-sm font-black text-white shadow-sm shadow-cyan-900/35 transition hover:-translate-y-0.5 hover:from-teal-400 hover:via-cyan-600 hover:to-blue-900 sm:inline-flex">Today's deals</a>
@@ -119,12 +119,13 @@ const navItems = [
         <a href="/account/" class="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-black text-slate-800 shadow-sm">
             <span class="relative grid h-8 w-8 place-items-center overflow-hidden rounded-full bg-slate-950 text-white" aria-hidden="true">
             <svg class="data-header-avatar-default h-4 w-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="2" /><path d="M5.75 20a6.25 6.25 0 0 1 12.5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
-            <img class="data-header-avatar-img absolute h-8 w-8 rounded-full object-cover" alt="" hidden />
+            <img class="data-header-avatar-img absolute h-8 w-8 rounded-full object-cover" alt="" width="32" height="32" loading="lazy" decoding="async" hidden />
             <span class="data-header-avatar-initials text-xs font-black" hidden></span>
           </span>
           Profile
         </a>
         <a href="/deals/" class="today-deals-link block rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-3 text-center text-sm font-black text-white shadow-sm shadow-cyan-900/35">See today's deals</a>
+        <a href="#language-options" class="mobile-nav-link min-h-12 justify-center sm:col-span-2">Language options</a>
       </div>
     </nav>
   </div>
@@ -224,19 +225,8 @@ const navItems = [
   .nav-dropdown[data-menu="tools"] .nav-menu-feature .nav-menu-kicker { color: #fbbf24 !important; }
   .nav-menu-link { color: #e5e7eb; font-size: 0.9rem; font-weight: 700; }
   .today-deals-link {
-    transform-origin: center;
-    animation: todayDealsWiggle 3s cubic-bezier(.36,.07,.19,.97) infinite;
-    will-change: transform;
+    transition: filter 180ms ease, transform 180ms ease;
   }
-  @keyframes todayDealsWiggle {
-    0%, 72%, 100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
-    76% { transform: translate3d(-2px,0,0) rotate(-4deg) scale(1.04); }
-    80% { transform: translate3d(3px,0,0) rotate(4deg) scale(1.04); }
-    84% { transform: translate3d(-2px,0,0) rotate(-3deg) scale(1.03); }
-    88% { transform: translate3d(2px,0,0) rotate(3deg) scale(1.03); }
-    92% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
-  }
-  @media (prefers-reduced-motion: reduce) { .today-deals-link { animation: none; } }
   .nav-menu-link:hover { background: #1f2937; color: #ffffff; transform: translateX(2px); }
   @media (prefers-reduced-motion: reduce) {
     .nav-menu { transition: opacity 120ms ease, visibility 0s linear 120ms; transform: none; }
@@ -270,7 +260,7 @@ const navItems = [
     overflow: hidden;
     border-left: 2px solid #334155;
     padding-left: 0.85rem;
-    transition: max-height 260ms ease, padding-bottom 180ms ease;
+    transition: max-height 240ms ease, padding-bottom 180ms ease;
   }
   .mobile-nav-group.is-open .mobile-submenu { max-height: 42rem; padding-bottom: 0.55rem; }
   .mobile-submenu-link {
@@ -286,24 +276,34 @@ const navItems = [
 </style>
 
 <script>
-  import { subscribeToAuthChanges } from '../lib/auth-channel.js';
-  import { getUserInitials } from '../lib/auth-helpers.js';
-  import { getSupabaseClient } from '../lib/supabase-client';
+  type HeaderUser = { user_metadata?: Record<string, unknown> };
+  interface HeaderAvatarState {
+    client?: any;
+    initialized?: boolean;
+    initializing?: boolean;
+    listenersBound?: boolean;
+    lastSessionError?: boolean;
+    lastSessionErrorAt?: number;
+    unsubscribe?: () => void;
+    getUserInitials?: (user: HeaderUser) => string;
+  }
+  type HeaderWindow = Window & { __flowhomeHeaderAvatarState?: HeaderAvatarState };
 
   (() => {
-    const stateKey = '__flowhomeHeaderAvatarState';
-    const state = window[stateKey] ||= {};
+    const headerWindow = window as HeaderWindow;
+    const state = (headerWindow.__flowhomeHeaderAvatarState ??= {});
 
-    const renderAvatar = (user) => {
-      const avatarImgs = document.querySelectorAll('.data-header-avatar-img');
-      const avatarDefaults = document.querySelectorAll('.data-header-avatar-default');
-      const avatarInitials = document.querySelectorAll('.data-header-avatar-initials');
+    const renderAvatar = (user?: HeaderUser | null) => {
+      const avatarImgs = document.querySelectorAll<HTMLImageElement>('.data-header-avatar-img');
+      const avatarDefaults = document.querySelectorAll<SVGElement>('.data-header-avatar-default');
+      const avatarInitials = document.querySelectorAll<HTMLSpanElement>('.data-header-avatar-initials');
       if (!avatarDefaults.length) return;
 
       const metadata = user?.user_metadata || {};
-      const avatarUrl = metadata.avatar_url || metadata.picture || '';
-      if (!avatarUrl) {
-        const initials = user ? getUserInitials(user) : '';
+      const avatarValue = metadata.avatar_url || metadata.picture;
+      const avatarUrl = typeof avatarValue === 'string' ? avatarValue : '';
+      if (!user || !avatarUrl) {
+          const initials = user && state.getUserInitials ? state.getUserInitials(user) : '';
         avatarImgs.forEach((avatarImg) => {
           avatarImg.removeAttribute('src');
           avatarImg.alt = '';
@@ -313,7 +313,7 @@ const navItems = [
           avatarInitial.textContent = initials;
           avatarInitial.hidden = !initials;
         });
-        avatarDefaults.forEach((avatarDefault) => { avatarDefault.hidden = Boolean(initials); });
+        avatarDefaults.forEach((avatarDefault) => { avatarDefault.classList.toggle('hidden', Boolean(initials)); });
         return;
       }
 
@@ -324,7 +324,7 @@ const navItems = [
         avatarImg.addEventListener('error', () => renderAvatar({ ...user, user_metadata: { ...metadata, avatar_url: '', picture: '' } }), { once: true });
       });
       avatarInitials.forEach((avatarInitial) => { avatarInitial.hidden = true; });
-      avatarDefaults.forEach((avatarDefault) => { avatarDefault.hidden = true; });
+      avatarDefaults.forEach((avatarDefault) => { avatarDefault.classList.add('hidden'); });
     };
 
     const syncAvatar = async () => {
@@ -346,26 +346,48 @@ const navItems = [
       }
     };
 
+    const hasAuthSessionHint = () => {
+      try { return Object.keys(window.localStorage).some((key) => /^sb-[a-z0-9-]+-auth-token$/i.test(key)); }
+      catch { return false; }
+    };
+
     const initialize = async () => {
+      if (state.initialized || state.initializing) {
+        if (state.initialized) await syncAvatar();
+        return;
+      }
+      if (!hasAuthSessionHint()) {
+        renderAvatar();
+        return;
+      }
+      state.initializing = true;
       try {
+        const [{ subscribeToAuthChanges }, { getUserInitials }, { getSupabaseClient }] = await Promise.all([
+          import('../lib/auth-channel.js'),
+          import('../lib/auth-helpers.js'),
+          import('../lib/supabase-client'),
+        ]);
+        state.getUserInitials = getUserInitials;
         state.client = getSupabaseClient();
         if (!state.client) {
           renderAvatar();
           return;
         }
+        state.initialized = true;
         state.unsubscribe = subscribeToAuthChanges(state.client, () => { void syncAvatar(); });
         await syncAvatar();
       } catch {
         renderAvatar();
+      } finally {
+        state.initializing = false;
       }
     };
 
-    if (!state.initialized) {
-      state.initialized = true;
-      document.addEventListener('astro:page-load', syncAvatar);
-      initialize();
-    } else {
-      syncAvatar();
+    if (!state.listenersBound) {
+      state.listenersBound = true;
+      document.addEventListener('astro:page-load', () => { void initialize(); });
+      window.addEventListener('focus', () => { void initialize(); });
     }
+    void initialize();
   })();
 </script>

@@ -57,14 +57,16 @@ export function formatCommerceDate(value?: string): string | undefined {
 export function getCommerceData(product: CommerceProduct, now = new Date()) {
   const price = Number(product.price);
   const priceFresh = isPriceSource(product.priceSource) && isFresh(product.priceLastChecked, COMMERCE_FRESHNESS.priceMs, now);
+  const validUntil = parseUtc(product.priceValidUntil);
+  const priceStillValid = !validUntil || validUntil.valueOf() > now.valueOf();
   const discountPct = Number(product.discountPct);
   const promotion = priceFresh
+    && priceStillValid
     && Number(product.originalPrice) > price
     && Number.isFinite(discountPct)
     && discountPct > 0
     && discountPct <= 100;
-  const offer = priceFresh && price > 0 && isHttpsUrl(product.affiliateUrl);
-  const validUntil = parseUtc(product.priceValidUntil);
+  const offer = priceFresh && priceStillValid && price > 0 && isHttpsUrl(product.affiliateUrl);
   const availabilityFresh = Boolean(product.availabilitySource)
     && isFresh(product.availabilityLastChecked, COMMERCE_FRESHNESS.availabilityMs, now);
   const availability = availabilityFresh && product.availabilityStatus

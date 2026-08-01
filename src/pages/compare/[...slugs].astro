@@ -15,7 +15,7 @@ export async function getStaticPaths() {
     slugs: ['roborock-q5-plus', 'irobot-roomba-j7-plus'],
     title: 'Roborock Q5+ vs iRobot Roomba j7+',
     description: 'Compare two vacuum-only robot vacuums by price, ratings, review volume, navigation approach, and smart-home compatibility.',
-    angle: 'This side-by-side distinguishes the available navigation signals, voice platforms, and owner-feedback context without treating either model as a universal winner.',
+    angle: 'This side-by-side distinguishes the available navigation signals, voice platforms, and owner-feedback context without assigning either model as best overall.',
     guidance: 'The Q5+ uses PreciSense Precision LiDAR for mapped routines. The j7+ uses PrecisionVision obstacle avoidance with Imprint Smart Mapping, not LiDAR. Both are vacuum-only; compare dock space, app routines, price, rating, review count, and ecosystem compatibility for your setup.',
   },
   {
@@ -73,7 +73,8 @@ export async function getStaticPaths() {
 const { comparison, relatedComparisons } = Astro.props;
 const products = await getCollection('products');
 const selected = comparison.slugs.map((slug:string) => products.find((p) => p.data.slug === slug)?.data).filter(Boolean);
-const updatedThrough = selected.map((product:any) => product.dateUpdated).filter(Boolean).sort().at(-1);
+const sourceDates = selected.map((product:any) => product.dateUpdated).filter(Boolean).sort();
+const updatedThrough = sourceDates.length > 1 ? `${sourceDates[0]}–${sourceDates.at(-1)}` : sourceDates[0];
 ---
 <CompareLayout
   products={selected}

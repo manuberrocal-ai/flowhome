@@ -6,10 +6,22 @@ import { join } from 'node:path';
 function read(p) { const c = readFileSync(p, 'utf8'); return c.charCodeAt(0) === 0xFEFF ? c.substring(1) : c; }
 function fileExists(p) { return existsSync(p); }
 
-test('GA1 - Sitemap is generated and sitemap-index.xml is referenced by robots.txt', () => {
-  assert.ok(fileExists('dist/sitemap-index.xml'), 'build emits sitemap-index.xml');
+test('GA1 - Sitemap source, build configuration, and build-to-audit workflow contract are present', () => {
   const robots = read('public/robots.txt');
+  const config = read('astro.config.mjs');
+  const pkg = read('package.json');
+  const audit = read('scripts/qa/seo-audit.mjs');
   assert.match(robots, /Sitemap:\s+https:\/\/flowhome\.dev\/sitemap-index\.xml/);
+  assert.match(config, /import sitemap from '@astrojs\/sitemap';/);
+  assert.match(config, /sitemap\(/);
+  assert.match(config, /site:\s*'https:\/\/flowhome\.dev'/);
+  assert.match(pkg, /"build":\s*"astro build"/);
+  assert.match(pkg, /"seo:audit":\s*"node scripts\/qa\/seo-audit\.mjs"/);
+  assert.match(audit, /readFile\(join\(DIST, 'sitemap-index\.xml'\), 'utf8'\)/);
+  for (const workflow of ['automation.yml', 'batched-deploy.yml', 'quality-check.yml', 'quality.yml']) {
+    const source = read(join('.github/workflows', workflow));
+    assert.match(source, /- run: npm run build\r?\n\s+- run: npm run seo:audit/, workflow);
+  }
 });
 
 test('GA2 - IndexNow key file present and consistent with the configured key in lib', () => {
@@ -112,12 +124,14 @@ test('FUN1 - Acquisition events flow through a central dispatcher, no direct win
   assert.match(analytics, /export function/);
 });
 
-test('FUN2 - Sticky CTA and Exit Intent popup expose affiliate disclosure and do not block Amazon access', () => {
+test('FUN2 - Sticky CTA opens Amazon directly and intrusive exit intent remains disabled', () => {
   const sticky = read('src/components/StickyCTA.astro');
   assert.match(sticky, /data-fh-amazon-cta/);
   assert.match(sticky, /rel="nofollow sponsored noopener noreferrer"/);
   const exit = read('src/components/ExitIntentPopup.astro');
-  assert.match(exit, /flow-wave|premium-action/);
+  const base = read('src/layouts/BaseLayout.astro');
+  assert.doesNotMatch(exit, /fixed|mouseleave|sessionStorage|premium-action/);
+  assert.doesNotMatch(base, /ExitIntentPopup/);
 });
 
 test('FUN3 - Funnel navigation statements (View details / Add to list / Take the quiz) are present across card layout and quiz', () => {
@@ -156,10 +170,16 @@ test('DATA4 - product-art fallback images cover every canonical category defined
   assert.match(art, /product-art/);
 });
 
-test('DATA5 - Quiz serializes ONLY catalog-active products and tracks completion events', () => {
+test('DATA5 - Quiz serializes ONLY catalog-active products, queues one deduped completion, and preserves direct Amazon access', () => {
   const quiz = read('src/pages/quiz.astro');
+  const quizAnalytics = read('src/lib/quiz-analytics.ts');
   assert.match(quiz, /catalogActive/);
-  assert.match(quiz, /trackEvent\(['"]quiz_complete/);
+  assert.match(quiz, /trackEvent\(['"]quiz_start/);
+  assert.match(quiz, /queueQuizCompletion\(\{ \.\.\.state, result_count: result\.recommendations\.length, page_type: 'quiz' \}\)/);
+  assert.doesNotMatch(quiz, /trackEvent\(['"]quiz_complete/);
+  assert.match(quizAnalytics, /queuedCompletionKeys\.has\(key\) \|\| stored\.has\(key\)\) return false;/);
+  assert.match(quizAnalytics, /queueEvent\('quiz_complete', \{ \.\.\.parameters, dedupe_key: key \}\)\.status !== 'queued'\) return false;/);
+  assert.match(quiz, /rel="nofollow sponsored noopener noreferrer"/);
 });
 
 test('DATA6 - Privacy page declares affiliate disclosure and accounts for GTM/clarity consent', () => {

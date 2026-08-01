@@ -33,7 +33,15 @@ const productsCollection = defineCollection({
     availabilityStatus: z.enum(['in-stock', 'out-of-stock', 'preorder', 'discontinued']).optional(),
     availabilityLastChecked: z.string().optional(),
     availabilitySource: z.string().optional(),
-    dateUpdated: z.string(),
+     dateUpdated: z.string(),
+     authorId: z.string().optional(),
+     reviewedBy: z.string().optional(),
+     humanReviewedDate: z.string().optional(),
+     sources: z.array(z.object({
+       label: z.string(),
+       url: z.string().url().refine((value) => value.startsWith('https://'), 'Sources must use HTTPS'),
+       accessedAt: z.string().optional(),
+     })).optional(),
 
     // General
     model: z.string().optional(),
@@ -114,6 +122,14 @@ const reviewsCollection = defineCollection({
     qualityScore: z.number().default(0),
     editorialRating: z.number().optional(),
     editorialRatingScale: z.number().optional(),
+    authorId: z.string().optional(),
+    reviewedBy: z.string().optional(),
+    humanReviewedDate: z.string().optional(),
+    sources: z.array(z.object({
+      label: z.string(),
+      url: z.string().url().refine((value) => value.startsWith('https://'), 'Sources must use HTTPS'),
+      accessedAt: z.string().optional(),
+    })).optional(),
   }),
 });
 

@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 
-const sitemapExcludedPaths = new Set(['/account', '/cart', '/search']);
+const sitemapExcludedPaths = new Set(['/account', '/cart', '/preferences', '/search']);
 
 export default defineConfig({
   site: 'https://flowhome.dev',

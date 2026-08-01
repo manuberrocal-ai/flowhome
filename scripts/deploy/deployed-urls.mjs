@@ -67,7 +67,7 @@ export function readCurrentSitemapUrls(distDir) {
 }
 
 export function urlToHtmlPath(distDir, canonicalUrl) {
-  const url = new URL(normalizeFlowHomeUrl(canonicalUrl));
+  normalizeFlowHomeUrl(canonicalUrl);
   const rawPathname = rawPathFromUrl(canonicalUrl);
   const segments = safePathSegments(rawPathname, canonicalUrl);
   const root = resolve(distDir);

@@ -5,10 +5,13 @@ import PriceHistory from '../../components/PriceHistory.astro';
 import RelatedProducts from '../../components/RelatedProducts.astro';
 import StickyCTA from '../../components/StickyCTA.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
-import { getDirectAlternatives } from '../../lib/internal-links';
 import { getCategoryLabel, getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../../lib/product-art';
 import { getCommerceData } from '../../lib/commerce-data';
-import { getProductFeatures, getEcosystemFeatures } from '../../lib/product-specs';
+import { getProductFeatures } from '../../lib/product-specs';
+import { getEditorialMetadata, EDITORIAL_TEAM } from '../../lib/editorial';
+import { prepareVerifiedProductCompatibility } from '../../lib/blocks/block9/compatibility-adapter.ts';
+import { forCompatibilitySurface, getCompatibilityEnvironment } from '../../lib/blocks/block9/runtime.ts';
+import { selectVerifiedDirectAlternatives } from '../../lib/product-taxonomy.ts';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -17,18 +20,19 @@ export async function getStaticPaths() {
 
 const { product } = Astro.props;
 const data = product.data;
-const related = await getDirectAlternatives(data, 4);
-const productImage = getProductImage(data, 'SL500');
+const allProducts = await getCollection('products');
+const compatibilityEnv = getCompatibilityEnvironment(import.meta.env);
+const related = selectVerifiedDirectAlternatives(data, allProducts, forCompatibilitySurface(compatibilityEnv, 'alternatives', data.slug), 4);
+const productImage = getProductImage(data);
 const fallbackImage = getProductFallbackImage(data);
 const productImageAlt = getProductImageAlt(data);
 const productImageKind = getProductImageKind(data);
 const sourceLabel = getProductImageSourceLabel(data);
 const categoryLabel = getCategoryLabel(data.category);
 const categoryFeatures = getProductFeatures(data);
-const ecosystemFeatures = getEcosystemFeatures(data);
 const featureList = categoryFeatures.map((f) => f.label + ': ' + f.value);
-const connectivity = ['Wi-Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean).join(', ') || 'Check listing';
-const voicePlatforms = ['Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ') || 'Check listing';
+const catalogConnect = [data.wifi && 'Wi-Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean);
+const catalogVoice = [data.alexaCompatible && 'Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean);
 const commerce = getCommerceData(data);
 const hasDeal = commerce.showPromotion;
 const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
@@ -36,6 +40,30 @@ const rating = Number(data.ownerRating ?? 0);
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
+const starStates = Array.from({ length: 5 }, (_, index) => {
+  const starNumber = index + 1;
+  return starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty'));
+});
+const editorial = getEditorialMetadata({ authorId: data.authorId, reviewedBy: data.reviewedBy, humanReviewedDate: data.humanReviewedDate, sources: data.sources });
+
+const verifiedCompatibility = prepareVerifiedProductCompatibility(
+  data,
+  data.slug,
+  forCompatibilitySurface(compatibilityEnv, 'product', data.slug),
+);
+const verifiedProduct = verifiedCompatibility.product;
+
+// Surface connectivity/voice only when the catalog boolean survived verification.
+// When the flag is off this is identical to the legacy listing (verifiedProduct === data booleans).
+const verifiedConnect = [verifiedProduct.wifi === true && 'Wi-Fi', verifiedProduct.bluetooth === true && 'Bluetooth', verifiedProduct.zigbee === true && 'Zigbee', verifiedProduct.matter === true && 'Matter'].filter(Boolean);
+const verifiedVoice = [verifiedProduct.alexaCompatible === true && 'Alexa', verifiedProduct.googleHomeCompatible === true && 'Google Home', verifiedProduct.appleHomeKit === true && 'Apple HomeKit'].filter(Boolean);
+const connectivity = compatibilityEnv.enabled && compatibilityEnv.graph
+  ? (verifiedConnect.join(', ') || 'Check listing')
+  : (catalogConnect.join(', ') || 'Check listing');
+const voicePlatforms = compatibilityEnv.enabled && compatibilityEnv.graph
+  ? (verifiedVoice.join(', ') || 'Check listing')
+  : (catalogVoice.join(', ') || 'Check listing');
+const verifiedNotices = verifiedCompatibility.notices;
 ---
 <ProductLayout product={data}>
   <article class="space-y-8">
@@ -52,6 +80,9 @@ const roundedStars = Math.round(rating);
               class="max-h-80 w-full object-contain drop-shadow-sm"
               width="500"
               height="500"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
               data-fallback-src={fallbackImage}
             />
           </div>
@@ -68,18 +99,20 @@ const roundedStars = Math.round(rating);
           </div>
           <div class="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
              <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p><p class="mt-1 text-2xl font-black text-slate-950">${data.price}</p>{hasDeal && <p class="mt-1 text-sm font-bold text-slate-400 line-through">${data.originalPrice}</p>}{commerce.priceLastCheckedLabel && <p class="mt-1 text-xs text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</p>}</div>
-             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon customer rating</p><div class="product-detail-stars mt-1" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}><span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => { const starNumber = index + 1; const state = starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty')); return <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>; })}</span><strong>{data.ownerRating}</strong></div><p class="mt-1 text-xs text-slate-500">Checked {data.ratingLastChecked}</p></div>
+             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon customer rating</p><div class="product-detail-stars mt-1" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}><span aria-hidden="true">{starStates.map((state) => <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{data.ownerRating}</strong></div><p class="mt-1 text-xs text-slate-500">Checked {data.ratingLastChecked}</p></div>
              <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon rating count</p><p class="mt-1 text-2xl font-black text-slate-950">{data.ownerRatingCount?.toLocaleString()}</p></div>
           </div>
-          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action flow-wave mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
-          <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
+          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+           <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
+           <p class="mt-3 text-sm text-slate-600"><strong>By:</strong> <a href={editorial.author.profileUrl} class="text-blue-700 underline">{editorial.author.name}</a> ({editorial.author.role})</p>
+           <p class="mt-1 text-xs text-slate-500">Product data updated {data.dateUpdated}. This is not a human review.</p>
         </div>
       </div>
     </section>
 
     <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <h2>Who should buy it?</h2>
-      <p>{data.name} is best for buyers who want a reliable {categoryLabel.toLowerCase()} with simple setup, broad ecosystem compatibility, and a clear reason to exist in a smart home setup.</p>
+       <p>{data.name} may fit buyers comparing a {categoryLabel.toLowerCase()} who need to check the documented connectivity, voice-platform, price snapshot, and rating context below. Confirm the product listing and household compatibility before buying.</p>
       <h2>Key specifications</h2>
       <p class="text-sm text-slate-600">FlowHome only shows specs that are documented in our product data and relevant to {categoryLabel.toLowerCase()}. Specs not listed here are not verified for this category.</p>
       <ul class="mt-2">
@@ -92,15 +125,27 @@ const roundedStars = Math.round(rating);
 
       <h2>Pros and cons</h2>
       <div class="not-prose grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Pros</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Strong owner feedback</li><li>Clear setup path for beginners</li><li>Good value inside current category</li></ul></div>
-         <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Cons</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Amazon listing pricing can change quickly</li><li>Some advanced features may require companion apps</li><li>Check ecosystem compatibility before buying</li></ul></div>
+        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Useful checks</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Documented compatibility fields are summarized below</li><li>Price and rating snapshots include their check dates</li><li>Connectivity and voice-platform fields are surfaced before purchase</li></ul></div>
+         <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Limits to verify</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Amazon listing pricing and availability can change</li><li>Additional app or subscription requirements are not inferred here</li><li>Specs not listed remain unverified for this profile</li></ul></div>
       </div>
+      {verifiedNotices.length > 0 && (
+        <section class="not-prose mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+          <h2 class="font-bold text-slate-900">Verified compatibility notes</h2>
+          <p class="mt-1 text-xs text-slate-600">These notes come from source-attributed compatibility claims surfaced when the compatibility graph is enabled. They degrade or disappear when claims expire or are disputed.</p>
+           <ul class="mt-3 list-disc pl-5 text-sm text-slate-700">
+             {verifiedNotices.map((notice) => <li class:list={{ 'text-rose-700': notice.relation === 'conflicts' }}>{notice.message} <span class="text-xs text-slate-600">Evidence: {notice.evidenceLabel}; confidence: {notice.confidence}; source: {notice.sourceLabel}.</span></li>)}
+           </ul>
+        </section>
+      )}
+
             <h2>Editorial methodology</h2>
       <div class="not-prose rounded-2xl border border-blue-100 bg-blue-50 p-5 text-sm leading-7 text-slate-700">
-        <p><strong>Author:</strong> FlowHome Editorial Team.</p>
+         <p><strong>Author:</strong> <a href={editorial.author.profileUrl}>{editorial.author.name}</a> ({editorial.author.role}).</p>
         <p class="mt-2"><strong>Ratings source:</strong> {data.ratingSource}. Ratings and counts are snapshots checked on {data.ratingLastChecked}; they reflect Amazon customer ratings, not FlowHome editorial opinions. FlowHome does not run controlled lab tests.</p>
         <p class="mt-2"><strong>Price source:</strong> {commerce.priceSourceLabel}. Prices are snapshots checked on {data.priceLastChecked}. Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
-        <p class="mt-2"><strong>Specs source:</strong> Public product data and manufacturer listings. Specs not surfaced under Key specifications are not verified for this category.</p>
+         <p class="mt-2"><strong>Specs source:</strong> Public product data and manufacturer listings. Specs not surfaced under Key specifications are not verified for this category.</p>
+         <p class="mt-2"><strong>Disclosure:</strong> {EDITORIAL_TEAM.disclosure}</p>
+         {editorial.sources.length > 0 && <div class="mt-2"><strong>Sources:</strong><ul><li>{editorial.sources.map((source) => <a class="mr-3" href={source.url} rel="noopener noreferrer">{source.label}</a>)}</li></ul></div>}
       </div>
     </section>
 
