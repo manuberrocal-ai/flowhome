@@ -54,9 +54,9 @@ Production is live at https://flowhome.dev. The Cloudflare Pages fallback URL is
 
 After each major deploy, verify:
 
-`ash
+```bash
 npm run build
-`
+```
 
 Then check:
 
