@@ -176,7 +176,7 @@ begin
     v_type_window := case when v_job.type = 'digest' and v_preference.frequency = 'weekly' then interval '7 days' when v_job.type = 'digest' then interval '28 days' when v_job.type in ('price-drop','restock') then interval '24 hours' when v_job.type in ('comparison-follow-up','recommendation') then interval '7 days' else interval '30 days' end;
     select count(*) into v_type_count from (select 1 from public.lifecycle_jobs where user_id = v_job.user_id and type = v_job.type and state = 'mock' and completed_at >= now() - v_type_window union all select 1 from public.lifecycle_dispatch_leases where user_id = v_job.user_id and type = v_job.type and (consumed_at is not null or expires_at > now())) completed;
   end if;
-  if v_type_count >= case v_job.type when 'onboarding' then 1 when 'digest' then 1 when 'price-drop' then 3 when 'restock' then 2 when 'comparison-follow-up' then 1 when 'recommendation' then 2 when 'reactivation' then 1 else 0 end then return null; end if;
+  if v_type_count >= (case v_job.type when 'onboarding' then 1 when 'digest' then 1 when 'price-drop' then 3 when 'restock' then 2 when 'comparison-follow-up' then 1 when 'recommendation' then 2 when 'reactivation' then 1 else 0 end) then return null; end if;
   insert into public.lifecycle_dispatch_leases (job_id, user_id, type, preference_version, expires_at) values (v_job.id, v_job.user_id, v_job.type, v_preference.dispatch_version, now() + interval '60 seconds') returning lease_token into v_lease;
   return v_lease;
 end; $$;
