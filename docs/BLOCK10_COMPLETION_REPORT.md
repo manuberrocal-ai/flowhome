@@ -42,3 +42,9 @@ Static SQL tests are contract checks only; they do not execute a database migrat
 ## External blockers and activation preconditions
 
 Source access/terms, database runner, backups, migration approval, privacy/legal/security review, service-role provisioning, alert routing, human owners, deployment, and real outcomes remain external and unknown. Activation requires all runbook approvals and must start with flags off plus a reviewed staged plan.
+
+## Append-only operational revalidation (2026-08-08)
+
+The scope statement above is historical local-implementation evidence. Later staging-only runtime evidence applied migrations `001`–`008` in a separate Supabase Free environment in `us-east-1`; the original paused Supabase production environment remained intact. Database lint had 0 findings, dry-run was up-to-date, 28/28 target tables had RLS, 0 rows were present, and `008` transactionally asserted zero direct write grants after the prior seven-migration query. The observed fixes were `003` PL/pgSQL `CASE`, `006` extension-qualified `gen_random_bytes`, `007` seven-column `sync_cart`, and `008` grant revocation.
+
+No source connector, provider, Edge Functions deployment, manual protected production dispatch, owner, alert channel, real outcome, or D90 evidence was observed. This revalidation does not activate the data platform or assert production Supabase activity.
