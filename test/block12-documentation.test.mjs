@@ -32,7 +32,10 @@ test('documentation preserves separated evidence, connection, and pending gates'
   ]) {
     assert.match(all, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
-  assert.match(all, /remote execution was not observed|remote execution.*not observed/i);
+  const readiness = read('BLOCK12_OPERATIONAL_READINESS.md');
+  assert.match(readiness, /Their remote execution was not observed in this change\./);
+  assert.match(readiness, /Remote `quality` and `verify` executions were observed passing on 2026-08-08\./);
+  assert.match(readiness, /no active connector, production queue, monitor, or provider is implied\./i);
   assert.match(all, /deals:detect.*not.*productive|local.*deals:detect/i);
 });
 
@@ -83,4 +86,31 @@ test('roadmap and baseline state preparation without business completion', () =>
   assert.match(baseline, /Technical gates pass; the 90-day gate/);
   assert.match(baseline, /No historical baseline is converted into validation/);
   assert.doesNotMatch(roadmap, /Phase 6.*business completion/i);
+});
+
+test('append-only operational revalidation preserves staging-only and deployment-control boundaries', () => {
+  const readiness = read('BLOCK12_OPERATIONAL_READINESS.md');
+  const finalReport = read('BLOCK12_FINAL_REPORT.md');
+  const baseline = readFileSync(new URL('../docs/BASELINE_SCORECARD.md', import.meta.url), 'utf8');
+  const lifecycle = readFileSync(new URL('../docs/BLOCK7_LIFECYCLE_RUNBOOK.md', import.meta.url), 'utf8');
+  const block10 = readFileSync(new URL('../docs/BLOCK10_COMPLETION_REPORT.md', import.meta.url), 'utf8');
+  const threatModel = readFileSync(new URL('../docs/BLOCK10_THREAT_MODEL.md', import.meta.url), 'utf8');
+  const deployment = readFileSync(new URL('../docs/DEPLOYMENT_RUNBOOK.md', import.meta.url), 'utf8');
+  const roadmap = readFileSync(new URL('../docs/ROADMAP_PHASES_0_6.md', import.meta.url), 'utf8');
+  const all = [readiness, finalReport, baseline, lifecycle, block10, threatModel, deployment, roadmap].join('\n');
+
+  for (const phrase of [
+    'Append-only operational revalidation (2026-08-08)',
+    'migrations `001`–`008`',
+    '28/28 target tables had RLS',
+    'automatic production deployments were Disabled',
+    'Preview was set to None',
+    '`3912e2f`',
+    'No manual protected production dispatch',
+  ]) {
+    assert.match(all, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+  assert.match(lifecycle, /Edge Functions.*not deploy|does not deploy Edge Functions/i);
+  assert.match(deployment, /does not establish current production availability/i);
+  assert.match(threatModel, /No production Supabase activation is claimed/i);
 });

@@ -28,3 +28,9 @@
 | Lifecycle privacy duplication | Existing Block 7 preference/consent tables are projection views only | Lifecycle table access remains governed by Block 7 functions. |
 
 Security review must verify SQL grants/RLS after application, the service-role boundary and definer-function surface, multiple-row kill-switch precedence, atomic reservation races, expired-lease reclaim/DLQ behavior, governance review/version references, SQL audit sanitization, retention policy, source agreements, alert routing, and incident response before activation. Residual risks include owner/RBAC and superuser access, staging configuration drift, and all unobserved external provider, deployment, migration, and production outcomes.
+
+## Append-only operational revalidation (2026-08-08)
+
+Staging execution reduced only the migration-runtime uncertainty: migrations `001`–`008` were applied in a separate Supabase Free staging environment in `us-east-1`; database lint had 0 findings, dry-run was up-to-date, 28/28 target tables had RLS, 0 rows were present, and `008` transactionally asserted zero direct write grants. The original Supabase production environment remained paused and intact. The `003` PL/pgSQL `CASE`, `006` extension-qualified `gen_random_bytes`, `007` seven-column `sync_cart`, and `008` grant-revocation corrections were observed there.
+
+The residual risks in the preceding review remain for provider operation, Edge Functions, lifecycle activation, ownership/RBAC, alert routing, real outcomes, and D90 validation. No production Supabase activation is claimed.

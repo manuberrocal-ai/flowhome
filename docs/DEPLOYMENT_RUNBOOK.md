@@ -1,7 +1,7 @@
 # FlowHome Deployment Runbook
 
 ## Status
-The project builds locally and is ready for Cloudflare Pages. Deployment is blocked only by external account permissions/secrets.
+The project builds locally. An observed Cloudflare Git Integration incident reached an external deployment before branch controls were closed; this is not an approved release and does not establish current production availability. The only authorized future route is the protected manual workflow gate below.
 
 ## GitHub publication
 If the remote repository already exists:
@@ -68,7 +68,7 @@ Upload the generated `artifacts/flowhome-dist-*.zip` contents to Cloudflare Page
 
 ## Production verification
 
-Production is live at https://flowhome.dev. The Cloudflare Pages fallback URL is https://flowhome-a1b.pages.dev.
+No current production availability is asserted by this runbook. The only observed deployment event was the automatic Git Integration deployment of `e018301` described above; it was not a protected workflow deployment. `3912e2f` subsequently produced neither a Cloudflare check nor a deployment after automatic production deployments were Disabled and Preview was set to None.
 
 After each major deploy, verify:
 
@@ -76,19 +76,17 @@ After each major deploy, verify:
 npm run build
 ```
 
-Then check:
+Then, after an explicitly approved manual dispatch, check the approved canonical production endpoint, sitemap, and GitHub Actions run record.
 
-- https://flowhome.dev
-- https://flowhome.dev/sitemap-index.xml
-- GitHub Actions latest runs
+
+Do not infer current availability from the historical `e018301` incident. No manual protected production dispatch occurred in this revalidation.
 
 ## Discovery notification lifecycle
 
-`Batched Deploy` is the only workflow that publishes discovery notifications. It builds the site, prepares an explicit URL file, deploys to Cloudflare Pages, and only then runs best-effort WebSub and IndexNow when the deployment outcome is successful.
+`Batched Deploy` is the only workflow permitted to publish discovery notifications. Only an explicitly approved manual production dispatch may deploy and then run best-effort WebSub and IndexNow after a successful protected deployment.
 
-- Pushes compare the current build with the previous push build and select only new or byte-changed canonical HTML pages present in the current sitemap.
+- Push and scheduled triggers verify only; they never deploy or send notifications.
 - `workflow_dispatch` accepts optional newline-separated canonical URLs. Each is validated against the current sitemap; an empty input sends no notifications.
-- Scheduled deploys perform no WebSub or IndexNow notification.
 - If Cloudflare credentials are unavailable, the manual production job fails before deployment; it is never silently skipped.
 
 To preview a targeted IndexNow payload locally without network access:

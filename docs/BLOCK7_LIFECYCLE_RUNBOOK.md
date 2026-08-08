@@ -44,6 +44,12 @@ Invoke `lifecycle-worker` only with a configured 32+-character server-only `x-li
 
 The prepared follow-up migration associates every webhook event with both its lifecycle job and subscriber through cascading foreign keys. Authenticated export includes preferences, consent history, jobs, and webhook events. Deleting the subscriber root is transactional and cascades all of that lifecycle activity. This migration is prepared only and has not been applied.
 
+### Append-only staging migration revalidation (2026-08-08)
+
+The historical prepared-only statement above describes the earlier local-only evidence. Later, migrations `001`–`008` were applied to a separate Supabase Free staging environment in `us-east-1`, not to the original paused production environment. Staging lint had 0 findings, dry-run was up-to-date, 28/28 target tables had RLS, and it contained 0 rows. `008` applied after a prior seven-migration query and transactionally asserted zero direct write grants. Runtime corrections covered the `003` PL/pgSQL `CASE`, `006` extension-qualified `gen_random_bytes`, `007` seven-column `sync_cart`, and `008` grant revocation.
+
+This staging evidence does not deploy Edge Functions, configure Vault or a scheduler, select a lifecycle provider, configure email DNS, or authorize sending. Delivery, open, click, and conversion remain **Unknown**.
+
 ## Rollback and incident response
 
 Rollback by retaining `EMAIL_PROVIDER=mock`, disabling scheduled worker invocation, and immediately suppressing affected subscribers; suppression cancels pending/claimed/retry jobs and invalidates unconsumed dispatch leases. Preserve non-PII operational evidence, rotate the affected server-only secret outside the repository, and do not retry an uncertain provider send. Export and deletion remain available to authenticated users.

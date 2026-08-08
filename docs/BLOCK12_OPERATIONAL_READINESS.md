@@ -1,6 +1,6 @@
 # Block 12 — Operational readiness
 
-**State:** local technical gates **PASS**. The 90-day gate and external/field gates remain **PENDING** or externally blocked until the required evidence exists. This change does not activate monitoring, accounts, credentials, deployment, or external alerting.
+**State:** local technical gates **PASS**. The 90-day gate and external/field gates remain **PENDING** or externally blocked until the required evidence exists. The append-only revalidation below records limited observed staging, CI, and deployment-control evidence; it does not establish sustained production operation, monitoring, or outcomes.
 
 ## Owner and cadence matrix
 
@@ -52,8 +52,17 @@ The `Batched Deploy` workflow verifies every push to `main` and scheduled run, i
 
 Push `e018301` passed GitHub Actions `verify` and left `deploy-production` skipped, but Cloudflare Pages Git Integration independently created a successful external deployment for that commit before branch-control closure. This confirms an external deployment path existed; it was not a protected workflow deployment. Cloudflare Pages Branch control was subsequently saved and re-opened with automatic production branch deployments **Disabled** and Preview branch **None / Disable automatic branch deployments**.
 
+Push `3912e2f` subsequently created neither a Cloudflare check nor a Cloudflare deployment. No protected manual production dispatch, Edge Functions deployment, lifecycle provider activation, DNS email setup, Vault/scheduler setup, alert channel, owner assignment, real data/outcome, or D90 evidence was observed.
+
 Future pushes must depend only on the protected manual workflow path. Before production, verify:
 
 - [ ] Automatic production branch deployments remains **Disabled**.
 - [ ] Preview branch remains **None** and automatic branch deployments remains disabled.
 - [ ] Manual dispatch targets `main`, `deploy_production` is checked, and the Environment reviewer approves it.
+
+## Append-only operational revalidation (2026-08-08)
+
+- A separate Supabase Free staging environment was created in `us-east-1`; the original Supabase production environment remained paused and intact. Migrations `001` through `008` were applied only to staging. Database lint reported 0 findings, dry-run was up-to-date, all 28/28 target tables had RLS, and staging contained 0 rows. A prior query showed seven migrations before `008`; `008` then applied its transactional assertion that direct write grants were zero.
+- The observed staging migration corrections were: `003` PL/pgSQL `CASE`, `006` extension-qualified `gen_random_bytes`, `007` seven-column `sync_cart`, and `008` direct-write-grant revocation. This is staging runtime evidence, not a production Supabase activation.
+- The final local suite before this documentation reconciliation was 482/482 PASS, with lint PASS, typecheck over 204 files reporting 0 errors/0 warnings/155 hints, build 88, production audit 0, and diff-check PASS. Subsequent workflow tests were 46/46 PASS and documentation tests 10/10 PASS.
+- Remote `quality` and `verify` executions were observed passing on 2026-08-08. The `production` GitHub Environment has a required reviewer and `main` branch policy; `main` is protected with required PRs, strict quality, administrator enforcement, linear history, and force-push/deletion protection. `deploy-production` was skipped.
