@@ -31,9 +31,21 @@ CLOUDFLARE_ACCOUNT_ID
 
 ## Production workflow gate
 
-Remote status verified on 2026-08-08: the GitHub Environment `production` exists with required reviewer `manuberrocal-ai`, `prevent_self_review=false`, and a custom deployment branch policy restricted to `main`. No deployment was performed. The Cloudflare secrets remain repository-level secrets and are referenced only by the protected `deploy-production` job; this runbook does not claim that Environment secrets exist. Future secret rotation or migration to Environment-scoped secrets must be performed manually, without recording secret values here.
+Remote status verified on 2026-08-08: the GitHub Environment `production` exists with a required reviewer, `prevent_self_review=false`, and a custom deployment branch policy restricted to `main`. The Cloudflare secrets remain repository-level secrets and are referenced only by the protected `deploy-production` job; this runbook does not claim that Environment secrets exist. Future secret rotation or migration to Environment-scoped secrets must be performed manually, without recording secret values here.
 
 `Batched Deploy` runs all verification gates on every push to `main` and on the scheduled trigger, but those triggers never deploy or notify. To deploy production, open **Run workflow**, select the `main` branch, check the `deploy_production` checkbox, optionally provide newline-separated canonical `notification_urls`, and approve the Environment review. Production uses Cloudflare Pages branch `main` and is serialized with the `flowhome-production` concurrency group.
+
+## Append-only deployment incident and control state (2026-08-08)
+
+- Push `e018301` passed the GitHub Actions `verify` job and left `deploy-production` skipped, but Cloudflare Pages Git Integration independently created a successful external deployment for that commit before automatic branch deployments were disabled. This was not a protected workflow deployment.
+- Cloudflare Pages Branch control was then saved and re-opened to verify both controls: **automatic production branch deployments Disabled** and **Preview branch None / Disable automatic branch deployments**.
+- Future pushes must depend only on the protected manual workflow path; do not treat external Git Integration deployments as an approved production gate.
+
+Before each future production deployment, confirm:
+
+- [ ] Cloudflare Pages **automatic production branch deployments** remains **Disabled**.
+- [ ] Cloudflare Pages **Preview branch** remains **None** and **automatic branch deployments** remains disabled.
+- [ ] GitHub Actions run is a manual dispatch on `main`, with `deploy_production` checked and the Environment review approved.
 
 ## Optional public environment variables
 

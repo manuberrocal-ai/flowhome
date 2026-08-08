@@ -46,4 +46,14 @@ Rollback is pure simulation: disable flags and restore a last-known-valid snapsh
 
 ## Production deployment gate
 
-The `Batched Deploy` workflow verifies every push to `main` and scheduled run, including build and quality gates, but does not deploy or send deployment notifications for either trigger. Remote status verified on 2026-08-08: GitHub Environment `production` exists with required reviewer `manuberrocal-ai`, `prevent_self_review=false`, and custom deployment branch policy `main`; no deployment was performed. Production requires an explicit `workflow_dispatch` on the `main` branch, checking the boolean `deploy_production` checkbox, and manual reviewer approval. `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` remain repository-level secrets referenced only by the protected production job; Environment secrets are not asserted. Future rotation or migration to Environment-scoped secrets is a manual follow-up without exposing values. The job fails closed when either repository secret is absent.
+The `Batched Deploy` workflow verifies every push to `main` and scheduled run, including build and quality gates, but does not deploy or send deployment notifications for either trigger. Remote status verified on 2026-08-08: GitHub Environment `production` exists with a required reviewer, `prevent_self_review=false`, and custom deployment branch policy `main`. Production requires an explicit `workflow_dispatch` on the `main` branch, checking the boolean `deploy_production` checkbox, and manual reviewer approval. Repository-level Cloudflare secrets remain referenced only by the protected production job; Environment secrets are not asserted. Future rotation or migration to Environment-scoped secrets is a manual follow-up without exposing values. The job fails closed when either repository secret is absent.
+
+## Append-only deployment incident and control state (2026-08-08)
+
+Push `e018301` passed GitHub Actions `verify` and left `deploy-production` skipped, but Cloudflare Pages Git Integration independently created a successful external deployment for that commit before branch-control closure. This confirms an external deployment path existed; it was not a protected workflow deployment. Cloudflare Pages Branch control was subsequently saved and re-opened with automatic production branch deployments **Disabled** and Preview branch **None / Disable automatic branch deployments**.
+
+Future pushes must depend only on the protected manual workflow path. Before production, verify:
+
+- [ ] Automatic production branch deployments remains **Disabled**.
+- [ ] Preview branch remains **None** and automatic branch deployments remains disabled.
+- [ ] Manual dispatch targets `main`, `deploy_production` is checked, and the Environment reviewer approves it.
