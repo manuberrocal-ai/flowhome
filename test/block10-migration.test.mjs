@@ -33,6 +33,13 @@ test('migration is additive, transactional, constrained, indexed, private, and m
    for (const text of ['block10_has_current_approval', 'approved_at <= p_at', 'block10_write_admin_audit', 'SECURITY DEFINER', 'lease_exhausted', "state='claimed' and lease_expires_at <= v_now", 'for update skip locked', 'lease_owner_id=p_worker_id', 'lease_expires_at > now()', 'retry_attempt_cap', 'block10_replay_dead_job', "block10_has_current_approval(p_approval_id, 'replay', p_at)", "failure_class = 'uncertain'", 'block10_write_admin_audit', 'block10_jobs_expired_claimed_idx', 'from service_role', 'grant execute on function public.block10_claim_jobs', 'block10_finish_job(text,text,text,text,timestamptz,text,text)', 'block10_replay_dead_job(text,text,timestamptz)']) assert.match(sql, new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
 });
 
+test('security definer functions qualify pgcrypto random-byte generation', async () => {
+  const sql = await readFile(migration, 'utf8');
+
+  assert.equal((sql.match(/\bextensions\.gen_random_bytes\(16\)/gi) ?? []).length, 2);
+  assert.doesNotMatch(sql, /(?<!\.)\bgen_random_bytes\s*\(/i);
+});
+
 test('rollback refuses destructive work while Block 10-owned rows exist', async () => {
   const sql = await readFile(rollback, 'utf8');
   assert.match(sql, /Refusing destructive Block 10 rollback/);

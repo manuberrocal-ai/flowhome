@@ -224,7 +224,7 @@ end; $$;
 create or replace function public.block10_write_admin_audit(p_actor_id text, p_action text, p_target_type text, p_target_id text, p_reason text, p_approval_id text, p_outcome text, p_trace_id text, p_before_state jsonb default null, p_after_state jsonb default null)
 returns void language sql security definer set search_path = pg_catalog, public as $$
   insert into public.block10_admin_audit_log (id, actor_id, action, target_type, target_id, reason, approval_id, outcome, trace_id, before_state, after_state)
-  values (encode(gen_random_bytes(16), 'hex'), p_actor_id, p_action, p_target_type, p_target_id, p_reason, p_approval_id, p_outcome, p_trace_id, p_before_state, p_after_state);
+  values (encode(extensions.gen_random_bytes(16), 'hex'), p_actor_id, p_action, p_target_type, p_target_id, p_reason, p_approval_id, p_outcome, p_trace_id, p_before_state, p_after_state);
 $$;
 
 create or replace function public.block10_feature_enabled(p_domain text)
@@ -344,7 +344,7 @@ begin
     order by available_at, id limit p_limit for update skip locked
   ), claimed as (
     update public.block10_jobs j set state='claimed', attempts=j.attempts+1, lease_owner_id=p_worker_id,
-      lease_token=encode(gen_random_bytes(16),'hex'), lease_expires_at=v_now + make_interval(secs => p_lease_seconds), updated_at=v_now
+      lease_token=encode(extensions.gen_random_bytes(16),'hex'), lease_expires_at=v_now + make_interval(secs => p_lease_seconds), updated_at=v_now
       from candidates c where j.id=c.id returning j.*
   ) select array_agg(id) into v_ids from claimed;
   if v_ids is not null then return query select * from public.block10_jobs where id = any(v_ids) order by available_at, id; end if;
