@@ -1,9 +1,22 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 
 const migration = new URL('../supabase/migrations/006_shared_data_platform.sql', import.meta.url);
-const rollback = new URL('../supabase/migrations/006_shared_data_platform.rollback.sql', import.meta.url);
+const rollback = new URL('../supabase/rollbacks/006_shared_data_platform.rollback.sql', import.meta.url);
+const migrationsDirectory = new URL('../supabase/migrations/', import.meta.url);
+
+test('migration runner directory contains unique forward versions only', async () => {
+  const files = (await readdir(migrationsDirectory)).filter((file) => /^\d+_.*\.sql$/.test(file));
+  const versions = files.map((file) => file.match(/^\d+/)[0]);
+
+  assert.equal(new Set(versions).size, versions.length, 'migration versions must be unique');
+  assert.deepEqual(
+    files.filter((file) => /(rollback|manual|destructive)/i.test(file)),
+    [],
+    'manual or destructive SQL must remain outside the migration runner directory',
+  );
+});
 
 test('migration is additive, transactional, constrained, indexed, private, and maps lifecycle', async () => {
   const sql = await readFile(migration, 'utf8');
@@ -25,6 +38,16 @@ test('rollback refuses destructive work while Block 10-owned rows exist', async 
   assert.match(sql, /Refusing destructive Block 10 rollback/);
   assert.match(sql, /if v_rows <> 0 then raise exception/i);
   assert.match(sql, /begin;[\s\S]*commit;/i);
+});
+
+test('rollback drops every function created by the forward migration', async () => {
+  const [sql, down] = await Promise.all([readFile(migration, 'utf8'), readFile(rollback, 'utf8')]);
+  const names = [...sql.matchAll(/create or replace function public\.([A-Za-z0-9_]+)\s*\(/gi)].map((match) => match[1]);
+
+  assert.ok(names.length > 0, 'forward migration must define functions');
+  for (const name of new Set(names)) {
+    assert.match(down, new RegExp(`drop function if exists public\\.${name}\\s*\\(`, 'i'), `missing rollback for ${name}`);
+  }
 });
 
 test('rollback drops lifecycle triggers before the first function drop and on the right tables', async () => {

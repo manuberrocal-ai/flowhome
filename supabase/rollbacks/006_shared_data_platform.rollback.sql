@@ -42,6 +42,7 @@ drop function if exists public.block10_guard_experiment();
 drop function if exists public.block10_guard_governance_decision();
 drop function if exists public.block10_guard_campaign();
 drop function if exists public.block10_guard_content_asset();
+drop function if exists public.block10_require_reviewed_artifact(text,text,text);
 drop function if exists public.block10_require_approved_approval(text,text);
 drop function if exists public.block10_has_current_approval(text,text,timestamptz);
 drop table if exists public.block10_governance_decisions;

@@ -53,7 +53,7 @@ The closed action vocabulary infers risk: publishing, spend, destructive, and le
 
 1. Enable the global kill switch, which has absolute precedence, disable domain flags/workers, and stop new claims; do not delete data.
 2. Obtain reviewed retention/export, security, privacy, and owner approvals. Export audited evidence through the approved controlled process.
-3. Run the count guard in `006_shared_data_platform.rollback.sql`. It intentionally raises and refuses rollback when any Block 10-owned row exists.
+3. Run the count guard in `supabase/rollbacks/006_shared_data_platform.rollback.sql`. It intentionally raises and refuses rollback when any Block 10-owned row exists. This manual rollback is outside `supabase/migrations/` and is never discovered by the migration runner.
 4. Only after a separately reviewed retention/deletion procedure has made every count zero may an authorized operator run the rollback file. Re-verify Block 7 lifecycle tables/views remain intact; they are never dropped.
 
 ## Admin review
