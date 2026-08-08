@@ -97,16 +97,32 @@ test('post-deploy policy permits only successful push or manual deployments with
   assert.equal(await readFile(githubOutput, 'utf8'), 'notify=true\n');
 });
 
-test('batched deploy delegates tested policy modes and keeps notifications after deployment', async () => {
+test('batched deploy verifies on push and cron, while production deploy is manual and protected', async () => {
   const workflow = await source('batched-deploy.yml');
+  assert.match(workflow, /push:\s*\n\s*branches:\s*\[main\]/);
+  assert.match(workflow, /schedule:\s*\n\s*- cron:/);
+  const pushTrigger = workflow.slice(workflow.indexOf('  push:'), workflow.indexOf('\n\npermissions:'));
+  assert.doesNotMatch(pushTrigger, /paths-ignore/);
+  assert.match(workflow, /deploy_production:[\s\S]*required:\s*true[\s\S]*default:\s*false[\s\S]*type:\s*boolean/);
+  assert.match(workflow, /deploy-production:\s*\n\s*needs: verify/);
+  assert.match(workflow, /environment:\s*production/);
+  assert.match(workflow, /group:\s*flowhome-production[\s\S]*cancel-in-progress:\s*false/);
+  assert.match(workflow, /actions\/upload-artifact@v7/);
+  assert.match(workflow, /actions\/download-artifact@v8/);
+  assert.match(workflow, /has_urls:\s*\$\{\{ steps\.notification-urls\.outputs\.has_urls \}\}/);
+
+  const verify = workflow.slice(workflow.indexOf('  verify:'), workflow.indexOf('  deploy-production:'));
+  const production = workflow.slice(workflow.indexOf('  deploy-production:'));
+  assert.doesNotMatch(verify, /wrangler-action|Deploy to Cloudflare Pages|websub:publish|indexnow:submit/);
+  assert.match(production, /if:\s*\$\{\{ github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main' && inputs\.deploy_production == true \}\}/);
+  assert.match(production, /- uses: actions\/checkout@v7\s+with:\s+ref: main/);
+  assert.match(production, /cloudflare\/wrangler-action@v3/);
+  assert.match(production, /needs\.verify\.outputs\.has_urls/);
+  assert.match(production, /deployment-urls\/deployed-urls\.txt/);
+
   assert.match(workflow, /--prepare/);
   assert.match(workflow, /--decide-notifications/);
   assert.match(workflow, /id: notification-decision/);
-  const deploy = workflow.indexOf('name: Deploy to Cloudflare Pages');
-  const websub = workflow.indexOf('name: Publish WebSub update');
-  const indexNow = workflow.indexOf('name: Submit IndexNow via default endpoint');
-  assert.ok(deploy < websub && websub < indexNow);
-  const notificationSteps = workflow.slice(websub, workflow.indexOf('name: Upload static artifact'));
-  assert.doesNotMatch(notificationSteps, /steps\.deploy\.outcome|notification-urls\.outputs\.has_urls/);
-  assert.match(notificationSteps, /steps\.notification-decision\.outputs\.notify == 'true'/);
+  assert.match(production, /name: Publish WebSub update[\s\S]*name: Submit IndexNow via default endpoint/);
+  assert.match(production, /steps\.notification-decision\.outputs\.notify == 'true'/);
 });

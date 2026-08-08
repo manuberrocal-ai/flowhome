@@ -43,3 +43,7 @@ Every observation is classified independently as `real_local`, `synthetic`, `moc
 ## Safety boundary
 
 Rollback is pure simulation: disable flags and restore a last-known-valid snapshot without mutation. External rollback is blocked. Browser QA and Lighthouse for this documentation/contracts change are N/A/not executed, subject to final audit.
+
+## Production deployment gate
+
+The `Batched Deploy` workflow verifies every push to `main` and scheduled run, including build and quality gates, but does not deploy or send deployment notifications for either trigger. Remote status verified on 2026-08-08: GitHub Environment `production` exists with required reviewer `manuberrocal-ai`, `prevent_self_review=false`, and custom deployment branch policy `main`; no deployment was performed. Production requires an explicit `workflow_dispatch` on the `main` branch, checking the boolean `deploy_production` checkbox, and manual reviewer approval. `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` remain repository-level secrets referenced only by the protected production job; Environment secrets are not asserted. Future rotation or migration to Environment-scoped secrets is a manual follow-up without exposing values. The job fails closed when either repository secret is absent.

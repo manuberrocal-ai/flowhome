@@ -22,12 +22,18 @@ If it does not exist, create `manuberrocal-ai/flowhome` first from GitHub UI or 
 - Root directory: repository root
 - Domain: `flowhome.dev`
 
-## Required GitHub secrets
+## Required repository secrets
 
 ```text
 CLOUDFLARE_API_TOKEN
 CLOUDFLARE_ACCOUNT_ID
 ```
+
+## Production workflow gate
+
+Remote status verified on 2026-08-08: the GitHub Environment `production` exists with required reviewer `manuberrocal-ai`, `prevent_self_review=false`, and a custom deployment branch policy restricted to `main`. No deployment was performed. The Cloudflare secrets remain repository-level secrets and are referenced only by the protected `deploy-production` job; this runbook does not claim that Environment secrets exist. Future secret rotation or migration to Environment-scoped secrets must be performed manually, without recording secret values here.
+
+`Batched Deploy` runs all verification gates on every push to `main` and on the scheduled trigger, but those triggers never deploy or notify. To deploy production, open **Run workflow**, select the `main` branch, check the `deploy_production` checkbox, optionally provide newline-separated canonical `notification_urls`, and approve the Environment review. Production uses Cloudflare Pages branch `main` and is serialized with the `flowhome-production` concurrency group.
 
 ## Optional public environment variables
 
@@ -71,7 +77,7 @@ Then check:
 - Pushes compare the current build with the previous push build and select only new or byte-changed canonical HTML pages present in the current sitemap.
 - `workflow_dispatch` accepts optional newline-separated canonical URLs. Each is validated against the current sitemap; an empty input sends no notifications.
 - Scheduled deploys perform no WebSub or IndexNow notification.
-- If Cloudflare credentials are unavailable, the deploy step is skipped and notifications are skipped too.
+- If Cloudflare credentials are unavailable, the manual production job fails before deployment; it is never silently skipped.
 
 To preview a targeted IndexNow payload locally without network access:
 
