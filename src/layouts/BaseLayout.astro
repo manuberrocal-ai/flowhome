@@ -88,6 +88,7 @@ const safePreloadImage = (() => {
     {safePreloadImage && <link rel="preload" as="image" href={safePreloadImage} fetchpriority="high" />}
   </head>
   <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800" data-page-type={pageType} data-gtm-id={GTM_ID} data-clarity-id={CLARITY_ID} data-funnel-experiment-v1={FUNNEL_EXPERIMENT_V1 ? 'on' : 'off'} data-home-primary-cta-v1={HOME_PRIMARY_CTA_V1 ? 'on' : 'off'}>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <Header />
     <div class="border-b border-amber-100 bg-amber-50/75">
       <div class="mx-auto max-w-7xl px-4 py-2 text-center text-[11px] font-semibold leading-5 text-amber-900 sm:px-6 lg:px-8">
@@ -95,7 +96,7 @@ const safePreloadImage = (() => {
       </div>
     </div>
     <ConsentBanner />
-    <main class="flex-1 w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main id="main-content" tabindex="-1" class="flex-1 w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <slot />
     </main>
     <Footer />

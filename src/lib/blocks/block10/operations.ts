@@ -60,16 +60,18 @@ export function finishClaim<T>(job: QueueJob<T>, workerId: string, leaseToken: s
 
 /** Manual replay never replays uncertain outcomes and requires a reviewed approval. */
 export interface ReplayRequest { jobId: string; approvalId: string; reason: string; traceId: string; requestedAt: string; }
+const FORBIDDEN_APPROVAL_REASON = /(?:@|token|secret|password|authorization|bearer|cookie|https?:\/\/|\b\d{7,}\b)/i;
 export function isCurrentApproval(approval: HumanApproval | null, action: HumanApproval['action'], now: string): boolean {
   const current = strictUtc(now); const approvedAt = approval?.approvedAt ? strictUtc(approval.approvedAt) : null; const expiresAt = approval?.expiresAt ? strictUtc(approval.expiresAt) : null;
-  return Boolean(current && approval && /^[A-Za-z0-9:_-]{1,160}$/.test(approval.id) && /^[A-Za-z0-9:_-]{1,160}$/.test(approval.actorId) && approval.action === action && approval.state === 'approved' && approvedAt && Date.parse(approvedAt) <= Date.parse(current) && (!expiresAt || Date.parse(expiresAt) > Date.parse(current)));
+  const hasSafeReason = typeof approval?.reason === 'string' && approval.reason.trim().length > 0 && approval.reason.length <= 240 && !FORBIDDEN_APPROVAL_REASON.test(approval.reason);
+  return Boolean(current && approval && hasSafeReason && /^[A-Za-z0-9:_-]{1,160}$/.test(approval.id) && /^[A-Za-z0-9:_-]{1,160}$/.test(approval.actorId) && approval.action === action && approval.state === 'approved' && approvedAt && Date.parse(approvedAt) <= Date.parse(current) && (!expiresAt || Date.parse(expiresAt) > Date.parse(current)));
 }
 export function replayDeadLetter<T>(job: QueueJob<T>, approval: HumanApproval | null, now: string): { job: QueueJob<T>; allowed: boolean; reason: string; replayRequest: ReplayRequest | null } {
   const strictNow = strictUtc(now);
   if (job.state !== 'dead') return { job, allowed: false, reason: 'not_dead_letter', replayRequest: null };
   if (job.failureClass === 'uncertain') return { job, allowed: false, reason: 'uncertain_outcome_never_replayed', replayRequest: null };
   if (!strictNow || !approval || !isCurrentApproval(approval, 'replay', strictNow)) return { job, allowed: false, reason: 'reviewed_approval_required', replayRequest: null };
-  const replayRequest = { jobId: job.id, approvalId: approval.id, reason: approval.reason.trim().slice(0, 120), traceId: job.traceId, requestedAt: strictNow };
+  const replayRequest = { jobId: job.id, approvalId: approval.id, reason: 'reviewed_replay', traceId: job.traceId, requestedAt: strictNow };
   return { job: { ...job, state: 'pending', attempts: 0, availableAt: strictNow, failureClass: null, failureReason: `manual_replay:${replayRequest.reason}`, updatedAt: strictNow }, allowed: true, reason: 'requeued_after_review', replayRequest };
 }
 

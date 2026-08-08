@@ -40,3 +40,7 @@ Roles are intentionally unassigned. Assignments require a human decision; no per
 ## Post-audit verification (2026-08-01)
 
 The cross-block local technical audit for Blocks 0–9 is complete. Current aggregate evidence and the Judgment Day methodology are recorded in [`BLOCKS_0_9_AUDIT_REPORT.md`](BLOCKS_0_9_AUDIT_REPORT.md). External, provider/source, deployment, remote-CI, and time/volume-dependent states remain `Unknown` or blocked; historical dated counts above are preserved.
+
+## Append-only revalidation (2026-08-08)
+
+The local follow-up corrected the Block 10 approval-reason fail-closed boundary, Block 12 runtime record validation, the skip-link focus target, and the historical Block 11 wording. Local revalidation recorded 476/476 tests PASS, lint PASS, typecheck 202 files with 0 errors / 0 warnings / 155 hints, build 88, quality check 15 review files PASS, SEO 88/0/0 PASS, links 0 stale / 5 unknown PASS, `npm audit --omit=dev` 0 vulnerabilities after the transitive lock updates to `js-yaml` 4.3.1 and `nanoid` 3.3.18, and diff-check PASS. Browser QA revalidation passed 20/20 in Brave with 0 failures and 0 setup errors. No Lighthouse, production, deployment, account, credential, or external-outcome evidence is added.

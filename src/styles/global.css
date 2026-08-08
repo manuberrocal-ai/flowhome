@@ -62,6 +62,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; }
 :where(button, [role="button"]):not(:disabled):not([aria-disabled="true"]):active { transform: translateY(1px); }
 :where(button, [role="button"]):disabled, :where(button, [role="button"], a)[aria-disabled="true"] { cursor: not-allowed; opacity: .56; filter: saturate(.65); transform: none; }
 :where(button, [role="button"], a)[aria-busy="true"] { cursor: progress; opacity: .72; pointer-events: none; }
+.skip-link { position: fixed; top: var(--fh-space-3); left: var(--fh-space-3); z-index: calc(var(--fh-z-modal) + 1); transform: translateY(-150%); border-radius: var(--fh-radius-sm); background: var(--fh-color-navy); padding: var(--fh-space-2) var(--fh-space-3); color: #fff; font-weight: 700; transition: transform var(--fh-motion-fast) var(--fh-ease); }
+.skip-link:focus-visible { transform: translateY(0); }
 :where([data-flow-cart-add], [data-quiz-save])[aria-pressed="true"], .product-card-side-action--list.is-added { border-color: #059669; background: linear-gradient(135deg, #047857, #059669 48%, #34d399); color: #fff; }
 :where(input, select, textarea)[aria-invalid="true"], :where(button, [role="button"])[data-state="error"] { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, .18); }
 

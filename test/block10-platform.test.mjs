@@ -43,7 +43,11 @@ test('safe failure retries with Block 8 defaults, uncertain failure becomes non-
   assert.equal(uncertain.state, 'dead'); assert.equal(uncertain.failureClass, 'uncertain');
   assert.equal(replayDeadLetter(uncertain, approval('replay'), NOW).allowed, false);
   const replay = replayDeadLetter({ ...uncertain, failureClass: 'permanent' }, approval('replay'), NOW);
-  assert.equal(replay.allowed, true); assert.equal(replay.replayRequest.approvalId, 'approval-replay');
+  assert.equal(replay.allowed, true); assert.equal(replay.replayRequest.approvalId, 'approval-replay'); assert.equal(replay.replayRequest.reason, 'reviewed_replay');
+  const sensitiveReasonReplay = replayDeadLetter({ ...uncertain, failureClass: 'permanent' }, { ...approval('replay'), reason: 'Email owner@example.com before retry' }, NOW);
+  assert.equal(sensitiveReasonReplay.allowed, false); assert.equal(sensitiveReasonReplay.replayRequest, null);
+  const emptyReasonReplay = replayDeadLetter({ ...uncertain, failureClass: 'permanent' }, { ...approval('replay'), reason: '   ' }, NOW);
+  assert.equal(emptyReasonReplay.allowed, false); assert.equal(emptyReasonReplay.replayRequest, null);
   assert.equal(claimNext([{ ...job(['cap']), attempts: 5, state: 'retry' }], 'worker-a', NOW).claimed, null);
 });
 

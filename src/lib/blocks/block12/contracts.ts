@@ -29,6 +29,14 @@ export type ConnectionState =
 export type DecisionState = 'continue' | 'revise' | 'defer' | 'stop' | 'externally_blocked';
 export type Cadence = 'daily' | 'weekly' | 'monthly' | 'quarterly';
 
+const DECISION_STATES = new Set<DecisionState>([
+  'continue',
+  'revise',
+  'defer',
+  'stop',
+  'externally_blocked',
+]);
+
 export type Evidence = Readonly<{
   kind: EvidenceKind;
   reference: string;
@@ -383,13 +391,23 @@ export function evaluate90DayGate(input: GateInput): GateResult {
   if (input.decision === 'success') {
     throw new RangeError('success_is_not_a_valid_gate_state');
   }
+  if (input.decision !== undefined && !DECISION_STATES.has(input.decision)) {
+    throw new RangeError('invalid_gate_decision');
+  }
   if (input.externalBlocked === true) {
     return Object.freeze({
       state: 'externally_blocked',
       reason: 'external dependency or approval is not connected',
     });
   }
-  const segments = Object.entries(input.outcomesBySegment ?? {});
+  if (
+    input.outcomesBySegment === null ||
+    typeof input.outcomesBySegment !== 'object' ||
+    Array.isArray(input.outcomesBySegment)
+  ) {
+    throw new RangeError('outcomes_by_segment_must_be_a_record');
+  }
+  const segments = Object.entries(input.outcomesBySegment);
   if (segments.length === 0) {
     throw new RangeError('outcomes_by_segment_must_not_be_empty');
   }

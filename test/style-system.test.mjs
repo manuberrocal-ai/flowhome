@@ -8,6 +8,7 @@ const heroCarouselPath = new URL('../src/lib/hero-carousel.js', import.meta.url)
 const headerPath = new URL('../src/components/Header.astro', import.meta.url);
 const accountPath = new URL('../src/pages/account.astro', import.meta.url);
 const cartClientPath = new URL('../src/lib/cart-client.js', import.meta.url);
+const baseLayoutPath = new URL('../src/layouts/BaseLayout.astro', import.meta.url);
 
 async function stylesheet() {
   return readFile(cssPath, 'utf8');
@@ -44,6 +45,14 @@ test('global control states distinguish enabled, disabled, loading, selected, an
   assert.match(css, /aria-busy="true"\] \{ cursor: progress/);
   assert.match(css, /data-quiz-save\]\)\[aria-pressed="true"\]/);
   assert.match(css, /aria-invalid="true"/);
+});
+
+test('keyboard users can bypass repeated navigation and focus the main landmark', async () => {
+  const [css, layout] = await Promise.all([stylesheet(), source(baseLayoutPath)]);
+  assert.match(layout, /<a class="skip-link" href="#main-content">Skip to main content<\/a>/);
+  assert.match(layout, /<main id="main-content" tabindex="-1"/);
+  assert.match(css, /\.skip-link \{[\s\S]*transform: translateY\(-150%\)/);
+  assert.match(css, /\.skip-link:focus-visible \{ transform: translateY\(0\); \}/);
 });
 
 test('cart dock reserves content space only while the dock is visible', async () => {

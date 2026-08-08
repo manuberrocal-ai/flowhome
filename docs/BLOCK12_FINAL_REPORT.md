@@ -92,3 +92,7 @@ Rollback is simulated and pure: disable flags and restore the last-known-valid s
 | D0/D30/D60/D90 gate, Wilson, bootstrap, bias | `docs/BLOCK12_90_DAY_GATE.md` |
 | final matrix, evidence, risks, permissions, rollout, backlog | this report |
 | roadmap/baseline state | `docs/ROADMAP_PHASES_0_6.md`, `docs/BASELINE_SCORECARD.md` |
+
+## Append-only revalidation (2026-08-08)
+
+The local follow-up corrected the Block 10 approval-reason fail-closed boundary, Block 12 runtime record validation, the skip-link focus target, and the historical Block 11 wording. Local revalidation recorded 476/476 tests PASS, lint PASS, typecheck 202 files with 0 errors / 0 warnings / 155 hints, build 88, quality check 15 review files PASS, SEO 88/0/0 PASS, links 0 stale / 5 unknown PASS, `npm audit --omit=dev` 0 vulnerabilities after the transitive lock updates to `js-yaml` 4.3.1 and `nanoid` 3.3.18, and diff-check PASS. Browser QA revalidation passed 20/20 in Brave with 0 failures and 0 setup errors. No Lighthouse, production, deployment, account, credential, or external-outcome evidence is claimed here.

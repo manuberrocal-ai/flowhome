@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T00:47:03.837Z",
+  "generatedAt": "2026-08-08T15:27:08.039Z",
   "results": [
     {
       "file": "src\\content\\reviews\\aeotec-smartthings-hub-review.md",
@@ -10,7 +10,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "548 words"
+          "detail": "545 words"
         },
         {
           "name": "h2Structure",
@@ -96,7 +96,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "525 words"
+          "detail": "518 words"
         },
         {
           "name": "h2Structure",
@@ -397,7 +397,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "502 words"
+          "detail": "730 words"
         },
         {
           "name": "h2Structure",
@@ -526,7 +526,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "534 words"
+          "detail": "870 words"
         },
         {
           "name": "h2Structure",
@@ -569,7 +569,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "533 words"
+          "detail": "530 words"
         },
         {
           "name": "h2Structure",

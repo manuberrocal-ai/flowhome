@@ -12,7 +12,7 @@ This roadmap sequences the remaining work without implementing later systems. `C
 | 3 | Technical SEO, performance, editorial E-E-A-T, GEO | Technically tested locally; externally/time blocked for validation | Phases 1–2 |
 | 4 | Funnel experiments, optional CRM, and local/mock lifecycle preparation | Baseline and Block 7 local/mock lifecycle technically tested; activation and outcomes Unknown/not started/time-volume-dependent | Consent-safe analytics and traffic |
 | 5 | Offer/trend, compatibility, data platform/governance | Blocks 8–10 contracts technically tested locally; activation and outcomes Unknown / externally blocked | Phases 2–4 and source access |
-| 6 | Multichannel, SLOs/runbooks, 90-day validation | Block 11 local/mock technically closed; Phase 6, Block 12, SLOs, and 90-day validation not started / externally blocked / time-volume-dependent | Phases 2–5 and comparable data |
+| 6 | Multichannel, SLOs/runbooks, 90-day validation | Blocks 11 local/mock and Block 12 operational contracts technically closed; Phase 6, D90 validation, and outcomes remain incomplete / externally blocked / time-volume-dependent | Phases 2–5 and comparable data |
 
 Remaining prompts for later blocks: [`REMAINING_WORK_PROMPTS.md`](REMAINING_WORK_PROMPTS.md). Baseline: [`BASELINE_SCORECARD.md`](BASELINE_SCORECARD.md). Organic runbook: [`ORGANIC_GROWTH_RUNBOOK.md`](ORGANIC_GROWTH_RUNBOOK.md).
 
@@ -149,3 +149,7 @@ The Block 7 schema, preference UI, mock provider, worker, webhook verifier, and 
 ## Post-audit verification (2026-08-01)
 
 Cross-block local technical audit for Blocks 0–9: **complete**. The dual-blind Judgment Day method, corrected categories, and current gates are recorded in [`BLOCKS_0_9_AUDIT_REPORT.md`](BLOCKS_0_9_AUDIT_REPORT.md); that audit remains its own report. Block 10 is locally and technically closed under [`BLOCK10_COMPLETION_REPORT.md`](BLOCK10_COMPLETION_REPORT.md), while its migration was not applied and external activation, providers, sources, production graphs, deployment, clean-checkout remote CI, outcomes, and time/volume validation remain `Unknown` or externally blocked. Block 11 is local/mock technically closed under [`BLOCK11_COMPLETION_REPORT.md`](BLOCK11_COMPLETION_REPORT.md); Block 12 local operational contracts technically prepared/closed under [`BLOCK12_FINAL_REPORT.md`](BLOCK12_FINAL_REPORT.md). Phase 6 is not complete, and 90-day/business outcomes remain not validated, externally blocked, or time-volume-dependent.
+
+## Append-only revalidation (2026-08-08)
+
+The Block 10 approval-reason boundary and Block 12 runtime gate input validation were corrected locally. The visible skip-link destination now receives programmatic focus; the prior Block 11 present-tense statement about Block 12 was qualified as historical. Local revalidation recorded 476/476 tests PASS, lint PASS, typecheck 202 files with 0 errors / 0 warnings / 155 hints, build 88, quality check 15 review files PASS, SEO 88/0/0 PASS, links 0 stale / 5 unknown PASS, `npm audit --omit=dev` 0 vulnerabilities after the transitive lock updates to `js-yaml` 4.3.1 and `nanoid` 3.3.18, and diff-check PASS. Browser QA revalidation passed 20/20 in Brave with 0 failures and 0 setup errors. No Lighthouse, production, deployment, account, credential, or external-outcome claim is added.

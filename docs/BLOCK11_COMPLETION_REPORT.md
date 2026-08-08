@@ -74,4 +74,4 @@ Browser QA is N/A because Block 11 has no UI and no public runtime. No browser a
 
 ## Residual limitations
 
-Local evidence proves contracts, fixtures, documentation, and mock behavior only. Permissions, app review, OAuth, rights clearance, consent, provider quotas, account setup, publication, delivery, measurement, external outcomes, deployment, operational SLOs, and 90-day validation remain Unknown, unapproved, externally blocked, or time/volume-dependent. Block 12 remains not started.
+Local evidence proves contracts, fixtures, documentation, and mock behavior only. Permissions, app review, OAuth, rights clearance, consent, provider quotas, account setup, publication, delivery, measurement, external outcomes, deployment, operational SLOs, and 90-day validation remain Unknown, unapproved, externally blocked, or time/volume-dependent. At the date of this report, Block 12 had not started.

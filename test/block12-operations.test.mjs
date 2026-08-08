@@ -100,6 +100,14 @@ test('Wilson helper and 90-day gate handle valid and invalid boundaries', async 
     /must_not_be_empty/,
   );
   assert.throws(
+    () => evaluate90DayGate({ day: 90, outcomesBySegment: [30], comparableWindows: 2, confidenceIntervalsComputed: true, biasReviewComplete: true, decision: 'continue' }),
+    /must_be_a_record/,
+  );
+  assert.throws(
+    () => evaluate90DayGate({ day: 90, outcomesBySegment: null, comparableWindows: 2, confidenceIntervalsComputed: true, biasReviewComplete: true, decision: 'continue' }),
+    /must_be_a_record/,
+  );
+  assert.throws(
     () => evaluate90DayGate({ day: 90, outcomesBySegment: { a: -1 }, comparableWindows: 2, confidenceIntervalsComputed: true, biasReviewComplete: true, decision: 'continue' }),
     /non_negative_integers/,
   );
@@ -110,6 +118,10 @@ test('Wilson helper and 90-day gate handle valid and invalid boundaries', async 
   assert.throws(
     () => evaluate90DayGate({ day: 90, outcomesBySegment: { a: 30 }, comparableWindows: 2, confidenceIntervalsComputed: true, biasReviewComplete: true, decision: 'success' }),
     /success_is_not_a_valid_gate_state/,
+  );
+  assert.throws(
+    () => evaluate90DayGate({ day: 90, outcomesBySegment: { a: 30 }, comparableWindows: 2, confidenceIntervalsComputed: true, biasReviewComplete: true, decision: 'approve' }),
+    /invalid_gate_decision/,
   );
   for (const missing of [
     {
