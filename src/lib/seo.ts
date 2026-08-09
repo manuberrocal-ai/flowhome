@@ -153,7 +153,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: 'FlowHome',
     url: 'https://flowhome.dev',
-    logo: 'https://flowhome.dev/images/flowhome-logo.svg',
+    logo: 'https://flowhome.dev/images/flowhome-logo.png',
     description: 'Smart home product reviews, comparisons, and deals',
   };
 }
