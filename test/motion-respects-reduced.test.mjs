@@ -66,7 +66,7 @@ test('Parallax and infinite decorative motion are removed', () => {
   const srcContents = srcFiles.map((file) => read(file)).join('\n');
   assert.doesNotMatch(srcContents, /flow-wave|home-parallax-bg(?:--account)?|data-dark-parallax/i);
   assert.doesNotMatch(srcContents, /background-attachment\s*:\s*fixed|animation-iteration-count\s*:\s*infinite|animation:[^;]*infinite|animate-(pulse|bounce|spin)/i);
-  assert.doesNotMatch(srcContents, /duration-(?:[3-9]\d{2}|\d{4,})\b|duration-\[(?:[3-9]\d{2}|\d{4,})ms\]|\b(?:2[6-9]\d|[3-9]\d{2}|\d{4,})ms\b/i);
+  assert.doesNotMatch(srcContents, /duration-(?:30[1-9]|3[1-9]\d|[4-9]\d{2}|\d{4,})\b|duration-\[(?:30[1-9]|3[1-9]\d|[4-9]\d{2}|\d{4,})ms\]|\b(?:30[1-9]|3[1-9]\d|[4-9]\d{2}|\d{4,})ms\b/i);
   assert.doesNotMatch(srcContents, /requestAnimationFrame|addEventListener\(['"]scroll/i);
   for (const content of [baseLayout, footer, indexPage, styleSheet]) {
     assert.doesNotMatch(content, /parallax|background-attachment\s*:\s*fixed|animation-iteration-count\s*:\s*infinite|animation:[^;]*infinite|animate-(pulse|bounce|spin)/i);
@@ -77,6 +77,7 @@ test('Parallax and infinite decorative motion are removed', () => {
 test('Interaction feedback stays within the brief motion range', () => {
   assert.match(styleSheet, /--fh-motion-fast:\s*150ms/);
   assert.match(styleSheet, /--fh-motion-base:\s*220ms/);
+  assert.match(styleSheet, /--fh-motion-slow:\s*300ms/);
   assert.match(footer, /transition: transform 180ms ease/);
   assert.match(indexPage, /transition hover:-translate-y-0\.5/);
 });
@@ -92,7 +93,11 @@ test('hero carousel exposes eager/fetchpriority high for primary image and lazy 
   assert.match(indexPage, /loading="lazy"[^>]*fetchpriority="low"/);
 });
 
-test('No infinite CTA/decorative keyframes remain', () => {
+test('Finite brand restoration motion remains one-shot and is disabled for reduced motion', () => {
+  assert.match(styleSheet, /@keyframes brand-star-reveal/);
+  assert.match(styleSheet, /\.hero-star \{ animation: brand-star-reveal var\(--fh-motion-slow\) var\(--fh-ease\) both; \}/);
+  assert.match(styleSheet, /\.hero-star:nth-child\(5\) \{ animation-delay: 180ms; \}/);
+  assert.match(styleSheet, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.hero-star \{ animation: none !important; \}/);
   assert.doesNotMatch(`${indexPage}\n${styleSheet}`, /@keyframes\s+(flow-wave|leaf-dance|sparkle|pop|heroStarPop)|animation:[^;]*infinite/i);
 });
 

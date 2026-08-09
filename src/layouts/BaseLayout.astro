@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
+import interLatinUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import plusJakartaLatinUrl from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title?: string;
@@ -69,6 +71,8 @@ const safePreloadImage = (() => {
     <link rel="apple-touch-icon" href="/images/flowhome-icon-192.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0f172a" />
+    <link rel="preload" as="font" href={interLatinUrl} type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href={plusJakartaLatinUrl} type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="search" type="application/opensearchdescription+xml" title="FlowHome" href="/opensearch.xml" />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow" />}
