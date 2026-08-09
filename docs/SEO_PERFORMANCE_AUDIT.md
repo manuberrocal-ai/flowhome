@@ -27,7 +27,7 @@ npm.cmd run seo:audit
 
 | Budget | Gate |
 | --- | --- |
-| HTML per page | <= 300,000 bytes |
+| HTML per page | <= 350,000 bytes |
 | Inline JavaScript per page | <= 120,000 bytes |
 | First-party CSS/JS per page | <= 800,000 bytes, with per-template observed maximum recorded |
 | External executable resources | 0 scripts and 0 stylesheets |
@@ -37,7 +37,7 @@ npm.cmd run seo:audit
 
 The script’s report path can be set with `SEO_AUDIT_REPORT_PATH`; it rejects a repository path to keep full reports out of version control.
 
-Verified 2026-07-29 audit evidence is `%TEMP%\flowhome-seo-audit-bwTnlh\report.json`: 87 content pages, 0 errors, and 0 warnings. Observed maxima were 213,045 HTML bytes, 19,774 inline JavaScript bytes, 132,474 first-party CSS/JS bytes, and 29 remote images. These are below the respective 300,000, 120,000, 800,000, and 64 budgets; external scripts and stylesheets were both 0. Remote retailer media are counted and reported separately; they are not described as only the footer QR image.
+Verified 2026-07-29 audit evidence is `%TEMP%\flowhome-seo-audit-bwTnlh\report.json`: 87 content pages, 0 errors, and 0 warnings. Observed maxima were 213,045 HTML bytes, 19,774 inline JavaScript bytes, 132,474 first-party CSS/JS bytes, and 29 remote images. These are below the respective former 300,000, 120,000, 800,000, and 64 budgets in effect at that time; external scripts and stylesheets were both 0. Remote retailer media are counted and reported separately; they are not described as only the footer QR image.
 
 ## Mobile Lighthouse procedure
 
@@ -71,3 +71,13 @@ All 12 samples returned a Windows Brave/chrome-launcher `EPERM` only after writi
 ## Closure
 
 Block 4 is limited to technical SEO and performance controls. Google Fonts were replaced with a system stack; unverified Organization `sameAs` was removed; robots blocks account/cart/search; the sitemap excludes those noindex utilities; the comparison hub, compatibility 301, and visible matching breadcrumbs repair crawl paths; consent prepaint removed measured lab CLS from about 0.157 to 0 without loading analytics; Supabase/auth synchronization is deferred behind a token-name-only session hint; the empty cart dock is idempotent; SVG brand assets replaced the logo/favicon payloads; home CSS is inline and the initial featured-card budget is eight. No Block 5 data/offer/compatibility engine, account action, Git operation, deployment, external account access, or external result claim was performed.
+
+## FlowHome visual restoration follow-up
+
+The restored visual system now uses self-hosted Latin-only Inter Variable and Plus Jakarta Sans Variable WOFF2 files with `font-display: optional`. The original 1076x250 PNG remains the approved master asset and Organization JSON-LD logo, while Header and Footer use the responsive 430x100 8,998-byte derivative via `srcset` with the original fallback retained. Astro inlines the project CSS, and the consent prepaint is inline and allowed by the exact CSP SHA-256 hash without `unsafe-inline`. The current 350,000-byte HTML cap accommodates that intentional CSS inlining.
+
+Verified local evidence is `%TEMP%\flowhome-lighthouse-2026-08-09T02-59-25-331Z\summary.json`: 3 complete samples per 4 routes, zero median-gate failures, external HTTPS blocked, and synthetic lab results only, not field CWV. Medians were Home 96/96/100/100 with LCP 2407.262 ms, CLS 0, TBT 0; Product 97/96/100/100 with LCP 2257.976 ms; Review 97/100/100/100 with LCP 2258.360 ms; Comparison 97/100/100/100 with LCP 2184.184 ms. EPERM warnings occurred only during post-report cleanup.
+
+Current SEO audit evidence is `%TEMP%\flowhome-seo-audit-ivKvAp\report.json`, 88 content pages, max HTML 324,639 bytes, 0 errors, 0 warnings, within the current 350,000-byte cap.
+
+Validation also recorded 488/488 tests passing, lint PASS, typecheck across 205 files with 0 errors, 0 warnings, and 155 hints, build output for 88 pages, Browser QA 20/20 at `%TEMP%\flowhome-browser-qa-2026-08-09T03-10-23-662Z\report.json`, and `git diff --check` PASS with LF/CRLF warnings only. No deploy or external-result claim is made.

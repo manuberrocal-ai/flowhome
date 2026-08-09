@@ -37,6 +37,7 @@ const GTM_ID = import.meta.env.PUBLIC_GTM_ID || '';
 const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || '';
 const FUNNEL_EXPERIMENT_V1 = import.meta.env.PUBLIC_FUNNEL_EXPERIMENT_V1 === 'true';
 const HOME_PRIMARY_CTA_V1 = import.meta.env.PUBLIC_HOME_PRIMARY_CTA_V1 === 'true';
+const CONSENT_PREPAINT_SCRIPT = `(()=>{let choice='unset';try{const saved=window.localStorage.getItem('flowhome-consent');const preference=saved?JSON.parse(saved):null;if(preference?.version===1&&(preference.choice==='accepted'||preference.choice==='rejected'))choice=preference.choice}catch{}document.documentElement.dataset.flowhomeConsent=choice})();`;
 const isCartPage = Astro.url.pathname === '/cart/' || Astro.url.pathname === '/cart';
 const pageType = Astro.url.pathname.split('/').filter(Boolean)[0] || 'home';
 const safePreloadImage = (() => {
@@ -81,8 +82,10 @@ const safePreloadImage = (() => {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
-    <script is:inline src="/consent-prepaint.js"></script>
-    <style is:inline>{`html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-banner-open="true"]), html[data-flowhome-consent="rejected"] [data-consent-banner]:not([data-consent-banner-open="true"]) { display: none; }`}</style>
+    <script is:inline set:html={CONSENT_PREPAINT_SCRIPT}></script>
+    <style is:inline>
+html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-banner-open="true"]), html[data-flowhome-consent="rejected"] [data-consent-banner]:not([data-consent-banner-open="true"]) { display: none; }
+</style>
     <script type="application/ld+json" set:html={serializeJsonLd(orgSchema)} />
     <script type="application/ld+json" set:html={serializeJsonLd(websiteSchema)} />
     {safePreloadImage && <link rel="preload" as="image" href={safePreloadImage} fetchpriority="high" />}

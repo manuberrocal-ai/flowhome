@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { aggregateLighthouseSamples, classifyLighthouseOutcome, isCompleteLighthouseReport, median, parseLighthouseRuns } from '../scripts/qa/lighthouse-mobile.mjs';
-import { isActionableImage, isPermittedUtilityQuery, normalizedPath, parseRedirects } from '../scripts/qa/seo-audit.mjs';
+import { isActionableImage, isPermittedUtilityQuery, normalizedPath, parseRedirects, SEO_BUDGETS } from '../scripts/qa/seo-audit.mjs';
 
 const root = new URL('..', import.meta.url);
 const read = (file) => readFile(new URL(file, root), 'utf8');
@@ -22,6 +22,17 @@ test('query links are limited to noindex utility routes', () => {
   assert.equal(isPermittedUtilityQuery(true, '/products/'), false);
 });
 
+test('SEO audit keeps the intentional inline-CSS HTML budget and adjacent budgets stable', () => {
+  assert.deepEqual(SEO_BUDGETS, {
+    maxHtmlBytes: 350000,
+    maxInlineScriptBytes: 120000,
+    maxFirstPartyCssJsBytes: 800000,
+    maxExternalScripts: 0,
+    maxExternalStylesheets: 0,
+    maxRemoteImages: 64,
+  });
+});
+
 test('comparison hub, breadcrumb, replacement links, and compatibility redirect use actual curated routes', async () => {
   const [hub, layout, header, home, redirects] = await Promise.all([read('src/pages/compare/index.astro'), read('src/layouts/CompareLayout.astro'), read('src/components/Header.astro'), read('src/pages/index.astro'), read('public/_redirects')]);
   assert.match(hub, /<h1[^>]*>Smart home product comparisons<\/h1>/);
@@ -33,7 +44,7 @@ test('comparison hub, breadcrumb, replacement links, and compatibility redirect 
 });
 
 test('Lighthouse uses the local dependency, loopback preview, lab budgets, and isolated reports', async () => {
-  const [pkg, runner, docs] = await Promise.all([read('package.json'), read('scripts/qa/lighthouse-mobile.mjs'), read('docs/SEO_PERFORMANCE_AUDIT.md')]);
+  const [pkg, runner, docs, astro] = await Promise.all([read('package.json'), read('scripts/qa/lighthouse-mobile.mjs'), read('docs/SEO_PERFORMANCE_AUDIT.md'), read('astro.config.mjs')]);
   assert.match(pkg, /"lighthouse": "\^13\.4\.1"/);
   assert.match(runner, /node_modules', '.bin'/);
   assert.match(runner, /startPreview\(\)/);
@@ -50,6 +61,7 @@ test('Lighthouse uses the local dependency, loopback preview, lab budgets, and i
   assert.match(docs, /Verified local lab evidence/);
   assert.match(docs, /three complete samples per route/);
   assert.match(docs, /not field Core Web Vitals/);
+  assert.match(astro, /build:\s*\{\s*format: 'directory',\s*inlineStylesheets: 'always',\s*\}/s);
 });
 
 test('Lighthouse sample count and median aggregation are deterministic', () => {
@@ -102,9 +114,18 @@ test('Lighthouse retains a complete post-report result but rejects incomplete no
   }
 });
 
-test('prepaint consent, deferred authenticated sync, and SVG logos preserve public-page boundaries', async () => {
+test('prepaint consent, deferred authenticated sync, and approved PNG wordmarks preserve public-page boundaries', async () => {
   const [layout, prepaint, banner, header, footer] = await Promise.all([read('src/layouts/BaseLayout.astro'), read('public/consent-prepaint.js'), read('src/components/ConsentBanner.astro'), read('src/components/Header.astro'), read('src/components/Footer.astro')]);
-  assert.match(layout, /<script is:inline src="\/consent-prepaint\.js"><\/script>/);
+  assert.match(layout, /const CONSENT_PREPAINT_SCRIPT = `[^`]+`;/);
+  assert.match(layout, /<script is:inline set:html=\{CONSENT_PREPAINT_SCRIPT\}><\/script>/);
+  assert.doesNotMatch(layout, /<script is:inline>\s*\{`/s);
+  assert.doesNotMatch(layout, /<style is:inline>\s*\{`/s);
+  assert.doesNotMatch(layout, /<script is:inline[^>]*src=/);
+  assert.doesNotMatch(layout, /<style is:inline[^>]*src=/);
+  assert.match(layout, /window\.localStorage\.getItem\('flowhome-consent'\)/);
+  assert.match(layout, /document\.documentElement\.dataset\.flowhomeConsent=choice/);
+  assert.match(layout, /<style is:inline>\s*html\[data-flowhome-consent="accepted"\]/s);
+  assert.doesNotMatch(layout, /<script is:inline src="\/consent-prepaint\.js"><\/script>/);
   assert.match(prepaint, /window\.localStorage\.getItem\('flowhome-consent'\)/);
   assert.match(prepaint, /preference\?\.version === 1/);
   assert.match(prepaint, /document\.documentElement\.dataset\.flowhomeConsent = choice/);
@@ -120,8 +141,10 @@ test('prepaint consent, deferred authenticated sync, and SVG logos preserve publ
   assert.match(header, /window\.addEventListener\('focus'/);
   assert.doesNotMatch(banner, /data-consent-banner[^>]*hidden/);
   assert.match(banner, /banner\.dataset\.consentBannerOpen/);
-  assert.match(header, /src="\/images\/flowhome-logo\.svg"/);
-  assert.match(footer, /src="\/images\/flowhome-logo\.svg"/);
+  assert.match(header, /src="\/images\/flowhome-logo\.png"/);
+  assert.match(header, /width="1076" height="250"/);
+  assert.match(footer, /src="\/images\/flowhome-logo\.png"/);
+  assert.match(footer, /width="1076" height="250"/);
 });
 
 test('home caps initial featured-card DOM as an LCP performance budget while preserving the six-product hero', async () => {

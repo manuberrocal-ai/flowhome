@@ -7,6 +7,14 @@ const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const DIST = resolve(ROOT, 'dist');
 const SITE = 'https://flowhome.dev';
 const UTILITY_ROUTES = new Set(['/account/', '/cart/', '/search/']);
+export const SEO_BUDGETS = Object.freeze({
+  maxHtmlBytes: 350000,
+  maxInlineScriptBytes: 120000,
+  maxFirstPartyCssJsBytes: 800000,
+  maxExternalScripts: 0,
+  maxExternalStylesheets: 0,
+  maxRemoteImages: 64,
+});
 async function outputPath() {
   const output = process.env.SEO_AUDIT_REPORT_PATH
     ? resolve(process.env.SEO_AUDIT_REPORT_PATH)
@@ -104,7 +112,7 @@ async function main() {
   try { await stat(DIST); } catch { throw new Error('dist/ is missing. Run npm.cmd run build before npm.cmd run seo:audit.'); }
   const report = {
     generatedAt: new Date().toISOString(), site: SITE, dist: DIST, reportPath: output,
-    budgets: { maxHtmlBytes: 300000, maxInlineScriptBytes: 120000, maxFirstPartyCssJsBytes: 800000, maxExternalScripts: 0, maxExternalStylesheets: 0, maxRemoteImages: 64 },
+    budgets: SEO_BUDGETS,
     observed: { maxHtmlBytes: 0, maxInlineScriptBytes: 0, maxFirstPartyCssJsBytes: 0, maxRemoteImages: 0 }, pages: [], errors: [], warnings: [], redirects: [],
   };
   const addError = (route, message) => report.errors.push({ route, message });

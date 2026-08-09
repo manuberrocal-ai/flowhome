@@ -16,7 +16,7 @@ test('keeps private utility pages out of sitemap indexing and fixes schema claim
   for (const path of ['/account', '/cart', '/search']) assert.match(astroConfig, new RegExp(`['"]${path}['"]`));
   assert.match(astroConfig, /pathname\.replace\(/);
   assert.match(search, /<BaseLayout[\s\S]*\bnoindex\b/);
-  assert.match(seo, /https:\/\/flowhome\.dev\/images\/flowhome-logo\.svg/);
+  assert.match(seo, /https:\/\/flowhome\.dev\/images\/flowhome-logo\.png/);
   assert.doesNotMatch(seo, /shippingDetails|hasMerchantReturnPolicy/);
 });
 

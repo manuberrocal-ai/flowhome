@@ -9,6 +9,10 @@ const headerPath = new URL('../src/components/Header.astro', import.meta.url);
 const accountPath = new URL('../src/pages/account.astro', import.meta.url);
 const cartClientPath = new URL('../src/lib/cart-client.js', import.meta.url);
 const baseLayoutPath = new URL('../src/layouts/BaseLayout.astro', import.meta.url);
+const footerPath = new URL('../src/components/Footer.astro', import.meta.url);
+const responsiveLogoPath = new URL('../public/images/flowhome-logo-430.png', import.meta.url);
+const seoPath = new URL('../src/lib/seo.ts', import.meta.url);
+const packagePath = new URL('../package.json', import.meta.url);
 
 async function stylesheet() {
   return readFile(cssPath, 'utf8');
@@ -25,6 +29,36 @@ test('global stylesheet keeps the FlowHome token system and valid comments', asy
   assert.match(css, /--fh-z-modal:/);
   assert.equal((css.match(/\/\*/g) || []).length, (css.match(/\*\//g) || []).length);
   assert.doesNotMatch(css, /FINAL\s+(?:FIX|BUTTON|TEXT)|REPAIR|â€”/i);
+});
+
+test('brand restoration uses optional Latin-only self-hosted fonts and preserves the approved wordmark geometry', async () => {
+  const [css, layout, header, footer, seo, pkg] = await Promise.all([
+    stylesheet(), source(baseLayoutPath), source(headerPath), source(footerPath), source(seoPath), source(packagePath),
+  ]);
+  assert.match(layout, /import ['"]\.\.\/styles\/global\.css['"]/);
+  assert.doesNotMatch(layout, /@fontsource-variable|fonts\.googleapis\.com/);
+  assert.match(pkg, /"@fontsource-variable\/inter": "\^5\.3\.0"/);
+  assert.match(pkg, /"@fontsource-variable\/plus-jakarta-sans": "\^5\.3\.0"/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Inter Variable"[\s\S]*font-display:\s*optional[\s\S]*font-weight:\s*100 900[\s\S]*url\(@fontsource-variable\/inter\/files\/inter-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Plus Jakarta Sans Variable"[\s\S]*font-display:\s*optional[\s\S]*font-weight:\s*200 800[\s\S]*url\(@fontsource-variable\/plus-jakarta-sans\/files\/plus-jakarta-sans-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
+  assert.match(css, /--font-sans:\s*"Inter Variable"/);
+  assert.match(css, /--font-heading:\s*"Plus Jakarta Sans Variable"/);
+  for (const sourceText of [css, layout, header, footer, seo]) assert.doesNotMatch(sourceText, /fonts\.googleapis\.com/);
+  for (const sourceText of [header, footer]) {
+    assert.match(sourceText, /src="\/images\/flowhome-logo\.png"/);
+    assert.match(sourceText, /width="1076" height="250"/);
+  }
+  assert.match(header, /srcset="\/images\/flowhome-logo-430\.png 430w, \/images\/flowhome-logo\.png 1076w" sizes="\(max-width: 404px\) 170px, 195px"/);
+  assert.match(footer, /srcset="\/images\/flowhome-logo-430\.png 430w, \/images\/flowhome-logo\.png 1076w" sizes="190px"/);
+  assert.match(seo, /logo:\s*'https:\/\/flowhome\.dev\/images\/flowhome-logo\.png'/);
+});
+
+test('responsive header logo derivative is an exact 430x100 PNG', async () => {
+  const logo = await readFile(responsiveLogoPath);
+  assert.equal(logo.toString('ascii', 1, 4), 'PNG');
+  assert.equal(logo.readUInt32BE(16), 430);
+  assert.equal(logo.readUInt32BE(20), 100);
+  assert.ok(logo.length < 41572, 'responsive derivative must be materially smaller than the master');
 });
 
 test('global stylesheet has a bounded override budget and critical component touch targets', async () => {
