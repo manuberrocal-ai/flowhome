@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { aggregateLighthouseSamples, classifyLighthouseOutcome, isCompleteLighthouseReport, median, parseLighthouseRuns } from '../scripts/qa/lighthouse-mobile.mjs';
-import { isActionableImage, isPermittedUtilityQuery, normalizedPath, parseRedirects } from '../scripts/qa/seo-audit.mjs';
+import { isActionableImage, isPermittedUtilityQuery, normalizedPath, parseRedirects, SEO_BUDGETS } from '../scripts/qa/seo-audit.mjs';
 
 const root = new URL('..', import.meta.url);
 const read = (file) => readFile(new URL(file, root), 'utf8');
@@ -20,6 +20,17 @@ test('query links are limited to noindex utility routes', () => {
   assert.equal(isPermittedUtilityQuery(true, '/account/'), true);
   assert.equal(isPermittedUtilityQuery(false, '/account/'), false);
   assert.equal(isPermittedUtilityQuery(true, '/products/'), false);
+});
+
+test('SEO audit keeps the intentional inline-CSS HTML budget and adjacent budgets stable', () => {
+  assert.deepEqual(SEO_BUDGETS, {
+    maxHtmlBytes: 350000,
+    maxInlineScriptBytes: 120000,
+    maxFirstPartyCssJsBytes: 800000,
+    maxExternalScripts: 0,
+    maxExternalStylesheets: 0,
+    maxRemoteImages: 64,
+  });
 });
 
 test('comparison hub, breadcrumb, replacement links, and compatibility redirect use actual curated routes', async () => {
