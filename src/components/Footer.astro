@@ -3,7 +3,7 @@ const year = new Date().getFullYear();
 const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=10&data=https%3A%2F%2Fflowhome.dev%2Fquiz%2F';
 ---
 
-<footer class="footer-surface relative isolate mt-16 overflow-hidden border-t border-slate-800 bg-slate-950 text-slate-300">
+<footer class="footer-surface brand-aurora-surface relative isolate mt-16 overflow-hidden border-t border-slate-800 text-slate-300">
   <div class="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-9 lg:px-8">
     <div class="footer-surface-orb pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
     <div class="footer-surface-orb pointer-events-none absolute -bottom-24 left-10 h-72 w-72 rounded-full bg-blue-700/20 blur-3xl"></div>
@@ -13,7 +13,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
       <section class="footer-surface-panel rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-slate-950/30 sm:p-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <a href="/" class="flex items-center gap-3" aria-label="FlowHome home">
-            <img src="/images/flowhome-logo.png" srcset="/images/flowhome-logo-430.png 430w, /images/flowhome-logo.png 1076w" sizes="190px" alt="FlowHome" class="h-auto w-[min(190px,100%)] max-w-full object-contain" width="1076" height="250" loading="lazy" decoding="async" />
+            <img src="/images/flowhome-logo.png" srcset="/images/flowhome-logo-430.png 430w, /images/flowhome-logo.png 1076w" sizes="190px" alt="FlowHome" class="h-10 w-auto max-w-full object-contain" width="1076" height="250" loading="lazy" decoding="async" />
           </a>
           <span class="inline-flex w-fit rounded-full border border-orange-400/30 bg-orange-400/10 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-orange-200">Deal-aware guides</span>
         </div>
@@ -149,32 +149,6 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
 <style is:global>
   .footer-surface {
     background: #020617;
-  }
-  .footer-surface::before {
-    content: "";
-    position: absolute;
-    inset: -32% -12%;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      radial-gradient(circle at 78% 8%, rgba(34,211,238,0.34), transparent 22%),
-      radial-gradient(circle at 16% 86%, rgba(37,99,235,0.42), transparent 30%),
-      radial-gradient(circle at 52% 42%, rgba(20,184,166,0.18), transparent 34%),
-      linear-gradient(135deg, #020617 0%, #030712 42%, #08233b 72%, #020617 100%);
-    background-size: 135% 135%;
-    transform: scale(1.08);
-  }
-  .footer-surface::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(125,211,252,0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(125,211,252,0.045) 1px, transparent 1px);
-    background-size: 42px 42px;
-    opacity: 0.32;
   }
 
   .footer-qr-main {

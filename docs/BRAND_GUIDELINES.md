@@ -13,5 +13,15 @@ The square mark assets are reserved for icon contexts such as favicons, app surf
 - Keep clear space around the wordmark equal to at least the height of the capital letter in the rendered mark.
 - Do not squash, stretch, crop, recolor, or otherwise distort the wordmark.
 - Use the current FlowHome palette and design tokens; do not introduce arbitrary brand colors.
-- Typography uses self-hosted, Latin-only Inter Variable for body copy and Plus Jakarta Sans Variable for headings. Both use `font-display: optional` to avoid a late font swap during LCP. Do not substitute arbitrary families or add CDN font requests.
+- Typography uses self-hosted, Latin-only Inter Variable for body copy and Plus Jakarta Sans Variable for headings. Both use `font-display: swap` and are preloaded from the local Vite build so the intended brand typography arrives promptly without third-party font requests. Do not substitute arbitrary families or add CDN font requests.
 - Preserve readable contrast, meaningful alt text, keyboard access, and reduced-motion behavior for branded UI.
+
+## Visual surfaces and motion
+
+- Use `.brand-aurora-surface` for dark editorial surfaces: the home hero, deal radar, shortlist confidence, newsletter, account hero, and footer. It provides static layered navy, blue, cyan, and grid treatments only; it must not add scroll behavior, parallax, or fixed backgrounds. Use `.brand-aurora-surface--account` for the account-specific color balance.
+- Use `.brand-sheen` on primary interactive surfaces. The finite sheen is available on hover and keyboard `:focus-within`; `.premium-action` shares the same treatment. Keep transitions at or below 300 ms and disable non-essential motion under `prefers-reduced-motion`.
+- The hero rating stars may use the one-shot `brand-star-reveal` stagger. It is never infinite and is disabled for reduced-motion preferences.
+
+## Translation privacy exception
+
+The former floating Google Translate interface is intentionally not restored. FlowHome does not load Google Translate or external translation UI because it would add third-party requests and expose browsing context outside the current consent and privacy model.

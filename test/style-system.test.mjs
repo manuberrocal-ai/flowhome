@@ -10,6 +10,8 @@ const accountPath = new URL('../src/pages/account.astro', import.meta.url);
 const cartClientPath = new URL('../src/lib/cart-client.js', import.meta.url);
 const baseLayoutPath = new URL('../src/layouts/BaseLayout.astro', import.meta.url);
 const footerPath = new URL('../src/components/Footer.astro', import.meta.url);
+const newsletterPath = new URL('../src/components/Newsletter.astro', import.meta.url);
+const dealCardPath = new URL('../src/components/DealCard.astro', import.meta.url);
 const responsiveLogoPath = new URL('../public/images/flowhome-logo-430.png', import.meta.url);
 const seoPath = new URL('../src/lib/seo.ts', import.meta.url);
 const packagePath = new URL('../package.json', import.meta.url);
@@ -31,26 +33,58 @@ test('global stylesheet keeps the FlowHome token system and valid comments', asy
   assert.doesNotMatch(css, /FINAL\s+(?:FIX|BUTTON|TEXT)|REPAIR|â€”/i);
 });
 
-test('brand restoration uses optional Latin-only self-hosted fonts and preserves the approved wordmark geometry', async () => {
+test('brand restoration preloads swapped Latin-only self-hosted fonts and preserves the approved wordmark geometry', async () => {
   const [css, layout, header, footer, seo, pkg] = await Promise.all([
     stylesheet(), source(baseLayoutPath), source(headerPath), source(footerPath), source(seoPath), source(packagePath),
   ]);
   assert.match(layout, /import ['"]\.\.\/styles\/global\.css['"]/);
-  assert.doesNotMatch(layout, /@fontsource-variable|fonts\.googleapis\.com/);
+  assert.match(layout, /import interLatinUrl from ['"]@fontsource-variable\/inter\/files\/inter-latin-wght-normal\.woff2\?url['"]/);
+  assert.match(layout, /import plusJakartaLatinUrl from ['"]@fontsource-variable\/plus-jakarta-sans\/files\/plus-jakarta-sans-latin-wght-normal\.woff2\?url['"]/);
+  assert.match(layout, /<link rel="preload" as="font" href=\{interLatinUrl\} type="font\/woff2" crossorigin \/>/);
+  assert.match(layout, /<link rel="preload" as="font" href=\{plusJakartaLatinUrl\} type="font\/woff2" crossorigin \/>/);
+  assert.doesNotMatch(layout, /fonts\.(?:googleapis|gstatic)\.com|GoogleTranslate/);
   assert.match(pkg, /"@fontsource-variable\/inter": "\^5\.3\.0"/);
   assert.match(pkg, /"@fontsource-variable\/plus-jakarta-sans": "\^5\.3\.0"/);
-  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Inter Variable"[\s\S]*font-display:\s*optional[\s\S]*font-weight:\s*100 900[\s\S]*url\(@fontsource-variable\/inter\/files\/inter-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
-  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Plus Jakarta Sans Variable"[\s\S]*font-display:\s*optional[\s\S]*font-weight:\s*200 800[\s\S]*url\(@fontsource-variable\/plus-jakarta-sans\/files\/plus-jakarta-sans-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Inter Variable"[\s\S]*font-display:\s*swap[\s\S]*font-weight:\s*100 900[\s\S]*url\(@fontsource-variable\/inter\/files\/inter-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Plus Jakarta Sans Variable"[\s\S]*font-display:\s*swap[\s\S]*font-weight:\s*200 800[\s\S]*url\(@fontsource-variable\/plus-jakarta-sans\/files\/plus-jakarta-sans-latin-wght-normal\.woff2\)[\s\S]*unicode-range:\s*U\+0000-00FF/);
   assert.match(css, /--font-sans:\s*"Inter Variable"/);
   assert.match(css, /--font-heading:\s*"Plus Jakarta Sans Variable"/);
-  for (const sourceText of [css, layout, header, footer, seo]) assert.doesNotMatch(sourceText, /fonts\.googleapis\.com/);
+  for (const sourceText of [css, layout, header, footer, seo]) assert.doesNotMatch(sourceText, /fonts\.(?:googleapis|gstatic)\.com|GoogleTranslate/);
   for (const sourceText of [header, footer]) {
     assert.match(sourceText, /src="\/images\/flowhome-logo\.png"/);
     assert.match(sourceText, /width="1076" height="250"/);
   }
   assert.match(header, /srcset="\/images\/flowhome-logo-430\.png 430w, \/images\/flowhome-logo\.png 1076w" sizes="\(max-width: 404px\) 170px, 195px"/);
   assert.match(footer, /srcset="\/images\/flowhome-logo-430\.png 430w, \/images\/flowhome-logo\.png 1076w" sizes="190px"/);
+  assert.match(header, /class="h-9 w-auto max-w-\[260px\] object-contain sm:h-11"/);
+  assert.match(footer, /class="h-10 w-auto max-w-full object-contain"/);
   assert.match(seo, /logo:\s*'https:\/\/flowhome\.dev\/images\/flowhome-logo\.png'/);
+});
+
+test('brand aurora and finite sheen are applied to the restored surfaces and primary CTAs', async () => {
+  const [css, home, account, footer, newsletter, dealCard] = await Promise.all([
+    stylesheet(), source(homePath), source(accountPath), source(footerPath), source(newsletterPath), source(dealCardPath),
+  ]);
+  assert.match(css, /\.brand-aurora-surface \{[\s\S]*radial-gradient[\s\S]*linear-gradient/);
+  assert.match(css, /\.brand-aurora-surface--account::before/);
+  assert.match(css, /\.brand-sheen, \.premium-action/);
+  assert.match(css, /\.brand-sheen:hover::after[\s\S]*\.brand-sheen:focus-within::after/);
+  assert.doesNotMatch(css, /\.brand-aurora-surface > \* \{ position: relative; z-index: 1; \}/);
+  assert.match(home, /hero-surface brand-aurora-surface/);
+  assert.match(home, /class="absolute inset-0 -z-10/);
+  assert.match(home, /class="absolute right-0 top-0 -z-10/);
+  assert.match(home, /class="relative z-10 grid min-w-0/);
+  assert.match(home, /home-surface brand-aurora-surface[\s\S]*Deal radar/);
+  assert.match(home, /home-surface brand-aurora-surface[\s\S]*Shortlist confidence/);
+  assert.match(home, /data-fh-home-primary-cta class="brand-sheen/);
+  assert.match(home, /data-hero-amazon[\s\S]*class="brand-sheen/);
+  assert.match(home, /href="\/account\/" class="brand-sheen/);
+  assert.match(account, /account-hero brand-aurora-surface brand-aurora-surface--account/);
+  assert.match(account, /class="brand-sheen[\s\S]*Continue with email/);
+  assert.match(footer, /footer-surface brand-aurora-surface/);
+  assert.match(newsletter, /brand-aurora-surface/);
+  assert.match(newsletter, /brand-sheen premium-action/);
+  assert.match(dealCard, /class="brand-sheen premium-action/);
 });
 
 test('responsive header logo derivative is an exact 430x100 PNG', async () => {

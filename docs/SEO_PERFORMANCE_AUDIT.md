@@ -74,10 +74,12 @@ Block 4 is limited to technical SEO and performance controls. Google Fonts were 
 
 ## FlowHome visual restoration follow-up
 
-The restored visual system now uses self-hosted Latin-only Inter Variable and Plus Jakarta Sans Variable WOFF2 files with `font-display: optional`. The original 1076x250 PNG remains the approved master asset and Organization JSON-LD logo, while Header and Footer use the responsive 430x100 8,998-byte derivative via `srcset` with the original fallback retained. Astro inlines the project CSS, and the consent prepaint is inline and allowed by the exact CSP SHA-256 hash without `unsafe-inline`. The current 350,000-byte HTML cap accommodates that intentional CSS inlining.
+Local Latin-only Inter Variable and Plus Jakarta Sans Variable now use `font-display: swap` and two local WOFF2 preloads, so the intended typography is visible; there are no external fonts. The approved 1076x250 PNG master and the 430x100 8,998-byte derivative remain unchanged. Static aurora surfaces and finite hover/focus sheen restore brand depth without scroll parallax, `requestAnimationFrame`, infinite motion, or Google Translate; reduced motion disables the one-shot star reveal. Astro still inlines project CSS, the consent prepaint remains inline and covered by the exact CSP SHA-256 hash without `unsafe-inline`, and the current 350,000-byte HTML cap still accommodates that intentional CSS inlining.
 
-Verified local evidence is `%TEMP%\flowhome-lighthouse-2026-08-09T02-59-25-331Z\summary.json`: 3 complete samples per 4 routes, zero median-gate failures, external HTTPS blocked, and synthetic lab results only, not field CWV. Medians were Home 96/96/100/100 with LCP 2407.262 ms, CLS 0, TBT 0; Product 97/96/100/100 with LCP 2257.976 ms; Review 97/100/100/100 with LCP 2258.360 ms; Comparison 97/100/100/100 with LCP 2184.184 ms. EPERM warnings occurred only during post-report cleanup.
+Current local evidence is `%TEMP%\flowhome-lighthouse-2026-08-09T22-42-52-244Z\summary.json`: 3 samples × 4 routes, zero failures, and synthetic lab results only, not field CWV. Medians were Home 98/100/100/100 with LCP 2410.041 ms, CLS 0, TBT 0; Product 98/96/100/100 with LCP 2261.674 ms, CLS 0, TBT 0; Review 98/100/100/100 with LCP 2262.072 ms, CLS 0, TBT 0; Compare 99/100/100/100 with LCP 2185.954 ms, CLS 0, TBT 0. EPERM cleanup warnings only.
 
-Current SEO audit evidence is `%TEMP%\flowhome-seo-audit-ivKvAp\report.json`, 88 content pages, max HTML 324,639 bytes, 0 errors, 0 warnings, within the current 350,000-byte cap.
+Current SEO audit evidence is `%TEMP%\flowhome-seo-audit-nhY5yi\report.json`: 88 pages, 0 errors, 0 warnings.
 
-Validation also recorded 488/488 tests passing, lint PASS, typecheck across 205 files with 0 errors, 0 warnings, and 155 hints, build output for 88 pages, Browser QA 20/20 at `%TEMP%\flowhome-browser-qa-2026-08-09T03-10-23-662Z\report.json`, and `git diff --check` PASS with LF/CRLF warnings only. No deploy or external-result claim is made.
+Validation recorded 489/489 tests passing, lint PASS, typecheck across 205 files with 0 errors, 0 warnings, and 155 hints, build output for 88 pages, Browser QA 20/20 at `%TEMP%\flowhome-browser-qa-2026-08-09T22-51-27-435Z\report.json`, and diff-check PASS.
+
+Local branch only; no deploy or external-result claim is made.

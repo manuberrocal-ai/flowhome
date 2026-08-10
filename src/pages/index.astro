@@ -50,17 +50,17 @@ const heroProducts = showcaseProducts.map((product) => {
 });
 ---
 <BaseLayout preloadImage={heroProducts[0]?.image}>
-  <section class="hero-surface relative isolate overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-2xl shadow-blue-950/20">
+  <section class="hero-surface brand-aurora-surface relative isolate overflow-hidden rounded-[2rem] text-white shadow-2xl shadow-blue-950/20">
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(249,115,22,0.38),transparent_24%),radial-gradient(circle_at_12%_0%,rgba(37,99,235,0.82),transparent_36%),linear-gradient(135deg,#020617_0%,#172554_43%,#0369a1_100%)]"></div>
     <div class="absolute right-0 top-0 -z-10 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08))]"></div>
 
-    <div class="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:p-10">
+    <div class="relative z-10 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:p-10">
       <div class="min-w-0">
         <p class="inline-flex max-w-full whitespace-normal break-words rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
         <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Buy smart home gear that actually fits your home.</h1>
         <p class="mt-5 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">FlowHome turns messy Amazon research into a clean shortlist: useful devices, strong owner feedback, ecosystem fit, and clear deal context.</p>
         <div class="mt-7 flex flex-wrap gap-3">
-           <a href="/quiz/" data-fh-home-primary-cta class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
+           <a href="/quiz/" data-fh-home-primary-cta class="brand-sheen inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
           <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Shop picks</a>
         </div>
         {topProduct && <div class="mt-7 flex max-w-xl flex-wrap gap-2 text-sm">
@@ -98,7 +98,7 @@ const heroProducts = showcaseProducts.map((product) => {
 
                     <div data-hero-field="discount" class="absolute right-4 top-[2.35rem] z-50 rounded-[1.35rem] bg-blue-950 px-3 py-2 text-white" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</div>
 
-                   <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
+                    <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="brand-sheen absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
                     <p data-hero-field="price-context" class="text-[9px] font-black uppercase tracking-[0.16em] text-slate-400">{heroProducts[0].priceContext}</p>
                     <div class="mt-1 flex flex-wrap items-end gap-x-2 gap-y-1">
                        <p data-hero-field="price" class="text-[1.52rem] font-black leading-none tracking-tight text-white">{heroProducts[0].priceLabel}</p>
@@ -143,12 +143,12 @@ const heroProducts = showcaseProducts.map((product) => {
     </div>
   </section>
 
-  {dealProducts.length > 0 && <section class="home-surface mt-8 rounded-[1.75rem] bg-slate-950 text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
-    <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
+  {dealProducts.length > 0 && <section class="home-surface brand-aurora-surface mt-8 rounded-[1.75rem] text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
+       <div class="flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
       <div><p class="text-xs font-black uppercase tracking-[0.2em] text-orange-400">Deal radar</p><h2 class="mt-1 text-2xl font-black">Discounts that deserve attention</h2></div>
        <a href="/deals/" class="premium-action rounded-full px-4 py-2 text-sm font-black text-white">See all deals</a>
     </div>
-    <div class="relative z-10 mx-5 mb-5 grid gap-3 md:grid-cols-4">
+     <div class="mx-5 mb-5 grid gap-3 md:grid-cols-4">
       {dealProducts.map((product) => <a href={`/product/${product.data.slug}/`} class="group flex items-center gap-3 rounded-2xl bg-slate-900/60 p-3 ring-1 ring-white/10 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-slate-900 hover:ring-orange-500/20">
         <img src={product.data.image} alt={product.data.name} class="h-16 w-16 rounded-xl bg-slate-800 object-contain p-1" loading="lazy" decoding="async" fetchpriority="low" width="64" height="64" data-fallback-src={getProductFallbackImage(product.data)} />
         <div class="min-w-0"><p class="truncate text-sm font-black">{product.data.name}</p><p class="text-lg font-black text-orange-400">-{product.data.discountPct}% <span class="text-sm text-slate-300">${product.data.price}</span></p></div>
@@ -168,8 +168,8 @@ const heroProducts = showcaseProducts.map((product) => {
 
   <section class="mt-16 rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
     <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-    <div class="home-surface min-h-full rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10">
-      <div class="relative z-10">
+    <div class="home-surface brand-aurora-surface min-h-full rounded-[1.75rem] p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10">
+       <div>
         <p class="text-xs font-black uppercase tracking-[0.22em] text-cyan-200">Shortlist confidence</p>
         <h2 class="mt-2 text-3xl font-black leading-tight">More signal before you click Amazon.</h2>
         <p class="mt-3 text-sm leading-6 text-slate-300">FlowHome turns price, compatibility, owner feedback, and everyday usefulness into a calmer buying path.</p>
@@ -206,7 +206,7 @@ const heroProducts = showcaseProducts.map((product) => {
         <p class="mt-3 max-w-2xl text-slate-600">Create an account with Google or email to keep your signed-in shortlist synced across devices.</p>
       </div>
       <div class="flex flex-wrap gap-3 lg:justify-end">
-         <a href="/account/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-black text-white shadow-lg shadow-slate-950/15">Create account</a>
+         <a href="/account/" class="brand-sheen inline-flex min-h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-black text-white shadow-lg shadow-slate-950/15">Create account</a>
         <a href="/quiz/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-5 py-3 font-black text-slate-950 ring-1 ring-slate-200 hover:bg-slate-50">Start with quiz</a>
       </div>
     </div>
