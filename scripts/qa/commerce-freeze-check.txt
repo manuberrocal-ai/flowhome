@@ -1,0 +1,35 @@
+async page => {
+  await page.reload();
+  await page.evaluate(async () => {
+    const { mountProductCommerce } = await import('/commerce-product-presentation.js');
+    const asin = document.querySelector('[data-commerce-observation]').dataset.commerceObservation;
+    const mounted = mountProductCommerce(document.body, asin, { enabled: true, endpoint: '/commerce/live', pageUrl: location.href });
+    window.commerceCleanup = mounted.dispose;
+    window.lifecycleEvidence = [];
+    for (const name of ['freeze', 'resume']) document.addEventListener(name, event => {
+      window.lifecycleEvidence.push({ event: name, trusted: event.isTrusted, empty: [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(el => el.textContent === '') });
+      if (name === 'freeze') console.debug('FH16L_FREEZE_READY');
+    });
+  });
+  const refresh = page.locator('[data-commerce-refresh]');
+  const ready = () => page.waitForFunction(() => [...document.querySelectorAll('[data-commerce-price]')].every(el => el.textContent === '$123.45'));
+  await refresh.click(); await ready();
+  const before = await page.evaluate(() => performance.getEntriesByType('resource').filter(r => r.name.includes('/commerce/')).length);
+  const session = await page.context().newCDPSession(page);
+  try {
+    // Browser protocol transition, not dispatchEvent. Do not evaluate JS while frozen.
+    const frozen = page.waitForEvent('console', { predicate: message => message.text() === 'FH16L_FREEZE_READY', timeout: 5000 });
+    await session.send('Page.setWebLifecycleState', { state: 'frozen' });
+    await frozen;
+    await session.send('Page.setWebLifecycleState', { state: 'active' });
+    await page.waitForFunction(() => window.lifecycleEvidence.some(event => event.event === 'resume'));
+    const result = await page.evaluate(() => ({ events: window.lifecycleEvidence, empty: [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(el => el.textContent === ''), requests: performance.getEntriesByType('resource').filter(r => r.name.includes('/commerce/')).length }));
+    if (!result.events.some(e => e.event === 'freeze' && e.trusted && e.empty) || !result.events.some(e => e.event === 'resume' && e.trusted && e.empty) || !result.empty || result.requests !== before) throw Error(JSON.stringify(result));
+    await refresh.click(); await ready();
+    return { ...result, explicitRefreshRecovered: true, browser: await page.context().browser().version() };
+  } finally {
+    await session.send('Page.setWebLifecycleState', { state: 'active' });
+    await session.detach();
+    await page.evaluate(() => window.commerceCleanup?.());
+  }
+}

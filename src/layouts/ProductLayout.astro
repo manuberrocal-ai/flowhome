@@ -5,6 +5,7 @@ import { serializeJsonLd } from '../lib/json-ld.js';
 import { getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../lib/product-art';
 import { getProductThumbnailSet } from '../lib/product-thumbnails.js';
 import { getCommerceData } from '../lib/commerce-data';
+import CommerceObservation from '../components/CommerceObservation.astro';
 
 interface Props {
   product: any;
@@ -87,6 +88,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
             <p class="mt-2 text-2xl font-black leading-tight text-slate-950">{product.name}</p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-4">
+            <CommerceObservation asin={product.asin} />
             <div class="flex items-start justify-between gap-3">
               <div>
                 <p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p>

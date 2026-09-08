@@ -33,6 +33,8 @@ Actualizar la sección correspondiente, no anteponer una sucesión de hitos. Los
 
 ## Artefactos: distinguir fuente, vista y candidato
 
+[FH13P](FH13P_REVISION_ACTUALIZADA_2026-09-08.md): revisión local actualizada f92d793,22 archivos frente a FH13N, checkout limpio con982 pruebas/lint/tipos/build88/SEO y421 archivos inventariados. Coincide con dist comprobado en FH12Q; no se repitió navegador. PR12 sigue en5cc6c95 autorizado: cualquier actualización al nuevo SHA requiere aprobación específica, sin fusión/publicación implícita.
+
 [FH12Q](FH12Q_ERROR_CONSENTIMIENTO_2026-09-08.md) añade respuesta accesible al fallo de guardado del consentimiento en la carpeta original:977 pruebas, build88/SEO y31 casos de navegador correctos. Dist actual cambia; los candidatos FH13M/N y su inventario no representan esta modificación. No se subió ningún cambio nuevo.
 
 [FH13O](FH13O_NAVEGADOR_CANDIDATO_2026-09-08.md) completa navegador sobre el checkout limpio b12a60e:134/134 casos y91/91HTTP, hashes preservados y checkout limpio. Sustituye la carencia de matriz propia de ese candidato, no los resultados históricos de otros artefactos. No hubo build nuevo, publicación ni actualización de PR.
@@ -54,7 +56,9 @@ La lectura [FH24A](FH24A_GOBIERNO_REMOTO_2026-09-08.md) confirma quality/Analyze
 
 ## Próxima secuencia
 
-Pendiente local B concretado en [FH16D](FH16D_CONTRATO_POR_CAMPO_2026-09-08.md): reconciliar permisos por campo antes del endpoint. [FH16E](FH16E_PERMISO_DISPONIBILIDAD_2026-09-08.md) ya exige permiso y TTL propios de disponibilidad en ingreso/promoción, con981 pruebas generales y5 dirigidas finales correctas. Faltan rating/otros campos y proyección autorizada de servidor. Conservar barrera estática y no activar proveedor con fixtures.
+[FH16L](FH16L_SUSPENSION_PENDIENTE_2026-09-08.md): el intento de suspensión nativa no emitió freeze/resume en la sesión probada; NO VERIFICADO. No repetir ese probe sin demostrar las precondiciones del entorno. Continuar catálogo/comparación; la revisión del correo CodeQL confirmó correspondencia con las17 anotaciones previamente clasificadas, sin descartar alertas remotas.
+
+Pendiente local B: [FH16T](FH16T_TRANSPORTE_RESERVA_2026-09-08.md) conecta transporte de cuota con lector bajo política de commit explícita:1032 pruebas correctas. No confirma JWT/PostgREST real ni su configuración; permisos/grants continúan desactivados. FH16S conserva presupuesto PostgreSQL local (12 solicitudes/3 admitidas y reinicio sin reset), no límites reales del proveedor. FH16R conserva autorización pre/post; faltan autoridad autenticada por cuenta, revisión y adquisición real. FH16P conserva comparación coordinada (84+28 comprobaciones), FH16N catálogo/ficha. FH16Q requiere entorno distinto para hidden/freeze/BFCache. No repetir búsquedas de claves ni pruebas de visibilidad fallidas sin evidencia nueva. FH13P es candidato anterior, no inventario actual. Conservar barrera estática y no activar proveedor con fixtures.
 
 1. Cerrar revisión de fuente y cadena de entrega. FH13N corrige el fallo de suite limpia de FH13M;973 pruebas y controles pasan, PR12 conserva el commit anterior autorizado. Confirmar actualización de PR al commit corregido antes de enviarlo; revisión/integración/manifiesto y publicación siguen independientes. FH13H conserva su matriz de navegador y FH12P su rendimiento local; no presentarlos como producción.
 2. Conservar el candidato FH13H como resultado revisable. Sólo reconstruir en una carpeta nueva si cambia la fuente o configuración que debe publicarse; no sobrescribir candidatos históricos. Completar identidad de fuente, manifiesto y recuperación por el flujo del repositorio.

@@ -65,6 +65,14 @@ export function buildComparisonInsights(products: readonly ComparisonInsightProd
     const commerce = getCommerceData(product, now);
     return { ...product, price: commerce.displayPrice, ownerRating: commerce.displayRating, ownerRatingCount: commerce.displayRatingCount };
   });
+  return formatComparisonSignals(safeProducts);
+}
+
+/** Presentation only, not an authorization or freshness check. Static callers must
+ * use buildComparisonInsights. Live callers supply values read from current leases
+ * immediately before rendering, never raw catalog prices or cached conclusions.
+ */
+export function formatComparisonSignals(safeProducts: readonly ComparisonInsightProduct[]) {
   const categories = [...new Set(safeProducts.map((product) => product.category).filter(Boolean))];
   const forms = [...new Set(safeProducts.map((product) => product.formFactor).filter(Boolean))];
   const tradeoffs: string[] = [];

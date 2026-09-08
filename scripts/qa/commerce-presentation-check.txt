@@ -1,0 +1,36 @@
+async page => {
+  const results = [];
+  const check = (value, message) => { if (!value) throw Error(message); results.push(message); };
+  const ready = () => page.waitForFunction(() => document.querySelector('#price').textContent === '$123.45' && !document.querySelector('#refresh').disabled);
+  const empty = async () => {
+    await page.waitForFunction(() => ['price', 'source', 'stock', 'duplicate', 'duplicate-source', 'duplicate-stock'].every(id => document.getElementById(id).textContent === ''));
+  };
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.reload();
+    await page.waitForFunction(() => typeof window.cleanup === 'function');
+    await page.getByRole('button', { name: 'Refresh price' }).focus(); await page.keyboard.press('Enter'); await ready();
+    check(await page.locator('#duplicate').textContent() === '$123.45', 'Repeated price agrees at ' + width);
+    check(await page.locator('#status').getAttribute('role') === 'status', 'Status semantics at ' + width);
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No overflow at ' + width);
+    await page.screenshot({ path: '.playwright-cli/fh16j-commerce-' + width + '.png' });
+    await page.waitForFunction(() => document.querySelector('#stock').textContent === '' && document.querySelector('#duplicate-stock').textContent === '');
+    check(await page.locator('#price').textContent() === '$123.45', 'Availability expires without removing valid price at ' + width);
+    await page.locator('#mode').selectOption('short'); await page.getByRole('button', { name: 'Refresh price' }).click(); await ready(); await empty();
+    check((await page.locator('#status').textContent()).includes('Refresh to check again'), 'Expiry offers recovery at ' + width);
+  }
+  await page.locator('#mode').selectOption('live'); await page.getByRole('button', { name: 'Refresh price' }).click(); await ready();
+  await page.context().setOffline(true);
+  try { await empty(); } finally { await page.context().setOffline(false); }
+  await empty();
+  check(await page.locator('#price').textContent() === '', 'Online does not restore a previous value');
+  await page.getByRole('button', { name: 'Refresh price' }).click(); await ready();
+  await page.getByRole('link', { name: 'Leave test page' }).click(); await page.goBack();
+  await page.waitForFunction(() => typeof window.cleanup === 'function'); await empty();
+  check(await page.locator('#price').textContent() === '', 'Real navigation and back leave slots empty');
+  await page.locator('#mode').selectOption('denied'); await page.getByRole('button', { name: 'Refresh price' }).click(); await empty();
+  check((await page.locator('#status').textContent()).includes('unavailable'), 'Denied response has no stale fallback');
+  await page.locator('#mode').selectOption('live'); await page.getByRole('button', { name: 'Refresh price' }).click(); await ready();
+  await page.evaluate(() => window.cleanup()); await empty();
+  check(await page.getByRole('button', { name: 'Refresh price' }).isDisabled(), 'Cleanup withdraws all text and disables refresh');
+  return { checks: results.length, results };
+}

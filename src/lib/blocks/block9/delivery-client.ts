@@ -77,28 +77,4 @@ export function createCompatibilityClient(options: {
   };
 }
 
-/** Binding only, no auto-fetch. Resuming requires an explicit fresh request. */
-export function bindCompatibilityLifecycle(client: Pick<ReturnType<typeof createCompatibilityClient>, 'setPermitted' | 'dispose'>, doc: Document, win: Window) {
-  let suspended = false;
-  const sync = () => client.setPermitted(!suspended && doc.visibilityState === 'visible' && win.navigator.onLine);
-  const suspend = () => { suspended = true; sync(); };
-  const resume = () => { suspended = false; sync(); };
-  doc.addEventListener('visibilitychange', sync);
-  doc.addEventListener('freeze', suspend);
-  doc.addEventListener('resume', resume);
-  win.addEventListener('pagehide', suspend);
-  win.addEventListener('pageshow', resume);
-  win.addEventListener('offline', sync);
-  win.addEventListener('online', sync);
-  sync();
-  return () => {
-    doc.removeEventListener('visibilitychange', sync);
-    doc.removeEventListener('freeze', suspend);
-    doc.removeEventListener('resume', resume);
-    win.removeEventListener('pagehide', suspend);
-    win.removeEventListener('pageshow', resume);
-    win.removeEventListener('offline', sync);
-    win.removeEventListener('online', sync);
-    client.dispose();
-  };
-}
+export { bindTransientLifecycle as bindCompatibilityLifecycle } from '../../transient-lifecycle.ts';

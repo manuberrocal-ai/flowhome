@@ -217,7 +217,7 @@
       "execution": "externo",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
-      "evidence": "docs/project/FH13N_REVISION_PR_2026-09-08.md; PR12 borrador creada con autorización para SHA5cc6c95, suite limpia falló. Corrección sólo local b12a60e: LF de fuente y frontmatter CRLF,973 pruebas/lint/tipos/calidad/enlaces/build88/SEO/audit producción0 correctos.421 archivos iguales a inventarioM. Pendientes autorización para actualizar PR, revisión/integración/manifiesto/aprobación y online; sin publicación.",
+      "evidence": "docs/project/FH13P_REVISION_ACTUALIZADA_2026-09-08.md; revisión local f92d793 con consentimiento recuperable y permisos de disponibilidad:982 pruebas, lint/tipos/calidad/enlaces/build88/SEO desde checkout limpio;421 archivos inventariados iguales a dist de FH12Q. PR12 conserva5cc6c95; actualización necesita aprobación. Integración/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -257,7 +257,7 @@
       "execution": "local",
       "owner_role": "Ingeniería/Datos",
       "acceptance": "Decisión revisable que prioriza infraestructura existente; define dato permitido, TTL, purga, cachés, borrado y fallos; HTML y clientes nunca conservan oferta vencida; no basar caducidad en cron.",
-      "evidence": "docs/project/FH16E_PERMISO_DISPONIBILIDAD_2026-09-08.md; disponibilidad exige permiso/TTL propio en ingreso/promoción, vencimiento de oferta recortado;981 pruebas generales y5 dirigidas finales, lint/tipos/build88/SEO correctos. Rating/otros campos, proyección autorizada, transporte y retiro real pendientes. Barrera estática conservada; sin permisos reales modificados ni activación.",
+      "evidence": "docs/project/FH16T_TRANSPORTE_RESERVA_2026-09-08.md; transporte de cuota integrado con lector y política explícita de commit,1032 pruebas. HTTP simulado no verifica JWT/PostgREST real. FH16S conserva borrador014 privado,12 solicitudes/3 admitidas y reinicio sin reset; sin grants. FH16P84+28 comprobaciones. FH16L/FH16Q requieren entorno distinto. Configuración/autoridad/cuotas/adquisición reales, BFCache, HTTP/CDN y otros campos pendientes; sin activación.",
       "reviewed_at": "2026-09-08"
     },
     {

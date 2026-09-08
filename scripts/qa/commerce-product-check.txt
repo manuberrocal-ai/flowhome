@@ -1,0 +1,39 @@
+async page => {
+  const checks = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); checks.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  const mount = async mode => page.evaluate(async mode => {
+    window.commerceCleanup?.();
+    const { mountProductCommerce } = await import('/commerce-product-presentation.js');
+    const asin = document.querySelector('[data-commerce-observation]').dataset.commerceObservation;
+    const mounted = mountProductCommerce(document.body, asin, { enabled: true, endpoint: '/commerce/' + mode, pageUrl: location.href });
+    window.commerceCleanup = mounted.dispose;
+  }, mode);
+  const ready = () => page.waitForFunction(() => [...document.querySelectorAll('[data-commerce-price]')].every(el => el.textContent === '$123.45') && !document.querySelector('[data-commerce-refresh]').disabled);
+  const empty = () => page.waitForFunction(() => [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(el => el.textContent === ''));
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.reload();
+    const staticState = await page.evaluate(() => ({ count: document.querySelectorAll('[data-commerce-observation]').length, hidden: [...document.querySelectorAll('[data-commerce-observation]')].every(el => el.hidden), requests: performance.getEntriesByType('resource').filter(r => r.name.includes('/commerce/')).length }));
+    check(staticState.count === 2 && staticState.hidden && staticState.requests === 0, 'Normal product has two inert slots at ' + width);
+    const links = await page.locator('[data-fh-amazon-cta]').evaluateAll(els => els.map(el => el.getAttribute('href')));
+    // Keep a conspicuous fixture notice in every screenshot; never present this price as real.
+    await page.evaluate(() => { const banner = document.createElement('p'); banner.textContent = 'LOCAL TEST ONLY — synthetic price, not an Amazon offer'; banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;color:#000;padding:8px;font-weight:bold'; document.body.append(banner); });
+    await mount('live');
+    const button = page.locator('[data-commerce-refresh]'); await button.focus(); await page.keyboard.press('Enter'); await ready();
+    check(await page.locator('[data-commerce-observation]').count() === 2, 'Both real panels loaded at ' + width);
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No page overflow at ' + width);
+    await button.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: '.playwright-cli/fh16k-product-' + width + '.png' });
+    await page.context().setOffline(true);
+    try { await empty(); } finally { await page.context().setOffline(false); }
+    check(await page.locator('[data-commerce-price]').allTextContents().then(values => values.every(value => value === '')), 'Offline/reconnect withdraws both panels at ' + width);
+    await mount('short'); await button.focus(); await page.keyboard.press('Enter'); await ready(); await empty();
+    check(await page.evaluate(() => document.activeElement.hasAttribute('data-commerce-refresh')), 'Expiry preserves keyboard focus at ' + width);
+    await mount('denied'); await button.click(); await page.waitForFunction(() => document.querySelector('[data-commerce-refresh]').getAttribute('aria-busy') === 'false'); await empty();
+    check((await page.locator('[data-commerce-status]').textContent()).includes('unavailable'), 'Denied data offers recovery at ' + width);
+    await page.evaluate(() => window.commerceCleanup()); await empty();
+    check(await page.locator('[data-commerce-observation]').evaluateAll(els => els.every(el => el.hidden)), 'Cleanup hides both panels at ' + width);
+    check(JSON.stringify(await page.locator('[data-fh-amazon-cta]').evaluateAll(els => els.map(el => el.getAttribute('href')))) === JSON.stringify(links), 'Purchase links preserved through all states at ' + width);
+  }
+  return { checks: checks.length, results: checks };
+}
