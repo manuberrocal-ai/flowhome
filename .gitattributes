@@ -1,3 +1,3 @@
-# Static text must have identical bytes in Windows and Linux checkouts.
+# Source and static text must have identical line endings in every checkout.
 # Auto detection leaves binary product illustrations unchanged.
-public/** text=auto eol=lf
+* text=auto eol=lf

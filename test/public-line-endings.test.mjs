@@ -5,7 +5,7 @@ import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-test('public checkout bytes remain LF with autocrlf enabled while binary images stay intact', () => {
+test('source and public checkout bytes remain LF with autocrlf enabled while binary images stay intact', () => {
   const root = mkdtempSync(path.join(tmpdir(), 'flowhome-eol-'));
   const git = (...args) => execFileSync('git', args, { cwd: root, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
   git('init', '--quiet');
@@ -14,7 +14,8 @@ test('public checkout bytes remain LF with autocrlf enabled while binary images 
   writeFileSync(path.join(root, '.gitattributes'), readFileSync(new URL('../.gitattributes', import.meta.url)));
   mkdirSync(path.join(root, 'public', '.well-known'), { recursive: true });
   mkdirSync(path.join(root, 'public', 'images'));
-  const texts = ['public/_headers', 'public/favicon.svg', 'public/.well-known/security.txt', 'public/images/quiz.svg'];
+  mkdirSync(path.join(root, 'src', 'content'), { recursive: true });
+  const texts = ['public/_headers', 'public/favicon.svg', 'public/.well-known/security.txt', 'public/images/quiz.svg', 'src/content/review.md', 'README.md'];
   for (const file of texts) writeFileSync(path.join(root, file), 'first\r\nsecond\r\n');
   const binary = Buffer.from([82, 73, 70, 70, 0, 13, 10, 255, 128, 10]);
   writeFileSync(path.join(root, 'public/images/product.webp'), binary);
