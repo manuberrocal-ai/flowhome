@@ -223,9 +223,12 @@ test('C13 - Product cards expose distinct actions (Amazon CTA, details, list) wi
   assert.match(card, /data-product-action="details"/);
   assert.match(card, /data-product-action="list"/);
   assert.match(card, /aria-pressed="false"/);
-  assert.match(card, /aria-label=\{`View \$\{data\.name\} on Amazon`/);
-  assert.match(card, /aria-label=\{`Add \$\{data\.name\} to your FlowHome list`/);
-  assert.match(card, /aria-label=\{`View \$\{data\.name\} details on FlowHome`/);
+  assert.match(card, /aria-label=\{`Check on Amazon: \$\{data\.name\}`/);
+  assert.match(card, /aria-label=\{`Add to list: \$\{data\.name\}`/);
+  assert.match(card, /aria-label=\{`View details: \$\{data\.name\} on FlowHome`/);
+  const mediaLink = card.match(/<a[^>]*class="product-card-media-link[^>]*>/)?.[0];
+  assert.ok(mediaLink);
+  assert.doesNotMatch(mediaLink, /aria-label=/, 'The image link must retain its visible category and illustration caption in its name');
 });
 
 test('C13b - Hero controls use SVG arrows with aria-label on the button, not raw < > literals', () => {

@@ -27,7 +27,7 @@ const stars = Array.from({ length: 5 }, (_, index) => {
 });
 ---
 <article data-image-fallback-scope class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
-  <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-200" aria-label={`Read the ${data.name} product profile`}>
+  <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-200">
     <div class="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</div>
     <div class="product-card-media flex h-44 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white p-1 shadow-inner shadow-slate-100 ring-1 ring-white/80">
       <img
@@ -87,14 +87,14 @@ const stars = Array.from({ length: 5 }, (_, index) => {
            data-discount={commerce.displayDiscountPct ?? 0}
            data-cta-position="product_card"
           class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300/50"
-            aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta
+            aria-label={`Check on Amazon: ${data.name}`} data-fh-amazon-cta
         >
           <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
         </a>}
         <a
           href={`/product/${slug}/`}
           class="product-card-side-action product-card-side-action--details" data-product-action="details"
-          aria-label={`View ${data.name} details on FlowHome`}
+          aria-label={`View details: ${data.name} on FlowHome`}
           title="View details"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.06 12.35a1 1 0 0 1 0-.7C3.65 7.55 7.38 5 12 5s8.35 2.55 9.94 6.65a1 1 0 0 1 0 .7C20.35 16.45 16.62 19 12 19s-8.35-2.55-9.94-6.65Z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -114,7 +114,7 @@ const stars = Array.from({ length: 5 }, (_, index) => {
            data-name={data.name}
           data-image={productImage}
            data-url={`/product/${slug}/`}
-           aria-label={`Add ${data.name} to your FlowHome list`}
+           aria-label={`Add to list: ${data.name}`}
            aria-pressed="false"
            title="Add to list"
         >

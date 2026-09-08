@@ -195,7 +195,7 @@
       "execution": "local",
       "owner_role": "SEO/UX",
       "acceptance": "88 rutas o cambios justificados; 83 indexables según política; canonicals/status/schema/teclado/7 tamaños; producción comprobada tras publicación; INP y CWV de campo separados de Lighthouse.",
-      "evidence": "docs/project/FH13O_NAVEGADOR_CANDIDATO_2026-09-08.md; candidato limpio b12a60e:134/134 navegador y91/91HTTP, hashes conservados. FH12P conserva rendimiento local 4 rutas×3 y portada×3, LCP mediano2407ms con muestra TBT301ms; FH12N/O17 escenarios de navegación y FH12B siete tamaños. No certifica accesibilidad integral; release aprobado, online y campo pendientes.",
+      "evidence": "docs/project/FH12S_ETIQUETAS_CONTRASTE_2026-09-08.md: corrección local posterior de contraste y nombres accesibles, validación dirigida propia. FH13Q conserva2ec3e0a:135/135 navegador y91HTTP; FH12R cuatro rutas×3, presupuestos aprobados. FH12P y sus outliers se conservan como históricos. No certifica accesibilidad integral; nuevo candidato, release aprobado, online y campo pendientes.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -217,7 +217,7 @@
       "execution": "externo",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
-      "evidence": "docs/project/FH13P_REVISION_ACTUALIZADA_2026-09-08.md; revisión local f92d793 con consentimiento recuperable y permisos de disponibilidad:982 pruebas, lint/tipos/calidad/enlaces/build88/SEO desde checkout limpio;421 archivos inventariados iguales a dist de FH12Q. PR12 conserva5cc6c95; actualización necesita aprobación. Integración/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
+      "evidence": "docs/project/FH13Q_REVISION_ACTUALIZADA_2026-09-08.md; candidato2ec3e0a limpio,1032 pruebas y135 casos/91HTTP; lint/tipos/calidad/enlaces/build88/SEO correctos.421 archivos inventariados iguales a vista local; original HEAD/índice/status preservados al crear snapshot. PR12 conserva5cc6c95 por lectura actual; actualizar requiere aprobación. Lighthouse del candidato, revisión externa/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
       "reviewed_at": "2026-09-08"
     },
     {

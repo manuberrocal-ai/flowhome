@@ -21,6 +21,19 @@ class FakeButton {
   querySelector(selector) { return selector === '.product-card-side-action-label' ? this.label : this.badge; }
 }
 
+test('shortlist accessible names contain visible labels in both toggle states', () => {
+  const button = new FakeButton('B012345678', 'sample', 'Sample device');
+  const root = { querySelectorAll: () => [button] };
+  for (const saved of [false, true, false]) {
+    syncProductButtons(saved ? [{ asin: 'B012345678', slug: 'sample' }] : [], root);
+    assert.equal(button.label.textContent, saved ? 'Saved' : 'Add to list');
+    assert.ok(button.getAttribute('aria-label').startsWith(button.label.textContent + ':'));
+    assert.ok(button.getAttribute('aria-label').includes('Sample device'));
+    assert.equal(button.getAttribute('aria-pressed'), String(saved));
+    if (saved) assert.match(button.getAttribute('aria-label'), /Remove from your FlowHome list/);
+  }
+});
+
 class FakeDocument extends EventTarget {
   constructor(buttons) {
     super();

@@ -21,8 +21,8 @@ export function syncProductButtons(items, root = document) {
     button.classList.toggle('is-added', isSaved);
     button.setAttribute('aria-pressed', String(isSaved));
     button.setAttribute('aria-label', isSaved
-      ? `Remove ${button.dataset.name ?? 'this product'} from your FlowHome list`
-      : `Add ${button.dataset.name ?? 'this product'} to your FlowHome list`);
+      ? `${SAVED_LABEL}: ${button.dataset.name ?? 'this product'}. Remove from your FlowHome list`
+      : `${ADD_LABEL}: ${button.dataset.name ?? 'this product'}`);
     button.setAttribute('title', isSaved ? REMOVE_LABEL : ADD_LABEL);
     // Update visible label when the button exposes a text label next to the icon.
     const label = button.querySelector('.product-card-side-action-label');
