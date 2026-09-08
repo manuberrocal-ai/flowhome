@@ -28,6 +28,7 @@ const CASES = [
   { name: 'contract-amazon-cta', path: '/product/amazon-smart-thermostat/', width: 375, setup: 'amazon-cta' },
   { name: 'contract-calculator-390', path: '/calculator/', width: 390, height: 844, setup: 'calculator' },
   { name: 'contract-consent-events', path: '/product/amazon-smart-thermostat/', width: 375, setup: 'consent-events' },
+  { name: 'contract-consent-storage-error-320', path: '/', width: 320, setup: 'consent-storage-error' },
   { name: 'contract-home-experiment-inactive', path: '/', width: 375, setup: 'home-experiment-inactive' },
 ];
 
@@ -559,6 +560,34 @@ async function runCase(testCase) {
     if (testCase.setup === 'consent-events') {
       const contract = await evaluate(`(async () => { const anchor = document.querySelector('[data-fh-amazon-cta]'); if (!anchor) return { missing: true }; let appPrevented = false; const guard = (event) => { const clicked = event.target instanceof Element ? event.target.closest('[data-fh-amazon-cta]') : null; if (!clicked) return; appPrevented ||= event.defaultPrevented; event.preventDefault(); }; const click = () => anchor.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); const set = async (choice, waitForMacrotask = false) => { if (choice) localStorage.setItem('flowhome-consent', JSON.stringify({ version: 1, choice })); else localStorage.removeItem('flowhome-consent'); window.dataLayer = []; click(); if (waitForMacrotask) await new Promise((resolve) => setTimeout(resolve, 0)); return window.dataLayer.filter((entry) => entry.event === 'affiliate_click'); }; document.addEventListener('click', guard); try { const accepted = await set('accepted', true); const safe = accepted.length === 1 && accepted[0].consent_state === 'accepted' && Boolean(accepted[0].event_id) && accepted[0].pathname === location.pathname && !JSON.stringify(accepted[0]).includes('?'); return { accepted: accepted.length, rejected: (await set('rejected')).length, unset: (await set(null)).length, safe, appPrevented }; } finally { document.removeEventListener('click', guard); } })()`);
       if (contract.missing || contract.accepted !== 1 || contract.rejected !== 0 || contract.unset !== 0 || !contract.safe || contract.appPrevented) result.failures.push(`Consent event contract failed: ${JSON.stringify(contract)}`);
+    }
+    if (testCase.setup === 'consent-storage-error') {
+      const contract = await evaluate(`(() => {
+        localStorage.removeItem('flowhome-consent');
+        const original = Storage.prototype.setItem;
+        const banner = document.querySelector('[data-consent-banner]');
+        const error = document.querySelector('[data-consent-error]');
+        let changes = 0;
+        const listener = () => changes++;
+        window.addEventListener('flowhome:consent-change', listener);
+        try {
+          Storage.prototype.setItem = function () { throw new DOMException('QA storage denied', 'QuotaExceededError'); };
+          document.querySelector('[data-consent-action="accepted"]')?.click();
+          const failed = !banner?.hidden && !error?.hidden && error?.textContent.includes('could not be saved') && localStorage.getItem('flowhome-consent') === null && changes === 0;
+          Storage.prototype.setItem = original;
+          document.querySelector('[data-consent-action="rejected"]')?.click();
+          const recovered = banner?.hidden && error?.hidden && error?.textContent === '' && changes === 1;
+          // Leave the error visible for geometry checks and the evidence screenshot.
+          document.querySelector('[data-consent-open]')?.click();
+          Storage.prototype.setItem = function () { throw new DOMException('QA storage denied', 'QuotaExceededError'); };
+          document.querySelector('[data-consent-action="accepted"]')?.click();
+          return { failed, recovered, finalVisible: !banner?.hidden && !error?.hidden, retained: JSON.parse(localStorage.getItem('flowhome-consent'))?.choice === 'rejected', changes };
+        } finally {
+          Storage.prototype.setItem = original;
+          window.removeEventListener('flowhome:consent-change', listener);
+        }
+      })()`);
+      if (!contract.failed || !contract.recovered || !contract.finalVisible || !contract.retained || contract.changes !== 1) result.failures.push(`Consent storage recovery failed: ${JSON.stringify(contract)}`);
     }
     if (testCase.setup === 'home-experiment-inactive') {
       const contract = await evaluate(`(() => { window.dataLayer = []; const cta = document.querySelector('[data-fh-home-primary-cta]'); const before = cta?.textContent?.trim(); return { flag: document.body.dataset.homePrimaryCtaV1, funnelFlag: document.body.dataset.funnelExperimentV1, before, exposure: window.dataLayer.filter((entry) => entry.event === 'experiment_exposure').length, variant: cta?.getAttribute('data-experiment-variant') || null }; })()`);

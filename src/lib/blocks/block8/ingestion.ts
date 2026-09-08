@@ -21,7 +21,7 @@ import type {
 import { toStrictUtc } from './domain.ts';
 import { detectPriceAnomaly } from './anomaly.ts';
 import { evaluateOfferFreshness, isOfferAvailabilityFresh } from './freshness.ts';
-import { validateCommercialEvidence, validateObservationIdentity, sourcePermissionFor, validPrice, type CommercialEvidenceContext, type CommercialObservation, type KnownVariants } from './evidence.ts';
+import { validateCommercialEvidence, validateObservationIdentity, sourcePermissionFor, availabilityPermissionFor, validPrice, type CommercialEvidenceContext, type CommercialObservation, type KnownVariants } from './evidence.ts';
 import { buildIdempotencyKey, canonicalContent, hasLegacyIdempotencyKeys } from './idempotency.ts';
 export { buildIdempotencyKey } from './idempotency.ts';
 export type { KnownVariants, KnownMerchants } from './evidence.ts';
@@ -299,7 +299,8 @@ export function ingestOffers(
       continue;
     }
     if (input.availability != null && !['in-stock', 'out-of-stock', 'preorder', 'discontinued', 'unknown'].includes(input.availability)) { out.push({ status: 'rejected', entity: null, reason: 'invalid_availability', idempotencyKey: '' }); continue; }
-    if (!isOfferAvailabilityFresh({ availabilityCapturedAt: availabilityCapturedIso }, now).fresh || !sourcePermissionFor({ ...observation, capturedAt: availabilityCapturedIso }, ctx, now)) { out.push({ status: 'rejected', entity: null, reason: 'availability_permission_or_freshness_missing', idempotencyKey: '' }); continue; }
+    const availabilityGrant = availabilityPermissionFor({ ...observation, capturedAt: availabilityCapturedIso }, ctx, now);
+    if (!isOfferAvailabilityFresh({ availabilityCapturedAt: availabilityCapturedIso }, now).fresh || !availabilityGrant) { out.push({ status: 'rejected', entity: null, reason: 'availability_permission_or_freshness_missing', idempotencyKey: '' }); continue; }
     let key: string;
     try { key = offerKey(input, capturedIso); } catch { out.push({ status: 'rejected', entity: null, reason: 'invalid_offer_content', idempotencyKey: '' }); continue; }
     if (seenKeys.has(key)) {
@@ -307,7 +308,7 @@ export function ingestOffers(
       continue;
     }
     const grant = sourcePermissionFor(observation, ctx, now)!;
-    const expiresIso = toStrictUtc(input.expiresAt ?? null) ?? new Date(Math.min(Date.parse(capturedIso) + grant.maxAgeMs, Date.parse(grant.validUntil))).toISOString();
+    const expiresIso = new Date(Math.min(Date.parse(toStrictUtc(input.expiresAt ?? null) ?? grant.validUntil), Date.parse(capturedIso) + grant.maxAgeMs, Date.parse(grant.validUntil), Date.parse(availabilityGrant.expiresAt))).toISOString();
     const lifecycle: Offer['lifecycle'] = freshness.reason === 'fresh' ? 'pending_review' : 'suppressed';
     const entity: Offer = {
       id: deterministicId('of', key),

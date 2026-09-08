@@ -19,6 +19,14 @@ export interface SourcePermission {
   currentPriceAllowed: boolean;
   /** May narrow, never extend the 24-hour current-price ceiling. */
   maxAgeMs: number;
+  /** Explicit availability rights; absence never inherits current-price rights. */
+  availability?: {
+    permissionId: string;
+    state: 'approved' | 'revoked' | 'unknown';
+    validFrom: string;
+    validUntil: string;
+    maxAgeMs: number;
+  };
   /** Separate documented rights, not implied by API access or cache permission. */
   history?: { permissionId: string; floorClaimsAllowed: boolean; retainForMs: number };
 }
@@ -62,6 +70,25 @@ export function sourcePermissionFor(observation: CommercialObservation, context:
     maxAge = history.retainForMs;
   }
   return at - capture < maxAge ? grant : null;
+}
+
+/** Availability has its own grant, capture and exclusive deadline. */
+export function availabilityPermissionFor(observation: CommercialObservation, context: CommercialEvidenceContext, now: Date | string): { expiresAt: string } | null {
+  const current = toStrictUtc(now); const captured = toStrictUtc(observation.capturedAt);
+  if (!current || !captured || !['amazon-creators-api', 'affiliate-feed'].includes(observation.source)) return null;
+  if (validateObservationIdentity(observation, context)) return null;
+  const grants = (context.sourcePermissions ?? []).filter(grant => grant.source === observation.source && grant.merchantId === observation.merchantId && grant.market === observation.market && grant.currency === observation.currency);
+  if (grants.length !== 1) return null;
+  const parent = grants[0]; const grant = parent.availability;
+  if (parent.state !== 'approved' || !safeId(parent.permissionId) || !grant || grant.state !== 'approved' || !safeId(grant.permissionId) || grant.permissionId === parent.permissionId) return null;
+  const parentStart = toStrictUtc(parent.validFrom); const parentEnd = toStrictUtc(parent.validUntil);
+  const start = toStrictUtc(grant.validFrom); const end = toStrictUtc(grant.validUntil);
+  if (!parentStart || !parentEnd || !start || !end || Date.parse(parentStart) >= Date.parse(parentEnd) || Date.parse(start) >= Date.parse(end)) return null;
+  if (!Number.isSafeInteger(grant.maxAgeMs) || grant.maxAgeMs <= 0 || grant.maxAgeMs > FRESHNESS_WINDOWS_MS.availability) return null;
+  const capture = Date.parse(captured); const at = Date.parse(current);
+  const expires = Math.min(capture + grant.maxAgeMs, Date.parse(end), Date.parse(parentEnd));
+  if (capture < Math.max(Date.parse(parentStart), Date.parse(start)) || capture > at || at >= expires) return null;
+  return { expiresAt: new Date(expires).toISOString() };
 }
 
 function sameObservation(left: CommercialObservation, right: CommercialObservation): boolean {

@@ -15,6 +15,6 @@ export function evidenceFixture(offer = offerFixture(), history = []) {
     knownMerchants: [{ id: 'm1', authorised: true, market: 'US', currency: 'USD' }],
     knownVariants: [{ id: 'v1', marketplaceId: 'B0FIXTURE01', marketplaceIdType: 'asin', market: 'US', currency: 'USD' }],
     snapshotsById: new Map([...history.map((snapshot) => [snapshot.id, snapshot]), [offer.lastSnapshotId, snapshotFixture({ id: offer.lastSnapshotId, price: offer.price, listPrice: offer.listPrice, source: offer.source, capturedAt: offer.capturedAt })]]),
-    sourcePermissions: [{ permissionId: 'fixture:current-permission', source: offer.source, merchantId: 'm1', market: 'US', currency: 'USD', state: 'approved', validFrom: '2026-01-01T00:00:00Z', validUntil: '2026-12-31T00:00:00Z', currentPriceAllowed: true, maxAgeMs: 86_400_000, history: { permissionId: 'fixture:separate-history-permission', floorClaimsAllowed: true, retainForMs: 90 * 86_400_000 } }],
+    sourcePermissions: [{ permissionId: 'fixture:current-permission', source: offer.source, merchantId: 'm1', market: 'US', currency: 'USD', state: 'approved', validFrom: '2026-01-01T00:00:00Z', validUntil: '2026-12-31T00:00:00Z', currentPriceAllowed: true, maxAgeMs: 86_400_000, availability: { permissionId: 'fixture:availability-permission', state: 'approved', validFrom: '2026-01-01T00:00:00Z', validUntil: '2026-12-31T00:00:00Z', maxAgeMs: 86_400_000 }, history: { permissionId: 'fixture:separate-history-permission', floorClaimsAllowed: true, retainForMs: 90 * 86_400_000 } }],
   };
 }

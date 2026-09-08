@@ -10,7 +10,7 @@
  */
 import type { Offer, PriceSnapshot, TrendSignal, ConfidenceLevel } from './domain.ts';
 import { FRESHNESS_WINDOWS_MS, toStrictUtc } from './domain.ts';
-import { validateCommercialEvidence, sourcePermissionFor, type CommercialEvidenceContext, type EvidencedOffer } from './evidence.ts';
+import { validateCommercialEvidence, availabilityPermissionFor, type CommercialEvidenceContext, type EvidencedOffer } from './evidence.ts';
 
 export interface FreshnessResult {
   /** True when the entity's `capturedAt` is within its useable window. */
@@ -107,7 +107,7 @@ export function isOfferPromotable(
   if (offer.availability !== 'in-stock') return { promotable: false, reason: `availability:${offer.availability}` };
   const availabilityFreshness = isOfferAvailabilityFresh(offer, now);
   if (availabilityFreshness.reason !== 'fresh') return { promotable: false, reason: `availability_freshness:${availabilityFreshness.reason}` };
-  if (!sourcePermissionFor({ ...offer, capturedAt: offer.availabilityCapturedAt }, evidence!, now)) return { promotable: false, reason: 'availability_permission_missing' };
+  if (!availabilityPermissionFor({ ...offer, capturedAt: offer.availabilityCapturedAt }, evidence!, now)) return { promotable: false, reason: 'availability_permission_missing' };
   return { promotable: true, reason: 'promotable' };
 }
 

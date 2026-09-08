@@ -166,8 +166,8 @@
       "execution": "externo",
       "owner_role": "Analítica",
       "acceptance": "En entorno autorizado, aceptar produce un solo affiliate_click visible en DebugView; rechazar/revocar detiene analítica; documentar referidos de Google login y discrepancias sin alterar cuentas por inferencia.",
-      "evidence": "src/lib/analytics.ts; docs/audit/current-measurement-v3.md",
-      "reviewed_at": "2026-09-05"
+      "evidence": "docs/project/FH12Q_ERROR_CONSENTIMIENTO_2026-09-08.md; mensaje accesible ante fallo de persistencia y recuperación,977 pruebas y31 casos navegador/91HTTP correctos. Sin transmisión real ni cambios de cuentas; DebugView/revocación real pendientes. src/lib/analytics.ts; docs/audit/current-measurement-v3.md",
+      "reviewed_at": "2026-09-08"
     },
     {
       "id": "FH-11",
@@ -195,7 +195,7 @@
       "execution": "local",
       "owner_role": "SEO/UX",
       "acceptance": "88 rutas o cambios justificados; 83 indexables según política; canonicals/status/schema/teclado/7 tamaños; producción comprobada tras publicación; INP y CWV de campo separados de Lighthouse.",
-      "evidence": "docs/project/FH12P_RENDIMIENTO_2026-09-08.md; matriz local 4 rutas×3 y portada corregida×3, LCP mediano2706→2407 ms; una muestra TBT301 ms preservada. 968 pruebas, doce escenarios responsive, build88/SEO/lint/tipos correctos. FH12N/O conserva 17 escenarios de navegación; FH12B siete tamaños. Candidato final, online y campo pendientes; no publicado.",
+      "evidence": "docs/project/FH13O_NAVEGADOR_CANDIDATO_2026-09-08.md; candidato limpio b12a60e:134/134 navegador y91/91HTTP, hashes conservados. FH12P conserva rendimiento local 4 rutas×3 y portada×3, LCP mediano2407ms con muestra TBT301ms; FH12N/O17 escenarios de navegación y FH12B siete tamaños. No certifica accesibilidad integral; release aprobado, online y campo pendientes.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -217,7 +217,7 @@
       "execution": "externo",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
-      "evidence": "docs/project/FH13H_ENTREGA_LOCAL_2026-09-08.md; 134 casos/91HTTP sobre dist correctos, candidato FH13H nuevo con FH12N/O/P, build88/SEO y smoke390/1440 correctos, inventario421 cotejado. sourceSha null/publishable false. FH13I_RECUPERACION_2026-09-08.md revalida destino/controles y canónico dirty por lectura; tres rutas públicas200 difieren del candidato. Pendientes fuente definitiva, manifiesto, aceptación de rollback/aprobación y comprobación online del candidato. FH13J_CONTROLES_ENTREGA_2026-09-08.md añade rechazo de automatismos habilitados/ausentes en preflight y registro; 970 pruebas y controles generales correctos. Sin publicación.",
+      "evidence": "docs/project/FH13N_REVISION_PR_2026-09-08.md; PR12 borrador creada con autorización para SHA5cc6c95, suite limpia falló. Corrección sólo local b12a60e: LF de fuente y frontmatter CRLF,973 pruebas/lint/tipos/calidad/enlaces/build88/SEO/audit producción0 correctos.421 archivos iguales a inventarioM. Pendientes autorización para actualizar PR, revisión/integración/manifiesto/aprobación y online; sin publicación.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -257,8 +257,8 @@
       "execution": "local",
       "owner_role": "Ingeniería/Datos",
       "acceptance": "Decisión revisable que prioriza infraestructura existente; define dato permitido, TTL, purga, cachés, borrado y fallos; HTML y clientes nunca conservan oferta vencida; no basar caducidad en cron.",
-      "evidence": "docs/project/FH16C_LISTA_SIN_PRECIOS_2026-09-08.md; precios heredados omitidos de normalización/migración, identidad conservada; 958 pruebas y navegador aislado correctos. FH16A/B conserva barrera estática. Endpoint efímero, permisos/cuotas y transporte real pendientes; sin activación.",
-      "reviewed_at": "2026-09-06"
+      "evidence": "docs/project/FH16E_PERMISO_DISPONIBILIDAD_2026-09-08.md; disponibilidad exige permiso/TTL propio en ingreso/promoción, vencimiento de oferta recortado;981 pruebas generales y5 dirigidas finales, lint/tipos/build88/SEO correctos. Rating/otros campos, proyección autorizada, transporte y retiro real pendientes. Barrera estática conservada; sin permisos reales modificados ni activación.",
+      "reviewed_at": "2026-09-08"
     },
     {
       "id": "FH-17",
@@ -374,8 +374,8 @@
       "execution": "local",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Conservar AGENTS, SECURITY, CONTRIBUTING, CODEOWNERS, Dependabot, CodeQL y plantilla existentes en main; verificar reglas remotas; documentar licencia explícita del titular sin inventar cesión.",
-      "evidence": "docs/project/INTEGRACION_FH01_2026-09-05.md; kit remoto integrado sin cambios; protecciones remotas y decisión de licencia pendientes",
-      "reviewed_at": "2026-09-05"
+      "evidence": "docs/project/FH24A_GOBIERNO_REMOTO_2026-09-08.md; protección clásica/ruleset/production comprobados por GET. PR requiere0 aprobaciones; quality y Analyze obligatorios, no contexto CodeQL. Production permite autoaprobación/bypass administrativo. Sin cambios remotos; políticas y licencia del titular pendientes. Kit integrado en FH01.",
+      "reviewed_at": "2026-09-08"
     },
     {
       "id": "FH-25",

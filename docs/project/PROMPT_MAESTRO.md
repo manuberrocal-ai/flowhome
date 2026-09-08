@@ -17,11 +17,11 @@ Proyecto: `C:\AGENTES\Proyectos\flowhome`. Conservar marca, logos, rutas, tipogr
 
 Actualizar la sección correspondiente, no anteponer una sucesión de hitos. Los informes fechados conservan el detalle. Para sincronizar el plan, obtener la vista con `node scripts/qa/project-plan.mjs --render`, aplicarla como edición revisable y comprobar `node scripts/qa/project-plan.mjs`. Este comando sólo lee/compara o imprime; no modifica archivos. Mantener aceptación y autoridad al actualizar estados.
 
-## Estado local comprobado — corte FH12P
+## Estado comprobado — fuente FH13N y gobierno FH24A
 
 | Área | Evidencia actual | Pendiente real |
 |---|---|---|
-| Fuente y entrega | Trabajo local preservado sobre integración 116e04d; sin commit final de este conjunto ni publicación nueva | Revisión de fuente, identidad final, manifiesto protegido, destino y rollback aprobados |
+| Fuente y entrega | Trabajo original preservado sobre116e04d; PR12 borrador contiene5cc6c95 y corrección b12a60e sólo local. [FH24A](FH24A_GOBIERNO_REMOTO_2026-09-08.md) comprueba reglas remotas y sus excepciones | Autorizar actualización de PR; revisión de fuente/resultados CodeQL, manifiesto protegido, destino y rollback aprobados |
 | Catálogo/editorial | 28 productos documentados, 15 reseñas y ocho guías revisadas; unknown explícito | No confundir documentación con prueba física, compatibilidad certificada o paquete comercial exacto |
 | Imágenes | 28 ilustraciones específicas rotuladas y variantes responsivas; [FH09AN](FH09AN_SITEMAP_RESENAS_2026-09-08.md) registra medición de plantillas | No son fotos oficiales ni certificados de bundle; rendimiento de entrega final y permisos de datos conectados independientes |
 | Interfaz | Favicon, acciones, búsqueda/lista y estados auxiliares corregidos; [FH12N](FH12N_NAVEGACION_ESCRITORIO_2026-09-08.md) y [FH12O](FH12O_ALTURA_NAVEGACION_2026-09-08.md) corrigen navegación/foco/altura | Revisión consolidada del artefacto final; producción y campo no probados por pruebas locales |
@@ -33,6 +33,18 @@ Actualizar la sección correspondiente, no anteponer una sucesión de hitos. Los
 
 ## Artefactos: distinguir fuente, vista y candidato
 
+[FH12Q](FH12Q_ERROR_CONSENTIMIENTO_2026-09-08.md) añade respuesta accesible al fallo de guardado del consentimiento en la carpeta original:977 pruebas, build88/SEO y31 casos de navegador correctos. Dist actual cambia; los candidatos FH13M/N y su inventario no representan esta modificación. No se subió ningún cambio nuevo.
+
+[FH13O](FH13O_NAVEGADOR_CANDIDATO_2026-09-08.md) completa navegador sobre el checkout limpio b12a60e:134/134 casos y91/91HTTP, hashes preservados y checkout limpio. Sustituye la carencia de matriz propia de ese candidato, no los resultados históricos de otros artefactos. No hubo build nuevo, publicación ni actualización de PR.
+
+La lectura [FH24A](FH24A_GOBIERNO_REMOTO_2026-09-08.md) confirma quality/Analyze correctos y CodeQL fallido en PR12. Las reglas exigen los primeros, no el contexto CodeQL ni una aprobación humana mínima. PR12 sigue borrador/BLOCKED; no atribuir esa condición únicamente a CodeQL. Production tiene revisor, pero permite autoaprobación y bypass administrativo. Ninguna regla fue cambiada.
+
+- [FH13N](FH13N_REVISION_PR_2026-09-08.md): PR12 autorizada en borrador apunta a FH13M (`5cc6c95`), cuya suite limpia falló. La corrección local `b12a60e` amplía LF a la fuente y admite frontmatter CRLF;973 pruebas y controles completos pasan en checkout limpio y sus421 archivos coinciden byte por byte con inventarioM. No subir esta corrección sin confirmar la actualización de la PR; no confundir fuente remota con local.
+
+- [FH13M](FH13M_FINALES_LINEA_2026-09-08.md): checkpoint `5cc6c95cafb78993b3f04cd4a074139e680ef21c`, política LF para texto público, prueba real de checkout y build88/SEO desde copia limpia. Inventario421; diferencias con FH13L sólo de finales de línea. Candidato no aprobado ni publicable; dependencias reutilizadas.
+
+- [FH13L](FH13L_FUENTE_IDENTIFICADA_2026-09-08.md): checkpoint local `bb8a9942653e20e34f57a1f3c051cf0a5ed586e9`, construido desde checkout limpio separado; build88/SEO correctos.421 archivos,12 diferencias sólo LF/CRLF respecto FH13H. Fuente identificada, no aprobada; dependencias reutilizadas. Normalizar finales de línea antes de sellar entrega. No mover/reutilizar las huellas anteriores como si fueran este candidato.
+
 - `dist`: vista local reconstruida con FH12N/O/P. No es por sí sola un paquete autorizado ni un inventario inmutable.
 - [FH13H](FH13H_ENTREGA_LOCAL_2026-09-08.md): candidato de revisión actualizado con FH12N/O/P, build88/SEO y smoke390/1440 correctos; inventario421 cotejado. `publishable:false`, `sourceSha:null`: no es release autorizado.
 - FH13G permanece como candidato anterior preservado; su inventario describe su propia carpeta, no el código actual.
@@ -42,7 +54,9 @@ Actualizar la sección correspondiente, no anteponer una sucesión de hitos. Los
 
 ## Próxima secuencia
 
-1. Cerrar la revisión/versionado de fuente y la cadena de entrega. FH13H ya consolida134 casos/91HTTP sobre dist y smoke dirigido al nuevo candidato; FH12P conserva rendimiento local. No repetir esas matrices sin cambios pertinentes ni presentarlas como producción.
+Pendiente local B concretado en [FH16D](FH16D_CONTRATO_POR_CAMPO_2026-09-08.md): reconciliar permisos por campo antes del endpoint. [FH16E](FH16E_PERMISO_DISPONIBILIDAD_2026-09-08.md) ya exige permiso y TTL propios de disponibilidad en ingreso/promoción, con981 pruebas generales y5 dirigidas finales correctas. Faltan rating/otros campos y proyección autorizada de servidor. Conservar barrera estática y no activar proveedor con fixtures.
+
+1. Cerrar revisión de fuente y cadena de entrega. FH13N corrige el fallo de suite limpia de FH13M;973 pruebas y controles pasan, PR12 conserva el commit anterior autorizado. Confirmar actualización de PR al commit corregido antes de enviarlo; revisión/integración/manifiesto y publicación siguen independientes. FH13H conserva su matriz de navegador y FH12P su rendimiento local; no presentarlos como producción.
 2. Conservar el candidato FH13H como resultado revisable. Sólo reconstruir en una carpeta nueva si cambia la fuente o configuración que debe publicarse; no sobrescribir candidatos históricos. Completar identidad de fuente, manifiesto y recuperación por el flujo del repositorio.
 3. Presentar el paquete con límites, destino y rollback identificados para aprobación concreta. No publicar ni convertir el respaldo del usuario al desarrollo en una aprobación de release.
 4. Mientras falte dependencia externa, continuar FH-16/17/20 u otra tarea independiente de B con contratos y pruebas que acerquen al flujo real; no sustituir autenticación, permisos o persistencia por objetos ficticios. FH17I/J verifican decisiones y suspensión local; [FH17K](FH17K_AUDITORIA_APROVISIONAMIENTO_2026-09-08.md) añade auditoría de provisión, probada junto con el consumidor real bajo UID sintético. 012/013 siguen fuera de migrations: faltan alta con referencia de aprobación humana/evidencia revisada, rehabilitación, integración y autenticación real. La fixture fh17i conserva ejecución de decisiones revocada.

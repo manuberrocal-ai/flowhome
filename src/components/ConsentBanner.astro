@@ -6,12 +6,20 @@
       <button type="button" class="min-h-11 rounded-xl bg-slate-950 px-4 py-2 text-sm font-bold text-white" data-consent-action="accepted">Accept</button>
     </div>
   </div>
+  <p class="mx-auto max-w-7xl px-4 pb-3 text-sm leading-6 text-amber-900 sm:px-6 lg:px-8" data-consent-error role="alert" hidden></p>
 </aside>
 
 <script>
   import { CONSENT_STORAGE_KEY, getConsentPreference, setConsentPreference, revokeConsent } from '../lib/consent';
 
   const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
+  const errorMessage = banner?.querySelector<HTMLElement>('[data-consent-error]');
+  const reportSaveFailure = () => {
+    showBanner();
+    if (!errorMessage) return;
+    errorMessage.textContent = 'Your choice could not be saved. Your previous preference is unchanged. Check your browser’s site storage settings and try again.';
+    errorMessage.hidden = false;
+  };
   const setBannerPreference = (preference: 'accepted' | 'rejected' | 'unset') => {
     document.documentElement.dataset.flowhomeConsent = preference;
   };
@@ -19,12 +27,20 @@
     if (!banner) return;
     banner.dataset.consentBannerOpen = 'true';
     banner.hidden = false;
+    if (errorMessage) {
+      errorMessage.hidden = true;
+      errorMessage.textContent = '';
+    }
     if (focusChoice) banner.querySelector<HTMLElement>('[data-consent-action="rejected"]')?.focus();
   };
   const hideBanner = () => {
     if (!banner) return;
     delete banner.dataset.consentBannerOpen;
     banner.hidden = true;
+    if (errorMessage) {
+      errorMessage.hidden = true;
+      errorMessage.textContent = '';
+    }
   };
 
   const preference = getConsentPreference();
@@ -34,13 +50,13 @@
     const target = event.target as Element | null;
     const action = target?.closest<HTMLElement>('[data-consent-action]')?.dataset.consentAction;
     if (action === 'accepted' || action === 'rejected') {
-      if (setConsentPreference(action) !== action) return;
+      if (setConsentPreference(action) !== action) { reportSaveFailure(); return; }
       setBannerPreference(action);
       hideBanner();
       window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
     }
     if (action === 'revoke') {
-      if (revokeConsent() !== 'rejected') return;
+      if (revokeConsent() !== 'rejected') { reportSaveFailure(); return; }
       setBannerPreference('rejected');
       showBanner();
       window.dispatchEvent(new CustomEvent('flowhome:consent-change'));
