@@ -9,7 +9,7 @@ const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const BASE_URL = (process.env.LIGHTHOUSE_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const OUTPUT_DIR = resolve(process.env.LIGHTHOUSE_OUTPUT_DIR || join(tmpdir(), `flowhome-lighthouse-${new Date().toISOString().replace(/[:.]/g, '-')}`));
 const PROFILE_DIR = join(tmpdir(), `flowhome-lighthouse-profile-${process.pid}-${Date.now()}`);
-const LOCAL_LIGHTHOUSE = join(ROOT, 'node_modules', '.bin', process.platform === 'win32' ? 'lighthouse.cmd' : 'lighthouse');
+const LOCAL_LIGHTHOUSE = join(ROOT, 'node_modules', 'lighthouse', 'cli', 'index.js');
 const LIGHTHOUSE_BIN = process.env.LIGHTHOUSE_BIN || LOCAL_LIGHTHOUSE;
 const ROUTES = ['/', '/product/amazon-smart-thermostat/', '/review/roborock-q5-plus-review/', '/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/'];
 const BUDGETS = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95, lcp: 2500, cls: 0.1, tbt: 200 };
@@ -17,7 +17,15 @@ const REQUIRED_LAB_AUDITS = ['largest-contentful-paint', 'cumulative-layout-shif
 let preview;
 let createdPreview = false;
 
-if (!relative(ROOT, OUTPUT_DIR).startsWith('..')) throw new Error('LIGHTHOUSE_OUTPUT_DIR must be outside the repository.');
+export function parseLighthouseRoutes(value) {
+  if (value === undefined) return [...ROUTES];
+  const routes = String(value).split(',').map(route => route.trim());
+  if (!routes.length || routes.some(route => !ROUTES.includes(route)) || new Set(routes).size !== routes.length) throw new Error('LIGHTHOUSE_ROUTES must select unique routes from the fixed local audit matrix.');
+  return routes;
+}
+
+const dailyPath = relative(join(ROOT, 'reports/daily'), OUTPUT_DIR);
+if (!relative(ROOT, OUTPUT_DIR).startsWith('..') && (!dailyPath || dailyPath.startsWith('..') || resolve(dailyPath) === dailyPath)) throw new Error('LIGHTHOUSE_OUTPUT_DIR must be outside the repository or within reports/daily.');
 if (!['127.0.0.1', 'localhost', '::1'].includes(new URL(BASE_URL).hostname)) throw new Error('LIGHTHOUSE_BASE_URL must resolve to localhost or a loopback address.');
 
 export function parseLighthouseRuns(value = '3') {
@@ -72,7 +80,11 @@ async function stopPreview() {
   if (!createdPreview || !preview?.pid || preview.exitCode !== null) return;
   if (process.platform === 'win32') await new Promise((resolvePromise) => spawn('taskkill', ['/pid', String(preview.pid), '/t', '/f'], { stdio: 'ignore', windowsHide: true }).once('close', resolvePromise)); else preview.kill('SIGTERM');
 }
-function run(command, args, env = {}) { return new Promise((resolvePromise, reject) => { const child = spawn(command, args, { cwd: ROOT, env: { ...process.env, ...env }, stdio: 'inherit', windowsHide: true, shell: process.platform === 'win32' }); child.once('error', reject); child.once('close', (code) => resolvePromise(code ?? 1)); }); }
+function run(command, args, env = {}) { return new Promise((resolvePromise, reject) => {
+  const javascript = /\.m?js$/i.test(command);
+  const child = spawn(javascript ? process.execPath : command, javascript ? [command, ...args] : args, { cwd: ROOT, env: { ...process.env, ...env }, stdio: 'inherit', windowsHide: true, shell: !javascript && process.platform === 'win32' && /\.(?:cmd|bat)$/i.test(command) });
+  child.once('error', reject); child.once('close', (code) => resolvePromise(code ?? 1));
+}); }
 function score(result, category) { return Math.round((result.categories?.[category]?.score ?? 0) * 100); }
 function numeric(result, audit) { const value = result.audits?.[audit]?.numericValue; return Number.isFinite(value) ? value : null; }
 async function readReport(path) { try { return JSON.parse(await readFile(path, 'utf8')); } catch { return undefined; } }
@@ -80,12 +92,13 @@ function reportName(route) { return route === '/' ? 'home' : route.split('/').fi
 
 async function main() {
   const sampleCount = parseLighthouseRuns(process.env.LIGHTHOUSE_RUNS || '3');
-  const summary = { generatedAt: new Date().toISOString(), baseUrl: BASE_URL, outputDir: OUTPUT_DIR, formFactor: 'mobile', sampleCount, budgets: BUDGETS, routes: [], failures: [], executionWarnings: [], notes: ['Synthetic local lab evidence only. External network is blocked; scores and lab metrics are not field CWV. INP can be unavailable in a lab run.'] };
+  const requestedRoutes = parseLighthouseRoutes(process.env.LIGHTHOUSE_ROUTES);
+  const summary = { generatedAt: new Date().toISOString(), baseUrl: BASE_URL, outputDir: OUTPUT_DIR, formFactor: 'mobile', scope: requestedRoutes.length === ROUTES.length ? 'full' : 'targeted', requestedRoutes, sampleCount, budgets: BUDGETS, routes: [], failures: [], executionWarnings: [], notes: ['Synthetic local lab evidence only. External network is blocked; scores and lab metrics are not field CWV. INP can be unavailable in a lab run.'] };
   try {
     if (!await exists(LIGHTHOUSE_BIN)) throw new Error(`Repository-local Lighthouse binary is unavailable: ${LIGHTHOUSE_BIN}`);
     const chrome = await findBrave(); if (!await exists(chrome)) throw new Error(`Chrome executable does not exist: ${chrome}`);
     await mkdir(OUTPUT_DIR, { recursive: true }); await mkdir(PROFILE_DIR, { recursive: true }); await startPreview();
-    for (const route of ROUTES) {
+    for (const route of requestedRoutes) {
       const requestedUrl = `${BASE_URL}${route}`; const name = reportName(route); const samples = []; const routeFailures = [];
       for (let sampleIndex = 1; sampleIndex <= sampleCount; sampleIndex += 1) {
         const reportPath = join(OUTPUT_DIR, `${name}-sample-${sampleIndex}.json`);
@@ -109,7 +122,7 @@ async function main() {
     try { await stopPreview(); } catch (error) { summary.executionWarnings.push(`Preview cleanup failed: ${error.message}`); }
     try { await rm(PROFILE_DIR, { recursive: true, force: true, maxRetries: 4, retryDelay: 250 }); } catch (error) { summary.executionWarnings.push(`Lighthouse temporary cleanup failed: ${error.message}`); }
     await mkdir(OUTPUT_DIR, { recursive: true }); const summaryPath = join(OUTPUT_DIR, 'summary.json'); await writeFile(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
-    console.log(`Lighthouse mobile summary: ${summaryPath}`); console.log(`Lighthouse mobile result: ${summary.routes.length}/${ROUTES.length} routes, ${summary.sampleCount} samples each, ${summary.failures.length} failure(s), ${summary.executionWarnings.length} execution warning(s)`); if (summary.failures.length) process.exitCode = 1;
+    console.log(`Lighthouse mobile summary: ${summaryPath}`); console.log(`Lighthouse mobile result: ${summary.routes.length}/${requestedRoutes.length} routes (${summary.scope}), ${summary.sampleCount} samples each, ${summary.failures.length} failure(s), ${summary.executionWarnings.length} execution warning(s)`); if (summary.failures.length) process.exitCode = 1;
   }
 }
 

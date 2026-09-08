@@ -32,6 +32,8 @@ import type {
 } from './domain.ts';
 import { toStrictUtc } from './domain.ts';
 import { isOfferPromotable } from './freshness.ts';
+import { type CommercialEvidenceContext, type EvidencedOffer } from './evidence.ts';
+import { buildIdempotencyKey } from './idempotency.ts';
 
 export interface ApplyOverrideInput {
   targetId: string;
@@ -50,13 +52,13 @@ export interface ApplyOverrideResult {
   /** True when the action changed either state field. */
   changed: boolean;
   /** Stable outcome code; surfaces to the audit trail. */
-  outcome: 'applied' | 'blocked_stale' | 'blocked_unsupported_action' | 'no_change';
+  outcome: 'applied' | 'blocked_stale' | 'blocked_unsupported_action' | 'blocked_invalid_reference' | 'no_change';
   /** The audit entry written for the action, even when blocked. */
   audit: AdminAuditEntry;
 }
 
-function isPromotableState(offer: Pick<Offer, 'capturedAt' | 'expiresAt' | 'availability' | 'availabilityCapturedAt' | 'lastSnapshotId' | 'lifecycle' | 'review'>, now: Date): boolean {
-  return isOfferPromotable({ ...offer, lifecycle: 'active', review: 'approved' }, now).promotable;
+function isPromotableState(offer: EvidencedOffer, now: string, evidence?: CommercialEvidenceContext): boolean {
+  return offer.lifecycle !== 'expired' && isOfferPromotable({ ...offer, lifecycle: 'active', review: 'approved' }, now, evidence).promotable;
 }
 
 function emptyAudit(input: ApplyOverrideInput, recordedAt: string): AdminAuditEntry {
@@ -75,16 +77,7 @@ function emptyAudit(input: ApplyOverrideInput, recordedAt: string): AdminAuditEn
 }
 
 function buildAuditId(input: ApplyOverrideInput, recordedAt: string): string {
-  let hash = 0x811c9dc5;
-  const parts = [input.targetId, input.targetType, input.action, input.actorId, recordedAt];
-  for (const part of parts) {
-    const str = String(part);
-    for (let i = 0; i < str.length; i++) {
-      hash ^= str.charCodeAt(i);
-      hash = Math.imul(hash, 0x01000193);
-    }
-  }
-  return `audit:${(hash >>> 0).toString(16).padStart(8, '0')}`;
+  return buildIdempotencyKey('audit', [input.targetId, input.targetType, input.action, input.actorId, recordedAt, input.note ?? '']);
 }
 
 function snapshotFields<T extends Record<string, unknown>>(obj: T, keys: string[]): Record<string, unknown> {
@@ -108,13 +101,14 @@ export function applyOverride(
     | (Pick<Offer, 'capturedAt' | 'expiresAt' | 'availability' | 'availabilityCapturedAt' | 'lastSnapshotId' | 'lifecycle' | 'review'> & Record<string, unknown>)
     | (Pick<TrendSignal, 'anomaly'> & Record<string, unknown>)
     | Record<string, unknown>,
+  evidence?: CommercialEvidenceContext,
 ): ApplyOverrideResult {
-  const ref = input.now instanceof Date ? input.now : input.now ? new Date(input.now) : new Date();
-  const recordedAt = toStrictUtc(ref.toISOString()) ?? ref.toISOString();
+  const recordedAt = toStrictUtc(input.now === undefined ? new Date() : input.now) ?? '';
   const baseAudit = emptyAudit(input, recordedAt);
+  if (!recordedAt) return { appliedLifecycle: null, appliedReview: null, changed: false, outcome: 'blocked_invalid_reference', audit: baseAudit };
 
   if (input.targetType === 'offer') {
-    const offer = target as Pick<Offer, 'capturedAt' | 'expiresAt' | 'availability' | 'availabilityCapturedAt' | 'lastSnapshotId' | 'lifecycle' | 'review'> & Record<string, unknown>;
+    const offer = target as EvidencedOffer & Record<string, unknown>;
     const before = snapshotFields(offer, ['lifecycle', 'review']);
     let nextLifecycle: OfferLifecycle = offer.lifecycle;
     let nextReview: ReviewVerdict = offer.review;
@@ -122,7 +116,7 @@ export function applyOverride(
     let changed = false;
 
     if (input.action === 'override_promote') {
-      if (isPromotableState(offer, ref)) {
+      if (target.id === input.targetId && isPromotableState(offer, recordedAt, evidence)) {
         nextLifecycle = 'active';
         nextReview = 'approved';
         changed = true;

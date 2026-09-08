@@ -15,6 +15,8 @@ yarn-error.log*
 .env
 .env.production
 .env.local
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
@@ -40,5 +42,14 @@ artifacts/
 # transient dev/audit logs
 .tmp/
 
+# Local browser session snapshots/logs, not reviewed publication evidence.
+# Final captures and reports selected for review remain in docs/project/.
+.playwright-cli/
+
 # Supabase CLI local state
 supabase/.temp/
+
+# Generated daily review evidence; never commit provider content or browser images.
+reports/daily/
+reports/content-drafts/
+reports/discovery/

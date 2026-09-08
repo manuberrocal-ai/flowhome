@@ -88,8 +88,8 @@ export function selectDirectAlternatives(current: any, products: any[], limit = 
 /**
  * Selects direct alternatives for a product, augmenting the curated catalog
  * relationships with verified `substitutes` edges from the Block 9 graph
- * when the flag is on. Verified substitutes are surfaced first (sorted by
- * the existing scoring), then any remaining same-category active candidates.
+ * when the flag is on. Verified substitutes are surfaced first in catalog
+ * order, then any remaining same-category active candidates.
  *
  * When the environment is missing or `enabled === false`, this is inert and
  * delegates to the existing `selectDirectAlternatives` (legacy behavior
@@ -107,9 +107,19 @@ export function selectVerifiedDirectAlternatives(
   const currentSlug = productData(current)?.slug;
   if (!currentSlug) return base;
   const verifiedSlugs = verifiedSubstitutes(env, currentSlug);
-  if (verifiedSlugs.length === 0) return base;
+  return selectCurrentDirectAlternatives(current, products, verifiedSlugs, limit);
+}
 
-  // Promote verified substitutes to the front; keep the rest ordered by the legacy sort.
+/** Recompute from a current, context-validated response, never a retained ranking.
+ * An empty list removes verified priority but preserves editorial candidates.
+ * This function does not authenticate evidence or infer complement relations.
+ */
+export function selectCurrentDirectAlternatives(current: any, products: any[], verifiedSlugs: readonly string[], limit = 4): RelatedProduct[] {
+  const base = selectDirectAlternatives(current, products, limit);
+  const currentSlug = productData(current)?.slug;
+  if (!currentSlug || verifiedSlugs.length === 0) return base;
+
+  // A substitute already in base must still be promoted, not silently discarded.
   const verifiedSet = new Set(verifiedSlugs);
   const verified = products
     .filter((candidate) => {
@@ -121,10 +131,10 @@ export function selectVerifiedDirectAlternatives(
       relationship: { type: 'direct-alternative' as const, targetSlug: productData(product).slug },
     }));
 
-  // Deduplicate: only include verified ones not already in base.
-  const baseSlugs = new Set(base.map((r) => productData(r.product).slug));
-  const uniqueVerified = verified.filter((r) => !baseSlugs.has(productData(r.product).slug));
-
-  return [...uniqueVerified, ...base]
-    .slice(0, limit) as RelatedProduct[];
+  const seen = new Set<string>();
+  return [...verified, ...base].filter(item => {
+    const slug = productData(item.product).slug;
+    if (seen.has(slug)) return false;
+    seen.add(slug); return true;
+  }).slice(0, limit);
 }

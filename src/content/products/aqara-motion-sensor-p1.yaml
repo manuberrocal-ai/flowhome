@@ -1,13 +1,13 @@
 slug: aqara-motion-sensor-p1
-asin: B09QXPBRM2
+asin: B09QKVMMTB
 name: "Aqara Motion Sensor P1"
 brand: "Aqara"
 price: 24.99
 originalPrice: 24.99
 discountPct: 0
 category: motion-sensor
-affiliateUrl: "https://www.amazon.com/dp/B09QXPBRM2?tag=flowhome-20"
-image: "https://us.aqara.com/cdn/shop/files/Aqara_Motion_Sensor_P1.webp?v=1728699321"
+affiliateUrl: "https://www.amazon.com/dp/B09QKVMMTB?tag=flowhome-20"
+image: "/images/product-art/illustrations-v1/motion-sensor.png"
 ownerRating: 4.4
 ownerRatingCount: 4200
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,68 @@ catalogActive: true
 dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
-model: "Motion Sensor P1"
+model: "MS-S02"
+identityEvidence:
+  model: "MS-S02"
+  asin: B09QKVMMTB
+  claims:
+    bundle:
+      value: "One P1 sensor, holder, sticker and manual"
+      conditions: "These items are listed in the manufacturer's MS-S02 manual. Confirm the seller's current package separately."
+      sources:
+        - label: "Aqara P1 manual — box contents, English page 8"
+          url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+          accessedAt: "2026-09-06"
+    asin:
+      value: "B09QKVMMTB"
+      conditions: "The indexed Amazon listing identifies MS-S02 / Motion Sensor P1. The seller's hardware revision and current offer remain unverified."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09QKVMMTB"
+          accessedAt: "2026-09-06"
+    market:
+      value: "US Amazon listing"
+      conditions: "This identifies the consulted storefront, not a certification of the seller's regional hardware."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09QKVMMTB"
+          accessedAt: "2026-09-06"
+    model:
+      value: "MS-S02"
+      conditions: "The P1 manual identifies this model; the seller's physical unit and revision have not been inspected."
+      sources:
+        - label: "Aqara P1 manual — specifications, English page 8"
+          url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+          accessedAt: "2026-09-06"
+    role:
+      value: "Zigbee motion and ambient-light sensor; requires a compatible Aqara Zigbee 3.0 hub"
+      conditions: "This is a sensor accessory, not a hub or controller. No individual ecosystem pairing is certified here."
+      sources:
+        - label: "Aqara P1 manual — product introduction and setup, English pages 1-2"
+          url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+          accessedAt: "2026-09-06"
+sources:
+  - label: "Amazon — Motion Sensor P1 MS-S02"
+    url: "https://www.amazon.com/dp/B09QKVMMTB"
+    accessedAt: "2026-09-06"
+  - label: "Aqara — Motion Sensor P1 manual, model MS-S02"
+    url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+    accessedAt: "2026-09-06"
+compatibilityNotes:
+  - "MS-S02 is the Zigbee Motion Sensor P1, not the Thread-based P2 or a presence sensor. The manufacturer's setup requires an Aqara Zigbee 3.0 hub and Aqara Home app; an individual ecosystem pairing is not certified here."
+  - "The previous ASIN could not be substantiated; this destination identifies MS-S02 in the consulted listing. Historical commercial observations have not been verified for the corrected destination. Confirm hardware, firmware and seller package before buying."
+installation:
+  model: "MS-S02"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Have an Aqara Zigbee 3.0 hub and Aqara Home app ready. Remove the battery insulating tab, add Motion Sensor P1 in the app and confirm communication with the hub before fixing the sensor in position."
+    - "Use indoors, away from moisture and heat sources. Choose a clean, flat mounting surface and a detection direction; the manual recommends 1.2-2 m mounting height. Avoid glass, tile, marble, uneven wall coverings and facing heaters. Test detection at the intended location."
+    - "Follow the MS-S02 manual for its two CR2450 button batteries; keep new and used batteries away from children and stop using a compartment that will not close securely. This is a documentary setup assessment, not a tested security system or a guarantee of ecosystem pairing."
+  sources:
+    - label: "Aqara — MS-S02 setup, placement and battery precautions (English pages 1-11)"
+      url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+      accessedAt: "2026-09-06"
 wifi: false
 bluetooth: false
 zigbee: true
@@ -33,6 +94,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: standard
-priorityScore: 52
-roiApproved: true

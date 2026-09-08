@@ -1,0 +1,451 @@
+{
+  "observedAt": "2026-09-05T14:36:03.415Z",
+  "scope": "Installation only. Declared catalog identity is not an independently verified Amazon listing match.",
+  "preservation": "All parsed YAML fields except the newly added installation object are unchanged from the pre-edit snapshot.",
+  "products": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "model": "Aeotec SmartThings Hub",
+      "asin": "B08TWDNQ5Q",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "5310d15ecaef910c7732569cbbfeb9ae4f1ababc594f609e8070599e7a4807fb",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "amazon-smart-thermostat",
+      "model": "Amazon Smart Thermostat",
+      "asin": "B08J4C8871",
+      "market": "US",
+      "installation": {
+        "model": "Amazon Smart Thermostat",
+        "market": "US",
+        "assessment": "advanced",
+        "requirements": [
+          "Requires compatible 24 V HVAC wiring and a C-wire or compatible C-wire power adapter; not for 120–240 V or millivolt systems.",
+          "Follow the manual's power-isolation precautions and use a professional if you are not comfortable with electrical wiring. Alexa app and 2.4 GHz Wi-Fi setup are also required."
+        ],
+        "sources": [
+          {
+            "label": "Amazon Smart Thermostat US installation and safety guide",
+            "url": "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "b5a5844644df29bca2889b3a72a3c25cb7b5634a68ad8f76df9a41fce678cbb3",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "model": "Aqara Hub M2",
+      "asin": "B08Y1PJZZH",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "e39a7836c0849ab95b2f457ef4e4d089301bc7902c1832604ec7b19e1c8c52ba",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "model": "Motion Sensor P1",
+      "asin": "B09QXPBRM2",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "ee8406234f305fc2b2f426720d0d18520f79a5497285cd4f2d5964a0be88da72",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "model": "Arlo Essential Outdoor Camera",
+      "asin": "B0DVNSQSD7",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "7f1af0e7ef74c25b65bca31b5d7c0046462d97e5388a861d027116656a81ce8c",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "august-wifi-smart-lock",
+      "model": "August Wi-Fi Smart Lock",
+      "asin": "B082VXK9CK",
+      "market": "US",
+      "installation": {
+        "model": "August Wi-Fi Smart Lock",
+        "market": "US",
+        "assessment": "light-setup",
+        "requirements": [
+          "Mounts on the inside of a compatible existing single-cylinder deadbolt; check August's deadbolt compatibility list first.",
+          "Requires batteries, the August app on a supported phone and Wi-Fi internet. This is a retrofit installation, not just app pairing."
+        ],
+        "sources": [
+          {
+            "label": "August Wi-Fi Smart Lock installation and deadbolt requirements",
+            "url": "https://august.com/products/august-wifi-smart-lock",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "d6b64e95fa64df2f4de227701efb51d23538c7855ae1e696396646f3e2592551",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "model": "Blink Outdoor 4",
+      "asin": "B0B1N5HW22",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "e63a944ce98d7f0601f8d8a556c5a22e314bb385230d4b1d6edb67f6cd2af36d",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "model": "Echo Dot 5th Gen",
+      "asin": "B09B8V1LZ3",
+      "market": "US",
+      "installation": {
+        "model": "Echo Dot 5th Gen",
+        "market": "US",
+        "assessment": "plug-and-play",
+        "requirements": [
+          "Connect the power adapter, then complete setup in the Alexa app with an Amazon account and Wi-Fi internet."
+        ],
+        "sources": [
+          {
+            "label": "Amazon Echo Dot 5th Generation setup guide",
+            "url": "https://digprjsurvey.amazon.com/csad/help/node/TdLI5SX5VhnxC6x6Ct",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "d5102f6727f72186aecf8c89833600a0b7abe2b011000e4ac1061d19a3d6c5a8",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "echo-show-8-3rd-gen",
+      "model": "Echo Show 8 3rd Gen",
+      "asin": "B0BLS3Y632",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "86aee72f669725d6a2bb90fa5cee627cb71b931f48ffc64bc01af65d0596e8ed",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "model": "ecobee Smart Thermostat Premium",
+      "asin": "B09XXTQP3B",
+      "market": "US",
+      "installation": {
+        "model": "ecobee Smart Thermostat Premium",
+        "market": "US",
+        "assessment": "advanced",
+        "requirements": [
+          "Requires compatible 24 VAC HVAC wiring; check your system with ecobee's compatibility checker before purchase.",
+          "Power uses a C-wire or a compatible Power Extender Kit installation. Check wiring and installation needs with the manufacturer or an HVAC professional."
+        ],
+        "sources": [
+          {
+            "label": "ecobee Smart Thermostat Premium US wiring and powering methods",
+            "url": "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "6bfa4fcb448c6794dd6a560440cb1995b74758dea4b84a76f4148f48b98cb065",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "eufy-security-indoor-cam-c120",
+      "model": "Eufy Security Indoor Cam C120",
+      "asin": "B08571VZ3Q",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "25689c679d0819dd3ee13e4e8738e78ebc66be380ff01cedad279872278eb487",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "model": "Google Nest Hub 2nd Gen",
+      "asin": "B08R8N3Q7C",
+      "market": "US",
+      "installation": {
+        "model": "Google Nest Hub 2nd Gen",
+        "market": "US",
+        "assessment": "plug-and-play",
+        "requirements": [
+          "Needs wall-outlet power and setup in the Google Home app with a Google Account, a supported phone or tablet, and Wi-Fi internet."
+        ],
+        "sources": [
+          {
+            "label": "Google Nest Hub 2nd gen specifications and power requirements",
+            "url": "https://support.google.com/googlehome/answer/7072284?hl=en",
+            "accessedAt": "2026-09-05"
+          },
+          {
+            "label": "Google smart speaker and display setup requirements",
+            "url": "https://support.google.com/googlehome/answer/7029485?hl=en",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "e0085e239ba1cc96cd5276510b516e77b0ef2a5a789dcfb13dd6c401c9212fa2",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "model": "Govee RGBIC LED Strip Lights",
+      "asin": "B099S9DXT7",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "e0cfc8c423e62548b0d13bb6cddc7261b1d6b0ef52c4508868ca57eabff30688",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "irobot-roomba-j7-plus",
+      "model": "iRobot Roomba j7+",
+      "asin": "B094NYHTMF",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "a8bd2dc2974cc2f301e6b6d98548eaca72bb4df685e17b4f5561b29f7a433249",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "model": "Levoit Core 300S Smart Air Purifier",
+      "asin": "B09BJMY8HL",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "11e46aa6a50bf07c40460543d7102c2827ad005c734a6193d3cd4a9d2db0b401",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "meross-smart-garage-door-opener",
+      "model": "Meross Smart Garage Door Opener",
+      "asin": "B084Z5QZR2",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "74cd3e86395e5399ff150ca666c1b66e6b5b98e42236d0ccf80c808175420b65",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "philips-hue-white-color-starter-kit",
+      "model": "Philips Hue White and Color Starter Kit",
+      "asin": "B016H0QZ7I",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "4671e560794dab253e2b2fd4d5323a107c700d9db983d52db392db302cb3d5dd",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "ring-video-doorbell-wired",
+      "model": "Ring Video Doorbell Wired",
+      "asin": "B08CKHPP52",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "c8593cce57c3b3c3ef9f3869a72bf43bf4ef01a86c9e74bd0598ea0134a016be",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "roborock-q5-plus",
+      "model": "Roborock Q5+ Robot Vacuum",
+      "asin": "B09NM549V7",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "34c2e5ac4fba2ea80312ed2cb953524493bfbc8c16020deab625d8026862449c",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "schlage-encode-smart-wifi-deadbolt",
+      "model": "Encode Smart WiFi Deadbolt",
+      "asin": "B07HXMLCBT",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "89c9fa42fabc7184eda5c6fb4687a48b64f1a9bc5eb2a2f12ff389c45a948575",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "model": "SwitchBot Blind Tilt",
+      "asin": "B0B4D95FZW",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "38d6504844cb99df73985b834aadaeb9e6a6d1d495ab4968421324667657c420",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "model": "Hub 2",
+      "asin": "B0BM8VS13P",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "a9ebcf6363856a03f048384b1e9a49cdf7d5a05b34fa808814b5d371c4d6d8b0",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "tapo-c120-security-camera",
+      "model": "Tapo C120",
+      "asin": "B0CH45HPZT",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "180bbe522f236c47f4b56c12c7869f9a0c32a8cf273ec070cea44788536fe2ae",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "tp-link-kasa-smart-dimmer-hs220",
+      "model": "HS220",
+      "asin": "B079775ZZQ",
+      "market": "US",
+      "installation": {
+        "model": "HS220",
+        "market": "US",
+        "assessment": "advanced",
+        "requirements": [
+          "This in-wall dimmer requires electrical wiring and a neutral wire; it is not a plug-in device.",
+          "Check the bulb's dimming type and the manufacturer's load limits before installation."
+        ],
+        "sources": [
+          {
+            "label": "Kasa HS220 US specifications and dimming requirements",
+            "url": "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "91c8700476e4b6309b80b547cad00a2d6925f1514a359a574687c577f16db26a",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "tp-link-kasa-smart-light-switch-hs200",
+      "model": "HS200",
+      "asin": "B01EZV35QU",
+      "market": "US",
+      "installation": {
+        "model": "HS200",
+        "market": "US",
+        "assessment": "advanced",
+        "requirements": [
+          "This in-wall switch requires electrical wiring and a neutral wire; it is not a plug-in device.",
+          "Check the manufacturer's wiring and load requirements with a qualified installer if needed."
+        ],
+        "sources": [
+          {
+            "label": "Kasa HS200 US specifications and installation",
+            "url": "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200",
+            "accessedAt": "2026-09-05"
+          }
+        ]
+      },
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "2fd316a87326069167bb5e81a083d402a02fb7b1c9a1a8c71ea8742b37a4fb80",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "tp-link-kasa-smart-plug-mini",
+      "model": "TP-Link Kasa Smart Plug Mini",
+      "asin": "B091FXQQMQ",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "fcab437797a0691248074d2877b59f2e8a16e404852bcb713f31a2736daa75ff",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "model": "Wyze Bulb Color",
+      "asin": "B08WZN4JW2",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "26b1a862aaef44defcacc1dc5a7e1dfa939cce3adc79ba3c27936683c5b6b9b8",
+      "otherFieldsPreserved": true
+    },
+    {
+      "slug": "yale-assure-lock-2-wifi",
+      "model": "Assure Lock 2 Wi-Fi",
+      "asin": "B0CPLS7F28",
+      "market": "US",
+      "installation": null,
+      "listingIdentityMatch": "unknown",
+      "bundle": "unknown",
+      "hardwareRevision": "unknown",
+      "restHash": "8dc7bcd1b6c68ce38307fcdf1907cc08265c2bd1ae1aabfb7d7174262f61a8d5",
+      "otherFieldsPreserved": true
+    }
+  ]
+}

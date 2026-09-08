@@ -1,0 +1,44 @@
+async page => {
+  const results = []; let requests = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  page.on('request', request => { if (request.url().includes('/compatibility/relations')) requests.push(request.url()); });
+  const origin = page.url().split('/').slice(0, 3).join('/');
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.goto(origin + '/real-product/'); requests = [];
+    const root = page.locator('[data-relationship-product]');
+    check(await root.isHidden(), 'Public relationship section starts hidden at ' + width);
+    const originalFields = await page.locator('[data-compatibility-value]').allTextContents();
+    await page.evaluate(async () => {
+      const { mountRelationPresentation } = await import('/relations-presentation.js');
+      window.mountRelations = endpoint => mountRelationPresentation(document.querySelector('[data-relationship-product]'), { enabled: true, endpoint, pageUrl: location.href });
+      window.relationsMounted = window.mountRelations('/compatibility/relations');
+    });
+    check(requests.length === 0, 'No request on explicit mount at ' + width);
+    await root.getByRole('button', { name: 'Refresh relationships' }).focus(); await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.querySelectorAll('[data-relationship-substitutes] li').length === 1);
+    check(requests.length === 1 && requests[0].includes('surface=alternatives'), 'Dedicated alternatives authorization requested at ' + width);
+    check(await root.locator('a').count() === 1 && (await root.locator('a').getAttribute('href')) === '/product/echo-show-8-3rd-gen/', 'Only known product gets a local link at ' + width);
+    check(await root.locator('[data-relationship-complements] li').count() === 2, 'Hardware and unavailable catalog records retained as text at ' + width);
+    check((await root.innerText()).includes('<img src=x onerror=alert(1)>') && await root.locator('img').count() === 0, 'Conditions remain literal text at ' + width);
+    check((await root.innerText()).includes('source: Synthetic rendering fixture'), 'Sources and confidence visible at ' + width);
+    check(JSON.stringify(await page.locator('[data-compatibility-value]').allTextContents()) === JSON.stringify(originalFields), 'Alternatives do not overwrite product-surface claims at ' + width);
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No global overflow at ' + width);
+    await root.scrollIntoViewIfNeeded(); await page.screenshot({ path: '.playwright-cli/flowhome-relations-live-' + width + '.png' });
+    await page.context().setOffline(true);
+    try {
+      await page.waitForFunction(() => document.querySelectorAll('[data-relationship-substitutes] li, [data-relationship-complements] li').length === 0);
+      check(!(await root.innerText()).includes('Synthetic rendering fixture') && await root.locator('a').count() === 0, 'Offline removes links, conditions and sources at ' + width);
+      await page.screenshot({ path: '.playwright-cli/flowhome-relations-withdrawn-' + width + '.png' });
+    } finally { await page.context().setOffline(false); }
+    check(requests.length === 1 && await root.locator('a').count() === 0, 'Online does not request or resurrect links at ' + width);
+    await page.evaluate(() => { window.relationsMounted.dispose(); window.relationsMounted = window.mountRelations('/compatibility/relations-short'); });
+    await root.getByRole('button', { name: 'Refresh relationships' }).click();
+    await page.waitForFunction(() => document.querySelectorAll('[data-relationship-substitutes] li').length === 1);
+    await page.waitForFunction(() => document.querySelectorAll('[data-relationship-substitutes] li, [data-relationship-complements] li').length === 0);
+    check(!(await root.innerText()).includes('Synthetic rendering fixture'), 'Actual expiry removes relationship metadata at ' + width);
+    await page.evaluate(() => window.relationsMounted.dispose());
+    check(await root.getByRole('button', { name: 'Refresh relationships' }).isDisabled(), 'Disposal disables refresh at ' + width);
+  }
+  return { checks: results.length, results };
+}

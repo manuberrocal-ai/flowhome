@@ -19,7 +19,9 @@ Keep countries, GSC/Bing/GA4/Amazon sources, devices, landing-page clusters, con
 
 ## Bias and provisional thresholds
 
-Record seasonality, country/device mix, consent loss, bot/filter differences, attribution windows, release timing, selection into affiliate clicks, survivorship, source changes, and small samples. Thresholds are provisional: candidate availability 99.9%/30d, critical flow 100% synthetic per release, CTA 100% contract-valid per release, zero expired surfaced with price 7d/availability 24h freshness, ingestion p95≤15m, Lighthouse 90/95/95/95, LCP≤2500ms, CLS≤0.1, TBT≤200ms, existing SEO budgets, and ≥30 outcomes/segment.
+Record seasonality, country/device mix, consent loss, bot/filter differences, attribution windows, release timing, selection into affiliate clicks, survivorship, source changes, and small samples. Thresholds are provisional: candidate availability 99.9%/30d, critical flow 100% synthetic per release, CTA 100% contract-valid per release, ingestion p95≤15m, Lighthouse 90/95/95/95, LCP≤2500ms, CLS≤0.1, TBT≤200ms, existing SEO budgets, and ≥30 outcomes/segment.
+
+The commercial ceiling is mandatory: zero expired offers surfaced; price and availability age <24h, narrowed by source permission and expiry. At exactly 24h data is unusable. D90 is a reporting window, not a retention grant. Historical use has no default permission (0); separate source-specific rights are required. Follow the [shared freshness and retention policy](data/commercial-freshness-policy.md), not a daily-check cadence, for expiry.
 
 ## Decision rules
 

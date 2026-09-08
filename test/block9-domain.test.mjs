@@ -66,6 +66,8 @@ test('toStrictUtc rejects date-only and offset forms', () => {
   assert.equal(toStrictUtc('2026-07-30'), null);
   assert.equal(toStrictUtc('2026-07-30T12:00:00+00:00'), null);
   assert.equal(toStrictUtc(null), null);
+  assert.equal(toStrictUtc('2026-02-30T12:00:00Z'), null);
+  assert.equal(toStrictUtc('2026-07-30T24:00:00Z'), null);
 });
 
 

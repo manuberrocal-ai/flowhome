@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "task": "FH-05",
+  "recorded_at": "2026-09-05T13:11:53.9823808Z",
+  "verdict": "APROBADO LOCAL",
+  "maturity": 3,
+  "repository": "C:/AGENTES/Proyectos/flowhome",
+  "branch": "improve/flowhome-v3-2026-09-04",
+  "head": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "version_limit": "Working tree with V3 and FH-02/FH-03/FH-05 uncommitted changes; HEAD alone does not identify these bytes.",
+  "policy": {
+    "price_max_age_ms": 86400000,
+    "availability_max_age_ms": 86400000,
+    "rating_max_age_ms": 86400000,
+    "age_boundary": "exclusive",
+    "default_history_retention_permission_ms": 0,
+    "history_requires_separate_source_permission": true
+  },
+  "validation": {
+    "directed": {
+      "command": "node --test test/commercial-policy.test.mjs test/commerce-data.test.mjs test/commerce-public-projection.test.mjs test/block8-*.test.mjs test/block12-*.test.mjs test/deal-client-expiry.test.mjs",
+      "passed": 121,
+      "failed": 0
+    },
+    "full_suite": {
+      "command": "npm test",
+      "passed": 634,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exit_code": 0
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "files": 239,
+      "errors": 0,
+      "warnings": 0,
+      "existing_hints": 18
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "content_pages": 88
+    },
+    "seo": {
+      "command": "npm run seo:audit",
+      "exit_code": 0,
+      "content_pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "diff_check": {
+      "command": "npm run diff-check",
+      "exit_code": 0,
+      "note": "Git warned about LF/CRLF normalization; no whitespace errors."
+    },
+    "browser_and_lighthouse": "Not repeated: no visual changes. Existing client-expiry tests included; not live serving validation."
+  },
+  "tested_cases": [
+    "24h-1ms accepted; 24h, 24h+1ms and seven days rejected across Block8/public projection",
+    "Missing/invalid/future capture rejection",
+    "Earlier explicit expiry with exclusive boundary",
+    "Shorter permission TTL, expired/revoked grant and excessive TTL rejected",
+    "Separate historical grant required; Amazon 90-day history rejected; synthetic alternate-feed history cannot refresh current price"
+  ],
+  "no_external_actions": true,
+  "live_provider_verified": false,
+  "production_verified": false,
+  "durable_retention_and_cache_expiry_verified": false,
+  "remaining_dependencies": [
+    "FH-16/FH-18: permission-aware durable storage, purge and serving/cache expiry",
+    "FH-14/FH-15: actual Amazon account access and rights",
+    "FH-13: approved release and online verification"
+  ],
+  "next_task": "FH-06",
+  "files": [
+    {
+      "path": "src/lib/commercial-policy.ts",
+      "sha256": "d969140a32686ac87724f7d481b24cbf7f316d828ee5d9152e0a05632e2deff7"
+    },
+    {
+      "path": "src/lib/commerce-data.ts",
+      "sha256": "24bdc1124b57fedfd24ecf15d5a6ab610f5b138db02b5c1a7c2a56d315050208"
+    },
+    {
+      "path": "src/lib/blocks/block8/domain.ts",
+      "sha256": "fe21e2be0b3f6a60c2f71e0dd07ecf2e6966839eb82ce888040805ce5dec2db9"
+    },
+    {
+      "path": "src/lib/blocks/block8/freshness.ts",
+      "sha256": "c8ac247a3df7390418d77189c2c1525d829c36b582d3c0f00f517704e15c2e1d"
+    },
+    {
+      "path": "src/lib/blocks/block12/contracts.ts",
+      "sha256": "af4014f081e2ba13cda0b553292763c6ede427f180b4818068a54933269b337e"
+    },
+    {
+      "path": "test/commercial-policy.test.mjs",
+      "sha256": "63754ccfac00de216502362f26ac91b934d69725f19da9b70be0285185ae3eb7"
+    },
+    {
+      "path": "test/block12-documentation.test.mjs",
+      "sha256": "dbf31b052ea43fc295268dddbca899d673efe34147a50255e226c26c9799b9f2"
+    },
+    {
+      "path": "docs/data/commercial-freshness-policy.md",
+      "sha256": "cf49f3128da97ff2ed5d998ace7344ca75d9edcfeddb544098240956ed9e78f0"
+    },
+    {
+      "path": "docs/BLOCK8_OFFER_TREND_RUNBOOK.md",
+      "sha256": "8f737fd49f65aff30c42d696def3dadd60c87b8f91b683010d9d0426320a8157"
+    },
+    {
+      "path": "docs/BLOCK12_SLO_CATALOG.md",
+      "sha256": "6a9522ac1a9cf33f31d920b1c27cba3c673f1314471e507537879026340313fe"
+    },
+    {
+      "path": "docs/BLOCK12_RUNBOOKS.md",
+      "sha256": "1cb3cf46132c35981759f2c9898cee56e2536dcf877d6c2b7adb62284c74a9e0"
+    },
+    {
+      "path": "docs/BLOCK12_90_DAY_GATE.md",
+      "sha256": "c80ab4a4ba44022a0b9c0951a8ef5718617876f49e9fdce5ee37bdf3489a127d"
+    }
+  ]
+}

@@ -2,19 +2,43 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import { getCategoryLabel } from '../../lib/product-art';
 
 const products = (await getCollection('products'))
   .filter((product) => product.data.catalogActive)
-  .sort((a, b) => (b.data.ownerRating * Math.log10(b.data.ownerRatingCount + 1)) - (a.data.ownerRating * Math.log10(a.data.ownerRatingCount + 1)));
+  .sort((a, b) => a.data.name.localeCompare(b.data.name, 'en') || a.id.localeCompare(b.id, 'en'));
 const categories = [...new Set(products.map((product) => product.data.category))].sort();
 ---
-<BaseLayout title="Smart Home Products, Research & Buying Guides | FlowHome" description="Research smart-home products and buying guides by category, compatibility, ratings, and practical setup considerations." canonicalURL="https://flowhome.dev/products/">
-  <section class="premium-page-hero">
+<BaseLayout title="Smart Home Products, Research & Buying Guides | FlowHome" description="Research smart-home products and buying guides by category, documented requirements, and practical setup considerations." canonicalURL="https://flowhome.dev/products/">
+  <section aria-label="Product directory">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Product directory</p>
-    <h1 class="mt-2 text-4xl font-black text-slate-950">Smart home products worth researching</h1>
-    <p class="mt-4 max-w-3xl text-lg text-slate-600">Browse smart speakers, lighting, cameras, robot vacuums, thermostats, plugs, and hubs. Use the directory for category discovery, then follow focused guides and reviews for a closer buying decision.</p>
-    <div class="mt-6 flex flex-wrap gap-2">
-      {categories.map((category) => <a href={'/category/' + category + '/'} class="rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700 hover:bg-blue-100">{category.replaceAll('-', ' ')}</a>)}
+    <h1 class="mt-2 text-3xl sm:text-4xl font-black text-slate-950">Smart home products worth researching</h1>
+    <p class="mt-3 max-w-3xl text-base text-slate-600">Find a device, check its setup requirements, and save a list to research.</p>
+    <div class="mt-5 grid gap-3 sm:grid-cols-2" data-catalog-controls hidden>
+      <label class="text-sm font-bold">Search products
+        <input id="catalog-search" type="search" placeholder="Name, brand or model" class="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal" />
+      </label>
+      <label class="text-sm font-bold">Category
+        <select id="catalog-category" class="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal">
+          <option value="">All categories</option>
+          {categories.map(category => <option value={category}>{getCategoryLabel(category)}</option>)}
+        </select>
+      </label>
+      <button id="catalog-reset" type="button" class="min-h-11 justify-self-start rounded-xl border border-slate-300 px-4 text-sm font-bold">Clear filters</button>
+    </div>
+    <details class="mt-3">
+      <summary class="min-h-11 cursor-pointer py-3 text-sm font-bold text-blue-800">Browse {categories.length} category guides</summary>
+      <nav aria-label="Product categories" class="flex flex-wrap gap-2">
+        {categories.map(category => <a href={'/category/' + category + '/'} class="inline-flex min-h-11 items-center rounded-xl bg-blue-50 px-3 py-2 text-sm font-bold text-blue-800">{getCategoryLabel(category)}</a>)}
+      </nav>
+    </details>
+  </section>
+  <section class="mt-5" aria-label="Product results">
+    <p id="catalog-count" role="status" class="mb-2 text-sm font-bold">{products.length} products</p>
+    <p class="mb-4 text-sm text-slate-600">Products are listed alphabetically, not ranked by customer ratings.</p>
+    <p id="catalog-empty" hidden class="rounded-xl border border-slate-200 bg-white p-6">No products match. Try a different name or clear the filters.</p>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {products.map(product => <div data-catalog-item data-name={product.data.name} data-brand={product.data.brand} data-model={product.data.model} data-category={product.data.category}><ProductCard product={product} /></div>)}
     </div>
   </section>
   <section class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="research-paths">
@@ -28,7 +52,39 @@ const categories = [...new Set(products.map((product) => product.data.category))
       <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/">Roborock Q5+ vs Roomba j7+ comparison →</a>
     </nav>
   </section>
-  <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {products.map((product) => <ProductCard product={product} />)}
-  </section>
+
+  <script>
+    import { matchesCatalogQuery } from '../../lib/catalog-filter.js';
+    const search = document.querySelector<HTMLInputElement>('#catalog-search');
+    const category = document.querySelector<HTMLSelectElement>('#catalog-category');
+    const reset = document.querySelector<HTMLButtonElement>('#catalog-reset');
+    const count = document.querySelector<HTMLElement>('#catalog-count');
+    const empty = document.querySelector<HTMLElement>('#catalog-empty');
+    const controls = document.querySelector<HTMLElement>('[data-catalog-controls]');
+    const items = [...document.querySelectorAll<HTMLElement>('[data-catalog-item]')];
+    if (search && category && reset && count && empty && controls) {
+      const update = () => {
+        let visible = 0;
+        for (const item of items) {
+          item.hidden = !matchesCatalogQuery(item.dataset, search.value, category.value);
+          if (!item.hidden) visible += 1;
+        }
+        count.textContent = visible + (visible === 1 ? ' product' : ' products') + ' of ' + items.length;
+        empty.hidden = visible !== 0;
+      };
+      search.addEventListener('input', update);
+      category.addEventListener('change', update);
+      reset.addEventListener('click', () => {
+        search.value = '';
+        category.value = '';
+        update();
+        search.focus();
+      });
+      controls.hidden = false;
+      update();
+    }
+  </script>
+  <style>
+    [data-catalog-controls][hidden] { display: none; }
+  </style>
 </BaseLayout>

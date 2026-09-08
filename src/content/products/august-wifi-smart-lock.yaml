@@ -7,7 +7,7 @@ originalPrice: 229.99
 discountPct: 22
 category: smart-lock
 affiliateUrl: "https://www.amazon.com/dp/B082VXK9CK?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B082VXK9CK.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-lock.png"
 ownerRating: 4.3
 ownerRatingCount: 10000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,35 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "August Wi-Fi Smart Lock"
+identityEvidence:
+  model: "August Wi-Fi Smart Lock"
+  asin: B082VXK9CK
+  claims:
+    model:
+      value: "August Wi-Fi Smart Lock"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "August Wi-Fi Smart Lock installation and deadbolt requirements"
+          url: "https://august.com/products/august-wifi-smart-lock"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Interior retrofit for a compatible single-cylinder deadbolt"
+      conditions: "This retains the exterior lock rather than replacing the entire deadbolt; consult the compatibility list."
+      sources:
+        - label: "August Wi-Fi Smart Lock installation and deadbolt requirements"
+          url: "https://august.com/products/august-wifi-smart-lock"
+          accessedAt: "2026-09-05"
+installation:
+  model: "August Wi-Fi Smart Lock"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Mounts on the inside of a compatible existing single-cylinder deadbolt; check August's deadbolt compatibility list first."
+    - "Requires batteries, the August app on a supported phone and Wi-Fi internet. This is a retrofit installation, not just app pairing."
+  sources:
+    - label: "August Wi-Fi Smart Lock installation and deadbolt requirements"
+      url: "https://august.com/products/august-wifi-smart-lock"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
@@ -33,6 +62,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 64
-roiApproved: true

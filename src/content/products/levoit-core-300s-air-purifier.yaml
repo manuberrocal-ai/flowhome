@@ -7,7 +7,7 @@ originalPrice: 149.99
 discountPct: 0
 category: air-purifier
 affiliateUrl: "https://www.amazon.com/dp/B09BJMY8HL?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B09BJMY8HL.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/air-purifier.png"
 ownerRating: 4.7
 ownerRatingCount: 11200
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,36 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Levoit Core 300S Smart Air Purifier"
+identityEvidence:
+  model: "Levoit Core 300S Smart Air Purifier"
+  asin: B09BJMY8HL
+  claims:
+    model:
+      value: "Levoit Core 300S Smart Air Purifier"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Levoit Core 300S manual — model, US power, safety, filter preparation and app setup (pages 1-3, 6-7)"
+          url: "https://files.vesync.com/desc/LEVOIT_Core300S_USER_MANUAL.pdf"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Air purifier with on-device and app controls"
+      conditions: "The Core 300S manual documents filter preparation and VeSync setup, not a clinical outcome or whole-home coverage guarantee."
+      sources:
+        - label: "Levoit Core 300S manual — model, US power, safety, filter preparation and app setup (pages 1-3, 6-7)"
+          url: "https://files.vesync.com/desc/LEVOIT_Core300S_USER_MANUAL.pdf"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Levoit Core 300S Smart Air Purifier"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "Before first use, remove the filter's plastic packaging, refit the filter handle-up and lock the cover. Keep the unit unplugged when servicing the filter; follow the Core 300S manual."
+    - "Use indoors on a flat, stable surface with at least 15 inches / 38 cm of clearance on all sides and unobstructed airflow. The documented US unit uses 120 V, 60 Hz; keep it away from water and heat."
+    - "The on-device controls operate the purifier without app setup. Additional smart functions use the VeSync app and an account; follow its pairing instructions for your exact unit."
+  sources:
+    - label: "Levoit Core 300S manual — model, US power, safety, filter preparation and app setup (pages 1-3, 6-7)"
+      url: "https://files.vesync.com/desc/LEVOIT_Core300S_USER_MANUAL.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +63,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 67
-roiApproved: true

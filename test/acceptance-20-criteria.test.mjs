@@ -2,6 +2,9 @@
 import test from 'node:test';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { getCommerceData } from '../src/lib/commerce-data.ts';
+import { generateProductSchema } from '../src/lib/seo.ts';
+import { selectRecommendationResult } from '../src/lib/quiz-recommend.ts';
 
 function read(path) {
   return readFileSync(path, 'utf8');
@@ -105,16 +108,18 @@ test('C6 - Owner ratings and editorial ratings are separate; JSON-LD never aggre
 });
 
 // P0#7 Disponibilidad real
-test('C7 - Availability only appears in JSON-LD when fresh source + status + timestamp verified ≤ 24h', () => {
-  const commerce = read(src('lib/commerce-data.ts'));
-  assert.match(commerce, /availabilityMs/);
-  assert.match(commerce, /availabilitySource/);
-  assert.match(commerce, /availabilityLastChecked/);
-  assert.match(commerce, /isFresh/);
-  assert.match(commerce, /getCommerceData/);
-  assert.match(commerce, /availability\s*=\s*availabilityFresh\s*&&\s*product\.availabilityStatus/);
-  assert.match(commerce, /availabilityMs:\s*24\s*\*\s*60\s*\*\s*60\s*\*\s*1000/);
-  assert.match(commerce, /isAvailabilityFresh/);
+test('C7 - Availability appears in JSON-LD only with exact authorized source, valid status and age below 24h', () => {
+  const now = new Date('2026-09-04T12:00:00Z');
+  const product = {
+    name: 'Test', asin: 'B012345678', affiliateUrl: 'https://www.amazon.com/dp/B012345678?tag=flowhome-20',
+    price: 80, priceSource: 'amazon-creators-api', priceLastChecked: '2026-09-04T11:00:00Z',
+    availabilityStatus: 'in-stock', availabilitySource: 'amazon-creators-api', availabilityLastChecked: '2026-09-04T11:00:00Z',
+  };
+  assert.equal(generateProductSchema(product, now).offers.availability, 'https://schema.org/InStock');
+  for (const overrides of [{ availabilitySource: 'manual' }, { availabilitySource: 'affiliate feed' }, { availabilitySource: undefined }, { availabilityStatus: 'unknown' }, { availabilityLastChecked: undefined }, { availabilityLastChecked: '2026-09-03T12:00:00Z' }, { availabilityLastChecked: '2026-09-05T12:00:00Z' }, { availabilityLastChecked: '2026-02-30T12:00:00Z' }]) {
+    assert.equal(getCommerceData({ ...product, ...overrides }, now).isAvailabilityFresh, false);
+    assert.equal(generateProductSchema({ ...product, ...overrides }, now).offers.availability, undefined);
+  }
 });
 
 // P1#8 Quiz real
@@ -130,16 +135,23 @@ test('C8 - Quiz has five-question flow, URL state, save actions, and at most fou
   assert.match(q, /serializeQuizState/);
   assert.match(q, /parseQuizState/);
   assert.match(q, /catalogActive/);
-  assert.match(q, /Math\.min\(4,/);
+  const candidates = Array.from({ length: 10 }, (_, index) => ({ slug: `camera-${index}`, category: 'security-camera', catalogActive: true }));
+  const selection = selectRecommendationResult({ goal: 'security', ecosystem: 'open', budget: 'open', installation: 'advanced', extra: 'open' }, candidates, 99);
+  assert.equal(selection.recommendations.length, 4);
   const page = read(src('pages/quiz.astro'));
   assert.match(page, /optionGroups\.map/);
   assert.match(page, /data-quiz-step=\{index \+ 1\}/);
   for (const group of ['GOAL_QUIZ_OPTIONS', 'ECOSYSTEM_QUIZ_OPTIONS', 'BUDGET_QUIZ_OPTIONS', 'INSTALLATION_QUIZ_OPTIONS', 'EXTRA_PRIORITY_QUIZ_OPTIONS']) assert.match(page, new RegExp(group));
-  assert.match(page, /Why this matches/);
+  assert.match(page, /Why it is listed/);
+  assert.match(page, /relaxedNotice\.classList\.toggle\('hidden', result\.relaxedFilters\.length === 0\)/);
+  assert.match(page, /#installation-checks/);
   assert.match(page, /Save/);
   assert.match(page, /history\.replaceState/);
   assert.match(page, /quiz_start/);
   assert.match(page, /Price source:/);
+  assert.match(page, /commerce\.isPriceFresh/);
+  assert.match(page, /Check price on Amazon/);
+  assert.match(q, /budget match is not verified/);
   assert.match(page, /quizStarted = false/);
   assert.match(page, /popstate[\s\S]*isCompleteQuizState\(state\)[\s\S]*renderResults\(false\)/);
   assert.ok(!/Step \$\{step\} of 3/.test(page), 'quiz must not retain the former three-step progress copy');
@@ -147,7 +159,7 @@ test('C8 - Quiz has five-question flow, URL state, save actions, and at most fou
 
 // P1#9 Comparaciones honestas
 test('C9 - Comparison pages have eight definitions with unique SEO guidance + Honest methodology section', () => {
-  const page = read(src('pages/compare/[...slugs].astro'));
+  const page = read(src('pages/compare/[...slugs].astro')) + read(src('lib/comparison-content.ts'));
   assert.equal((page.match(/slugs:\s*\[/g) ?? []).length, 8);
   const layout = read(src('layouts/CompareLayout.astro'));
   assert.match(layout, /Editorial methodology/);
@@ -163,6 +175,9 @@ test('C10 - Product, review and comparison pages expose an Editorial methodology
   assert.match(product, /editorial\.author\.name/);
   assert.match(product, /Ratings source:/);
   assert.match(product, /Price source:/);
+  assert.match(product, /commerce\.isRatingFresh \? `Amazon Creators API/);
+  assert.match(product, /commerce\.isPriceFresh \? `Amazon Creators API/);
+  assert.match(product, /A current authorized price is not available here/);
   assert.match(product, /Specs source:/);
   const review = read(src('layouts/ReviewLayout.astro'));
   assert.match(review, /Editorial methodology/);
@@ -183,7 +198,8 @@ test('C11 - Product specs are scoped by category via product-specs matrix (no Ni
   assert.match(specs, /export function getProductFeatures/);
   const product = read(src('pages/product/[slug].astro'));
   assert.match(product, /categoryFeatures/);
-  assert.match(product, /FlowHome only shows specs that are documented in our product data/);
+  assert.match(product, /catalog entries, not independent verification of each feature/);
+  assert.match(product, /Subscription requirements are not yet verified by feature/);
 });
 
 // P2#12 Motion respeta reduceMotion
@@ -233,7 +249,9 @@ test('C14 - Essential content renders by default while critical and below-fold i
   assert.match(index, /data-hero-image[\s\S]*loading="eager"[\s\S]*fetchpriority="high"[\s\S]*data-fallback-src/);
   assert.doesNotMatch(index, /content-visibility:\s*auto|data-reveal/);
   const base = read(src('layouts/BaseLayout.astro'));
-  assert.match(base, /safePreloadImage && <link rel="preload" as="image" href=\{safePreloadImage\} fetchpriority="high"/);
+  assert.match(base, /safePreloadImage && <link rel="preload" as="image" href=\{safePreloadImage\} imagesrcset=\{preloadImageSrcset\} imagesizes=\{preloadImageSizes\} fetchpriority="high"/);
+  assert.match(index, /preloadImageSrcset=\{heroProducts\[0\]\?\.imageSrcset\}/);
+  assert.match(index, /srcset=\{heroProducts\[0\]\.imageSrcset\} sizes=\{heroProducts\[0\]\.imageSizes\}/);
   assert.doesNotMatch(base, /preloadImage && <link rel="preload"/);
 });
 
@@ -244,7 +262,7 @@ test('C15 - Style system keeps 44px touch targets on hero carousel + mobile menu
   assert.match(css, /min-h-11|min-height:\s*2\.75rem|44px/);
   const home = read(src('pages/index.astro'));
   assert.match(home, /grid min-w-0 grid-cols-\[minmax\(0,1fr\)\]/);
-  assert.match(home, /max-w-full flex-wrap gap-1/);
+  assert.match(home, /hero-dot-controls flex min-w-0 max-w-full flex-wrap gap-0/);
   const consent = read(src('components/ConsentBanner.astro'));
   assert.doesNotMatch(consent, /class="fixed/);
   const base = read(src('layouts/BaseLayout.astro'));

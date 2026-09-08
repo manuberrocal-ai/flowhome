@@ -1,5 +1,7 @@
 # FlowHome Roadmap: Phases 0–6
 
+> Historical phased roadmap with dated appendices. For current execution use the [master prompt](project/PROMPT_MAESTRO.md), [integral assessment](project/JUZGADO_INTEGRAL.md) and [backlog](project/BACKLOG.json), reviewed 2026-09-05. Preserve these earlier observations; do not treat their pending states or metrics as a current account check.
+
 This roadmap sequences the remaining work without implementing later systems. `Completed` means existing evidence is recorded; `Technically tested` means local contracts or checks exist; `Not started`, `Externally blocked`, and `Time/volume-dependent` are explicit states, not success claims.
 
 ## Phase summary

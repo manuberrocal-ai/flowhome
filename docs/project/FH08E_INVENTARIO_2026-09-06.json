@@ -1,0 +1,213 @@
+{
+  "scope": "Local source/render parity, not independent source truth, physical testing, or publication approval.",
+  "total": 23,
+  "records": [
+    {
+      "file": "src/content/reviews/aeotec-smartthings-hub-review.md",
+      "path": "/review/aeotec-smartthings-hub-review/",
+      "title": "Aeotec SmartThings Hub Review: Controller Role and Compatibility Checks",
+      "description": "A structured FlowHome review of Aeotec SmartThings Hub covering Matter, Zigbee, ecosystem support, tradeoffs, and buyer fit.",
+      "sourceCount": 4,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/amazon-smart-thermostat-review.md",
+      "path": "/review/amazon-smart-thermostat-review/",
+      "title": "Amazon Smart Thermostat Review: Wiring Checks for Alexa Homes",
+      "description": "A practical FlowHome review of Amazon Smart Thermostat with setup checks, Alexa compatibility, thermostat tradeoffs, and buying timing.",
+      "sourceCount": 1,
+      "paragraphsChecked": 19,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/aqara-hub-m2-review.md",
+      "path": "/review/aqara-hub-m2-review/",
+      "title": "Aqara Hub M2 Review: Zigbee Devices and Matter Bridging",
+      "description": "A structured FlowHome review of Aqara Hub M2 covering Zigbee, ecosystem support, app control, tradeoffs, and buyer fit.",
+      "sourceCount": 3,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/august-wifi-smart-lock-review.md",
+      "path": "/review/august-wifi-smart-lock-review/",
+      "title": "August Wi-Fi Smart Lock Review: Retrofit Access Without Replacing Keys",
+      "description": "A practical FlowHome review of August Wi-Fi Smart Lock with retrofit setup notes, compatibility, access-control tradeoffs, and buying timing.",
+      "sourceCount": 1,
+      "paragraphsChecked": 19,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/blink-outdoor-4-review.md",
+      "path": "/review/blink-outdoor-4-review/",
+      "title": "Blink Outdoor 4 Review: Wireless Security for Alexa Homes",
+      "description": "A practical FlowHome review of Blink Outdoor 4 with setup notes, security-camera tradeoffs, compatibility, and buying timing.",
+      "sourceCount": 2,
+      "paragraphsChecked": 19,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/echo-dot-5th-gen-review.md",
+      "path": "/review/echo-dot-5th-gen-review/",
+      "title": "Echo Dot 5th Gen Review: Alexa Controls and Matter Requirements",
+      "description": "A documentary Echo Dot fifth-generation review covering Alexa setup, microphone controls, Matter roles, and commands to verify.",
+      "sourceCount": 2,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/ecobee-smart-thermostat-premium-review.md",
+      "path": "/review/ecobee-smart-thermostat-premium-review/",
+      "title": "ecobee Smart Thermostat Premium Review: Room Sensors and HVAC Checks",
+      "description": "A documentary review of ecobee Premium covering the included room sensor, HVAC compatibility, installation, and untested comfort outcomes.",
+      "sourceCount": 1,
+      "paragraphsChecked": 19,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/eufy-security-indoor-cam-c120-review.md",
+      "path": "/review/eufy-security-indoor-cam-c120-review/",
+      "title": "Eufy Indoor Cam C120 Review: Indoor Placement and Storage Choices",
+      "description": "A practical FlowHome review of Eufy Security Indoor Cam C120 with setup notes, ecosystem compatibility, privacy tradeoffs, and buying timing.",
+      "sourceCount": 1,
+      "paragraphsChecked": 18,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/google-nest-hub-2nd-gen-review.md",
+      "path": "/review/google-nest-hub-2nd-gen-review/",
+      "title": "Google Nest Hub 2nd Gen Review: A Smart Display for Google Home Routines",
+      "description": "A practical FlowHome review of Google Nest Hub 2nd Gen with setup notes, display use cases, compatibility, privacy tradeoffs, and buying timing.",
+      "sourceCount": 2,
+      "paragraphsChecked": 21,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/irobot-roomba-j7-plus-review.md",
+      "path": "/review/irobot-roomba-j7-plus-review/",
+      "title": "iRobot Roomba j7+ Review: Smart Mapping, Compatibility, and Tradeoffs",
+      "description": "A cautious iRobot Roomba j7+ review covering PrecisionVision obstacle avoidance, Imprint Smart Mapping, app control, smart-home compatibility, setup questions, and tradeoffs.",
+      "sourceCount": 2,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/philips-hue-white-color-starter-kit-review.md",
+      "path": "/review/philips-hue-white-color-starter-kit-review/",
+      "title": "Philips Hue Starter Kit 562918 Review: Two E26 Bulbs and Bridge Setup",
+      "description": "A documentary review of Hue kit 562918 covering its two E26 color bulbs, included Bridge, fixture planning, and package checks.",
+      "sourceCount": 3,
+      "paragraphsChecked": 19,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/ring-video-doorbell-wired-review.md",
+      "path": "/review/ring-video-doorbell-wired-review/",
+      "title": "Ring Video Doorbell Wired Review: Installation and Recording Tradeoffs",
+      "description": "A practical FlowHome review of Ring Video Doorbell Wired with setup notes, subscription tradeoffs, Alexa fit, and buying timing.",
+      "sourceCount": 5,
+      "paragraphsChecked": 18,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/roborock-q5-plus-review.md",
+      "path": "/review/roborock-q5-plus-review/",
+      "title": "Roborock Q5+ Review: A Smart Robot Vacuum for Routine Floor Care",
+      "description": "A cautious review of the original Roborock Q5+ robot vacuum, covering PreciSense Precision LiDAR, app control, dock planning, smart-home compatibility, and buying questions.",
+      "sourceCount": 3,
+      "paragraphsChecked": 22,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/switchbot-hub-2-review.md",
+      "path": "/review/switchbot-hub-2-review/",
+      "title": "SwitchBot Hub 2 Review: Matter Bridging and Device Limits",
+      "description": "A structured FlowHome review of SwitchBot Hub 2 covering Matter, ecosystem support, app control, tradeoffs, and buyer fit.",
+      "sourceCount": 4,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/reviews/tp-link-kasa-smart-plug-mini-review.md",
+      "path": "/review/tp-link-kasa-smart-plug-mini-review/",
+      "title": "Kasa EP10P2 Review: Two-Pack Identity and On/Off Control Checks",
+      "description": "A documentary review of Kasa EP10P2 covering its two-pack identity, load and setup checks, and unresolved energy-monitoring evidence.",
+      "sourceCount": 5,
+      "paragraphsChecked": 20,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-alexa-smart-home-devices.yaml",
+      "path": "/best/best-alexa-smart-home-devices/",
+      "title": "Alexa Smart Home Buying Guide: Devices and Setup Checks",
+      "description": "An Alexa-oriented shortlist with model, wiring, storage, and account checks before purchase.",
+      "sourceCount": 5,
+      "paragraphsChecked": 5,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-google-home-starter-devices.yaml",
+      "path": "/best/best-google-home-starter-devices/",
+      "title": "Google Home Starter Buying Guide: Display, Controls, and Fit",
+      "description": "Compare a Google-oriented device shortlist with exact-model, permissions, installation, and integration checks.",
+      "sourceCount": 5,
+      "paragraphsChecked": 7,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-robot-vacuums-for-smart-homes.yaml",
+      "path": "/best/best-robot-vacuums-for-smart-homes/",
+      "title": "Robot Vacuum Buying Guide: Original Roborock Q5+ vs Roomba j7+",
+      "description": "Compare the original Q5+ and j7+ by documented navigation, dock requirements, cleaning role, and model checks.",
+      "sourceCount": 2,
+      "paragraphsChecked": 7,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-smart-home-devices-for-renters.yaml",
+      "path": "/best/best-smart-home-devices-for-renters/",
+      "title": "Smart Home Devices for Renters: Installation and Permission Checks",
+      "description": "Research removable controls, cameras, lighting, and retrofit access without assuming every installation is permitted or damage-free.",
+      "sourceCount": 4,
+      "paragraphsChecked": 5,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-smart-home-starter-kit.yaml",
+      "path": "/best/best-smart-home-starter-kit/",
+      "title": "Smart Home Starter Kit Guide: Choose One Useful Room Routine",
+      "description": "Plan a starter setup around a specific room, compatible controls, required accessories, and current total cost.",
+      "sourceCount": 4,
+      "paragraphsChecked": 5,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-smart-hubs-for-matter-zigbee.yaml",
+      "path": "/best/best-smart-hubs-for-matter-zigbee/",
+      "title": "Smart Hub Buying Guide: Aqara, SwitchBot, and Aeotec Roles",
+      "description": "Compare documented bridge and controller roles, exact-device support, and ecosystem requirements before choosing a hub.",
+      "sourceCount": 7,
+      "paragraphsChecked": 11,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-smart-lighting-for-room-control.yaml",
+      "path": "/best/best-smart-lighting-for-room-control/",
+      "title": "Smart Lighting Buying Guide: Hue, Govee, and Wyze Room Control",
+      "description": "Compare bulb and strip formats, documented control paths, exact models, and installation requirements.",
+      "sourceCount": 5,
+      "paragraphsChecked": 11,
+      "status": "source-render-match"
+    },
+    {
+      "file": "src/content/best-of/best-smart-security-basics.yaml",
+      "path": "/best/best-smart-security-basics/",
+      "title": "Smart Security Buying Guide: Camera, Doorbell, and Lock Roles",
+      "description": "Compare monitoring and access-control roles with storage, power, privacy, and installation checks.",
+      "sourceCount": 4,
+      "paragraphsChecked": 5,
+      "status": "source-render-match"
+    }
+  ]
+}

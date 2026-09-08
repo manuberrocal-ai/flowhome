@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { parseCsv } from '../scripts/maintenance/organic-growth-report.mjs';
+import { expandQualityWorkflow } from './helpers/quality-workflow.mjs';
 
 const root = new URL('..', import.meta.url);
-const read = (file) => readFile(new URL(file, root), 'utf8');
+const read = async (file) => expandQualityWorkflow(await readFile(new URL(file, root), 'utf8'));
 const scorecardHeader = ['area', 'metric', 'before', 'current', 'source', 'measured_at', 'owner', 'sample_window', 'status', 'evidence', 'target', 'gap'];
 const areas = ['UX', 'reliability', 'conversion', 'technical_seo', 'editorial_eeat', 'geo', 'acquisition', 'catalog_deals', 'trends', 'analytics', 'automation', 'trust_privacy', 'performance', 'accessibility'];
 const statuses = new Set(['implemented', 'technically_tested', 'externally_blocked', 'time_volume_dependent']);
@@ -76,8 +77,8 @@ test('roadmap and CI workflows preserve the documented security gates', async ()
   assert.match(quality, /npm run typecheck/);
 
   for (const workflow of [qualityCheck, batchedDeploy]) {
-    assert.match(workflow, /actions\/checkout@v7/);
-    assert.match(workflow, /actions\/setup-node@v6/);
+    assert.match(workflow, /actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1/);
+    assert.match(workflow, /actions\/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38/);
     assert.match(workflow, /node-version: 24/);
     assert.match(workflow, /cache-dependency-path: package-lock\.json/);
     assert.match(workflow, /npm audit --omit=dev --audit-level=moderate/);

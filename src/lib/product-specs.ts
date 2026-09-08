@@ -14,92 +14,91 @@
   | 'garage-door-opener'
   | 'smart-blinds';
 
+import { getFeatureEvidenceLabel } from './product-feature-evidence.ts';
+
 interface FeatureRow {
   label: string;
   sourceField: string;
-  truthyLabel?: string;
-  falsyLabel?: string;
+  boolean?: true;
   formatter?: (value: any, product: any) => string;
 }
 
 const SECURITY_CAMERA_FEATURES: FeatureRow[] = [
   { label: 'Resolution', sourceField: 'resolution' },
   { label: 'Field of view', sourceField: 'fieldOfView', formatter: (v) => (v ? `${v}\u00b0` : '') },
-  { label: 'Night vision', sourceField: 'nightVision', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Two-way audio', sourceField: 'twoWayAudio', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Night vision', sourceField: 'nightVision', boolean: true },
+  { label: 'Two-way audio', sourceField: 'twoWayAudio', boolean: true },
   { label: 'Local storage', sourceField: 'storage' },
-  { label: 'Subscription required', sourceField: 'subscriptionRequired', truthyLabel: 'Yes', falsyLabel: 'No' },
 ];
 
 const VIDEO_DOORBELL_FEATURES: FeatureRow[] = [
   { label: 'Resolution', sourceField: 'resolution' },
   { label: 'Field of view', sourceField: 'fieldOfView', formatter: (v) => (v ? `${v}\u00b0` : '') },
-  { label: 'Night vision', sourceField: 'nightVision', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Two-way audio', sourceField: 'twoWayAudio', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Night vision', sourceField: 'nightVision', boolean: true },
+  { label: 'Two-way audio', sourceField: 'twoWayAudio', boolean: true },
   { label: 'Local storage', sourceField: 'storage' },
-  { label: 'Subscription required', sourceField: 'subscriptionRequired', truthyLabel: 'Yes', falsyLabel: 'No' },
 ];
 
 const SMART_LOCK_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Bluetooth', sourceField: 'bluetooth', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Battery included', sourceField: 'batteryIncluded', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Bluetooth', sourceField: 'bluetooth', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
+  { label: 'Battery included', sourceField: 'batteryIncluded', boolean: true },
   { label: 'Battery life', sourceField: 'batteryLife' },
 ];
 
 const SMART_SPEAKER_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Bluetooth', sourceField: 'bluetooth', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Bluetooth', sourceField: 'bluetooth', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
 ];
 
 const SMART_DISPLAY_FEATURES: FeatureRow[] = [
   { label: 'Screen size', sourceField: 'screenSize' },
   { label: 'Screen resolution', sourceField: 'screenResolution' },
   { label: 'Speakers', sourceField: 'speakers' },
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
 ];
 
 const SMART_LIGHTING_FEATURES: FeatureRow[] = [
   { label: 'Lumens', sourceField: 'lumens' },
   { label: 'Color temperature', sourceField: 'colorTemp' },
-  { label: 'RGB color', sourceField: 'rgb', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Dimmable', sourceField: 'dimmable', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'RGB color', sourceField: 'rgb', boolean: true },
+  { label: 'Dimmable', sourceField: 'dimmable', boolean: true },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
 ];
 
 const SMART_PLUG_FEATURES: FeatureRow[] = [
   { label: 'Amperage', sourceField: 'amperage' },
-  { label: 'Energy monitoring', sourceField: 'energyMonitoring', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Surge protection', sourceField: 'surgeProtection', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Energy monitoring', sourceField: 'energyMonitoring', boolean: true },
+  { label: 'Surge protection', sourceField: 'surgeProtection', boolean: true },
   { label: 'USB ports', sourceField: 'usbPorts' },
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
 ];
 
 const SMART_THERMOSTAT_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Energy monitoring', sourceField: 'energyMonitoring', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
+  { label: 'Energy monitoring', sourceField: 'energyMonitoring', boolean: true },
   { label: 'Power (W)', sourceField: 'powerWatts' },
 ];
 
@@ -107,56 +106,56 @@ const ROBOT_VACUUM_FEATURES: FeatureRow[] = [
   { label: 'Suction power', sourceField: 'suctionPower' },
   { label: 'Battery runtime', sourceField: 'batteryRuntime', formatter: (v) => (v ? `${v} min` : '') },
   { label: 'Dust capacity', sourceField: 'dustCapacity' },
-  { label: 'Mopping support', sourceField: 'hasMop', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'LiDAR mapping', sourceField: 'lidarMapping', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Obstacle detection', sourceField: 'obstacleDetection', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Mopping support', sourceField: 'hasMop', boolean: true },
+  { label: 'LiDAR mapping', sourceField: 'lidarMapping', boolean: true },
+  { label: 'Obstacle detection', sourceField: 'obstacleDetection', boolean: true },
   { label: 'Noise level', sourceField: 'noiseLevel', formatter: (v) => (v ? `${v} dB` : '') },
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
 ];
 
 const SMART_HUB_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Bluetooth', sourceField: 'bluetooth', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Zigbee', sourceField: 'zigbee', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Bluetooth', sourceField: 'bluetooth', boolean: true },
+  { label: 'Zigbee', sourceField: 'zigbee', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
 ];
 
 const MOTION_SENSOR_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Zigbee', sourceField: 'zigbee', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Zigbee', sourceField: 'zigbee', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
   { label: 'Battery life', sourceField: 'batteryLife' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
 ];
 
 const AIR_PURIFIER_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
   { label: 'Power (W)', sourceField: 'powerWatts' },
 ];
 
 const GARAGE_DOOR_OPENER_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
 ];
 
 const SMART_BLINDS_FEATURES: FeatureRow[] = [
-  { label: 'Wi-Fi', sourceField: 'wifi', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Bluetooth', sourceField: 'bluetooth', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Matter ready', sourceField: 'matter', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Alexa compatible', sourceField: 'alexaCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Google Home compatible', sourceField: 'googleHomeCompatible', truthyLabel: 'Yes', falsyLabel: 'No' },
-  { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit', truthyLabel: 'Yes', falsyLabel: 'No' },
+  { label: 'Wi-Fi', sourceField: 'wifi', boolean: true },
+  { label: 'Bluetooth', sourceField: 'bluetooth', boolean: true },
+  { label: 'Matter', sourceField: 'matter', boolean: true },
+  { label: 'Alexa', sourceField: 'alexaCompatible', boolean: true },
+  { label: 'Google Home', sourceField: 'googleHomeCompatible', boolean: true },
+  { label: 'Apple HomeKit', sourceField: 'appleHomeKit', boolean: true },
   { label: 'Battery life', sourceField: 'batteryLife' },
 ];
 
@@ -180,6 +179,7 @@ export const CATEGORY_FEATURE_MATRIX: Record<SpecCategory, FeatureRow[]> = {
 export interface ProductFeature {
   label: string;
   value: string;
+  sourceField: string;
 }
 
 export function getProductFeatures(product: any): ProductFeature[] {
@@ -188,15 +188,15 @@ export function getProductFeatures(product: any): ProductFeature[] {
     .map((row) => {
       const raw = product[row.sourceField];
       let value = '';
-      if (typeof raw === 'boolean') {
-        value = raw ? (row.truthyLabel ?? 'Yes') : (row.falsyLabel ?? 'No');
-      } else if (raw != null && raw !== '') {
-        value = row.formatter ? row.formatter(raw, product) : String(raw);
-      } else if (raw != null && row.formatter) {
-        value = row.formatter(raw, product);
+      if (row.boolean) {
+        value = getFeatureEvidenceLabel(product, row.sourceField);
+      } else if ((typeof raw === 'string' && raw.trim() !== '') || (typeof raw === 'number' && Number.isFinite(raw))) {
+        const formatted = row.formatter ? row.formatter(raw, product) : String(raw);
+        // General product sources do not establish field-specific verification.
+        value = formatted ? `Catalog: ${formatted} (unverified)` : '';
       }
       if (!value) return null;
-      return { label: row.label, value };
+      return { label: row.label, value, sourceField: row.sourceField };
     })
     .filter((item): item is ProductFeature => Boolean(item && item.value));
 }
@@ -206,21 +206,14 @@ export function getEcosystemFeatures(product: any): ProductFeature[] {
     { label: 'Wi-Fi', sourceField: 'wifi' },
     { label: 'Bluetooth', sourceField: 'bluetooth' },
     { label: 'Zigbee', sourceField: 'zigbee' },
-    { label: 'Matter ready', sourceField: 'matter' },
-    { label: 'Alexa compatible', sourceField: 'alexaCompatible' },
-    { label: 'Google Home compatible', sourceField: 'googleHomeCompatible' },
-    { label: 'Apple HomeKit compatible', sourceField: 'appleHomeKit' },
+    { label: 'Matter', sourceField: 'matter' },
+    { label: 'Alexa', sourceField: 'alexaCompatible' },
+    { label: 'Google Home', sourceField: 'googleHomeCompatible' },
+    { label: 'Apple HomeKit', sourceField: 'appleHomeKit' },
+    { label: 'Thread role / integration', sourceField: 'thread' },
+    { label: 'SmartThings role / integration', sourceField: 'smartthingsIntegration' },
   ];
-  return rows
-    .map((row) => {
-      const raw = product[row.sourceField];
-      if (typeof raw === 'boolean') {
-        return { label: row.label, value: raw ? 'Yes' : 'No' };
-      }
-      if (raw != null && raw !== '') return { label: row.label, value: String(raw) };
-      return null;
-    })
-    .filter((item): item is ProductFeature => Boolean(item));
+  return rows.map((row) => ({ label: row.label, sourceField: row.sourceField, value: getFeatureEvidenceLabel(product, row.sourceField) }));
 }
 
 export function getHighlights(product: any): string[] {

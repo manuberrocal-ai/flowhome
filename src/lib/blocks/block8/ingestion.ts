@@ -13,16 +13,18 @@
  */
 import type {
   Coupon,
-  Merchant,
   Offer,
   PriceSnapshot,
-  ProductVariant,
   ShippingTerms,
   TrendSignal,
 } from './domain.ts';
 import { toStrictUtc } from './domain.ts';
 import { detectPriceAnomaly } from './anomaly.ts';
-import { evaluateOfferFreshness } from './freshness.ts';
+import { evaluateOfferFreshness, isOfferAvailabilityFresh } from './freshness.ts';
+import { validateCommercialEvidence, validateObservationIdentity, sourcePermissionFor, validPrice, type CommercialEvidenceContext, type CommercialObservation, type KnownVariants } from './evidence.ts';
+import { buildIdempotencyKey, canonicalContent, hasLegacyIdempotencyKeys } from './idempotency.ts';
+export { buildIdempotencyKey } from './idempotency.ts';
+export type { KnownVariants, KnownMerchants } from './evidence.ts';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -75,45 +77,18 @@ export interface TrendSignalInput {
   capturedAt: string;
 }
 
-/** A registry frozen at ingestion time — the caller passes the known set. */
-export type KnownVariants = ReadonlyArray<Pick<ProductVariant, 'id' | 'marketplaceId' | 'marketplaceIdType' | 'market' | 'currency'>>;
-
-/** Registry of merchants already authorised at ingestion time. */
-export type KnownMerchants = ReadonlyArray<Pick<Merchant, 'id' | 'authorised' | 'market' | 'currency'>>;
-
-export interface IngestionContext {
-  knownMerchants: KnownMerchants;
-  knownVariants: KnownVariants;
+export interface IngestionContext extends CommercialEvidenceContext {
   /** Existing snapshot ids already in the store (for duplicate detection). */
   existingSnapshotKeys: ReadonlySet<string>;
   existingOfferKeys: ReadonlySet<string>;
   existingTrendKeys: ReadonlySet<string>;
-  /** Existing persisted snapshots eligible to back an offer. */
-  snapshotsById: ReadonlyMap<string, Pick<PriceSnapshot, 'id' | 'variantId' | 'merchantId' | 'price' | 'anomaly'>>;
   /** Existing good-snapshot prices per variant, oldest first. */
   historyByVariant: ReadonlyMap<string, number[]>;
 }
 
 // ---------------------------------------------------------------------------
-// Idempotency key builder (stable, content-based FNV-1a hash)
+// Idempotency key builder is versioned in idempotency.ts (server-only SHA-256).
 // ---------------------------------------------------------------------------
-
-/**
- * Build a content-based idempotency key. Pure and stable; the seed and
- * multiplier are fixed so re-runs reproduce the same key byte-for-byte.
- */
-export function buildIdempotencyKey(prefix: string, parts: (string | number)[]): string {
-  let hash = 0x811c9dc5;
-  for (const part of parts) {
-    const str = String(part);
-    for (let i = 0; i < str.length; i++) {
-      hash ^= str.charCodeAt(i);
-      hash = Math.imul(hash, 0x01000193);
-    }
-  }
-  const digest = (hash >>> 0).toString(16).padStart(8, '0');
-  return `${prefix}:${digest}`;
-}
 
 // ---------------------------------------------------------------------------
 // Variant resolution
@@ -128,13 +103,16 @@ export function resolveVariant(
   known: KnownVariants,
   marketplaceId: string | null,
   marketplaceIdType: 'asin' | 'sku' | 'gtin' | 'unknown',
-): { variantId: string | null; reason: 'resolved' | 'no_marketplace_id' | 'unknown_type' | 'unmatched' } {
+  market?: ProductVariantMarket,
+): { variantId: string | null; reason: 'resolved' | 'no_marketplace_id' | 'unknown_type' | 'unmatched' | 'ambiguous' } {
   if (!marketplaceId) return { variantId: null, reason: 'no_marketplace_id' };
   if (marketplaceIdType === 'unknown') return { variantId: null, reason: 'unknown_type' };
-  const match = known.find((v) => v.marketplaceId === marketplaceId && v.marketplaceIdType === marketplaceIdType);
-  if (!match) return { variantId: null, reason: 'unmatched' };
-  return { variantId: match.id, reason: 'resolved' };
+  const matches = known.filter((v) => v.marketplaceId === marketplaceId && v.marketplaceIdType === marketplaceIdType && (market === undefined || v.market === market));
+  if (!matches.length || market === 'unknown') return { variantId: null, reason: 'unmatched' };
+  if (matches.length !== 1) return { variantId: null, reason: 'ambiguous' };
+  return { variantId: matches[0].id, reason: 'resolved' };
 }
+type ProductVariantMarket = KnownVariants[number]['market'];
 
 // ---------------------------------------------------------------------------
 // Durable id generation (the caller persists these)
@@ -155,6 +133,7 @@ function snapshotKey(input: PriceSnapshotInput, capturedIso: string): string {
     input.price,
     input.source ?? 'manual',
     capturedIso,
+    canonicalContent({ listPrice: input.listPrice ?? null, market: input.market ?? null, currency: input.currency ?? null, affiliateUrl: input.affiliateUrl ?? null }),
   ]);
 }
 
@@ -165,11 +144,12 @@ function offerKey(input: OfferInput, capturedIso: string): string {
     input.price,
     input.source ?? 'manual',
     capturedIso,
+    canonicalContent({ listPrice: input.listPrice ?? null, market: input.market, currency: input.currency, affiliateUrl: input.affiliateUrl ?? null, snapshotId: input.snapshotId ?? null, availability: input.availability ?? 'unknown', availabilityCapturedAt: toStrictUtc(input.availabilityCapturedAt), expiresAt: toStrictUtc(input.expiresAt ?? null), shipping: { cost: input.shipping?.cost ?? null, freeShipping: input.shipping?.freeShipping ?? false, conditions: input.shipping?.conditions ?? null, etaDays: input.shipping?.etaDays ?? null }, coupons: input.coupons ?? [] }),
   ]);
 }
 
 function trendKey(input: TrendSignalInput, capturedIso: string): string {
-  return buildIdempotencyKey('ts', [input.topicId, input.source ?? 'manual', input.delta, capturedIso]);
+  return buildIdempotencyKey('ts', [input.topicId, input.source ?? 'manual', Number.isFinite(input.delta) ? input.delta : String(input.delta), input.weight ?? 0.5, capturedIso]);
 }
 
 const OFFER_SOURCES = ['manual', 'affiliate-feed', 'amazon-creators-api'] as const;
@@ -201,19 +181,6 @@ function validateOfferCoherence(input: OfferInput, ctx: IngestionContext): strin
   return null;
 }
 
-function validateOfferSnapshot(input: OfferInput, ctx: IngestionContext): string | null {
-  if (!input.snapshotId) return 'missing_authorised_snapshot';
-  const snapshot = ctx.snapshotsById.get(input.snapshotId);
-  if (!snapshot) return 'unknown_snapshot';
-  const merchant = ctx.knownMerchants.find((m) => m.id === snapshot.merchantId);
-  if (!merchant || !merchant.authorised) return 'snapshot_merchant_not_authorised';
-  if (snapshot.anomaly) return 'snapshot_anomalous';
-  if (snapshot.variantId !== input.variantId || snapshot.merchantId !== input.merchantId || snapshot.price !== input.price) {
-    return 'snapshot_incoherent';
-  }
-  return null;
-}
-
 function validateSnapshotCoherence(input: PriceSnapshotInput, ctx: IngestionContext): string | null {
   if (!isCanonicalOfferSource(input.source)) return 'invalid_offer_source';
   if (!isCanonicalMarket(input.market)) return 'invalid_market';
@@ -238,11 +205,14 @@ function validateSnapshotCoherence(input: PriceSnapshotInput, ctx: IngestionCont
 export function ingestPriceSnapshots(
   inputs: PriceSnapshotInput[],
   ctx: IngestionContext,
-  _now: Date | string = new Date(),
+  now: Date | string = new Date(),
 ): IngestOutcome<PriceSnapshot>[] {
   const out: IngestOutcome<PriceSnapshot>[] = [];
   const seenKeys = new Set(ctx.existingSnapshotKeys);
   for (const input of inputs) {
+    if (hasLegacyIdempotencyKeys(seenKeys)) { out.push({ status: 'rejected', entity: null, reason: 'legacy_idempotency_migration_required', idempotencyKey: '' }); continue; }
+    const current = toStrictUtc(now);
+    if (!current) { out.push({ status: 'rejected', entity: null, reason: 'invalid_reference', idempotencyKey: '' }); continue; }
     const capturedIso = toStrictUtc(input.capturedAt);
     if (!capturedIso) {
       out.push({ status: 'rejected', entity: null, reason: 'invalid_captured_at', idempotencyKey: '' });
@@ -253,6 +223,10 @@ export function ingestPriceSnapshots(
       out.push({ status: 'rejected', entity: null, reason: validationError, idempotencyKey: '' });
       continue;
     }
+    if (Date.parse(capturedIso) > Date.parse(current) || !validPrice(input.price) || (input.listPrice != null && (!validPrice(input.listPrice) || input.listPrice < input.price))) { out.push({ status: 'rejected', entity: null, reason: 'invalid_price_or_future_capture', idempotencyKey: '' }); continue; }
+    const observation = { ...input, listPrice: input.listPrice ?? null } as CommercialObservation;
+    const identityError = validateObservationIdentity(observation, ctx);
+    if (identityError || (input.source !== 'manual' && !sourcePermissionFor(observation, ctx, now))) { out.push({ status: 'rejected', entity: null, reason: identityError ?? 'source_permission_or_freshness_missing', idempotencyKey: '' }); continue; }
     const key = snapshotKey(input, capturedIso);
     if (seenKeys.has(key)) {
       out.push({ status: 'duplicate', entity: null, reason: 'duplicate_snapshot_key', idempotencyKey: key });
@@ -288,19 +262,19 @@ export function ingestPriceSnapshots(
 // ---------------------------------------------------------------------------
 
 /**
- * Ingest offers. Stale or expired offers are inserted with lifecycle `suppressed`
- * and `review=unknown`; they are never promotable until an admin review upgrades
- * them after freshness has been re-established. Idempotency is by `offerKey`.
+ * Ingest only evidenced fresh offers as pending_review. Rejected commercial
+ * input is not retained in the outcome. Source permission is never admin-overridden.
  */
 export function ingestOffers(
   inputs: OfferInput[],
   ctx: IngestionContext,
   now: Date | string = new Date(),
 ): IngestOutcome<Offer>[] {
-  const refDate = now instanceof Date ? now : new Date(now);
   const out: IngestOutcome<Offer>[] = [];
   const seenKeys = new Set(ctx.existingOfferKeys);
   for (const input of inputs) {
+    if (hasLegacyIdempotencyKeys(seenKeys)) { out.push({ status: 'rejected', entity: null, reason: 'legacy_idempotency_migration_required', idempotencyKey: '' }); continue; }
+    if (!toStrictUtc(now)) { out.push({ status: 'rejected', entity: null, reason: 'invalid_reference', idempotencyKey: '' }); continue; }
     const capturedIso = toStrictUtc(input.capturedAt);
     if (!capturedIso) {
       out.push({ status: 'rejected', entity: null, reason: 'invalid_captured_at', idempotencyKey: '' });
@@ -316,18 +290,24 @@ export function ingestOffers(
       out.push({ status: 'rejected', entity: null, reason: validationError, idempotencyKey: '' });
       continue;
     }
-    const snapshotError = validateOfferSnapshot(input, ctx);
+    const freshness = evaluateOfferFreshness({ capturedAt: capturedIso, expiresAt: input.expiresAt ?? null }, now);
+    if (freshness.reason !== 'fresh') { out.push({ status: 'rejected', entity: null, reason: `offer_freshness:${freshness.reason}`, idempotencyKey: '' }); continue; }
+    const observation = { ...input, listPrice: input.listPrice ?? null } as CommercialObservation;
+    const snapshotError = validateCommercialEvidence({ ...observation, expiresAt: input.expiresAt, lastSnapshotId: input.snapshotId }, ctx, now);
     if (snapshotError) {
       out.push({ status: 'rejected', entity: null, reason: snapshotError, idempotencyKey: '' });
       continue;
     }
-    const key = offerKey(input, capturedIso);
+    if (input.availability != null && !['in-stock', 'out-of-stock', 'preorder', 'discontinued', 'unknown'].includes(input.availability)) { out.push({ status: 'rejected', entity: null, reason: 'invalid_availability', idempotencyKey: '' }); continue; }
+    if (!isOfferAvailabilityFresh({ availabilityCapturedAt: availabilityCapturedIso }, now).fresh || !sourcePermissionFor({ ...observation, capturedAt: availabilityCapturedIso }, ctx, now)) { out.push({ status: 'rejected', entity: null, reason: 'availability_permission_or_freshness_missing', idempotencyKey: '' }); continue; }
+    let key: string;
+    try { key = offerKey(input, capturedIso); } catch { out.push({ status: 'rejected', entity: null, reason: 'invalid_offer_content', idempotencyKey: '' }); continue; }
     if (seenKeys.has(key)) {
       out.push({ status: 'duplicate', entity: null, reason: 'duplicate_offer_key', idempotencyKey: key });
       continue;
     }
-    const expiresIso = toStrictUtc(input.expiresAt ?? null);
-    const freshness = evaluateOfferFreshness({ capturedAt: capturedIso, expiresAt: expiresIso }, refDate);
+    const grant = sourcePermissionFor(observation, ctx, now)!;
+    const expiresIso = toStrictUtc(input.expiresAt ?? null) ?? new Date(Math.min(Date.parse(capturedIso) + grant.maxAgeMs, Date.parse(grant.validUntil))).toISOString();
     const lifecycle: Offer['lifecycle'] = freshness.reason === 'fresh' ? 'pending_review' : 'suppressed';
     const entity: Offer = {
       id: deterministicId('of', key),
@@ -377,16 +357,20 @@ export function ingestOffers(
 export function ingestTrendSignals(
   inputs: TrendSignalInput[],
   ctx: IngestionContext,
-  _now: Date | string = new Date(),
+  now: Date | string = new Date(),
 ): IngestOutcome<TrendSignal>[] {
   const out: IngestOutcome<TrendSignal>[] = [];
   const seenKeys = new Set(ctx.existingTrendKeys);
   for (const input of inputs) {
+    if (hasLegacyIdempotencyKeys(seenKeys)) { out.push({ status: 'rejected', entity: null, reason: 'legacy_idempotency_migration_required', idempotencyKey: '' }); continue; }
+    const current = toStrictUtc(now);
+    if (!current) { out.push({ status: 'rejected', entity: null, reason: 'invalid_reference', idempotencyKey: '' }); continue; }
     const capturedIso = toStrictUtc(input.capturedAt);
     if (!capturedIso) {
       out.push({ status: 'rejected', entity: null, reason: 'invalid_captured_at', idempotencyKey: '' });
       continue;
     }
+    if (Date.parse(capturedIso) > Date.parse(current) || (input.weight != null && !Number.isFinite(input.weight))) { out.push({ status: 'rejected', entity: null, reason: 'invalid_weight_or_future_capture', idempotencyKey: '' }); continue; }
     const key = trendKey(input, capturedIso);
     if (seenKeys.has(key)) {
       out.push({ status: 'duplicate', entity: null, reason: 'duplicate_trend_key', idempotencyKey: key });

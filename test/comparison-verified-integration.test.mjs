@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildVerifiedComparisonInsights, prepareVerifiedComparisonProducts } from '../src/lib/blocks/block9/comparison-insights-verified.ts';
-import { buildComparisonInsights } from '../src/lib/comparison-insights.ts';
+import { buildComparisonInsights, getComparisonFeatureLabel } from '../src/lib/comparison-insights.ts';
 import { loadBlock9Fixtures } from '../src/lib/blocks/block9/fixtures.ts';
 
 const graph = loadBlock9Fixtures();
@@ -46,6 +46,8 @@ test('comparison layout data path gives visible table and card products only exa
   assert.equal(visibleProducts[0].alexaCompatible, true);
   assert.equal(visibleProducts[0].googleHomeCompatible, undefined);
   assert.equal(visibleProducts[0].compatibilityVerificationEnabled, true);
+  assert.match(getComparisonFeatureLabel(visibleProducts[0], 'alexaCompatible'), /Evidence-backed signal/);
+  assert.equal(getComparisonFeatureLabel(visibleProducts[0], 'googleHomeCompatible'), 'Not verified');
 });
 
 test('comparison surface degrades a catalog compatibility field when only a product row exists', () => {

@@ -1,5 +1,7 @@
 ﻿import { getCommerceData } from './commerce-data.ts';
 
+import { getProductImage, getProductImageAlt } from './product-art.ts';
+
 export interface SEOConfig {
   title: string;
   description: string;
@@ -69,7 +71,7 @@ export function generateProductSchema(product: any, now = new Date()) {
       '@type': 'Brand',
       name: product.brand || 'Unknown',
     },
-    image: toAbsolute(product.image || '/images/og-default.svg'),
+    image: { '@type': 'ImageObject', url: toAbsolute(getProductImage(product)), caption: getProductImageAlt(product) },
     ...(product.slug ? { url: `https://flowhome.dev/product/${product.slug}/` } : {}),
     ...(offer ? { offers: offer } : {}),
   };

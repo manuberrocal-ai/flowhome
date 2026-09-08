@@ -1,9 +1,14 @@
 ﻿import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyOverride, verifyAuditTrail } from '../src/lib/blocks/block8/admin.ts';
+import { applyOverride as overrideWithEvidence, verifyAuditTrail } from '../src/lib/blocks/block8/admin.ts';
+import { offerFixture, evidenceFixture } from './helpers/block8-fixtures.mjs';
+
+function applyOverride(input, target) {
+  return overrideWithEvidence(input, target, evidenceFixture(target));
+}
 
 const NOW = '2026-07-30T12:00:00Z';
-const freshOffer = { id: 'o1', capturedAt: '2026-07-29T12:00:00Z', expiresAt: '2026-08-05T12:00:00Z', availability: 'in-stock', availabilityCapturedAt: '2026-07-29T12:00:00Z', lastSnapshotId: 's1', lifecycle: 'pending_review', review: 'unknown' };
+const freshOffer = offerFixture({ id: 'o1', capturedAt: '2026-07-30T11:00:00Z', expiresAt: '2026-07-30T13:00:00Z', availability: 'in-stock', availabilityCapturedAt: '2026-07-30T11:00:00Z', lastSnapshotId: 's1', lifecycle: 'pending_review', review: 'unknown' });
 const staleOffer = { id: 'o2', capturedAt: '2026-06-01T12:00:00Z', expiresAt: null, availability: 'in-stock', availabilityCapturedAt: '2026-07-29T12:00:00Z', lastSnapshotId: 's2', lifecycle: 'pending_review', review: 'unknown' };
 const expiredOffer = { id: 'o3', capturedAt: '2026-07-29T12:00:00Z', expiresAt: '2026-07-15T12:00:00Z', availability: 'in-stock', availabilityCapturedAt: '2026-07-29T12:00:00Z', lastSnapshotId: 's3', lifecycle: 'suppressed', review: 'unknown' };
 

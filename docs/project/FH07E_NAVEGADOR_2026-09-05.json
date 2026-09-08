@@ -1,0 +1,429 @@
+{
+  "observedAt": "2026-09-05T17:53:48.152Z",
+  "checks": [
+    {
+      "name": "Catalog carries 28 products and fourteen installation profiles",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color requirements and non-hands-on assessment 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color exact listing limits retained 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color dated source links 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color anchor heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color metadata 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color empty-alt candidates are hidden avatars 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color direct affiliate destination 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color source link receives keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier requirements and non-hands-on assessment 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier exact listing limits retained 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier dated source links 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier anchor heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier metadata 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier empty-alt candidates are hidden avatars 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier direct affiliate destination 1440",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier source link receives keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt requirements and non-hands-on assessment 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt exact listing limits retained 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt dated source links 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt anchor heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt metadata 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt empty-alt candidates are hidden avatars 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt direct affiliate destination 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt source link receives keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color requirements and non-hands-on assessment 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color exact listing limits retained 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color dated source links 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color anchor heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color metadata 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color empty-alt candidates are hidden avatars 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color direct affiliate destination 390",
+      "passed": true
+    },
+    {
+      "name": "wyze-bulb-color source link receives keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier requirements and non-hands-on assessment 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier exact listing limits retained 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier dated source links 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier anchor heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier metadata 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier empty-alt candidates are hidden avatars 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier direct affiliate destination 390",
+      "passed": true
+    },
+    {
+      "name": "levoit-core-300s-air-purifier source link receives keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt requirements and non-hands-on assessment 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt exact listing limits retained 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt dated source links 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt anchor heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt metadata 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt empty-alt candidates are hidden avatars 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt direct affiliate destination 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-blind-tilt source link receives keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort exact candidates plug-and-play 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort no relaxed installation plug-and-play 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort no horizontal overflow plug-and-play 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort relevant limitations visible plug-and-play 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort exact candidates light-setup 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort no relaxed installation light-setup 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort no horizontal overflow light-setup 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort relevant limitations visible light-setup 1440",
+      "passed": true
+    },
+    {
+      "name": "Comfort exact candidates plug-and-play 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort no relaxed installation plug-and-play 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort no horizontal overflow plug-and-play 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort relevant limitations visible plug-and-play 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort exact candidates light-setup 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort no relaxed installation light-setup 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort no horizontal overflow light-setup 390",
+      "passed": true
+    },
+    {
+      "name": "Comfort relevant limitations visible light-setup 390",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "pages": [
+    {
+      "slug": "wyze-bulb-color",
+      "width": 1440,
+      "meta": {
+        "title": "Wyze Bulb Color - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/wyze-bulb-color/",
+        "description": "Wyze Bulb Color: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "width": 1440,
+      "meta": {
+        "title": "Levoit Core 300S Smart Air Purifier - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/levoit-core-300s-air-purifier/",
+        "description": "Levoit Core 300S Smart Air Purifier: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "width": 1440,
+      "meta": {
+        "title": "SwitchBot Blind Tilt - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/switchbot-blind-tilt/",
+        "description": "SwitchBot Blind Tilt: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "width": 390,
+      "meta": {
+        "title": "Wyze Bulb Color - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/wyze-bulb-color/",
+        "description": "Wyze Bulb Color: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "width": 390,
+      "meta": {
+        "title": "Levoit Core 300S Smart Air Purifier - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/levoit-core-300s-air-purifier/",
+        "description": "Levoit Core 300S Smart Air Purifier: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "width": 390,
+      "meta": {
+        "title": "SwitchBot Blind Tilt - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/switchbot-blind-tilt/",
+        "description": "SwitchBot Blind Tilt: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "profile": "Local-only browser routing explicitly set; reduced motion; 1440/390 CSS px. No account, remote image, physical device or complete release certification."
+}

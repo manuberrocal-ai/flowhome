@@ -1,0 +1,60 @@
+{
+  "asOf": "2026-09-07T01:27:11Z",
+  "scope": "Isolated real Astro static builds, not browser execution, owner approval or production expiry.",
+  "scenarios": [
+    {
+      "mode": "candidate",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-P9ZeO4/output",
+      "pages": 88,
+      "checkedClaims": 115,
+      "comparisonClaims": 52,
+      "alternativeSections": 21,
+      "quizProducts": 28,
+      "clientBundlesChecked": 27,
+      "runtimeSourceUnchanged": true,
+      "publicationAuthorized": false
+    },
+    {
+      "mode": "expired",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-X8lUvk/output",
+      "pages": 88,
+      "checkedClaims": 115,
+      "comparisonClaims": 52,
+      "alternativeSections": 21,
+      "quizProducts": 28,
+      "clientBundlesChecked": 27,
+      "runtimeSourceUnchanged": true,
+      "publicationAuthorized": false
+    },
+    {
+      "mode": "disputed",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-aCbOny/output",
+      "pages": 88,
+      "checkedClaims": 115,
+      "comparisonClaims": 52,
+      "alternativeSections": 21,
+      "quizProducts": 28,
+      "clientBundlesChecked": 27,
+      "runtimeSourceUnchanged": true,
+      "publicationAuthorized": false
+    }
+  ],
+  "checks": {
+    "lint": "passed",
+    "types": {
+      "files": 323,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 18
+    },
+    "diffCheck": "passed",
+    "fullSuite": "Not repeated: 837 passing tests from FH20AB remain the baseline; this increment changes only QA script and documentation."
+  },
+  "limitations": [
+    "No browser layout or interaction verification.",
+    "Expiry scenario rebuilds at a future clock; already-published static HTML does not expire by itself.",
+    "Comparison renders six compatibility fields; Wi-Fi, BLE and Zigbee have no table rows.",
+    "Alternative cards contain profile links, not per-protocol claims.",
+    "Client marker scan excludes known review internals; quiz intentionally serializes qualified public signals."
+  ]
+}

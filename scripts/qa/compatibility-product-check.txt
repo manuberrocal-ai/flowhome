@@ -1,0 +1,35 @@
+async page => {
+  const results = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  const origin = page.url().split('/').slice(0, 3).join('/');
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.goto(origin + '/real-product/');
+    const root = page.locator('[data-compatibility-product]');
+    const fields = root.locator('[data-compatibility-value]');
+    check(await fields.count() === 15, 'All nine rows plus six repeated chips bound at ' + width);
+    check(await root.locator('[data-compatibility-controls]').isHidden(), 'Default controls remain hidden at ' + width);
+    check((await fields.allTextContents()).every(text => !text.includes('Evidence-backed')), 'Default build has no activated evidence at ' + width);
+    await page.evaluate(async () => {
+      const { mountProductCompatibility } = await import('/product-presentation.js');
+      window.productMounted = mountProductCompatibility(document.querySelector('[data-compatibility-product]'), { enabled: true, endpoint: '/compatibility/live', pageUrl: location.href });
+    });
+    await root.getByRole('button', { name: 'Refresh evidence' }).focus(); await page.keyboard.press('Enter');
+    await page.waitForFunction(() => [...document.querySelectorAll('[data-compatibility-value="alexaCompatible"]')].every(el => el.textContent.startsWith('Evidence-backed signal:')));
+    const alexa = await root.locator('[data-compatibility-value="alexaCompatible"]').allTextContents();
+    check(alexa.length === 2 && alexa[0] === alexa[1], 'Chip and row agree at ' + width);
+    check((await root.locator('[data-compatibility-source="alexaCompatible"]').textContent()).length > 0, 'Source shown in actual profile at ' + width);
+    await root.locator('#compatibility-checks').scrollIntoViewIfNeeded();
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No horizontal overflow at ' + width);
+    await page.screenshot({ path: '.playwright-cli/flowhome-product-live-' + width + '.png' });
+    await page.context().setOffline(true);
+    try {
+      await page.waitForFunction(() => [...document.querySelectorAll('[data-compatibility-value]')].every(el => el.textContent === 'Not verified'));
+      check((await root.locator('[data-compatibility-source]').allTextContents()).every(text => text === ''), 'All sources withdrawn at ' + width);
+      await page.screenshot({ path: '.playwright-cli/flowhome-product-withdrawn-' + width + '.png' });
+    } finally { await page.context().setOffline(false); }
+    check((await fields.allTextContents()).every(text => text === 'Not verified'), 'Reconnect does not restore stale chips at ' + width);
+    await page.evaluate(() => window.productMounted.dispose());
+  }
+  return { checks: results.length, results };
+}

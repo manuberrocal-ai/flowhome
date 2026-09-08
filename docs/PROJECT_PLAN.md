@@ -1,5 +1,7 @@
 # FlowHome Project Plan
 
+> Historical plan. Current direction, verified state and execution sequence: [Master prompt — 2026-09-05](project/PROMPT_MAESTRO.md), [whole-project assessment](project/JUZGADO_INTEGRAL.md) and [backlog](project/BACKLOG.json). The initial operational market is US; Canada expansion remains deferred pending its own evidence and setup.
+
 FlowHome is an automated smart-home affiliate website for the US/Canada market.
 
 ## Stack

@@ -1,18 +1,5 @@
-const categoryArtwork: Record<string, string> = {
-  'smart-thermostat': '/images/product-art/smart-thermostat.svg',
-  'security-camera': '/images/product-art/security-camera.svg',
-  'video-doorbell': '/images/product-art/video-doorbell.svg',
-  'smart-lock': '/images/product-art/smart-lock.svg',
-  'robot-vacuum': '/images/product-art/robot-vacuum.svg',
-  'smart-lighting': '/images/product-art/smart-lighting.svg',
-  'smart-plug': '/images/product-art/smart-plug.svg',
-  'smart-speaker': '/images/product-art/smart-speaker.svg',
-  'smart-display': '/images/product-art/smart-display.svg',
-  'smart-hub': '/images/product-art/smart-hub.svg',
-};
-
-const placeholderImage = '/images/product-placeholder.svg';
-const defaultArtwork = '/images/product-art/smart-home-device.svg';
+import { getCategoryIllustration, getLocalProductIllustration, getModelIllustration, getIllustrationCaption } from './product-image-policy.js';
+import { thumbnailPath } from './product-thumbnails.js';
 
 export type ProductImageKind = 'product' | 'fallback';
 
@@ -25,16 +12,14 @@ export function getCategoryLabel(category?: string) {
 }
 
 export function hasRealProductImage(product: { image?: string }) {
-  return Boolean(
-    product.image &&
-    product.image !== placeholderImage &&
-    !product.image.includes('product-placeholder.svg') &&
-    !product.image.includes('/images/product-art/')
-  );
+  // Image URLs alone do not establish permission. Editorial A uses illustrations only.
+  void product;
+  return false;
 }
 
 export function getProductFallbackImage(product: { category?: string }) {
-  return categoryArtwork[product.category ?? ''] ?? defaultArtwork;
+  const source = getCategoryIllustration(product.category);
+  return thumbnailPath(source, 960) ?? source;
 }
 
 export function getProductImageKind(product: { image?: string }) : ProductImageKind {
@@ -42,15 +27,15 @@ export function getProductImageKind(product: { image?: string }) : ProductImageK
 }
 
 export function getProductImage(product: { image?: string; category?: string }) {
-  if (hasRealProductImage(product)) return product.image as string;
-  return getProductFallbackImage(product);
+  return getLocalProductIllustration(product);
 }
 
 export function getProductImageAlt(product: { name?: string; category?: string; image?: string }) {
-  if (hasRealProductImage(product)) return product.name ?? 'Product image';
-  return `${getCategoryLabel(product.category)} product illustration`;
+  const model = getModelIllustration(product);
+  if (model) return model.alt;
+  return `${getCategoryLabel(product.category)} category illustration; not a photo of ${product.name ?? 'the product'}`;
 }
 
 export function getProductImageSourceLabel(product: { image?: string }) {
-  return hasRealProductImage(product) ? 'Product photo' : 'Representative category image';
+  return getIllustrationCaption(product);
 }

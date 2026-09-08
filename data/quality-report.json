@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-08T15:27:08.039Z",
+  "generatedAt": "2026-09-05T17:33:50.771Z",
   "results": [
     {
       "file": "src\\content\\reviews\\aeotec-smartthings-hub-review.md",
-      "title": "Aeotec SmartThings Hub Review: The Matter and Zigbee Option",
+      "title": "Aeotec SmartThings Hub Review: Controller Role and Compatibility Checks",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "545 words"
+          "detail": "449 words"
         },
         {
           "name": "h2Structure",
@@ -46,14 +46,14 @@
     },
     {
       "file": "src\\content\\reviews\\amazon-smart-thermostat-review.md",
-      "title": "Amazon Smart Thermostat Review: Low-Cost Climate Control for Alexa Homes",
+      "title": "Amazon Smart Thermostat Review: Wiring Checks for Alexa Homes",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "532 words"
+          "detail": "476 words"
         },
         {
           "name": "h2Structure",
@@ -89,14 +89,14 @@
     },
     {
       "file": "src\\content\\reviews\\aqara-hub-m2-review.md",
-      "title": "Aqara Hub M2 Review: A Zigbee-Focused Smart-Home Hub",
+      "title": "Aqara Hub M2 Review: Zigbee Devices and Matter Bridging",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "518 words"
+          "detail": "433 words"
         },
         {
           "name": "h2Structure",
@@ -139,7 +139,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "482 words"
+          "detail": "484 words"
         },
         {
           "name": "h2Structure",
@@ -182,7 +182,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "503 words"
+          "detail": "473 words"
         },
         {
           "name": "h2Structure",
@@ -225,7 +225,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "485 words"
+          "detail": "534 words"
         },
         {
           "name": "h2Structure",
@@ -268,7 +268,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "458 words"
+          "detail": "454 words"
         },
         {
           "name": "h2Structure",
@@ -304,14 +304,14 @@
     },
     {
       "file": "src\\content\\reviews\\eufy-security-indoor-cam-c120-review.md",
-      "title": "Eufy Security Indoor Cam C120 Review: Flexible Indoor Monitoring Without a Required Subscription",
+      "title": "Eufy Indoor Cam C120 Review: Indoor Placement and Storage Choices",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "530 words"
+          "detail": "493 words"
         },
         {
           "name": "h2Structure",
@@ -354,7 +354,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "500 words"
+          "detail": "538 words"
         },
         {
           "name": "h2Structure",
@@ -397,7 +397,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "730 words"
+          "detail": "677 words"
         },
         {
           "name": "h2Structure",
@@ -440,7 +440,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "488 words"
+          "detail": "498 words"
         },
         {
           "name": "h2Structure",
@@ -476,14 +476,14 @@
     },
     {
       "file": "src\\content\\reviews\\ring-video-doorbell-wired-review.md",
-      "title": "Ring Video Doorbell Wired Review: Budget Doorway Security for Alexa Homes",
+      "title": "Ring Video Doorbell Wired Review: Installation and Recording Tradeoffs",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "551 words"
+          "detail": "474 words"
         },
         {
           "name": "h2Structure",
@@ -526,7 +526,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "870 words"
+          "detail": "801 words"
         },
         {
           "name": "h2Structure",
@@ -562,14 +562,14 @@
     },
     {
       "file": "src\\content\\reviews\\switchbot-hub-2-review.md",
-      "title": "SwitchBot Hub 2 Review: A Matter-Ready Hub Without Zigbee",
+      "title": "SwitchBot Hub 2 Review: Matter Bridging and Device Limits",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "530 words"
+          "detail": "435 words"
         },
         {
           "name": "h2Structure",
@@ -612,7 +612,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "458 words"
+          "detail": "457 words"
         },
         {
           "name": "h2Structure",

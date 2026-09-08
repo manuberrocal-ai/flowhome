@@ -1,0 +1,456 @@
+{
+  "scope": "Built identity states and source links; not semantic source verification or publication approval",
+  "products": 28,
+  "documented": 74,
+  "unknown": 150,
+  "results": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "documented": [
+        "model",
+        "asin",
+        "market",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "amazon-smart-thermostat",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "documented": [
+        "model",
+        "asin",
+        "bundle",
+        "market",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "documented": [
+        "model",
+        "asin",
+        "generation"
+      ],
+      "unknown": [
+        "bundle",
+        "market",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "august-wifi-smart-lock",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "echo-show-8-3rd-gen",
+      "documented": [
+        "model",
+        "asin",
+        "generation"
+      ],
+      "unknown": [
+        "bundle",
+        "market",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "eufy-security-indoor-cam-c120",
+      "documented": [
+        "model",
+        "asin"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "documented": [
+        "model",
+        "asin",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "irobot-roomba-j7-plus",
+      "documented": [
+        "model",
+        "asin",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "meross-smart-garage-door-opener",
+      "documented": [
+        "model",
+        "asin",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "philips-hue-white-color-starter-kit",
+      "documented": [
+        "model",
+        "asin",
+        "bundle",
+        "market"
+      ],
+      "unknown": [
+        "generation",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "ring-video-doorbell-wired",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "roborock-q5-plus",
+      "documented": [
+        "model",
+        "asin",
+        "bundle",
+        "market"
+      ],
+      "unknown": [
+        "generation",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "schlage-encode-smart-wifi-deadbolt",
+      "documented": [
+        "model",
+        "asin",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "tapo-c120-security-camera",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    },
+    {
+      "slug": "tp-link-kasa-smart-dimmer-hs220",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "tp-link-kasa-smart-light-switch-hs200",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "advanced"
+    },
+    {
+      "slug": "tp-link-kasa-smart-plug-mini",
+      "documented": [
+        "model",
+        "asin",
+        "bundle",
+        "market"
+      ],
+      "unknown": [
+        "generation",
+        "firmware",
+        "role",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "documented": [
+        "model",
+        "role"
+      ],
+      "unknown": [
+        "asin",
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "plug-and-play"
+    },
+    {
+      "slug": "yale-assure-lock-2-wifi",
+      "documented": [
+        "model",
+        "asin",
+        "role"
+      ],
+      "unknown": [
+        "generation",
+        "bundle",
+        "market",
+        "firmware",
+        "subscription"
+      ],
+      "installation": "light-setup"
+    }
+  ]
+}

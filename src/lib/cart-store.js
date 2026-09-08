@@ -45,11 +45,6 @@ function cleanClock(value) {
   return Number.isSafeInteger(clock) && clock >= 0 ? clock : null;
 }
 
-function cleanPrice(value) {
-  const price = Number(value);
-  return Number.isFinite(price) && price >= 0 ? price : 0;
-}
-
 function createDeviceId() {
   if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
   return `cart-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 14)}`;
@@ -66,15 +61,19 @@ function clone(value) {
 
 export function normalizeCartItem(value) {
   if (!value || typeof value !== 'object') return null;
-  const asin = cleanAsin(value.asin || value.productId);
+  let asin = cleanAsin(value.asin || value.productId);
   const slug = cleanSlug(value.slug);
+  // FH07L: repair only the known Q5+ catalog association, never a standalone S7 MaxV ASIN.
+  if (slug === 'roborock-q5-plus' && asin === 'B09NM549V7') asin = 'B09NM56KJM';
+  // FH07T: repair only these catalog associations; preserve unrelated bridge/sensor entries.
+  if (slug === 'philips-hue-white-color-starter-kit' && asin === 'B016H0QZ7I') asin = 'B096YFWVVS';
+  if (slug === 'aqara-motion-sensor-p1' && asin === 'B09QXPBRM2') asin = 'B09QKVMMTB';
   if (!asin && !slug) return null;
 
   return {
     asin,
     slug,
     name: cleanText(value.name, asin),
-    price: cleanPrice(value.price),
     image: cleanUrl(value.image),
     url: cleanUrl(value.url),
   };
@@ -201,10 +200,6 @@ export function serializeCartPayload(items) {
  */
 export function getUniqueItemCount(items) {
   return normalizeCartItems(items).length;
-}
-
-export function getCartSubtotal(items) {
-  return normalizeCartItems(items).reduce((total, item) => total + item.price, 0);
 }
 
 export function buildAmazonCartUrl(items, associateTag = 'flowhome-20') {

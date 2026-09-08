@@ -1,15 +1,23 @@
 ﻿import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  computeDealScore,
+  computeDealScore as scoreWithEvidence,
   computeTrendScore,
   DEAL_SCORE_WEIGHTS,
   MIN_HISTORY_FOR_FLOOR_CLAIM,
   TREND_SCORE_THRESHOLDS,
 } from '../src/lib/blocks/block8/scoring.ts';
+import { offerFixture, snapshotFixture, evidenceFixture } from './helpers/block8-fixtures.mjs';
+
+// These factor tests use an explicitly licensed synthetic feed, not manual/API history.
+function computeDealScore(input) {
+  const offer = offerFixture(input.offer);
+  const history = input.history.map((snapshot, index) => snapshotFixture({ id: `history:${index}`, idempotencyKey: `fixture:history:${index}`, ...snapshot }));
+  return scoreWithEvidence({ ...input, offer, history, evidence: evidenceFixture(offer, history) });
+}
 
 const NOW = new Date('2026-07-30T12:00:00Z');
-const freshIso = '2026-07-29T12:00:00Z';
+const freshIso = '2026-07-30T11:00:00Z';
 const staleIso = '2026-06-01T12:00:00Z';
 const BACKING_SNAPSHOT = 's1';
 

@@ -1,0 +1,65 @@
+{
+  "scope": "Local static-delivery guard; not a live freshness service or public source approval.",
+  "generatedAt": "2026-09-07T01:35:00Z",
+  "directedTests": 20,
+  "fullTests": 839,
+  "lint": "passed",
+  "types": {
+    "files": 323,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 18
+  },
+  "normalBuild": {
+    "pages": 88,
+    "exitCode": 0,
+    "defaultTapoDocumentaryClaimAbsent": true,
+    "quizRecords": 28,
+    "quizVerifiedRecords": 0
+  },
+  "guard": {
+    "expectedError": "STATIC_COMPATIBILITY_DELIVERY_BLOCKED",
+    "actualAstroRenderAborted": true,
+    "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-DnD9rg/output",
+    "publicAuthorization": false
+  },
+  "reviewScenarios": [
+    {
+      "mode": "candidate",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-pRdNYu/output",
+      "pages": 88,
+      "profileClaims": 115,
+      "comparisonClaims": 52,
+      "quizProducts": 28,
+      "alternativeSections": 21,
+      "clientBundles": 27,
+      "isolatedGuardBypass": true,
+      "publicAuthorization": false
+    },
+    {
+      "mode": "expired",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-gUWUjQ/output",
+      "pages": 88,
+      "profileClaims": 115,
+      "comparisonClaims": 52,
+      "quizProducts": 28,
+      "alternativeSections": 21,
+      "clientBundles": 27,
+      "isolatedGuardBypass": true,
+      "publicAuthorization": false
+    },
+    {
+      "mode": "disputed",
+      "outDir": "C:/Users/manub/AppData/Local/Temp/flowhome-compatibility-review-HQWOpC/output",
+      "pages": 88,
+      "profileClaims": 115,
+      "comparisonClaims": 52,
+      "quizProducts": 28,
+      "alternativeSections": 21,
+      "clientBundles": 27,
+      "isolatedGuardBypass": true,
+      "publicAuthorization": false
+    }
+  ],
+  "diffCheck": "passed"
+}

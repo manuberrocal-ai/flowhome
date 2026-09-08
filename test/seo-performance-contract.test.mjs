@@ -1,11 +1,27 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { aggregateLighthouseSamples, classifyLighthouseOutcome, isCompleteLighthouseReport, median, parseLighthouseRuns } from '../scripts/qa/lighthouse-mobile.mjs';
+import { aggregateLighthouseSamples, classifyLighthouseOutcome, isCompleteLighthouseReport, median, parseLighthouseRuns, parseLighthouseRoutes } from '../scripts/qa/lighthouse-mobile.mjs';
 import { isActionableImage, isPermittedUtilityQuery, normalizedPath, parseRedirects, SEO_BUDGETS } from '../scripts/qa/seo-audit.mjs';
 
 const root = new URL('..', import.meta.url);
 const read = (file) => readFile(new URL(file, root), 'utf8');
+
+test('targeted Lighthouse reruns select only unique routes in the full local matrix', () => {
+  const routes = parseLighthouseRoutes();
+  assert.equal(routes.length, 4);
+  assert.deepEqual(parseLighthouseRoutes('/'), ['/']);
+  assert.deepEqual(parseLighthouseRoutes(routes.join(',')), routes);
+  routes.pop();
+  assert.equal(parseLighthouseRoutes().length, 4);
+  for (const value of ['', '/,/', 'https://flowhome.dev/', '/unknown/', 'http://127.0.0.1:4339/']) assert.throws(() => parseLighthouseRoutes(value));
+});
+
+test('mobile hero source selection matches its existing 12rem artwork constraint', async () => {
+  const home = await read('src/pages/index.astro');
+  assert.match(home, /imageSizes: '\(max-width: 639px\) 192px, \(max-width: 767px\) 324px, 352px'/);
+  assert.match(home, /height: 12rem; max-height: 12rem !important/);
+});
 
 test('SEO audit normalizes routes, keeps non-content images out of loading noise, and rejects duplicate redirects', () => {
   assert.equal(normalizedPath('/compare/?x=1'), '/compare/');
@@ -36,7 +52,8 @@ test('SEO audit keeps the intentional inline-CSS HTML budget and adjacent budget
 test('comparison hub, breadcrumb, replacement links, and compatibility redirect use actual curated routes', async () => {
   const [hub, layout, header, home, redirects] = await Promise.all([read('src/pages/compare/index.astro'), read('src/layouts/CompareLayout.astro'), read('src/components/Header.astro'), read('src/pages/index.astro'), read('public/_redirects')]);
   assert.match(hub, /<h1[^>]*>Smart home product comparisons<\/h1>/);
-  assert.match(hub, /amazon-smart-thermostat.*ecobee-smart-thermostat-premium/);
+  assert.ok(hub.includes("from '../../lib/comparison-content'"));
+  assert.match(await read('src/lib/comparison-content.ts'), /amazon-smart-thermostat.*ecobee-smart-thermostat-premium/);
   assert.match(layout, /name: 'Comparisons', href: '\/compare\/'/);
   assert.doesNotMatch(header, /echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/);
   assert.doesNotMatch(home, /echo-dot-5th-gen-vs-google-nest-hub-2nd-gen-vs-tp-link-kasa-smart-plug-mini/);
@@ -46,7 +63,8 @@ test('comparison hub, breadcrumb, replacement links, and compatibility redirect 
 test('Lighthouse uses the local dependency, loopback preview, lab budgets, and isolated reports', async () => {
   const [pkg, runner, docs, astro] = await Promise.all([read('package.json'), read('scripts/qa/lighthouse-mobile.mjs'), read('docs/SEO_PERFORMANCE_AUDIT.md'), read('astro.config.mjs')]);
   assert.match(pkg, /"lighthouse": "\^13\.4\.1"/);
-  assert.match(runner, /node_modules', '.bin'/);
+  assert.match(runner, /node_modules', 'lighthouse', 'cli', 'index\.js'/);
+  assert.match(runner, /javascript \? process\.execPath : command/);
   assert.match(runner, /startPreview\(\)/);
   assert.match(runner, /CHROME_PATH: chrome/);
   assert.match(runner, /--no-enable-error-reporting/);
@@ -149,8 +167,8 @@ test('prepaint consent, deferred authenticated sync, and approved PNG wordmarks 
 
 test('home caps initial featured-card DOM as an LCP performance budget while preserving the six-product hero', async () => {
   const home = await read('src/pages/index.astro');
-  assert.match(home, /const featuredProducts = products\.filter\(\(p\) => p\.data\.catalogActive\)\.slice\(0, 8\);/);
+  assert.match(home, /const featuredProducts = selectHomeShortlist\(products\);/);
   assert.match(home, /const showcaseProducts = featuredProducts\.slice\(0, 6\);/);
-  assert.match(home, /featuredProducts\.map\(\(product\) => <ProductCard product=\{product\} \/>\)/);
+  assert.match(home, /featuredProducts\.map\(\(product\) => <ProductCard product=\{product\} editorialReason=\{product.editorialReason\} \/>\)/);
   assert.match(home, /<style is:inline>/);
 });

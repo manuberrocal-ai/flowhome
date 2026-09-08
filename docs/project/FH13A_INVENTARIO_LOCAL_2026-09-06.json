@@ -1,0 +1,822 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-review-inventory-not-release-manifest",
+  "observedAt": "2026-09-06T22:40:38.481Z",
+  "baseSha": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "sourceSha": null,
+  "cleanCheckout": false,
+  "productionEnvironment": false,
+  "publishable": false,
+  "rollbackDeploymentId": null,
+  "distSha256": "ada28afb9758dcb799b95bf5d840309c881f0b23cd1517794d0ea381593cc9b2",
+  "filesCount": 160,
+  "environment": {
+    "schemaVersion": 1,
+    "environment": "local",
+    "authEnabled": false,
+    "analyticsEnabled": false,
+    "supabaseProjectRef": null
+  },
+  "files": [
+    {
+      "path": ".well-known/security.txt",
+      "size": 166,
+      "sha256": "453eb660a86e540b82ffdcf9a6434af6d5361cef34f6fe9f30c99e02c1ede621"
+    },
+    {
+      "path": "404.html",
+      "size": 140118,
+      "sha256": "85eedfe295c74e1e4569a74897b29a31769fcd46e483c5131fa83052cf76f1ac"
+    },
+    {
+      "path": "85b3b79bd6a26a3862465cc5611db3a2.txt",
+      "size": 32,
+      "sha256": "608e6d3b0e312a02ad2f12fb475b89220b756d58f4cf6559a0bf8c099fdb80fd"
+    },
+    {
+      "path": "BingSiteAuth.xml",
+      "size": 85,
+      "sha256": "c08ef4c23e03d9fea5f9c395c4413ecae02390d8265bda2cedf604131f9690cd"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_0_lang.Diiwc1rL.js",
+      "size": 751,
+      "sha256": "ac8e1bcf6f08ffbed868e0587b33f5d9ac033830b21cb4bd2c146072acc8481e"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_1_lang.CvKL_-UD.js",
+      "size": 2241,
+      "sha256": "382cc9a0f9f782da8acf709e33fc7f00b50b85ff7e4a3221ec267b81ba9d2674"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_2_lang.CahRpJJZ.js",
+      "size": 812,
+      "sha256": "3a381ea7bdb586af7be40b6293dc23ffa8bda32103e5d2d8abd2c454178ec2d8"
+    },
+    {
+      "path": "_astro/ConsentBanner.astro_astro_type_script_index_0_lang.Do2_6K12.js",
+      "size": 1008,
+      "sha256": "569c9e167d42bfb74d2938c09efde606930263872c0ba4fd85842c553b697eb6"
+    },
+    {
+      "path": "_astro/DealCard.astro_astro_type_script_index_0_lang.D9QIWNY9.js",
+      "size": 2039,
+      "sha256": "dbb49d5a262228d60eed4f86a8fe15ecf5a3df536cc1397e951bdfda0b3de551"
+    },
+    {
+      "path": "_astro/Footer.astro_astro_type_script_index_0_lang.DUaV7jwV.js",
+      "size": 346,
+      "sha256": "595545dcf105ebc56d8ecfc30a2f2f86945ca89a13a00c58379f850120d03def"
+    },
+    {
+      "path": "_astro/Header.astro_astro_type_script_index_0_lang.DkIarfvo.js",
+      "size": 1235,
+      "sha256": "2e0ff8b78436412bbadee0cc83fb8a0cd90df9f44b994b9858cb3f1f1d4e9be7"
+    },
+    {
+      "path": "_astro/Header.astro_astro_type_script_index_1_lang.D14q-GoV.js",
+      "size": 2224,
+      "sha256": "a997c59816193129d312eee8edbfe477d65433bf05a4ec031604a1d4f669c25f"
+    },
+    {
+      "path": "_astro/account.astro_astro_type_script_index_0_lang.BF_aKt7u.js",
+      "size": 4759,
+      "sha256": "165c98b1f9df5984400ccd5c9481182850c0c8de55734da3a8d4a31fc965a8f4"
+    },
+    {
+      "path": "_astro/analytics.BgNWto8B.js",
+      "size": 7052,
+      "sha256": "88a2ff0e1812e902456a19932916ed8de062c909564cf4a459fc51bc65fe8e32"
+    },
+    {
+      "path": "_astro/auth-channel.B0ndQh5p.js",
+      "size": 1045,
+      "sha256": "be1fb9101db7ef58be56dd302db27b86c8e5eeda2ea7fa772eee6cafb233fe52"
+    },
+    {
+      "path": "_astro/auth-helpers.BlQnyFY1.js",
+      "size": 1018,
+      "sha256": "9d3f9c4a7ae229767bfa2962f412ca0d55b5f47cf31a8e6eb5fc4b9d9cd58eeb"
+    },
+    {
+      "path": "_astro/calculator.astro_astro_type_script_index_0_lang.B_p8nvjc.js",
+      "size": 1260,
+      "sha256": "271f59cb3681d64e1c9109eca4b667994836f01e22f0ace7e38bb013ec7f9a05"
+    },
+    {
+      "path": "_astro/cart-client.ClXzIaIy.js",
+      "size": 4621,
+      "sha256": "435846fa5a441d9a1b69cab25a9c20a5209be27df3e92343c08a5526615c7b17"
+    },
+    {
+      "path": "_astro/cart-store.lgc8IoLf.js",
+      "size": 7607,
+      "sha256": "8d785d00aa1cc79d92789d3ac226a56c08d57f9bccfab94cf2ab53a6fbdff1cf"
+    },
+    {
+      "path": "_astro/cart-sync.W-JznufO.js",
+      "size": 1211,
+      "sha256": "d5e5c5004cd90f50db5e0d222961ac2c8f15249d1f0bd320d766f82ab0a9b8a4"
+    },
+    {
+      "path": "_astro/cart.astro_astro_type_script_index_0_lang.CETUuSHh.js",
+      "size": 50,
+      "sha256": "02358b5e0fecc301729f47b13fefeee346762a62db0665d25996d5d8ff076cbe"
+    },
+    {
+      "path": "_astro/commerce-data.ZbxwU02i.js",
+      "size": 3037,
+      "sha256": "942c2c536f6c230da56e8ca63183aa0ec46cdddbc9f05bbc4e2c8a8dd1e988a6"
+    },
+    {
+      "path": "_astro/consent.CXUsHNVh.js",
+      "size": 638,
+      "sha256": "c43c47a30389d8464abb61e033a1fb502615e4b39d7ad905716e18d381307dae"
+    },
+    {
+      "path": "_astro/experiments.Blh6Bryf.js",
+      "size": 5652,
+      "sha256": "df7918b698b4432b6ac0402c4114b8a7aea5fa7616b4740888643a62beab3bf9"
+    },
+    {
+      "path": "_astro/index.astro_astro_type_script_index_0_lang.CfPeeNp5.js",
+      "size": 5043,
+      "sha256": "3e0c774340494490ccb0b463462630229a42bf518d741386a8a61c310b183da8"
+    },
+    {
+      "path": "_astro/inter-latin-wght-normal.Dx4kXJAl.woff2",
+      "size": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "_astro/plus-jakarta-sans-latin-wght-normal.eXO_dkmS.woff2",
+      "size": 27348,
+      "sha256": "153fc85b70298beeb1d61a5f723331649e7f23bb77302a66e61cb3e2fbdb5e79"
+    },
+    {
+      "path": "_astro/preferences.astro_astro_type_script_index_0_lang.QElPJ4p5.js",
+      "size": 5515,
+      "sha256": "faa8679aa28e75cd704fd13ad4688a1d670ab8a55aa3cdd31bdc556e47cf6b12"
+    },
+    {
+      "path": "_astro/preload-helper.L5lOfJxi.js",
+      "size": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "path": "_astro/quiz.astro_astro_type_script_index_0_lang.13wJdATd.js",
+      "size": 18099,
+      "sha256": "432ff37d4eabe7dea66ada1af91fe2b282bfe288887d8aac47d811afce3158f8"
+    },
+    {
+      "path": "_astro/rolldown-runtime.DK3Fl9T5.js",
+      "size": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "path": "_astro/search.astro_astro_type_script_index_0_lang.F6MTQOII.js",
+      "size": 1595,
+      "sha256": "380aa8bb5339a8037499eef27274972b0573c6937a461daa636ca58c72559168"
+    },
+    {
+      "path": "_astro/supabase-client.CE6HPg85.js",
+      "size": 203026,
+      "sha256": "10261418980f1be27bafc4426b39a14c6173febd829f9dd7f466810a7163e6d5"
+    },
+    {
+      "path": "_headers",
+      "size": 1522,
+      "sha256": "92f3e1305c5fd83c9e17b09446df8ec7ef4ea3154f35ded55a4371738f447aa3"
+    },
+    {
+      "path": "_redirects",
+      "size": 260,
+      "sha256": "17713f3cf7d5ec1c3db6a128c8f456db704abfa671252a2572951c4ae50a607c"
+    },
+    {
+      "path": "about/index.html",
+      "size": 145738,
+      "sha256": "dd14989c4f4c97549f67e26a9b49c7755a18c69e2db3d974807d0a3ee55f4a47"
+    },
+    {
+      "path": "account/index.html",
+      "size": 147280,
+      "sha256": "a2630aa36d305d9b6ac87e61109139d4002b91279e1dce75a27598c19113b849"
+    },
+    {
+      "path": "ads.txt",
+      "size": 61,
+      "sha256": "e3c44cb5fc0955bd8a64c4a8f3ae9adac0fb50e59419f94ac3a9b9b7f4562c6b"
+    },
+    {
+      "path": "best/best-alexa-smart-home-devices/index.html",
+      "size": 175248,
+      "sha256": "e148ddb8d8096bb61b1ac6518ad364875ef92e1d614a9a507de0881b75601e8a"
+    },
+    {
+      "path": "best/best-google-home-starter-devices/index.html",
+      "size": 170721,
+      "sha256": "fe41568e051cd83de7ed6acc4ef095ca63aa9c36292dcb5c9a66fe970ec383fb"
+    },
+    {
+      "path": "best/best-robot-vacuums-for-smart-homes/index.html",
+      "size": 157748,
+      "sha256": "fbbb19d0b93b42b7f5a968ad19cce6a04edde9d63bd918af30c2c1acc3aca9a8"
+    },
+    {
+      "path": "best/best-smart-home-devices-for-renters/index.html",
+      "size": 181074,
+      "sha256": "4b0a172b236a8ee8722498aca528a101dc671c59317bf7f6bd620b8699deef49"
+    },
+    {
+      "path": "best/best-smart-home-starter-kit/index.html",
+      "size": 169667,
+      "sha256": "2e057b53859d9db1b9c06d0b6827308555def436f3f11413cd64a87757941719"
+    },
+    {
+      "path": "best/best-smart-hubs-for-matter-zigbee/index.html",
+      "size": 165929,
+      "sha256": "8873d68e8a2d3dd505596b9d597a9306e5b9963592c420499b61cd8b25c0b662"
+    },
+    {
+      "path": "best/best-smart-lighting-for-room-control/index.html",
+      "size": 165402,
+      "sha256": "4324014e9df7c3224a073845181fe349a8db402ee05ee1453d67bc0778ee55f3"
+    },
+    {
+      "path": "best/best-smart-security-basics/index.html",
+      "size": 169597,
+      "sha256": "f0ee5bc6f26029e005236e416576cadd6ff343353dfa965deae7289bde67d5fa"
+    },
+    {
+      "path": "best/index.html",
+      "size": 145681,
+      "sha256": "1ef1accc72c704e6247c8174040cd9e76c6fc388829f8e6302f3903477c523bb"
+    },
+    {
+      "path": "calculator/index.html",
+      "size": 142943,
+      "sha256": "1dc62a90097548088398c42a7cddb63630842ed5c653ba1ca846605c5c915f8c"
+    },
+    {
+      "path": "cart/index.html",
+      "size": 143389,
+      "sha256": "da5c9cea334e54754a01b6a6fe8c9bd696a6369eda4b764f92ab320740322dc8"
+    },
+    {
+      "path": "category/air-purifier/index.html",
+      "size": 147405,
+      "sha256": "2bee3b7f2222f54f4c34bd8f2b691957dd15641fcee1340e109b4d537f1e2a38"
+    },
+    {
+      "path": "category/garage-door-opener/index.html",
+      "size": 147457,
+      "sha256": "a8c287216b662e75b7453de4cc2a1cf5223d435da3dc4372c8567e039434469a"
+    },
+    {
+      "path": "category/motion-sensor/index.html",
+      "size": 147306,
+      "sha256": "c50bd1f39286ccb6d44b920477521e933baa5ceed07536c92d6115142d4927fa"
+    },
+    {
+      "path": "category/robot-vacuum/index.html",
+      "size": 153361,
+      "sha256": "a5274463cb9a4fa1e6ee22f929551c62eecc6c3a5311e71d648313f74cb92bea"
+    },
+    {
+      "path": "category/security-camera/index.html",
+      "size": 165104,
+      "sha256": "45a5fa8a01de1208b5e14365d6bf7eb0dd6e61075965822867105536f081f3bc"
+    },
+    {
+      "path": "category/smart-blinds/index.html",
+      "size": 147255,
+      "sha256": "bb731f1144f69310690993cf45b9da85fcecbcffaf83777702155e79d4b29708"
+    },
+    {
+      "path": "category/smart-display/index.html",
+      "size": 153353,
+      "sha256": "38d0931d2332c7354da53b922c2dd3e2e7cf6cd174568ff0b2696e257bb09679"
+    },
+    {
+      "path": "category/smart-hub/index.html",
+      "size": 159249,
+      "sha256": "528ac7a646c6449803957bfa9cea56ea3af5b3316643a1bf825ea7a38b09a97c"
+    },
+    {
+      "path": "category/smart-lighting/index.html",
+      "size": 170884,
+      "sha256": "93d03f3998a4ca3706e89cfe2dc5dd238ebfab34ae1c3a024a1b5f94157bae56"
+    },
+    {
+      "path": "category/smart-lock/index.html",
+      "size": 159041,
+      "sha256": "582dee6aa0aff02218ae4f273b7ddb087696f9e6ec0638c023bb50946954f8c3"
+    },
+    {
+      "path": "category/smart-plug/index.html",
+      "size": 147742,
+      "sha256": "d85c1b5b4c7d1ea5f37a7fdd337f1106e520a895445b81c32cf6b2ac095dc121"
+    },
+    {
+      "path": "category/smart-speaker/index.html",
+      "size": 147569,
+      "sha256": "926634365d0d864e53692bd137fb71d4c67c90ea2a13b84ecb95feec1c16e120"
+    },
+    {
+      "path": "category/smart-thermostat/index.html",
+      "size": 153677,
+      "sha256": "4e98db2d228739b2eee6ed9537c3d10d152ef4b0269607509aaa7b63530ee921"
+    },
+    {
+      "path": "category/video-doorbell/index.html",
+      "size": 147545,
+      "sha256": "50d7dedd669da4e9287cf42a868af611226254c890b67f99d82841bf7708c037"
+    },
+    {
+      "path": "compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/index.html",
+      "size": 154406,
+      "sha256": "82133457c6f8b8db775867de27f832b89529a46cc21318757848a6993a52b9ee"
+    },
+    {
+      "path": "compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/index.html",
+      "size": 156937,
+      "sha256": "618df7206da4e40b8a1d8a6f461c80220e19dc4bd8f7d16ba9c87e43301bcf30"
+    },
+    {
+      "path": "compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/index.html",
+      "size": 156546,
+      "sha256": "a906262d1a13d992bcb17c59cdcbb374026eefbe1dd7cd361090700ef1ad7b6e"
+    },
+    {
+      "path": "compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/index.html",
+      "size": 153962,
+      "sha256": "160ea04e3efeb6087614632d26c72242403fd4f190756e1d930bef0830067ea7"
+    },
+    {
+      "path": "compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/index.html",
+      "size": 154321,
+      "sha256": "26505cb17347398ab4697d37e87aede96baca9c697c336b2d7c1f3a34aa33381"
+    },
+    {
+      "path": "compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/index.html",
+      "size": 154275,
+      "sha256": "abf5b2a45c989ef1d3555f97db244e2d9247b482a6fd3a9e2a14a0c00811a1b0"
+    },
+    {
+      "path": "compare/index.html",
+      "size": 150128,
+      "sha256": "4f0f2cc8c9c600652714489ffbdacf5cdba2b8d85fb8ffdeb1e59f15865920cc"
+    },
+    {
+      "path": "compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/index.html",
+      "size": 157879,
+      "sha256": "178752dcbe904d40c62d6d4ab9ff06d6130c72db3eec5571cf9e8e529fd30dc0"
+    },
+    {
+      "path": "compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/index.html",
+      "size": 153888,
+      "sha256": "89cd8bb5d51556af4846faf5de451702cac76670e05cff47d7c6f62dc9381e6e"
+    },
+    {
+      "path": "consent-prepaint.js",
+      "size": 382,
+      "sha256": "9c657ed0f2aefda97d2239bf1bc22a40d6116375b16db9ecc3c6694d5fdc4f45"
+    },
+    {
+      "path": "deals/index.html",
+      "size": 140720,
+      "sha256": "c02abb448609862fea6f5526b4de74287669fdf3bb11f877527bf37653743642"
+    },
+    {
+      "path": "favicon.svg",
+      "size": 263,
+      "sha256": "900373084d10c8b94ced1faf81b05c06a187227089410ed51a849f6fae0cba0a"
+    },
+    {
+      "path": "google100da42fd55ce083.html",
+      "size": 53,
+      "sha256": "cb3fc033d0e1c5245c384becf34b846bfb2b65f6aebd21784aeaac2e9ae0b861"
+    },
+    {
+      "path": "humans.txt",
+      "size": 319,
+      "sha256": "401c562c36ac7477c953d3be2d00395b7c24f4073ce26bcfa9e79ee13566ad4a"
+    },
+    {
+      "path": "images/flowhome-favicon.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-icon-192.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-icon-512.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-logo-430.png",
+      "size": 8998,
+      "sha256": "4508410bb4506a102276cd81110cce9860d2757cad8acb576d186faa2f3e0533"
+    },
+    {
+      "path": "images/flowhome-logo-mark.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-logo-mark.svg",
+      "size": 1457,
+      "sha256": "123eb3fe88bc8a8802614d2cc1d7eeb1ed77719049b7ee99fa8839fe9060840d"
+    },
+    {
+      "path": "images/flowhome-logo.png",
+      "size": 41572,
+      "sha256": "b9b666fb77d6306af1fd3d2fa563d87142a551f94183d71d5fd164b7fa4de0a5"
+    },
+    {
+      "path": "images/flowhome-logo.svg",
+      "size": 2502,
+      "sha256": "16470a6362f5cb9f9a7a7430b7ef9892a1a9471f2b66d39ced44e13eaed16431"
+    },
+    {
+      "path": "images/og-default.svg",
+      "size": 709,
+      "sha256": "2dbab04599581d2369b57e8260997cabe47d4bbf4a497ffcaa021c19f80e530e"
+    },
+    {
+      "path": "images/pinterest/robot-vacuums-guide.png",
+      "size": 187765,
+      "sha256": "1799c80deff6337315907a14e5e4f2a6a4ce420c0aa3635abb0190bf90ebf0b8"
+    },
+    {
+      "path": "images/pinterest/smart-hubs-guide.png",
+      "size": 177924,
+      "sha256": "23ffdd314a153f70f901f2c99ae910960f65db1570f64022978f89ede0dd7201"
+    },
+    {
+      "path": "images/pinterest/smart-lighting-guide.png",
+      "size": 179311,
+      "sha256": "b4306f7372649ff10217cd41544becd0fce2944444cbe7698bd464fc1ae5a46f"
+    },
+    {
+      "path": "images/product-art/robot-vacuum.svg",
+      "size": 1394,
+      "sha256": "830a539109ecf390c63ba101abd7125589fb0054908b19df77ee8b6f46bf9cbd"
+    },
+    {
+      "path": "images/product-art/security-camera.svg",
+      "size": 1336,
+      "sha256": "ed4965b8c3383ab8f2d79a6ab7e72ec86dad9e913ae8d98a908eb278b0c9945a"
+    },
+    {
+      "path": "images/product-art/smart-display.svg",
+      "size": 1329,
+      "sha256": "8b0c0eab84410b9a3ec2d346355db2c0444a3c25cab5eab260291153c1a7fe93"
+    },
+    {
+      "path": "images/product-art/smart-home-device.svg",
+      "size": 1316,
+      "sha256": "04938d81fb6475e50f737cf9d74de36342c93febdea62eb030493f5ab1cbce2d"
+    },
+    {
+      "path": "images/product-art/smart-hub.svg",
+      "size": 1390,
+      "sha256": "f51ca3796b741ee946f576e0d1d0707bf527f0046f384b12cf0166c5274bd729"
+    },
+    {
+      "path": "images/product-art/smart-lighting.svg",
+      "size": 1384,
+      "sha256": "fb321448396606082bf560aef3dc551f9444808767ab0429c25cedf47b8f7e1d"
+    },
+    {
+      "path": "images/product-art/smart-lock.svg",
+      "size": 1313,
+      "sha256": "4ecda4285ae715a80158b78b6f89e2ae99242f8a763add65a889ceeea3830d85"
+    },
+    {
+      "path": "images/product-art/smart-plug.svg",
+      "size": 1338,
+      "sha256": "8976c40f874d6af861edf465b13eb794bd3c3ac1b61204ebd40d7e9059cc6f9e"
+    },
+    {
+      "path": "images/product-art/smart-speaker.svg",
+      "size": 1342,
+      "sha256": "c90026898a2897a7a1000ab81b7336ee8da1ba23521b002e1252dfbbe6a0de95"
+    },
+    {
+      "path": "images/product-art/smart-thermostat.svg",
+      "size": 1362,
+      "sha256": "c37be2b1de3c1596d9d5f0aa3e6e4f0cf674e17342b3f84fe52439efba2a982a"
+    },
+    {
+      "path": "images/product-art/video-doorbell.svg",
+      "size": 1313,
+      "sha256": "e7b317f81dfb004286ac12d1cd3edf056867283e1bcc96870f66931c922ed206"
+    },
+    {
+      "path": "images/product-placeholder.svg",
+      "size": 447,
+      "sha256": "f55618419b1fbe66d1f7f0f0b5b0a204dbb7321ab5692f2d5cec573a9b9c0b6a"
+    },
+    {
+      "path": "images/quiz-qr.svg",
+      "size": 6550,
+      "sha256": "11d3c7fda30a512913e21d52bd142a39cd5a6e92558e4f165dfc643259bba558"
+    },
+    {
+      "path": "index.html",
+      "size": 213644,
+      "sha256": "8ae061cb01cee7ad8ef6027e3ac5b5da7a8e165e03c8c5e01ba3df2c6854a6fb"
+    },
+    {
+      "path": "llms.txt",
+      "size": 567,
+      "sha256": "8fe85f5c76e2efc654dce14aee8a1b1673ecd7a0f4f923afad6e4b2781e05b7d"
+    },
+    {
+      "path": "opensearch.xml",
+      "size": 496,
+      "sha256": "76b3f507029f41cd2c396adfab9a16844d125865a931065ad759cc30ae5c93f6"
+    },
+    {
+      "path": "preferences/index.html",
+      "size": 142822,
+      "sha256": "cdc69452541e988c16893e0d1c43683c2717d0d30cfd4564bf451360de6678a2"
+    },
+    {
+      "path": "privacy/index.html",
+      "size": 142147,
+      "sha256": "d41cd83172b16b3ce5ba99c4d71635e7330c56e246d9c0cff1889acbd7fa07e0"
+    },
+    {
+      "path": "product/aeotec-smartthings-hub/index.html",
+      "size": 168517,
+      "sha256": "dfdf6137a3d61a0aa4145ef3998c4c1214710dd42197bff1e38547097e02b080"
+    },
+    {
+      "path": "product/amazon-smart-thermostat/index.html",
+      "size": 162978,
+      "sha256": "8b30abd75b3f12fe196afcf036a9afba0babbf93b577dec2ffb97b28a436c542"
+    },
+    {
+      "path": "product/aqara-hub-m2/index.html",
+      "size": 167684,
+      "sha256": "53293574867248b9491c89a94c6307148c930263078ededab20b06ecf80da7c6"
+    },
+    {
+      "path": "product/aqara-motion-sensor-p1/index.html",
+      "size": 160548,
+      "sha256": "2df6800433ffeed60de3a5743b9db11ead67a16c56ed9b5abaa1cfa8ba7f3c7b"
+    },
+    {
+      "path": "product/arlo-essential-outdoor-camera/index.html",
+      "size": 172776,
+      "sha256": "98b681bca22d2c060150598c4f6f2451c46bcf31df3327763496de9cb6c6d410"
+    },
+    {
+      "path": "product/august-wifi-smart-lock/index.html",
+      "size": 166977,
+      "sha256": "25f20fb434c87ee779075d37bcf338177fe59696cbe3bc31bd353e7ee9bee521"
+    },
+    {
+      "path": "product/blink-outdoor-4/index.html",
+      "size": 171433,
+      "sha256": "6255d4ac8edb30c356f4700b011dd6f3437a71b6a4941cf4103fc9ec77c76b5c"
+    },
+    {
+      "path": "product/echo-dot-5th-gen/index.html",
+      "size": 158368,
+      "sha256": "9ba2aabac43f701791fbb1b8748f5c7fa144a2715c701dfd635ff5c791f45050"
+    },
+    {
+      "path": "product/echo-show-8-3rd-gen/index.html",
+      "size": 164165,
+      "sha256": "0195bd002aa0bfac8318f7e915841dc28dceb5551cbf270e6e1c8cf4c09de9cf"
+    },
+    {
+      "path": "product/ecobee-smart-thermostat-premium/index.html",
+      "size": 163216,
+      "sha256": "47c14b853b1a69424da6705c6266cfdfbc62ca1f89957c363e97c9608d462583"
+    },
+    {
+      "path": "product/eufy-security-indoor-cam-c120/index.html",
+      "size": 172516,
+      "sha256": "5a76c05f74f1315d6eea2bc691b97b174a38541ea28f6f53d89dc7774c3a0119"
+    },
+    {
+      "path": "product/google-nest-hub-2nd-gen/index.html",
+      "size": 163281,
+      "sha256": "de50838f1a91553a90110d86aaa25011b5ada7585f12f9d5f4ac4e678c6b2e24"
+    },
+    {
+      "path": "product/govee-rgbic-led-strip-lights/index.html",
+      "size": 178216,
+      "sha256": "0674b8921f3baabe1fa039c9d07bd0247e0a3ac75ae45e08cec8df6b8e249b9c"
+    },
+    {
+      "path": "product/irobot-roomba-j7-plus/index.html",
+      "size": 163011,
+      "sha256": "2036572618fa940f5710dd844718c2c8f84ea439e16e6857c7279fdb92056915"
+    },
+    {
+      "path": "product/levoit-core-300s-air-purifier/index.html",
+      "size": 158685,
+      "sha256": "80fa0cb0fc3abda43f432ee82c2d894a222f62bdfcb5d9ecc3aab71abb574518"
+    },
+    {
+      "path": "product/meross-smart-garage-door-opener/index.html",
+      "size": 160394,
+      "sha256": "703c0bb0b29df54eaeb3adff2ae46c5504f8dfed49bf94d9699af71d01170777"
+    },
+    {
+      "path": "product/philips-hue-white-color-starter-kit/index.html",
+      "size": 178742,
+      "sha256": "dd4936f7cc52e09426a32ab615b1d2312b2bdf65772ab4e95860aa766466f229"
+    },
+    {
+      "path": "product/ring-video-doorbell-wired/index.html",
+      "size": 160038,
+      "sha256": "66a2de6395289699b942a3cc90a07d0a718aa7f36f27b2b0662912bbfd2df683"
+    },
+    {
+      "path": "product/roborock-q5-plus/index.html",
+      "size": 163507,
+      "sha256": "a46309fb13d74aa012dd77a2ae65cd09ac533e8ca5d6bfcbd9d770d809fe6e19"
+    },
+    {
+      "path": "product/schlage-encode-smart-wifi-deadbolt/index.html",
+      "size": 168697,
+      "sha256": "fafce615dfb0624ca7f1cee01d353b4ea900d1e45a2bacedc270cdd59f729721"
+    },
+    {
+      "path": "product/switchbot-blind-tilt/index.html",
+      "size": 162312,
+      "sha256": "397fb333aec6ac88c5871953ad390e70f54ca23499a7fbceb1fe8f83c550b66c"
+    },
+    {
+      "path": "product/switchbot-hub-2/index.html",
+      "size": 167776,
+      "sha256": "a1ad07d02ad3e641d83c5e7050a5c71eb509ebad12cc2c002c711f64217077b8"
+    },
+    {
+      "path": "product/tapo-c120-security-camera/index.html",
+      "size": 172133,
+      "sha256": "ce6766782b9cefe0940957178f2e4666ab4d93807b191a3e21a704d54b7c8ef5"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-dimmer-hs220/index.html",
+      "size": 175655,
+      "sha256": "cb4208dd1fb6237edc6b761242ae74e206202689abc9198af1e12eb376183d81"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-light-switch-hs200/index.html",
+      "size": 175563,
+      "sha256": "4ec62fec84ee8ce5afcd9992b915f6b0d5ee57ddce010e3301cd63685e91ff8f"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-plug-mini/index.html",
+      "size": 160799,
+      "sha256": "2a4c68905904527c9837e83c0bd56baeecc9f058e3526ffe82648e4e9210d0a3"
+    },
+    {
+      "path": "product/wyze-bulb-color/index.html",
+      "size": 176261,
+      "sha256": "0619e67257c07868e125bf95a7eb1a5541c15e5b746517c512c9ba277bdf1cc0"
+    },
+    {
+      "path": "product/yale-assure-lock-2-wifi/index.html",
+      "size": 168942,
+      "sha256": "4034869069c3214b7da821981cfba1d974705a9f9f4e8b39fb6f1e5ffad6121a"
+    },
+    {
+      "path": "products/index.html",
+      "size": 300223,
+      "sha256": "77eb9fc91aee8dee4d570973c511fd5fd0d74fb3b350e1c3724c8554aab9ee43"
+    },
+    {
+      "path": "quiz/index.html",
+      "size": 200821,
+      "sha256": "f38dbb0917e5e66dd291a2e68402281ea457e6fca41ea4a4e4b7cf47b21098a4"
+    },
+    {
+      "path": "release-environment.json",
+      "size": 134,
+      "sha256": "9b87fbf01a9df5499571e5b482e54f0aeafb62b5e569386dc1bbdbb1352c2fbb"
+    },
+    {
+      "path": "review/aeotec-smartthings-hub-review/index.html",
+      "size": 165867,
+      "sha256": "688ecf13345b43406145d4c3fa34fe993c368a5428e6b423b0a929362ff7fea2"
+    },
+    {
+      "path": "review/amazon-smart-thermostat-review/index.html",
+      "size": 160609,
+      "sha256": "186edb3e3f57dda9c708e5d7de576be96eb94abf2d6634711b421e560d18f2b8"
+    },
+    {
+      "path": "review/aqara-hub-m2-review/index.html",
+      "size": 165199,
+      "sha256": "7542feeded542dc8c588b4be83cfa7d94f613e97447f346d04cccbb029121876"
+    },
+    {
+      "path": "review/august-wifi-smart-lock-review/index.html",
+      "size": 164647,
+      "sha256": "6b1f4c16b4985153bc26e939ced29aabf72216acafd9c560b294519d3ebcd5ad"
+    },
+    {
+      "path": "review/blink-outdoor-4-review/index.html",
+      "size": 168779,
+      "sha256": "ef81ddc824366868fa5bfc87072e46a0ab2e540ab7b388546ddbee9838036989"
+    },
+    {
+      "path": "review/echo-dot-5th-gen-review/index.html",
+      "size": 156249,
+      "sha256": "bc4722849e271398ed0e6f064693293797630f20e2b6b83138eed33b433e0a39"
+    },
+    {
+      "path": "review/ecobee-smart-thermostat-premium-review/index.html",
+      "size": 160871,
+      "sha256": "291343e30fdf16b55280d60d16d35b6a86a0ab8a5032f2353cf56bc45d68c2eb"
+    },
+    {
+      "path": "review/eufy-security-indoor-cam-c120-review/index.html",
+      "size": 169075,
+      "sha256": "48c0c0c1de3371ee8da834c6121d7cb1f18ad856412c45102e061a36c1fc71ab"
+    },
+    {
+      "path": "review/google-nest-hub-2nd-gen-review/index.html",
+      "size": 161222,
+      "sha256": "595a8186579176c6552777c8538d4a0286bd80bfbd810a7dc3c6b5583f55b80d"
+    },
+    {
+      "path": "review/irobot-roomba-j7-plus-review/index.html",
+      "size": 162203,
+      "sha256": "4766eb26be718e112373122da71580bd4d6c50f09d54b8b5fa0ffeac5d23598f"
+    },
+    {
+      "path": "review/philips-hue-white-color-starter-kit-review/index.html",
+      "size": 173875,
+      "sha256": "380a1c5868c3583dbd5f4b34236adb63e7a37d591645ecedb06b390b76477e02"
+    },
+    {
+      "path": "review/ring-video-doorbell-wired-review/index.html",
+      "size": 157133,
+      "sha256": "2e1385be38887737b7672545d532cd37826a6d890cbe80141bcd404057ab5585"
+    },
+    {
+      "path": "review/roborock-q5-plus-review/index.html",
+      "size": 162741,
+      "sha256": "e74c36d16d039d716eb9de74dc12acb82d017d93b5d0e8fe1301d2474a110d08"
+    },
+    {
+      "path": "review/switchbot-hub-2-review/index.html",
+      "size": 165536,
+      "sha256": "8ea778685dd18458d58ff1351263acdc1439aeadbb30b1a3689488e8116c0d83"
+    },
+    {
+      "path": "review/tp-link-kasa-smart-plug-mini-review/index.html",
+      "size": 157370,
+      "sha256": "7098a9d7b48f78b4dad7760fa07f7cf08cc41983262cdb7b66f3acf6390bec76"
+    },
+    {
+      "path": "reviews/index.html",
+      "size": 171435,
+      "sha256": "dc0d391792e37b271970fadb5881c6923d5352cab001c676c42d84b53cda1f1f"
+    },
+    {
+      "path": "robots.txt",
+      "size": 397,
+      "sha256": "45c90c4040ea1314bf74b9f21d8859dd28ba6979365eadedff67259b399b65eb"
+    },
+    {
+      "path": "rss.xml",
+      "size": 12870,
+      "sha256": "2b6ece6f6486558ca1b93f200ec0970f10b72030a58f5df442137376b7b68978"
+    },
+    {
+      "path": "search/index.html",
+      "size": 154551,
+      "sha256": "f6946a99727c3d7a564507bdfb558b26a9d08723ae81e86085bc3880f7f34eb4"
+    },
+    {
+      "path": "site.webmanifest",
+      "size": 437,
+      "sha256": "5c82e586efe077f30ceb6a228f2a15640130b8c4c7999680581ec829eb6a6ee5"
+    },
+    {
+      "path": "sitemap-0.xml",
+      "size": 6622,
+      "sha256": "4ad70dd11f539a22d59ffddde2da15acdc9f0ada804150c00cd4693d051898b6"
+    },
+    {
+      "path": "sitemap-index.xml",
+      "size": 183,
+      "sha256": "e7e7714278d602e86ac1738f0c363a4bdf430684eee083704f646f8a3c141e47"
+    }
+  ]
+}

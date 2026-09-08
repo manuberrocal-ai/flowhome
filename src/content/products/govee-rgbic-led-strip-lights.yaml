@@ -7,7 +7,7 @@ originalPrice: 49.99
 discountPct: 20
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B099S9DXT7?tag=flowhome-20"
-image: "https://cdn.shopify.com/s/files/1/0512/3489/8105/files/617F.png?v=1770881059"
+image: "/images/product-art/illustrations-v1/smart-lighting.png"
 ownerRating: 4.6
 ownerRatingCount: 48000
 ratingSource: "Amazon customer ratings"
@@ -16,13 +16,65 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "Govee RGBIC LED Strip Lights"
-wifi: true
+model: "H617C"
+identityEvidence:
+  model: "H617C"
+  asin: B099S9DXT7
+  claims:
+    model:
+      value: "H617C"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Govee — H617C length, power, Bluetooth and no-cut specification"
+          url: "https://community.govee.com/support/faqs/specs"
+          accessedAt: "2026-09-06"
+    role:
+      value: "Bluetooth-controlled RGBIC light strip"
+      conditions: "The H617C row does not establish Wi-Fi, native Matter or Alexa support; do not transfer another strip's capabilities."
+      sources:
+        - label: "Govee — H617C length, power, Bluetooth and no-cut specification"
+          url: "https://community.govee.com/support/faqs/specs"
+          accessedAt: "2026-09-06"
+    asin:
+      value: "B099S9DXT7"
+      conditions: "The reviewed indexed listing identifies H617C / H617C1D1, 32.8 ft; not a current stock or price check."
+      sources:
+        - label: "Amazon indexed listing — identity observation only"
+          url: "https://www.amazon.com/dp/B099S9DXT7"
+          accessedAt: "2026-09-06"
+sources:
+  - label: "Amazon listing — H617C / H617C1D1, 32.8 ft"
+    url: "https://www.amazon.com/dp/B099S9DXT7"
+    accessedAt: "2026-09-06"
+  - label: "Govee — model-specific strip specifications"
+    url: "https://community.govee.com/support/faqs/specs"
+    accessedAt: "2026-09-06"
+compatibilityNotes:
+  - "H617C is the Bluetooth-controlled 10 m strip in Govee's model matrix, not the Wi-Fi H618C. The matrix lists no Alexa or Matter support for H617C; no Google Home integration is established here. Do not transfer assistant support from other RGBIC models."
+installation:
+  model: "H617C"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Plan space for the full 10 m (32.8 ft) H617C strip before mounting. Govee's model matrix marks this strip as not cuttable. Do not apply generic strip-cutting or splicing instructions to this model."
+    - "Use the matching supplied power adapter and controller; Govee specifies 24 V / 0.75 A for H617C. Its documented control path is Bluetooth with the Govee Home app, not direct Wi-Fi or Alexa. Confirm the exact H617C1D1 package and power hardware before buying."
+    - "Govee's general mounting guidance calls for a clean, dry surface and a planned cable route. Check the unit's instructions for the actual mounting surface and test the lights after placement. This estimate does not approve outdoor use, concealed wiring or custom power supplies; hardware and firmware have not been physically verified."
+  sources:
+    - label: "Govee — H617C length, power, Bluetooth and no-cut specification"
+      url: "https://community.govee.com/support/faqs/specs"
+      accessedAt: "2026-09-06"
+    - label: "Govee US — H617C family and Govee Home control (refurbished listing)"
+      url: "https://us.govee.com/products/govee-rgbic-basic-led-strip-lights-refurbished"
+      accessedAt: "2026-09-06"
+    - label: "Govee — general surface preparation only; cutting advice does not apply to H617C"
+      url: "https://us.govee.com/blogs/product-review-blog/how-to-install-led-strip-lights"
+      accessedAt: "2026-09-06"
+wifi: false
 bluetooth: true
 zigbee: false
 matter: false
-alexaCompatible: true
-googleHomeCompatible: true
+alexaCompatible: false
+googleHomeCompatible: false
 appleHomeKit: false
 appControl: true
 energyMonitoring: false
@@ -33,6 +85,3 @@ lidarMapping: false
 rgb: true
 dimmable: true
 subscriptionRequired: false
-priority: standard
-priorityScore: 49
-roiApproved: true

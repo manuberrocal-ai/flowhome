@@ -1,40 +1,79 @@
-name: FlowHome Automation
+name: FlowHome daily review (publication disabled)
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/automation.yml'
-      - 'scripts/**'
-      - 'src/content/**'
   schedule:
-    - cron: '0 13 * * 1,4'
+    # Keep these values aligned with DAILY_RUN_TIME and FLOWHOME_TIMEZONE below.
+    - cron: '7 10 * * *'
+      timezone: 'America/Argentina/Buenos_Aires'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Disable all Amazon API requests
+        type: boolean
+        default: true
+      weekly:
+        description: Full viewport matrix and three-sample Lighthouse
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flowhome-daily-review
+  cancel-in-progress: false
 
 jobs:
-  automation:
-    runs-on: ubuntu-latest
+  review:
+    if: github.event_name == 'workflow_dispatch' || vars.FLOWHOME_DAILY_SCHEDULE_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
     env:
+      PUBLIC_APP_ENV: 'local'
+      PUBLIC_AUTH_ENABLED: 'false'
+      PUBLIC_ANALYTICS_ENABLED: 'false'
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      FLOWHOME_TIMEZONE: ${{ vars.FLOWHOME_TIMEZONE || 'America/Argentina/Buenos_Aires' }}
+      DAILY_RUN_TIME: ${{ vars.DAILY_RUN_TIME || '10:07' }}
+      FLOWHOME_DAILY_KILL_SWITCH: ${{ vars.FLOWHOME_DAILY_KILL_SWITCH || 'false' }}
+      DAILY_AUTOPUBLISH: 'false'
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run discover:products
-      - run: npm run deals:detect
-      - run: npm run syndicate
+          persist-credentials: false
+      - name: Check local-time slot and kill switch
+        id: slot
+        run: node scripts/daily-schedule.mjs
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        if: steps.slot.outputs.due == 'true'
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Install locked dependencies
+        if: steps.slot.outputs.due == 'true'
+        run: npm ci
+      - name: Observe, validate and queue review
+        if: steps.slot.outputs.due == 'true'
         env:
-          SYNDICATION_DRY_RUN: 'true'
-      - run: npm run maintenance:weekly
-      - run: npm run build
-      - run: npm run seo:audit
-      - name: Upload automation reports
-        uses: actions/upload-artifact@v6
+          AMAZON_CREATORS_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_CLIENT_ID }}
+          AMAZON_CREATORS_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_CLIENT_SECRET }}
+          AMAZON_CREATORS_VERSION: ${{ vars.AMAZON_CREATORS_VERSION }}
+          AMAZON_PARTNER_TAG: ${{ vars.AMAZON_PARTNER_TAG }}
+          AMAZON_DISCOVERY_APPROVED: ${{ vars.AMAZON_DISCOVERY_APPROVED || 'false' }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || vars.AMAZON_DISCOVERY_APPROVED != 'true' }}
+          WEEKLY: ${{ inputs.weekly || steps.slot.outputs.weekly == 'true' }}
+          BRAVE_PATH: /usr/bin/google-chrome
+          LIGHTHOUSE_CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          args=()
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          if [ "$WEEKLY" = "true" ]; then args+=(--weekly); fi
+          npm run flowhome:daily -- "${args[@]}"
+      - name: Preserve evidence even after failure
+        if: always() && steps.slot.outputs.due == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: flowhome-automation-reports
-          path: |
-            data/deal-report.json
-            data/quality-report.json
-            data/syndication-queue.json
+          name: flowhome-daily-${{ github.run_id }}
+          path: reports/daily/
+          retention-days: 14
+          if-no-files-found: warn

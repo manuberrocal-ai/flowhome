@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../lib/product-art';
+import { getProductThumbnailSet } from '../lib/product-thumbnails';
+import { getProductImageSourceLabel, getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../lib/product-art';
 import { generateReviewSchema, generateBreadcrumbSchema, getValidEditorialRating } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 import { getCollection } from 'astro:content';
@@ -20,8 +21,8 @@ const productImage = product ? getProductImage(product) : undefined;
 const productAlt = product ? getProductImageAlt(product) : review.title;
 const productFallback = product ? getProductFallbackImage(product) : undefined;
 const categoryLabel = getCategoryLabel(review.category ?? product?.category);
-const reviewDate = review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-const updatedDate = review.updatedDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const reviewDate = review.pubDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const updatedDate = review.updatedDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const editorial = getEditorialMetadata({ authorId: review.authorId, reviewedBy: review.reviewedBy, humanReviewedDate: review.humanReviewedDate, sources: review.sources });
 const editorialRating = getValidEditorialRating(review);
 const reviewSchema = product ? generateReviewSchema(review, product) : undefined;
@@ -58,7 +59,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
           {editorial.author && <a href={editorial.author.profileUrl} class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">By {editorial.author.name}</a>}
           {reviewDate && <span class="rounded-full border border-slate-200 bg-white px-4 py-2">Published {reviewDate}</span>}
           {updatedDate && <span class="rounded-full border border-slate-200 bg-white px-4 py-2">Content updated {updatedDate}</span>}
-           {editorial.humanReviewedDate && <span class="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-emerald-700">Human reviewed {new Date(editorial.humanReviewedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+           {editorial.humanReviewedDate && <span class="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-emerald-700">Human reviewed {new Date(editorial.humanReviewedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</span>}
           {editorialRating && <span class="rounded-full border border-violet-100 bg-violet-50 px-4 py-2 text-violet-700">Editorial rating: {editorialRating.rating}/{editorialRating.scale}</span>}
           <span class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-blue-700">Editorial buying guide</span>
           <span class="rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-amber-700">Affiliate disclosure included</span>
@@ -66,25 +67,26 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
       </div>
       {product && (
         <aside class="premium-card p-5">
-          <div class="rounded-3xl bg-slate-50 p-4">
-            <img src={productImage} alt={productAlt} class="mx-auto h-48 w-full object-contain" width="640" height="480" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={productFallback} />
+          <div class="rounded-3xl bg-slate-50 p-4" data-image-fallback-scope>
+            <img src={productImage} srcset={getProductThumbnailSet(product)} sizes="192px" alt={productAlt} class="mx-auto h-48 w-full object-contain" width="640" height="480" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={productFallback} />
+            <p class="mt-2 text-xs text-slate-600" data-image-source-caption>{getProductImageSourceLabel(product)}</p>
           </div>
           <p class="mt-4 text-xs font-black uppercase tracking-wide text-slate-500">Product covered</p>
           <h2 class="mt-1 font-heading text-2xl font-black text-slate-950">{product.name}</h2>
           <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
             <div class="rounded-2xl bg-orange-50 p-3">
               <p class="font-bold text-orange-700">{commerce?.priceLabel}</p>
-              <p class="mt-1 text-2xl font-black text-slate-950">${product.price}</p>
+              <p class="mt-1 text-lg font-black text-slate-950">{commerce?.displayPrice === undefined ? 'Check on Amazon' : `$${commerce.displayPrice}`}</p>
             </div>
             <div class="rounded-2xl bg-blue-50 p-3">
               <p class="font-bold text-blue-700">Amazon customer rating</p>
-              <p class="mt-1 text-2xl font-black text-slate-950">{product.ownerRating}/5</p>
+              <p class="mt-1 text-lg font-black text-slate-950">{commerce?.isRatingFresh ? `${commerce.displayRating}/5` : 'Not verified'}</p>
             </div>
           </div>
-          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="review_summary">
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-black text-white" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerce?.displayDiscountPct ?? 0} data-cta-position="review_summary">
             <span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
           </a>
-           <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">{commerce?.priceLastCheckedLabel ? `Price last checked ${commerce.priceLastCheckedLabel}. ` : ''}Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
+           <p class="mt-3 text-center text-xs leading-relaxed text-slate-500">{commerce?.hasOffer ? `Price checked ${commerce.priceLastCheckedLabel}. ` : ''}Confirm the exact model, included package, price, and availability on Amazon. The current seller offer is not verified by this review. <a class="underline" href={`/product/${product.slug}/#identity-evidence`}>Check model evidence and unknowns</a>. FlowHome may earn from qualifying purchases.</p>
         </aside>
       )}
     </div>
@@ -100,10 +102,10 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
     <h2 id="review-methodology" class="text-2xl font-black text-slate-950">Editorial methodology</h2>
     <div class="mt-3 text-sm leading-7 text-slate-700">
        <p><strong>Author:</strong> <a href={editorial.author.profileUrl}>{editorial.author.name}</a> ({editorial.author.role}).</p>
-       {editorial.reviewedBy && <p class="mt-2"><strong>Human reviewer:</strong> {editorial.reviewedBy}{editorial.humanReviewedDate ? `, reviewed ${new Date(editorial.humanReviewedDate).toLocaleDateString('en-US')}` : ''}.</p>}
-      <p class="mt-2"><strong>Ratings source:</strong> {product ? `${product.ratingSource ?? 'Amazon customer ratings'}` : 'Amazon customer ratings'}. Ratings and counts are snapshots checked on {product ? `${product.ratingLastChecked ?? 'the publication date'}` : 'the publication date'}; they reflect Amazon customer feedback, not FlowHome editorial opinions. FlowHome does not run controlled lab tests.</p>
-      <p class="mt-2"><strong>Price source:</strong> {commerce ? `${commerce.priceSourceLabel}` : 'Historical snapshots'}. Prices are snapshots checked on the dates shown above. Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
-       <p class="mt-2"><strong>How to read this review:</strong> Treat each section as buying guidance built from public data, not a controlled lab test. Confirm current pricing, availability, and compatibility on Amazon before purchasing.</p>
+       {editorial.reviewedBy && <p class="mt-2"><strong>Human reviewer:</strong> {editorial.reviewedBy}{editorial.humanReviewedDate ? `, reviewed ${new Date(editorial.humanReviewedDate).toLocaleDateString('en-US', { timeZone: 'UTC' })}` : ''}.</p>}
+      <p class="mt-2"><strong>Ratings source:</strong> Amazon customer ratings are shown only when a current, authorized observation is available. Otherwise the rating is not verified. Customer feedback is not a FlowHome editorial score. FlowHome does not run controlled lab tests.</p>
+      <p class="mt-2"><strong>Price source:</strong> Prices are shown only with current, authorized Amazon data. Manual catalog values and expired observations are withheld. Confirm price and availability on Amazon before purchasing.</p>
+       <p class="mt-2"><strong>How to read this review:</strong> Treat each section as buying guidance built from public data, not a controlled lab test. Check model-specific manufacturer documentation for compatibility and installation requirements; confirm the exact seller package, price, and availability on Amazon before purchasing.</p>
        <p class="mt-2"><strong>Disclosure:</strong> {EDITORIAL_TEAM.disclosure}</p>
        {editorial.sources.length > 0 && <div class="mt-2"><strong>Sources:</strong><ul>{editorial.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a>{source.accessedAt ? ` (accessed ${source.accessedAt})` : ''}</li>)}</ul></div>}
     </div>

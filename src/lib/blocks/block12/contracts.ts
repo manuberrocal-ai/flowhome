@@ -1,4 +1,6 @@
 /** Pure Block 12 contracts. They do not open connections or mutate infrastructure. */
+import { COMMERCIAL_DATA_POLICY } from '../../commercial-policy.ts';
+import { FRESHNESS_WINDOWS_MS } from '../block8/domain.ts';
 
 export const BLOCK12_DOMAINS = [
   'site_flow_availability',
@@ -164,7 +166,7 @@ const definitions: readonly Definition[] = [
   {
     domain: 'expired_offers',
     title: 'Offer freshness and expiry',
-    slo: '0 expired offers surfaced; price freshness 7d and availability freshness 24h',
+    slo: `0 expired offers surfaced; price age <${COMMERCIAL_DATA_POLICY.priceMs / 3_600_000}h and availability age <${COMMERCIAL_DATA_POLICY.availabilityMs / 3_600_000}h, narrowed by source permission and expiry`,
     window: 'Daily freshness review',
     source: 'local deals:detect and Block 8 freshness contracts; fixtures/reports may be used',
     severity: 'sev2',
@@ -312,10 +314,11 @@ export const OPERATIONAL_CONTRACTS: readonly OperationalContract[] = Object.free
 
 export const PROVISIONAL_THRESHOLDS = Object.freeze({
   ingestionLagP95Minutes: 15,
-  freshnessPriceDays: 7,
-  freshnessAvailabilityHours: 24,
-  freshnessTrendDays: 14,
-  freshnessHistoryDays: 90,
+  // Commercial limits are mandatory ceilings, not tunable SLO candidates.
+  freshnessPriceHours: COMMERCIAL_DATA_POLICY.priceMs / 3_600_000,
+  freshnessAvailabilityHours: COMMERCIAL_DATA_POLICY.availabilityMs / 3_600_000,
+  freshnessTrendDays: FRESHNESS_WINDOWS_MS.trend / 86_400_000,
+  historyRetentionDefaultMs: COMMERCIAL_DATA_POLICY.defaultHistoryRetentionMs,
   lighthouse: [90, 95, 95, 95] as const,
   lcpMs: 2500,
   cls: 0.1,

@@ -32,6 +32,22 @@ test('claim leases exactly one job and reclaim only happens after expiry', () =>
   assert.equal(claimNext(only.jobs, 'worker-b', '2026-08-01T12:01:01.000Z').claimed.id, only.claimed.id);
 });
 
+test('v2 job keys reject legacy enqueue without mutating existing work and distinguish part boundaries', () => {
+  const input = { source: 'feed', partition: 'US', payload: {}, idempotencyParts: ['ab', 'c'], correlationId: 'fixture', now: NOW };
+  const first = createJob(input); const second = createJob({ ...input, idempotencyParts: ['a', 'bc'] });
+  assert.throws(() => enqueueJob([first], { ...input, payload: { price: 200 } }), /idempotency_content_conflict/);
+  const structured = createJob({ ...input, payload: { price: 100, stock: true } });
+  assert.equal(enqueueJob([structured], { ...input, payload: { stock: true, price: 100 } }).status, 'duplicate');
+  assert.notEqual(first.idempotencyKey, second.idempotencyKey);
+  assert.match(first.idempotencyKey, /^job:v2:[0-9a-f]{64}$/);
+  const legacy = { ...first, id: 'job:legacy', idempotencyKey: 'job:1a47e90b' };
+  assert.throws(() => enqueueJob([legacy], input), /legacy_idempotency_migration_required/);
+  assert.equal(legacy.idempotencyKey, 'job:1a47e90b');
+  const claimed = claimNext([legacy], 'worker-a', NOW).claimed;
+  assert.equal(claimed.id, legacy.id);
+  assert.equal(finishClaim(claimed, 'worker-a', claimed.leaseToken, { state: 'mock', confirmed: true }, NOW).state, 'completed');
+});
+
 test('safe failure retries with Block 8 defaults, uncertain failure becomes non-replayable DLQ', () => {
   const claimed = claimNext([job()], 'worker-a', NOW).claimed;
   const retry = finishClaim(claimed, 'worker-a', claimed.leaseToken, { state: 'failed', safeToRetry: true }, NOW, () => 0.5);

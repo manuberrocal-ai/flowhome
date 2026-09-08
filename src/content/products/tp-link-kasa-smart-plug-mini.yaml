@@ -7,7 +7,7 @@ originalPrice: 29.99
 discountPct: 23
 category: smart-plug
 affiliateUrl: "https://www.amazon.com/dp/B091FXQQMQ?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B091FXQQMQ.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-plug.png"
 ownerRating: 4.6
 ownerRatingCount: 78000
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,67 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "TP-Link Kasa Smart Plug Mini"
+model: "EP10 (EP10P2 two-pack)"
+identityEvidence:
+  model: "EP10 (EP10P2 two-pack)"
+  asin: B091FXQQMQ
+  claims:
+    model:
+      value: "EP10 (EP10P2 two-pack)"
+      conditions: "The reviewed listing identifies EP10P2, not KP125. No particular hardware revision or energy-metering capability is established."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B091FXQQMQ"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B091FXQQMQ"
+      conditions: "This is the reviewed EP10P2 destination; price, stock and seller contents require a separate current check."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B091FXQQMQ"
+          accessedAt: "2026-09-05"
+    bundle:
+      value: "Two EP10 smart plugs (EP10P2)"
+      conditions: "The listing's two-pack designation is documentary evidence, not an inspection of the shipped package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B091FXQQMQ"
+          accessedAt: "2026-09-05"
+    market:
+      value: "US Amazon listing"
+      conditions: "The US manuals provide setup context but do not establish the revision of the seller's units."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B091FXQQMQ"
+          accessedAt: "2026-09-05"
+installation:
+  model: "EP10 (EP10P2 two-pack)"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "For the documented EP10 US, use an accessible indoor outlet, away from water, humidity and heat. Do not stack plug adapters. Check the hardware label against the regional manual; the retail bundle's revision and firmware are not verified."
+    - "Use 2.4 GHz Wi-Fi and the Kasa Smart app with a TP-Link ID for the documented setup path. A separate hub is not required for that path; follow the app's model-selection instructions."
+    - "The EP10 US datasheet specifies 100-120 V AC, up to 15 A and 1800 W for general/resistive loads. Those are not universal appliance limits: check the manual's load-specific restrictions and the appliance instructions before connecting it."
+  sources:
+    - label: "EP10 US user guide — setup and safety, REV1.1.0 (2024)"
+      url: "https://static.tp-link.com/upload/manual/2024/202407/20240718/1910013747_EP10%28US%29_UG_V1.pdf"
+      accessedAt: "2026-09-05"
+    - label: "EP10 US V1 datasheet — network, voltage and load scope"
+      url: "https://static.tp-link.com/2020/202011/20201124/EP10%28US%291.0_Datasheet.pdf"
+      accessedAt: "2026-09-05"
+sources:
+  - label: "EP10 2024 manual — usage wording conflicts with runtime and older support; energy measurement unverified"
+    url: "https://static.tp-link.com/upload/manual/2024/202407/20240718/1910013747_EP10%28US%29_UG_V1.pdf"
+    accessedAt: "2026-09-05"
+  - label: "Amazon listing identity — B091FXQQMQ, EP10P2 two-pack; not live offer verification"
+    url: "https://www.amazon.com/dp/B091FXQQMQ"
+    accessedAt: "2026-09-05"
+  - label: "Kasa EP10 — US manufacturer product page"
+    url: "https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-plug-mini-ep10"
+    accessedAt: "2026-09-05"
+  - label: "TP-Link support — EP10 does not provide energy monitoring (2022 response)"
+    url: "https://community.tp-link.com/en/smart-home/threads/topic/588562"
+    accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -25,7 +85,7 @@ alexaCompatible: true
 googleHomeCompatible: true
 appleHomeKit: false
 appControl: true
-energyMonitoring: true
+# Energy measurement remains unknown: 2024 manual wording conflicts with 2022 support.
 nightVision: false
 twoWayAudio: false
 hasMop: false
@@ -33,6 +93,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 69
-roiApproved: true

@@ -13,6 +13,7 @@ import {
 } from '../lib/quiz-recommend';
 import { getCompatibilityEnvironment } from '../lib/blocks/block9/runtime.ts';
 import { getCommerceData } from '../lib/commerce-data';
+import { getProductImage } from '../lib/product-art';
 
 const canonical = 'https://flowhome.dev/quiz/';
 const products = await getCollection('products');
@@ -21,37 +22,34 @@ const quizCatalog = prepareQuizCatalog(products
   .map((entry) => entry.data)
   .filter((data) => data.catalogActive)
   .map((data) => {
-    const fields = data as Record<string, unknown>;
-    const priceLastChecked = typeof fields.priceLastChecked === 'string' ? fields.priceLastChecked : '';
-    const priceSource = typeof fields.priceSource === 'string' ? fields.priceSource as 'manual' | 'amazon-creators-api' | 'affiliate-feed' : undefined;
-    const commerce = getCommerceData({ price: Number(data.price ?? 0), priceLastChecked, priceSource });
+    const commerce = getCommerceData(data);
     return {
       slug: data.slug,
+      asin: data.asin,
       name: data.name,
+      model: data.model,
+      installation: data.installation,
       brand: data.brand,
-      price: Number(data.price ?? 0),
-      priceLastChecked,
-      priceSource: priceSource || '',
+      price: commerce.displayPrice,
+      priceLastChecked: commerce.priceCapturedAt,
+      priceSource: commerce.isPriceFresh ? data.priceSource : undefined,
+      priceValidUntil: commerce.priceExpiresAt,
       priceLabel: commerce.priceLabel,
       category: data.category,
       catalogActive: true,
-      ownerRating: Number(data.ownerRating ?? 0),
-      ownerRatingCount: Number(data.ownerRatingCount ?? 0),
-      ratingSource: typeof fields.ratingSource === 'string' ? fields.ratingSource : '',
-      ratingLastChecked: typeof fields.ratingLastChecked === 'string' ? fields.ratingLastChecked : '',
+      ownerRating: commerce.displayRating,
+      ownerRatingCount: commerce.displayRatingCount,
+      ratingSource: commerce.isRatingFresh ? 'amazon-creators-api' : undefined,
+      ratingLastChecked: commerce.ratingCapturedAt,
+      ratingValidUntil: commerce.ratingExpiresAt,
       amazonUrl: data.affiliateUrl,
-      image: data.image,
-      priority: data.priority,
-      alexaCompatible: Boolean(data.alexaCompatible),
-      googleHomeCompatible: Boolean(data.googleHomeCompatible),
-      appleHomeKit: Boolean(data.appleHomeKit),
-      matter: Boolean(data.matter),
-      zigbee: fields.zigbee === true,
-      wifi: fields.wifi === true,
-      appControl: fields.appControl === true,
-      // Only surface the privacy signal when this field is actually present.
-      hasSubscriptionRequired: Object.prototype.hasOwnProperty.call(fields, 'subscriptionRequired') && typeof fields.subscriptionRequired === 'boolean',
-      subscriptionRequired: fields.subscriptionRequired === true,
+      affiliateUrl: data.affiliateUrl,
+      image: getProductImage(data),
+      alexaCompatible: data.alexaCompatible,
+      googleHomeCompatible: data.googleHomeCompatible,
+      appleHomeKit: data.appleHomeKit,
+      matter: data.matter,
+      zigbee: data.zigbee,
     };
   }), compatibilityEnv);
 const optionGroups = [GOAL_QUIZ_OPTIONS, ECOSYSTEM_QUIZ_OPTIONS, BUDGET_QUIZ_OPTIONS, INSTALLATION_QUIZ_OPTIONS, EXTRA_PRIORITY_QUIZ_OPTIONS];
@@ -61,7 +59,7 @@ const inputNames = ['quiz-goal', 'quiz-ecosystem', 'quiz-budget', 'quiz-installa
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Starter quiz</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950 md:text-5xl">Find your smart home starter path</h1>
-    <p class="mt-3 max-w-2xl text-lg leading-8 text-slate-600">Answer five quick questions. We rank catalog-active products and explain the recorded signals behind every match.</p>
+    <p class="mt-3 max-w-2xl text-lg leading-8 text-slate-600">Answer five quick questions to build a starter shortlist. Review the recorded setup details and any limits before choosing.</p>
 
     <form id="quiz-form" class="mt-8" aria-label="Smart home starter recommendation quiz" novalidate>
       {optionGroups.map((options, index) => (
@@ -81,30 +79,38 @@ const inputNames = ['quiz-goal', 'quiz-ecosystem', 'quiz-budget', 'quiz-installa
       <div class="mt-6 flex flex-wrap items-center gap-3">
         <button type="button" id="quiz-back" class="hidden min-h-11 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Back</button>
         <button type="button" id="quiz-next" class="min-h-11 rounded-2xl bg-blue-700 px-5 py-2.5 text-sm font-black text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300" disabled>Continue</button>
-        <button type="button" id="quiz-submit" class="hidden min-h-11 rounded-2xl bg-orange-600 px-5 py-2.5 text-sm font-black text-white transition hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300" disabled>See my recommendations</button>
+        <button type="button" id="quiz-submit" class="hidden min-h-11 rounded-2xl bg-orange-700 px-5 py-2.5 text-sm font-black text-white transition hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300" disabled>See my recommendations</button>
       </div>
     </form>
 
-    <section id="quiz-results" class="mt-8 hidden" hidden tabindex="-1" aria-labelledby="quiz-results-title" aria-live="polite">
+    <section id="quiz-results" class="mt-8 hidden scroll-mt-24" hidden tabindex="-1" aria-labelledby="quiz-results-title" aria-live="polite">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div><h2 id="quiz-results-title" class="text-2xl font-black text-slate-950">Your starter shortlist</h2><p id="quiz-results-summary" class="mt-2 max-w-2xl text-sm leading-7 text-slate-600"></p></div>
         <button type="button" id="quiz-edit" class="min-h-11 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Edit answers</button>
       </div>
       <p id="quiz-relaxed-notice" class="mt-3 hidden rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950" role="status"></p>
+      <p id="quiz-priority-notice" class="mt-3 hidden rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950" hidden></p>
+      <p id="quiz-ecosystem-notice" class="mt-3 hidden rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950" hidden></p>
       <p class="mt-3 text-xs text-slate-500">Prices are snapshots and availability changes on Amazon. FlowHome may earn from qualifying purchases.</p>
+      <div id="quiz-evidence-controls" class="mt-4" hidden>
+        <p data-quiz-evidence-status class="text-sm text-slate-600" role="status"></p>
+        <button type="button" data-quiz-evidence-refresh class="mt-2 min-h-11 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Refresh evidence</button>
+      </div>
        <div id="quiz-results-cards" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
        <LifecycleCapture />
-       <button type="button" id="quiz-restart" class="mt-6 min-h-11 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Start over</button>
+       <button type="button" id="quiz-restart" class="mt-6 min-h-11 rounded-2xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-950 focus:outline-none focus:ring-4 focus:ring-blue-100">Start over</button>
     </section>
     <p id="quiz-progress" class="mt-4 text-xs font-bold uppercase tracking-wide text-slate-500" aria-live="polite">Step 1 of 5</p>
   </section>
 
   <script type="application/json" id="quiz-catalog" set:html={JSON.stringify(quizCatalog).replaceAll('<', '\\u003c')}></script>
   <script>
-    import { createInitialQuizState, getRecommendationReasons, isCompleteQuizState, parseQuizState, selectRecommendationResult, serializeQuizState } from '../lib/quiz-recommend';
+    import { createInitialQuizState, getExtraPriorityNotice, getQuizEcosystemNotice, getQuizCompatibilitySignals, getRecommendationReasons, isCompleteQuizState, parseQuizState, selectRecommendationResult, serializeQuizState } from '../lib/quiz-recommend';
     import { trackEvent } from '../lib/analytics';
     import { queueQuizCompletion, resetQuizCompletionDedupe } from '../lib/quiz-analytics';
     import { getCartStore } from '../lib/cart-store.js';
+    import { getCommerceData } from '../lib/commerce-data';
+    import { mountQuizCompatibility } from '../lib/blocks/block9/quiz-presentation.ts';
 
     type QuizState = ReturnType<typeof createInitialQuizState>;
     type QuizKey = keyof QuizState;
@@ -129,11 +135,17 @@ const inputNames = ['quiz-goal', 'quiz-ecosystem', 'quiz-budget', 'quiz-installa
     const cards = requiredElement<HTMLElement>('#quiz-results-cards');
     const summary = requiredElement<HTMLElement>('#quiz-results-summary');
     const relaxedNotice = requiredElement<HTMLElement>('#quiz-relaxed-notice');
+    const priorityNotice = requiredElement<HTMLElement>('#quiz-priority-notice');
+    const ecosystemNotice = requiredElement<HTMLElement>('#quiz-ecosystem-notice');
     const progress = requiredElement<HTMLElement>('#quiz-progress');
     const store = getCartStore();
     let state: QuizState = parseQuizState(window.location.search);
     let step = Math.max(1, keys.findIndex((key) => !state[key]) + 1 || 5);
     let quizStarted = false;
+    // Public activation requires an authorized delivery service; there is no URL or storage override.
+    const liveCatalog = mountQuizCompatibility(catalog, requiredElement<HTMLElement>('#quiz-evidence-controls'), () => {
+      if (!results.hidden && isCompleteQuizState(state)) renderResults(false, false);
+    });
 
     const htmlEscapes: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     const escapeHtml = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (character) => htmlEscapes[character] ?? '');
@@ -168,34 +180,50 @@ const inputNames = ['quiz-goal', 'quiz-ecosystem', 'quiz-budget', 'quiz-installa
     }
     function renderCards(recommendations: QuizProduct[], result: QuizResult) {
       cards.innerHTML = recommendations.map((product) => {
+        const commerce = getCommerceData(product);
         const reasons = getRecommendationReasons(product, state, result).map((reason) => `<li>${escapeHtml(reason)}</li>`).join('');
+        const notices = Array.isArray(product.compatibilityNotices) ? product.compatibilityNotices.map(notice => `<p data-quiz-evidence-notice class="mt-2 text-xs leading-5 text-slate-700">${escapeHtml(notice)}</p>`).join('') : '';
         const productUrl = `/product/${encodeURIComponent(product.slug)}/`;
         const saved = store.hasItem(product.slug);
         return `<article class="quiz-result-card flex h-full flex-col rounded-[1.6rem] border border-slate-200 bg-slate-50 p-4 shadow-sm">
           <a href="${productUrl}" class="block"><p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">${escapeHtml(product.brand)}</p><h3 class="mt-1 text-base font-black leading-snug text-slate-950">${escapeHtml(product.name)}</h3></a>
-          <p class="mt-2 text-sm font-bold text-slate-700">${escapeHtml(product.priceLabel === 'Price snapshot' ? 'Price snapshot' : 'Historical price snapshot')}: ${escapeHtml(price(product.price))}</p>
-          ${(product.priceSource || product.priceLastChecked) ? `<p class="mt-1 text-xs text-slate-500">Price source: ${escapeHtml(product.priceSource || 'not recorded')}${product.priceLastChecked ? ` · checked ${escapeHtml(product.priceLastChecked)}` : ''}</p>` : ''}
-          ${Number(product.ownerRating) > 0 ? `<p class="mt-1 text-xs text-slate-500">${escapeHtml(product.ratingSource || 'Owner rating')}: ${escapeHtml(product.ownerRating)} / 5${product.ratingLastChecked ? ` · checked ${escapeHtml(product.ratingLastChecked)}` : ''}</p>` : ''}
-          <div class="mt-3 flex flex-wrap gap-1.5" aria-label="Recorded compatibility signals">${[[product.matter, 'Matter'], [product.zigbee, 'Zigbee'], [product.alexaCompatible, 'Alexa'], [product.googleHomeCompatible, 'Google Home'], [product.appleHomeKit, 'Apple Home']].filter(([enabled]) => enabled).map(([, label]) => `<span class="rounded-full bg-teal-50 px-2 py-1 text-[10px] font-black uppercase text-teal-700">${escapeHtml(label)}</span>`).join('') || '<span class="text-xs text-slate-500">No compatibility signal verified in this catalog.</span>'}</div>
-          <div class="mt-3 rounded-xl bg-white p-3"><h4 class="text-xs font-black uppercase tracking-wide text-slate-700">Why this matches</h4><ul class="mt-2 list-disc space-y-1 pl-4 text-xs leading-5 text-slate-600">${reasons}</ul></div>
-          <div class="mt-auto flex flex-wrap gap-2 pt-4"><button type="button" class="quiz-save inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-300 px-3 py-2 text-xs font-black text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-100" data-quiz-save data-slug="${escapeHtml(product.slug)}" aria-pressed="${saved}" aria-label="${saved ? 'Remove' : 'Save'} ${escapeHtml(product.name)} from your FlowHome list">${saved ? 'Saved' : 'Save'}</button><a href="${productUrl}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700" aria-label="View ${escapeHtml(product.name)} details">Details</a><a href="${escapeHtml(product.amazonUrl)}" target="_blank" rel="nofollow sponsored noopener noreferrer" data-fh-amazon-cta data-product-slug="${escapeHtml(product.slug)}" data-category="${escapeHtml(product.category)}" data-cta-position="quiz_result" data-discount="0" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-orange-600 px-3 py-2 text-xs font-black text-white" aria-label="Check ${escapeHtml(product.name)} on Amazon">Amazon</a></div>
+          <p class="mt-2 text-sm font-bold text-slate-700">${commerce.displayPrice === undefined ? 'Check price on Amazon' : `Price snapshot: ${escapeHtml(price(commerce.displayPrice))}`}</p>
+          ${notices}
+          ${commerce.isPriceFresh ? `<p class="mt-1 text-xs text-slate-500">Price source: Amazon Creators API · checked ${escapeHtml(commerce.priceLastCheckedLabel)}</p>` : ''}
+          ${commerce.isRatingFresh ? `<p class="mt-1 text-xs text-slate-500">Amazon customer rating: ${escapeHtml(commerce.displayRating)} / 5 · checked ${escapeHtml(commerce.ratingLastCheckedLabel)}</p>` : ''}
+          <div class="mt-3 space-y-1 text-xs leading-5 text-slate-700" aria-label="Compatibility records and evidence limits">${getQuizCompatibilitySignals(product).map(({ label, value }) => `<p data-quiz-compatibility><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`).join('')}<a href="${productUrl}#compatibility-checks" class="inline-flex min-h-11 items-center font-bold text-blue-700 underline">Compatibility sources and limits</a></div>
+          <div class="mt-3 rounded-xl bg-white p-3"><h4 class="text-xs font-black uppercase tracking-wide text-slate-700">Why it is listed</h4><ul class="mt-2 list-disc space-y-1 pl-4 text-xs leading-5 text-slate-600">${reasons}</ul><a href="${productUrl}#installation-checks" class="mt-2 inline-flex min-h-11 items-center text-xs font-bold text-blue-700 underline">Setup sources and limits</a></div>
+          <div class="mt-auto flex flex-wrap gap-2 pt-4"><button type="button" class="quiz-save inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-300 px-3 py-2 text-xs font-black text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-100" data-quiz-save data-slug="${escapeHtml(product.slug)}" aria-pressed="${saved}" aria-label="${saved ? 'Remove' : 'Save'} ${escapeHtml(product.name)} from your FlowHome list">${saved ? 'Saved' : 'Save'}</button><a href="${productUrl}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700" aria-label="View ${escapeHtml(product.name)} details">Details</a><a href="${escapeHtml(product.amazonUrl)}" target="_blank" rel="nofollow sponsored noopener noreferrer" data-fh-amazon-cta data-product-slug="${escapeHtml(product.slug)}" data-category="${escapeHtml(product.category)}" data-cta-position="quiz_result" data-discount="0" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-orange-700 px-3 py-2 text-xs font-black text-white hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300" aria-label="Check ${escapeHtml(product.name)} on Amazon">Amazon</a></div>
         </article>`;
       }).join('');
       cards.querySelectorAll<HTMLButtonElement>('[data-quiz-save]').forEach((button) => button.addEventListener('click', () => {
         const product = recommendations.find((item) => item.slug === button.dataset.slug);
-        if (product) store.toggle({ asin: product.asin, slug: product.slug, name: product.name, price: product.price, image: product.image, url: `/product/${product.slug}/` });
+        if (product) store.toggle({ asin: product.asin, slug: product.slug, name: product.name, image: product.image, url: `/product/${product.slug}/` });
       }));
     }
-    function renderResults(trackCompletion = true) {
+    function renderResults(trackCompletion = true, moveFocus = true) {
       if (!isCompleteQuizState(state)) return;
-      const result = selectRecommendationResult(state, catalog, 4);
-      summary.textContent = result.recommendations.length ? `These ${result.recommendations.length} catalog-active products match your answers using recorded catalog signals.` : 'No catalog-active products match this combination yet. Edit answers to widen the fit.';
+      const result = selectRecommendationResult(state, liveCatalog.read(), 4);
+      const count = result.recommendations.length;
+      summary.textContent = count ? `${count === 1 ? 'This product is a starting point' : `These ${count} products are starting points`} for your selected goal. Review setup and any widened preferences below.` : 'No catalog-active products match this combination yet. Edit answers to widen the fit.';
       relaxedNotice.hidden = result.relaxedFilters.length === 0;
+      relaxedNotice.classList.toggle('hidden', result.relaxedFilters.length === 0);
       relaxedNotice.textContent = result.relaxedFilters.length ? `To show enough goal-category matches, we relaxed: ${result.relaxedFilters.join(', ')}. Check each product listing before buying.` : '';
+      const priorityLimit = getExtraPriorityNotice(state.extra);
+      priorityNotice.hidden = !priorityLimit;
+      priorityNotice.classList.toggle('hidden', !priorityLimit);
+      priorityNotice.textContent = priorityLimit;
+      const ecosystemLimit = getQuizEcosystemNotice(state, result);
+      ecosystemNotice.hidden = !ecosystemLimit;
+      ecosystemNotice.classList.toggle('hidden', !ecosystemLimit);
+      ecosystemNotice.textContent = ecosystemLimit;
       renderCards(result.recommendations, result);
       form.hidden = true; form.classList.add('hidden'); results.hidden = false; results.classList.remove('hidden'); progress.textContent = 'Recommendations ready';
       if (trackCompletion) queueQuizCompletion({ ...state, result_count: result.recommendations.length, page_type: 'quiz' });
-      results.focus?.();
+      if (moveFocus) {
+        results.focus?.();
+        results.scrollIntoView({ block: 'start' });
+      }
     }
     document.addEventListener('change', (event: Event) => {
       const input = event.target;
@@ -215,7 +243,7 @@ const inputNames = ['quiz-goal', 'quiz-ecosystem', 'quiz-budget', 'quiz-installa
     requiredElement<HTMLButtonElement>('#quiz-restart').addEventListener('click', () => { resetQuizCompletionDedupe(); state = createInitialQuizState(); step = 1; quizStarted = false; results.hidden = true; results.classList.add('hidden'); form.hidden = false; form.classList.remove('hidden'); syncOptions(); showStep(true); updateUrl(); });
     store.subscribe(() => {
       if (!results.hidden && isCompleteQuizState(state)) {
-        const result = selectRecommendationResult(state, catalog, 4);
+        const result = selectRecommendationResult(state, liveCatalog.read(), 4);
         renderCards(result.recommendations, result);
       }
     });

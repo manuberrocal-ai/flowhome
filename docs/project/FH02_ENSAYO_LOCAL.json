@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-09-05T12:11:33.204Z",
+  "environment": "isolated-local-rehearsal",
+  "session": "C:\\Users\\manub\\Documents\\Codex\\2026-09-04\\f\\work\\fh02-rehearsal-BRPmgm",
+  "sourceSha": "977a8f5276cbe5e696d2483ca2bcc0d381b619ba",
+  "note": "This SHA identifies only the isolated rehearsal snapshot, not the project HEAD, GitHub or production. Run ID 1 is a local fixture. No rollback ID supplied; not deployable.",
+  "projectFilesPreserved": 465,
+  "manifestSha256": "0e33785b282b38530596ab0bab83a740b4a9fd5a3a10437eb4f91698c8ccd81f",
+  "distSha256": "90d498a888fb962961081b8928fb2128ae637cee9526e8b016096be1dd8c9b5a",
+  "files": 159,
+  "checks": {
+    "quality": true,
+    "links": true,
+    "build": true,
+    "seo": true,
+    "copyVerified": true,
+    "tamperingRejected": true
+  },
+  "buildSummary": [
+    "09:11:29 [build] 88 page(s) built in 3.64s"
+  ],
+  "seoSummary": [
+    "SEO audit summary: 88 content pages, 0 error(s), 0 warning(s)"
+  ],
+  "deployed": false,
+  "cloudflareRequests": 0,
+  "installationPerformed": false
+}

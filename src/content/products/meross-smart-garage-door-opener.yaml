@@ -7,7 +7,7 @@ originalPrice: 59.99
 discountPct: 17
 category: garage-door-opener
 affiliateUrl: "https://www.amazon.com/dp/B084Z5QZR2?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B084Z5QZR2.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/garage-door-opener.png"
 ownerRating: 4.4
 ownerRatingCount: 9200
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,54 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "Meross Smart Garage Door Opener"
+model: "MSG100"
+identityEvidence:
+  model: "MSG100"
+  asin: B084Z5QZR2
+  claims:
+    model:
+      value: "MSG100"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Meross — MSG100 family motor compatibility checker and terminal-test caution"
+          url: "https://www.meross.com/en-gc/compatibility-check/garage-door-opener"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Add-on controller for an existing garage-door motor"
+      conditions: "It is not a replacement motor. Confirm the exact motor and regional accessory requirements; unattended safety is not established."
+      sources:
+        - label: "Meross — MSG100 family motor compatibility checker and terminal-test caution"
+          url: "https://www.meross.com/en-gc/compatibility-check/garage-door-opener"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B084Z5QZR2"
+      conditions: "The reviewed indexed listing identifies MSG100 and advertises HomeKit; the hardware suffix and included accessories remain unverified."
+      sources:
+        - label: "Amazon indexed listing — identity observation only"
+          url: "https://www.amazon.com/dp/B084Z5QZR2"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing identity — MSG100 with HomeKit in the title; hardware suffix not inspected"
+    url: "https://www.amazon.com/dp/B084Z5QZR2"
+    accessedAt: "2026-09-05"
+installation:
+  model: "MSG100"
+  market: US
+  assessment: advanced
+  requirements:
+    - "This is an add-on controller for an existing garage-door motor, not a replacement motor. Check the motor's exact brand and model in Meross's compatibility checker before buying; some installations require an additional accessory. Do not assume every motor from a listed brand is compatible."
+    - "Installation includes control-terminal connections and mounting a wired door-position sensor. If you cannot identify the wall-button terminals confidently, do not attempt a terminal-bridging test; consult Meross support or a qualified installer. Check the motor's own safety instructions before installation."
+    - "Plan power and sensor-cable routing and check 2.4 GHz Wi-Fi coverage at the motor. The listing identifies MSG100 and advertises HomeKit, but FlowHome has not inspected the hardware suffix or supplied accessories. Confirm the exact regional kit and app instructions; this assessment does not establish safe unattended operation."
+  sources:
+    - label: "Meross — MSG100 family motor compatibility checker and terminal-test caution"
+      url: "https://www.meross.com/en-gc/compatibility-check/garage-door-opener"
+      accessedAt: "2026-09-05"
+    - label: "Meross official store — MSG100 setup, wired sensor and Wi-Fi requirements"
+      url: "https://shop.meross.com/products/smart-wifi-garage-door-opener"
+      accessedAt: "2026-09-05"
+    - label: "Meross — accessory eligibility is limited by motor and region"
+      url: "https://www.meross.com/en-gc/support/FAQ/79.html"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +80,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: standard
-priorityScore: 47
-roiApproved: true

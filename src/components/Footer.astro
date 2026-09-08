@@ -1,6 +1,6 @@
 ---
 const year = new Date().getFullYear();
-const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=10&data=https%3A%2F%2Fflowhome.dev%2Fquiz%2F';
+const qrUrl = '/images/quiz-qr.svg';
 ---
 
 <footer class="footer-surface brand-aurora-surface relative isolate mt-16 overflow-hidden border-t border-slate-800 text-slate-300">
@@ -12,14 +12,14 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
     <div class="relative grid gap-5 lg:grid-cols-[1.35fr_0.85fr] lg:gap-6">
       <section class="footer-surface-panel rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-slate-950/30 sm:p-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <a href="/" class="flex items-center gap-3" aria-label="FlowHome home">
+          <a href="/" class="flex w-fit items-center gap-3 rounded-xl bg-white px-3 py-2" aria-label="FlowHome home">
             <img src="/images/flowhome-logo.png" srcset="/images/flowhome-logo-430.png 430w, /images/flowhome-logo.png 1076w" sizes="190px" alt="FlowHome" class="h-10 w-auto max-w-full object-contain" width="1076" height="250" loading="lazy" decoding="async" />
           </a>
           <span class="inline-flex w-fit rounded-full border border-orange-400/30 bg-orange-400/10 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-orange-200">Deal-aware guides</span>
         </div>
 
         <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
-          Independent smart-home buying guides, comparison tools, and deal tracking for US and Canada readers. We focus on practical value, ecosystem fit, owner feedback, and products that make everyday homes easier to run.
+          Smart-home buying guides and comparison tools for the US market. Compare setup requirements and ecosystem fit, then confirm current prices and customer feedback on Amazon.
         </p>
 
         <div class="mt-5 grid gap-2 sm:grid-cols-3">
@@ -122,7 +122,7 @@ const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=164x164&margin=1
     </div>
   </div>
 
-  <div class="relative z-10 border-t border-slate-800 px-4 py-3 text-center text-xs text-slate-500">
+  <div class="relative z-10 border-t border-slate-800 bg-slate-950 px-4 py-3 text-center text-xs text-slate-200">
     &copy; {year} FlowHome. As an Amazon Associate we earn from qualifying purchases.
   </div>
 </footer>

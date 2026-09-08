@@ -1,0 +1,690 @@
+{
+  "/images/product-art/illustrations-v1/smart-speaker-240.webp": {
+    "key": "40a48a259d20c215a2fc15cabd25ab2a92ead0dc5bb4264b7f657a591c36ef99",
+    "outputHash": "46a6944720d6bbcd0fb80d50934300e624864a97712ebd670878054f22e3af36"
+  },
+  "/images/product-art/illustrations-v1/smart-speaker-480.webp": {
+    "key": "d435e99861c6b895dfa2c82bc52f5b0298aef2a716646ed5041dee508dc35f7f",
+    "outputHash": "d5af22016c6b44296d91a81cbe79e28fa46278b51b02313a3e6ab3cf58efc16a"
+  },
+  "/images/product-art/illustrations-v1/smart-speaker-720.webp": {
+    "key": "6d0919fcff515cb834703fe367e8c568d459cd82b2489f99ff1ba6803fe25f82",
+    "outputHash": "d3eb6147c04bdb21cdb46a680d400c133a33fad980ec0c0145eca8b5ca2dd24e"
+  },
+  "/images/product-art/illustrations-v1/smart-speaker-960.webp": {
+    "key": "44b597c3b91f31235afba6c7e192c87bc90c57e2759bf143c4370f8a1aeeb6f5",
+    "outputHash": "9aaf5065349a979561c83d2d1ea2e9e31256c423a1cab3f75e04448e5d0c1b99"
+  },
+  "/images/product-art/illustrations-v1/smart-thermostat-240.webp": {
+    "key": "fd025247caf28499da968c81cf8ac39e8a16ffbb3a5b4f6176a3e92b54c251f0",
+    "outputHash": "c54be5e48f1c8a91fb12d30e8101879e13dcb3fee2ca89ae70f138a48f6ff6ff"
+  },
+  "/images/product-art/illustrations-v1/smart-thermostat-480.webp": {
+    "key": "1230cd8203e8ed6536c2ed3ddfd2da4210eee5d9f3993a6c8d5df025270019a0",
+    "outputHash": "053baba2c1d7e14dcb1fcb6355d74eb2041fb60c6a92ab0f302b871e5e1fdafa"
+  },
+  "/images/product-art/illustrations-v1/smart-thermostat-720.webp": {
+    "key": "70f8d2f0724e0d33906a45672b9ebe6cf1688847a6a402fa8ae0e68778ed1c5e",
+    "outputHash": "f9dedddb3f1d9039b49eb6381f5d82c7fce6ae20ae7f9536b6770a8fca96ad7e"
+  },
+  "/images/product-art/illustrations-v1/smart-thermostat-960.webp": {
+    "key": "f2edb23d8e104948e8b945c23ca1d8e7504f67729edde73a7f323c8972ffdf36",
+    "outputHash": "c44f2bff5d99ab105667860373b4e90477529998e0c76e8840c2b5a750ef5626"
+  },
+  "/images/product-art/illustrations-v1/security-camera-240.webp": {
+    "key": "6e78a47072e37a217fcf532a83950e373e0ace63c1ce7d4c23e540b970a8ca04",
+    "outputHash": "1c443e1311abded878c667235dd76dcbebe8958437d299a8abe6a54cf0e9a14c"
+  },
+  "/images/product-art/illustrations-v1/security-camera-480.webp": {
+    "key": "722f8ca4b94375bd5fe945794a65c5aebd5cde261a91eaa572007927369eec15",
+    "outputHash": "f54f0a18d84ee251959e44c518be3bf69dd16167644d83d51ba77dcf810843ac"
+  },
+  "/images/product-art/illustrations-v1/security-camera-720.webp": {
+    "key": "400aadeb46ef23b54ffaa440858fe82b1ff59d204ca1cdf4ec541243b22fd647",
+    "outputHash": "6df3a74f93a6b28c9eb36c091a392ff010bf70f2459388ae66ab7dbb1bbf20e8"
+  },
+  "/images/product-art/illustrations-v1/security-camera-960.webp": {
+    "key": "7298ce299a93ebb63f68a28de149d6395fa61dccc13c1315f74220eed5612af8",
+    "outputHash": "f0cb18356cefde1bf7b9466b8aba111d9c5315f9be74f85de011b7d1d337145d"
+  },
+  "/images/product-art/illustrations-v1/video-doorbell-240.webp": {
+    "key": "73080370c83553ee82e79e8eb4c728a4b33a77845f8d4ea3f73553a8f5741a0c",
+    "outputHash": "8c375031dedf7b2a01f6858c81e75617840a3a28ed5a2f6828974a794ce27f43"
+  },
+  "/images/product-art/illustrations-v1/video-doorbell-480.webp": {
+    "key": "03da2ee6348a426d926e91831d1eadbbd4d996017a8f2986db6722926b1e2630",
+    "outputHash": "487da73814a317a278f38ae80963d796720fdfdf6787f49e072fcd1d6d6688f6"
+  },
+  "/images/product-art/illustrations-v1/video-doorbell-720.webp": {
+    "key": "b3f014b618693bcf991bae2dad2bd1c4a59ff039fc69a05585886b1f9cb3c53a",
+    "outputHash": "ac1b694876e709b2abaa018159370088232eb3636023f1a2e70453c7bee00ea5"
+  },
+  "/images/product-art/illustrations-v1/video-doorbell-960.webp": {
+    "key": "dbe011ec1ec89f04576a88c5c7cd1882becb027404efd05a7937be76de3b567e",
+    "outputHash": "6fedc3600a8532b5b1ef9cc5857180f54133b89f74e54533f74883c01dc68bd0"
+  },
+  "/images/product-art/illustrations-v1/smart-lock-240.webp": {
+    "key": "8d078386d55d383f0fba550c98c1ba35181ca4dd3e3873d26006b6516d896494",
+    "outputHash": "9d1dd1661e321ae3439b26a0ff1223b0a8895908f87071f5285b8e27f6eb9c4c"
+  },
+  "/images/product-art/illustrations-v1/smart-lock-480.webp": {
+    "key": "055594989830da97ab1804e1da8ac5cacb82e5258f58d434e9c38a663a25b428",
+    "outputHash": "055f4d1f88a3c0a51f7f916e1d6d6572300492282db962913c6e4d43cb547514"
+  },
+  "/images/product-art/illustrations-v1/smart-lock-720.webp": {
+    "key": "87b3fa778bf693f5753342bd1bf22f4bb4c68622782e0a4ac575edb9dbebd624",
+    "outputHash": "7019f4779394ca42bb78bc892b4f0621c3fe33a882a2f8eb437c8587720c0448"
+  },
+  "/images/product-art/illustrations-v1/smart-lock-960.webp": {
+    "key": "898d7c588e53115d4a8a2d59d4a5ba8d48108570fb6b3eac2c1362e036dd6163",
+    "outputHash": "8adacf23fd4c053abe675022f3984caaec495f879d0e1ce1e25f6cf25a1ec295"
+  },
+  "/images/product-art/illustrations-v1/robot-vacuum-240.webp": {
+    "key": "a13c5b804f5bf780b705f946979d0a52327268d3c8f88fe5d0acba7b0261627b",
+    "outputHash": "fc06d33261131058325b3f0ecd2d5d08c28ac61ad6777f3f526aa4c0f1be75ba"
+  },
+  "/images/product-art/illustrations-v1/robot-vacuum-480.webp": {
+    "key": "e27617034fdbe2eb89bf07d2efe1c6e0d07c11010b327a588d5d4c9dfe3bae2c",
+    "outputHash": "114735451e653d1e45f6ef9cb41a51743dd438cbaed3021402658e01d9ba0178"
+  },
+  "/images/product-art/illustrations-v1/robot-vacuum-720.webp": {
+    "key": "0d8e8e8ba4d2fc80f424e093be7078b9d60431d6ca54e59008277ecec1dcd27a",
+    "outputHash": "b95b6d79f686957e39cbff4725370ceaaa317d42d9d4aeb2fee8594ff5c1bc69"
+  },
+  "/images/product-art/illustrations-v1/robot-vacuum-960.webp": {
+    "key": "dca69fa703f906ef2c288aa5312345567d9901f670ab306270327c50e9384143",
+    "outputHash": "7ecb4c713c824480a16146e7c42553cdf1b753f5b9cba57480e00d7b18e8fc75"
+  },
+  "/images/product-art/illustrations-v1/smart-lighting-240.webp": {
+    "key": "3e67617f6f298d5f6f73f3e5b1daddff0bfb0ccab6134d379aaf1890061a4c50",
+    "outputHash": "5599eac4d957ed1a8e3e854f5b34ae90619f0fe9e84732fd5a3bdaaef3de4522"
+  },
+  "/images/product-art/illustrations-v1/smart-lighting-480.webp": {
+    "key": "748e29cbf0c867b6b3a4713e849db2db39e407985359f9509051148f7158a426",
+    "outputHash": "cd073a12de73d5e8087ccd36c9efd636f62b27fc64abf20b9f48f0fe76c58c38"
+  },
+  "/images/product-art/illustrations-v1/smart-lighting-720.webp": {
+    "key": "6804ed014e893021397763bfd82bfe645384d558831e461aa040e7e3cad67812",
+    "outputHash": "23b49d9086d469829b08e5ed46b9c4cde84e3cdb7eaeefe3fcde3dc2968a9971"
+  },
+  "/images/product-art/illustrations-v1/smart-lighting-960.webp": {
+    "key": "71c2500a64423de01ad7be75435099cb2b05b55aeb4715ac0c877f1c75466c71",
+    "outputHash": "4f9d67e6ae5e8ec375090a514b14a7036a00788f7fec298341810a52ee8ada69"
+  },
+  "/images/product-art/illustrations-v1/smart-plug-240.webp": {
+    "key": "4ba4c5f7fc79a6093b5ac17e05378fb415136e295445ac1d79276466964648ca",
+    "outputHash": "a07780aae08f85d3dc477def4270eb273b8ace884ff0d33ae8a4655abe5596bd"
+  },
+  "/images/product-art/illustrations-v1/smart-plug-480.webp": {
+    "key": "2ee3ed59e5e192913e13587d37bbd49e3e4d692b53eee9622de2c5ac0890aae0",
+    "outputHash": "a241cf81d64fc623338692589de3b8d3d8a62aaaef3d471664fcd121f633a61b"
+  },
+  "/images/product-art/illustrations-v1/smart-plug-720.webp": {
+    "key": "915a538ce06194a5628b6617593fb856b7096ef54b8f3edc363593c3fa6a1b57",
+    "outputHash": "ef46b79622896d4a90f6248bdeb114121a914981bf7a4f4f232d92561600130b"
+  },
+  "/images/product-art/illustrations-v1/smart-plug-960.webp": {
+    "key": "a617eecfd7d58cd5d748a4ed935fc86bed3821ec7e13a67d678c5d748c99d54d",
+    "outputHash": "3e06a22cea7b3e4bb9a370565d24c6f96305bbe26a96ca277dd5b0346da2220d"
+  },
+  "/images/product-art/illustrations-v1/smart-display-240.webp": {
+    "key": "e5ba4c6a2e0c66faf2981a4650feb5400c3c37e62cdcb7d11795c058340f3273",
+    "outputHash": "d2662097d088aedf1b9a87647ad5d05d5c91d139bf145c66812bce7a24d3aa18"
+  },
+  "/images/product-art/illustrations-v1/smart-display-480.webp": {
+    "key": "7c277dfd5e3ca65f1871e36a5fc8bc519687355d375eb716bf89ba247c966d65",
+    "outputHash": "5af7bcb59d1376e35373c08a3c557d71421561d45ea8a6d0e2cee6c8f4565b4e"
+  },
+  "/images/product-art/illustrations-v1/smart-display-720.webp": {
+    "key": "0b15135a83de59ec3842736b769c9436bd52afc329ebbadc68a2910c2403eef9",
+    "outputHash": "d5d22f5c9c18915a66ae3db9078ba948005cbffb0213cd0fface8614978fbf30"
+  },
+  "/images/product-art/illustrations-v1/smart-display-960.webp": {
+    "key": "590ec81136822fa6481541406975c90919e0c60d01cd310c3b46b2eccb28f462",
+    "outputHash": "b0de04e51903aa0cdec0f804b2f2ca6144192d53f486f3c3b461faf223e58b86"
+  },
+  "/images/product-art/illustrations-v1/smart-hub-240.webp": {
+    "key": "b681c47df437a24b317d44c0a541dadc3957edcc6e4c395f0f38b6a80f70f374",
+    "outputHash": "13db34c37e25d704ac608ba22cd0e1cdca0dd5d9a7e7b79babdb024398f09e81"
+  },
+  "/images/product-art/illustrations-v1/smart-hub-480.webp": {
+    "key": "7c9ed3d0af0cecc058e4de2595c495f5424e52027735f6b99ee73c778b35f64e",
+    "outputHash": "4c2997c769e84b26f3656fd50440f5ee97c698600215bd4909875367f678973a"
+  },
+  "/images/product-art/illustrations-v1/smart-hub-720.webp": {
+    "key": "040b265c5aa111780aad9f979871ed2f9c361fa0b510858e8a08d8bb77aaabea",
+    "outputHash": "3a9e39c21fcc59ca242be3577d811f83b68ebaa876a04d0f6da1b334d3bee2bf"
+  },
+  "/images/product-art/illustrations-v1/smart-hub-960.webp": {
+    "key": "08ddc56d5464234bf96b8274d34665efb77b109f5e3c212461859acc5f782b57",
+    "outputHash": "dc7502f437b593221b6a9f7a5ba3248d5fdd613e132a8c2d5ba5d3766486fe04"
+  },
+  "/images/product-art/illustrations-v1/motion-sensor-240.webp": {
+    "key": "54dd4ba1835dccc882298f953c7d6f927d302f4030f2624f1170ca6282f8ca84",
+    "outputHash": "dcdf577d89f50cf642455d2c8d7f708b55ccc2269a46ff57adfe8c304b21a318"
+  },
+  "/images/product-art/illustrations-v1/motion-sensor-480.webp": {
+    "key": "a18ce40423e10642d55927c578a522f38ae4750f88c1e54c0dd615a951d7540c",
+    "outputHash": "45b395ff1dbe1d556109566b921a52dc235db8815cd4b42e3614ea3d64e60982"
+  },
+  "/images/product-art/illustrations-v1/motion-sensor-720.webp": {
+    "key": "ee28261a5ee037e41e43b0932b0b924931f2ac2a1db91a8be0f38f6f5869d64f",
+    "outputHash": "01fd8a82fcbb47a15f64f339417c807c66a6b35714e092ebcbad52c3eeec69f2"
+  },
+  "/images/product-art/illustrations-v1/motion-sensor-960.webp": {
+    "key": "958d860a801e0f1b8bbbaa330fe9fb7fb19c7504d97b092737920a362c24be7e",
+    "outputHash": "66ec95bfa162be0c0f531e1975416fde75b46423fa38e8f8208506083d65366e"
+  },
+  "/images/product-art/illustrations-v1/air-purifier-240.webp": {
+    "key": "081b5992f442b16c80efebe08de2a794651d95c754d19c7e3cff4c983272e2e1",
+    "outputHash": "b7389aea301467eae4d8c5e6dfb1309e76ae39771a908882fdf34aed98345603"
+  },
+  "/images/product-art/illustrations-v1/air-purifier-480.webp": {
+    "key": "aac8d8623c2942d21856e1e8c808a33c9de51409946a3d613a4c3ef7ea2e6c5f",
+    "outputHash": "9d20d6db2fafc78fac787b121669a6e1bc1f6493a38b96e23680628bde8d09b2"
+  },
+  "/images/product-art/illustrations-v1/air-purifier-720.webp": {
+    "key": "dedc32fc10c108c63e1962b0fb754d01b117f74b13422456376c979053a6537a",
+    "outputHash": "38e4c4877e22ac5b082a0726beb301d88cd84a43d4f9c86bf0cdf0d53e99ec6a"
+  },
+  "/images/product-art/illustrations-v1/air-purifier-960.webp": {
+    "key": "e2f4e84436510fd89c9327483bb0f53f37ca1fa5c21d88ac38a152c98519814e",
+    "outputHash": "9cbb154cb6d1cd0154007f656691687069b31089545b23b166fabb075f7093b2"
+  },
+  "/images/product-art/illustrations-v1/garage-door-opener-240.webp": {
+    "key": "da1d20f36f3e84c8cd85d5cc4d55fc2609ecaea9cbd143016e6ea74e3d475fa5",
+    "outputHash": "7c71d361579d6addbb0e8ee9d225463a74350f96867e8163a7d477058aa49234"
+  },
+  "/images/product-art/illustrations-v1/garage-door-opener-480.webp": {
+    "key": "09d0acb4ddf0d4ac7c9137562ef9b8689d607cd8b0fea879f4bafad65b8afc46",
+    "outputHash": "ee0049428db165f57cef57320a04b9cbb295d962e562c37fc3323697ebeed067"
+  },
+  "/images/product-art/illustrations-v1/garage-door-opener-720.webp": {
+    "key": "63ec946d79b09573a13af9386087ccdc8b1261f610f42e173efd83275725437f",
+    "outputHash": "4a3048d1bb1e940b97484c17d0dfe430a96715f25f5882d84250953a83a71379"
+  },
+  "/images/product-art/illustrations-v1/garage-door-opener-960.webp": {
+    "key": "b8c1de50f05453da64effdffb349863c4fca8d06f8274a112288ed0373e7001c",
+    "outputHash": "324eff76af63635e5fc56475ae5c2bfa7bef1e1d10d8835c43062faff7fefb8d"
+  },
+  "/images/product-art/illustrations-v1/smart-blinds-240.webp": {
+    "key": "c6abf0f799096cdbb0e5d67a3713b51dfecea6b9a151ac150aa9cea0e0bcc211",
+    "outputHash": "8e9cab6c7cb55f2469a6fafb7fc64ac48814372d73915144dbc092c73d95618b"
+  },
+  "/images/product-art/illustrations-v1/smart-blinds-480.webp": {
+    "key": "4c208e0dcefaca4905c062f30e3b9f10e1aefd619d697f963d4c33ef9a439f2c",
+    "outputHash": "34170c215f81d8a96356d8850313d2fbd95431589bd8ef8c80240d4298d0e4ab"
+  },
+  "/images/product-art/illustrations-v1/smart-blinds-720.webp": {
+    "key": "40e110cfe89b59cad8d72b67469d3bbde8ee8a9ac57d7102c59b5a84ed8cecc0",
+    "outputHash": "45b4b1ca1eae9de44e5f1a0fb633d1e165859f733a66820f32b9d5adf4804a5c"
+  },
+  "/images/product-art/illustrations-v1/smart-blinds-960.webp": {
+    "key": "43cd115208e6f9792c9d0719f2fdc8ac920edfb9a9a0d3e911034a17d5e2bdde",
+    "outputHash": "b492966e1fc0b7a86e6337bd9cdd4a5c9f2b211c320b1108176a1edb969da16f"
+  },
+  "/images/product-art/illustrations-v1/smart-home-device-240.webp": {
+    "key": "7f64c7668f2367856bdfae04a63c629154944d53563f011648b9776d837b78db",
+    "outputHash": "34d66dff2b0d37ab98728a60260a835eb528ed91ee50021ce53010e514357131"
+  },
+  "/images/product-art/illustrations-v1/smart-home-device-480.webp": {
+    "key": "440210e20f2d91eb142aea7f49acf32521dcc7210c0d0bf3ab15bc14047f7938",
+    "outputHash": "bd4dba777b7e0f6854c01ec95535c3e9fbfeb87672e91c4ea90701b99dd534cb"
+  },
+  "/images/product-art/illustrations-v1/smart-home-device-720.webp": {
+    "key": "37a4af1aa5cea716150d91f5f38e8682850706098a9faab83afec7a8e8f7bd9c",
+    "outputHash": "6eb84e992996e30caabb9abf5019a1401cc17f6ec49517dba5c2125b4bcf2f15"
+  },
+  "/images/product-art/illustrations-v1/smart-home-device-960.webp": {
+    "key": "80ff732e4613476e42e29411cd8c81b51352448a17589deb8a8a165518289805",
+    "outputHash": "cfe9a405c24dcfabd83a914209752828f27d4036fe7d1f91632026a11b7c8507"
+  },
+  "/images/product-art/models-v1/switchbot-blind-tilt-240.webp": {
+    "key": "60a925780ed02301789334fdf4b13e8ba45388acfbd28cc0cdc6d6b7a6e66850",
+    "outputHash": "e4a8b0deeac97dad1da78af4229fd8c9522dd59c22bce88775831c3cb02fcca7"
+  },
+  "/images/product-art/models-v1/switchbot-blind-tilt-480.webp": {
+    "key": "6963873e18627dc961904298bdad157016c01d9f0134c853e4c85227200f34be",
+    "outputHash": "9373388a042b794c4b66685e9874f292be42db63868ca061ba5485ef95bf989d"
+  },
+  "/images/product-art/models-v1/switchbot-blind-tilt-720.webp": {
+    "key": "6319ae003de1f03af94ad23752251a4c4d3901dc3d79a3f067aadafd132300a0",
+    "outputHash": "2feb7ad7b63d73c08c6608452957c54e48522b6c60e48b0164218a26a993951e"
+  },
+  "/images/product-art/models-v1/switchbot-blind-tilt-960.webp": {
+    "key": "6459ce8babc7351d046f126b94e64f3d89cc305252f4086469c7c3011a362d57",
+    "outputHash": "266863558fee21cde45a0d44f9f017c5e849779bf296c31bf9cdcd6c7935c575"
+  },
+  "/images/product-art/models-v1/meross-msg100-240.webp": {
+    "key": "e5113132c02f214e637f9cf613b331262a8f818b371d1305146a7c50ed710df9",
+    "outputHash": "119c954d431a14838ad227dfd7d9f9ffe242e643ce3e840b47a3b6c114085501"
+  },
+  "/images/product-art/models-v1/meross-msg100-480.webp": {
+    "key": "3b713cd94d5ee5cece1af9bd4daf260c8a6106c5eefeba76dee9046116235d37",
+    "outputHash": "ee4670cedbea0718c44c3c604e1a45eae587fa389ec4491d2b55f75621cf2acf"
+  },
+  "/images/product-art/models-v1/meross-msg100-720.webp": {
+    "key": "e9828fa68fca80182604fc61032206d27a8097d8dc9b6de65b4351d9c2a117c8",
+    "outputHash": "13f22055cb134d6f5dd645aa0c1eb6a4a339ff207feee7422ca763e2915b9070"
+  },
+  "/images/product-art/models-v1/meross-msg100-960.webp": {
+    "key": "84f4ee30ead6d8160a261e272c1cef1b9f92c2bcf1826ab3534ed082482d4975",
+    "outputHash": "6dd8bb85104d3df5ccebe4b518ac5fa99cdda72a02a9cb85599df089e751f984"
+  },
+  "/images/product-art/models-v1/levoit-core-300s-240.webp": {
+    "key": "088f9a65158260cc131156cfa2072093bd96649e354604a8f1a0df2946f36429",
+    "outputHash": "8bfe67430164423ad7fad308b5f5896c78140576574482a7510e140c2516ed12"
+  },
+  "/images/product-art/models-v1/levoit-core-300s-480.webp": {
+    "key": "b970c8a5c267e19681fcf282c95a9b1afd9ba537258d18d9db696e69866dd80d",
+    "outputHash": "617b4b355f55e2fca77dbbf56ff52f66bcd04346e20b0dbbc9968007cac962b1"
+  },
+  "/images/product-art/models-v1/levoit-core-300s-720.webp": {
+    "key": "0175252778cf91651da313d349613e40087187a64d21b9a99c6c34c1ecd0a488",
+    "outputHash": "23c6dbde248139e5223b8f446b968af142076f8e20a32a0ef77e4b3530931fde"
+  },
+  "/images/product-art/models-v1/levoit-core-300s-960.webp": {
+    "key": "38845949f246d77c65b857ac3144481539dfa10cc07a19e9e79e6bf379f3ee40",
+    "outputHash": "051d2451a3abc4380260943e683e960a23962fa0cdbe5023b23748f95ee6c292"
+  },
+  "/images/product-art/models-v1/aqara-motion-p1-240.webp": {
+    "key": "b2850292258116a6cc9b8105c15738357ebeb077d64081e83c97d8ebe340f6d6",
+    "outputHash": "15a2c240dc8661a1444128a1ecb87cdb738b612e9148c4a336338caa3a414a89"
+  },
+  "/images/product-art/models-v1/aqara-motion-p1-480.webp": {
+    "key": "84ba6ad3d3af00f1d3ef31b04ef23a8e0c608df835613c343dc04b6a427e57b2",
+    "outputHash": "8d34a74268ba8d5ab7a747797a8c15b560179adde6ff0979ba09a25df3807d6e"
+  },
+  "/images/product-art/models-v1/aqara-motion-p1-720.webp": {
+    "key": "e0fcd2d5666a11fbdec77ced8fce05a1bba98c12efd1fc37e99d85c3b78039a2",
+    "outputHash": "23e5d4c428b74557c072fe124481ee1ced9e8b22856bfaa4d625a976df85d1b4"
+  },
+  "/images/product-art/models-v1/aqara-motion-p1-960.webp": {
+    "key": "d7a2442be2aacd35d70467a3cc99ff11f1a2cf3e66f114c81142fa7532f50e49",
+    "outputHash": "ec748072f8e9052b45711f2b83ad49ea8b0a615bf1cd70c03e03cbd2bafdf805"
+  },
+  "/images/product-art/models-v1/yale-assure-lock-2-keyed-240.webp": {
+    "key": "cdd691d88cf6e79e9751a4c294a8610d0a389ce2e5b5884193b9dd0a837fd6cd",
+    "outputHash": "f2d92b06dc3d8262d19ac6168dc67449af77742eca8dac332521454c90dedf53"
+  },
+  "/images/product-art/models-v1/yale-assure-lock-2-keyed-480.webp": {
+    "key": "20c7c7f0bc94412bf8c55461afbdb199df901008d1199f2ab56de2d02e094ad7",
+    "outputHash": "746dce369d0d7a164925dd5fdbaa294ca7f504a7a41f20b5792274c87940faf0"
+  },
+  "/images/product-art/models-v1/yale-assure-lock-2-keyed-720.webp": {
+    "key": "4e7b06b6abf00990d2b2a86939e9d72667da62c70991fcb384652321f4b65dbc",
+    "outputHash": "aad35d2bf0bda4e80d8cf0bc5f60d7588add892724fd8d42faa0d0ec260eb49a"
+  },
+  "/images/product-art/models-v1/yale-assure-lock-2-keyed-960.webp": {
+    "key": "001036fe9edb225afeed2efb9023e7538227cc8fd33d12cfc8377234d6833f98",
+    "outputHash": "1d7b2f840802aa12dc4e44cceb0e61e302f8d882e71ab21ba64351ff82ea8e1d"
+  },
+  "/images/product-art/models-v1/schlage-encode-century-240.webp": {
+    "key": "923c51997d69310f251b918931a327f9851d4814f5f721f0a59d5b330263e062",
+    "outputHash": "bca4a9914b4a6d964be52631220d76ea5b29d475f9c84fd61acab5ec0cf3cf00"
+  },
+  "/images/product-art/models-v1/schlage-encode-century-480.webp": {
+    "key": "0d33a7cfb278e0dbe1c3d8c614ddcf15d443de81f702ad5c1ec3be61effb49b3",
+    "outputHash": "85015f2e2e1fd9f7c83e2e4dd963c79e338f3ea81e33b91ddf0d6b1954188d19"
+  },
+  "/images/product-art/models-v1/schlage-encode-century-720.webp": {
+    "key": "3848d5e1a874c376cfcbfed7872f686a1d038c58465dcce213ea57b86d018646",
+    "outputHash": "ad6ba55494fb377700fbf81d1e1e231d51c0970f927b3a0e2eb59efb1f9184a1"
+  },
+  "/images/product-art/models-v1/schlage-encode-century-960.webp": {
+    "key": "6a8a323a463625b12f74f9c86f766aad918c9fdc69a62d05977b62e9dda248a9",
+    "outputHash": "dd635bb30e4a79882bcd79f6c2e950f380530301e60313bc7c045d939d776339"
+  },
+  "/images/product-art/models-v1/august-wifi-smart-lock-240.webp": {
+    "key": "19b4257aa3489883164839ca3ebf7f981513f1d07c2032468bd087c6f3b3b443",
+    "outputHash": "654ec9bd9bff69128f41787cef775ab16c7980a03b969df33046cc0df10c7223"
+  },
+  "/images/product-art/models-v1/august-wifi-smart-lock-480.webp": {
+    "key": "6493ad40e6030f7522fea1701598fb23b52f96e5da697a4d39205e3cfb6f6bcc",
+    "outputHash": "2bec2a45f88d89b0b7f71b232620c73fe4748963dc75a9addce6ec11271f4628"
+  },
+  "/images/product-art/models-v1/august-wifi-smart-lock-720.webp": {
+    "key": "59d91194151f9e38b1c73efc404dd613f3323a59fff3866bca11ebfbd1d4eef1",
+    "outputHash": "32f615559cd653eafa483daf852787f961edfe7584bb8d624b1c0c9d3efc3545"
+  },
+  "/images/product-art/models-v1/august-wifi-smart-lock-960.webp": {
+    "key": "7850b5ef158329736b012bc027c1cacfc29e0058a99faf9d9a74373d8aec789b",
+    "outputHash": "ffde6ddbb4e79dc88cd4045cbee249d69373a0ebc631941a352a1bb7da6fca9b"
+  },
+  "/images/product-art/models-v1/aeotec-v3-240.webp": {
+    "key": "2f7bbbbd650081d5e3ce9a4f8fc3424af19018152f9d51791838a7672b3c2344",
+    "outputHash": "6f249703f73549ec3194d22bd7cb69b31f3c6e629af6ce704809935b9835ec59"
+  },
+  "/images/product-art/models-v1/aeotec-v3-480.webp": {
+    "key": "a062200985ef79674ca6673ff63d3b9f2cbe2c558721f8ae265bad11d7413db0",
+    "outputHash": "59a6d60e5a73571a701c8d73bb21dd4f4203df06623324e71889d030358b7e87"
+  },
+  "/images/product-art/models-v1/aeotec-v3-720.webp": {
+    "key": "cc22f6bdf62d68c36bee5b81455493b537a878bf62c815c4cfb00dcac6e638bb",
+    "outputHash": "e8dc67781cbca4723633910c2292834e92bcc7c0af21f7cc5d2fb10d63fdf72d"
+  },
+  "/images/product-art/models-v1/aeotec-v3-960.webp": {
+    "key": "d8acc13c41ed8aca583546d12c29e59d8e5f23af8f745192be1794d57aaec0a9",
+    "outputHash": "fd23399aa6c6c209a1409e8ff449747b6a86bc65dda4955d7e39c58852a7f0ee"
+  },
+  "/images/product-art/models-v1/switchbot-hub-2-240.webp": {
+    "key": "5cdaa091651423806528602e6eb65bcfccac2d63914209f53c5efe71752959f5",
+    "outputHash": "455efe7585f098b06dab8286e4a3b2ad8a6b376fa26aa89b1cfec26b7ff34d3d"
+  },
+  "/images/product-art/models-v1/switchbot-hub-2-480.webp": {
+    "key": "85c34168e7b2ea40cde6ac0fe0955a1758f7774dfd838bd665d15a8b1fc17b15",
+    "outputHash": "38ab79b2beff51e2aae06f42a0cafc92bddf7cdca78a443bb3115ddd290c346f"
+  },
+  "/images/product-art/models-v1/switchbot-hub-2-720.webp": {
+    "key": "acdcfaa49598f0fcb75445de79aabcefe2f49f293f2087c2a9899f6f8bc26b28",
+    "outputHash": "20d6f77847914f0187bd03e946d0ca288573d37dc88380685d219dafee65288b"
+  },
+  "/images/product-art/models-v1/switchbot-hub-2-960.webp": {
+    "key": "01e955568bed83551de0c250a3be7ff08727674c7180d8d6c4daf878c59b5d7b",
+    "outputHash": "1efe2931c32f2d0070de7041ebb1e02ffa7b0172590031b7dc92b711f03d5561"
+  },
+  "/images/product-art/models-v1/roomba-j7-plus-240.webp": {
+    "key": "53fa8991dfaa69600b08609ab3c5104b8630ee98f7020d6a6cc33ee67f023ee3",
+    "outputHash": "bc7d9f3be7db909386f8b3924762b34e722de0a1af6360e5063b16eadf62b2a5"
+  },
+  "/images/product-art/models-v1/roomba-j7-plus-480.webp": {
+    "key": "84e77414430fff653e26c300c62260f7f5faba8ca1ad13cfcc32c35bf5b01b91",
+    "outputHash": "3813f47ccd740e3ba9dbf058850813e82ecf2738cdba4a82134dbe0a39f3ee06"
+  },
+  "/images/product-art/models-v1/roomba-j7-plus-720.webp": {
+    "key": "818bbd541d6599e18d3fa222eb25ff363bd3d9779990fe013db69ea698914930",
+    "outputHash": "be03d4abb383b2e52250d8b0c81995a7982bb4c0e8852313d270e314b37c7736"
+  },
+  "/images/product-art/models-v1/roomba-j7-plus-960.webp": {
+    "key": "a9a2c2d43153366a96948a6afeba81626d4f2b84756aed265481a5ef1fc31e34",
+    "outputHash": "180b6ee674fb95fbde61980fcf1c76bb70a68b2a91d6e625eef9fb9052f5e7ea"
+  },
+  "/images/product-art/models-v1/ecobee-premium-240.webp": {
+    "key": "fa9e62525b2159c0d63c1d132923d7cfaa0e115b581cf461e86bf9bff50aa35c",
+    "outputHash": "ec898fad11f06fec1efad96bf258fbbce0361facae89dbacface3090d98a0225"
+  },
+  "/images/product-art/models-v1/ecobee-premium-480.webp": {
+    "key": "e57848a0ce51dae5ac7c8d5678bda2e5a28f0bc4624372ec9489197a620a5034",
+    "outputHash": "090fe002db841d4b42039f23463ad8d08a60309a73a9693295e279f7c08005c2"
+  },
+  "/images/product-art/models-v1/ecobee-premium-720.webp": {
+    "key": "b5e95e543091fd35a4c6f6b267ec785bd52e6807f6434c896cd55fec017b94d2",
+    "outputHash": "2bdcf5ba43e39564a7aff4aad8782c4dc9492ebcdf2f31ba3514d8203969ae3d"
+  },
+  "/images/product-art/models-v1/ecobee-premium-960.webp": {
+    "key": "478fa85c5daf7a3a9e5d13d8303631387e52c1357009951cee46ef42406a18d5",
+    "outputHash": "84562ae1ecddd95a847c2bbd754b4a632a2870c22005e4ed176f22e97cd38884"
+  },
+  "/images/product-art/models-v1/arlo-essential-2nd-gen-240.webp": {
+    "key": "1176ca97fdb96cb50bef309f835f03bfa378e6c7304ee896e53c6d50d0bcde21",
+    "outputHash": "94ac4b2a18bff8cc8f5914fc320bd9d23ff209e29313c23c345fcec8c75e0f59"
+  },
+  "/images/product-art/models-v1/arlo-essential-2nd-gen-480.webp": {
+    "key": "bb53c5b7cd605de16b7efb7cc1e06a743b29f70291d0302fb717d175ed1a215c",
+    "outputHash": "f70f0f1064d32953f78f080a744c75114ce896c0b60aa0add39af9f2bc31ebc3"
+  },
+  "/images/product-art/models-v1/arlo-essential-2nd-gen-720.webp": {
+    "key": "7fa497f3797528d2a73ae68b00d6478f3e473524979e2a2544fbdd64c60809b9",
+    "outputHash": "e86fa68096931a73c1064d57b0e20b0789944d46cfdbf2f740c4bfb710f9f296"
+  },
+  "/images/product-art/models-v1/arlo-essential-2nd-gen-960.webp": {
+    "key": "0d4a8deb94346512c400b8fd8b4015193069a4506e12d300515295974e308fd1",
+    "outputHash": "d83f4e55b33f1412d8e6e6d7d068868d70aa679b1264fd2c38d594b33b13c01e"
+  },
+  "/images/product-art/models-v1/blink-outdoor-4-240.webp": {
+    "key": "9c6f2c134ee65a0d8a572dc459b55dd9b847598edfc46b1181f3efa422fd7fe3",
+    "outputHash": "5704ad59346bc45a0efd81da9a33848d56e1c17fb57e1b210b1837cad104585b"
+  },
+  "/images/product-art/models-v1/blink-outdoor-4-480.webp": {
+    "key": "a1cb28b1209dd452e917eaa6e0d74f33abf53b3cb1e5705f81b06bd34b116563",
+    "outputHash": "82a4ad13868c7052f52aaff0d0d9dbfaaef109f6fb5547731342a15eb9b71b90"
+  },
+  "/images/product-art/models-v1/blink-outdoor-4-720.webp": {
+    "key": "be1689167f8532587114284771324328e0d7173e3b1557bc6fe4ce7510adcf71",
+    "outputHash": "9f20f5d110a1029f4a4069b89f0d0950d5c26ca97f4d5963837b4f11b176b60b"
+  },
+  "/images/product-art/models-v1/blink-outdoor-4-960.webp": {
+    "key": "2bbf242e94e30ad510162f087cf74cf1c1d962e5b245aa2e2fa1aee01c6cc942",
+    "outputHash": "6ac878799b97b150c31af4ee5ec6058c1482a586f1cc23434c70204272e516e6"
+  },
+  "/images/product-art/models-v1/tapo-c120-240.webp": {
+    "key": "329239fbd9345dffebde1802e8a765535d6cc1833768987b699135876eb9b816",
+    "outputHash": "843b6a1579dba9b220747bdb8173c5359dd736fc1df065432af822b05a419f75"
+  },
+  "/images/product-art/models-v1/tapo-c120-480.webp": {
+    "key": "dfe98a5d879016eda3ad5b437965a5375b12dd69c0667914994b2b594107c336",
+    "outputHash": "7ac7af1eb89852f0bee27b5a0f088697b56045b4603a0b0434a2ad5c2078141c"
+  },
+  "/images/product-art/models-v1/tapo-c120-720.webp": {
+    "key": "5927fc6291e9d53cd9ceaa05b498bf88bd2fa483c0e99c4413254220451673d5",
+    "outputHash": "b00ac0f453757b94002c65c452b02eaf21e1c47d7411fde7f1d3fe42378e6aa2"
+  },
+  "/images/product-art/models-v1/tapo-c120-960.webp": {
+    "key": "302f7485e0d3f1b5146c0bdf7ddb83028512761b0bc27840119875293b44c5e5",
+    "outputHash": "1cd65d7cafc32684677148a4851b4b3272bf6e513494e282b5a939d39e2ad952"
+  },
+  "/images/product-art/models-v1/wyze-bulb-color-240.webp": {
+    "key": "fbf204d29c44d1f267e960b5814a77ca2cc1e30eeeed4e39031b4a501d8337fa",
+    "outputHash": "185ba659ec44a77ff700d62ee4fb5b34b04821d25fa2ac83506b58ffe579e1c5"
+  },
+  "/images/product-art/models-v1/wyze-bulb-color-480.webp": {
+    "key": "ce02128ce7dbc5bd59052be38c1b680ea3d958ca42a09c38336aece63be9bb27",
+    "outputHash": "e19103ffef2b7caa4e9385d2c7adc10443e135e146adef9681a8fff202d7aacc"
+  },
+  "/images/product-art/models-v1/wyze-bulb-color-720.webp": {
+    "key": "2df5257958cd9ed82f9650ec10bbea61a8859b280dd35f623a7b9587486e6543",
+    "outputHash": "bdff4f2144a13c1e5ba389f337acd96214f1141e5503d11aaf884f701adac850"
+  },
+  "/images/product-art/models-v1/wyze-bulb-color-960.webp": {
+    "key": "a0a6632d99ac370587259cd2f96528e9feacae0d0113fa7682fc2405f0790104",
+    "outputHash": "8b2dcb1011c03c9ac14affba7effd4b2269316a4cc11e0c3449f83e4e45e3c7d"
+  },
+  "/images/product-art/models-v1/kasa-hs220-240.webp": {
+    "key": "cc6958c44ef3828bcfbdc1b3bdc17e81844acc9e80cfd8f4039bd803a5fa16eb",
+    "outputHash": "9fddfc9347ead2e1a1bcdd7b52552949b45548c532062f23436b69e5599be430"
+  },
+  "/images/product-art/models-v1/kasa-hs220-480.webp": {
+    "key": "ddc563827e6342423dd84f82540077b0df07c331dcf002c07851fc873e30999b",
+    "outputHash": "20a9d7805c4e8c6ba0e505a1ce8d1456d222b5bae83dae3b9cdc2dc167bc4757"
+  },
+  "/images/product-art/models-v1/kasa-hs220-720.webp": {
+    "key": "92a5df1b4148787eb6f53950d5fdda50f02532d3ee2599b5ea730063f153de62",
+    "outputHash": "7ba4a15f464956195d6c03fb6c798baa7ad9691c2c203a1b085ff39d1d00a44e"
+  },
+  "/images/product-art/models-v1/kasa-hs220-960.webp": {
+    "key": "a39af7f8e7fc9e77155bf9e0c2a79f08b8717cbc4bb0120c70ec9be6d883313a",
+    "outputHash": "96b2650a1a3cd440daee01c63f1bc7da6e29f48521410b3eced5561275b0ae1b"
+  },
+  "/images/product-art/models-v1/kasa-hs200-240.webp": {
+    "key": "30e86d0107768ca1af3479fc5b6156a562a0208180dd38d92ca83304da6469a8",
+    "outputHash": "c025402b323352d696b7d327c1b025e96d5f5edddb05158ca7702a1928790d76"
+  },
+  "/images/product-art/models-v1/kasa-hs200-480.webp": {
+    "key": "98b5e559a0512157cf54c08a535e09301113087d0405353d5ff0dee5729e664c",
+    "outputHash": "643215eeeda44cbd1d3f94c03b49b68875697f6153485e6c46de66ed366fa684"
+  },
+  "/images/product-art/models-v1/kasa-hs200-720.webp": {
+    "key": "8fe635c789a9b104c23359e9daee78b9508d36e37087cff3f06930926c6a3351",
+    "outputHash": "0e0d7fdd3184e2da0182fe5cf85f40a2dba088a7583841fcd3ae76cb8c554478"
+  },
+  "/images/product-art/models-v1/kasa-hs200-960.webp": {
+    "key": "0c11e8f068a680aa2978745945b6dbc5cc90984d34b4ebe2c8a0b33941fb7806",
+    "outputHash": "ca32c372020bd179fd1593f341bef10402d2a438bb28faebd0c3a6f370ac4cc0"
+  },
+  "/images/product-art/models-v1/nest-hub-2nd-gen-240.webp": {
+    "key": "319bfec9940246b63d5cc0b775dc6f7508dd1668e62ce88f4f9ed4d4370437c1",
+    "outputHash": "b21b226d189e07d7e7c4844b61d8c79754c7d442807470807ec538f2ccb49101"
+  },
+  "/images/product-art/models-v1/nest-hub-2nd-gen-480.webp": {
+    "key": "8ef27a9835cca7a886aae52f0f887311f02464979084d39bd452c20300605515",
+    "outputHash": "2143e31cbbfde9d747a000fa0526b30810f87705ca47c99211f4ec4d567fd57b"
+  },
+  "/images/product-art/models-v1/nest-hub-2nd-gen-720.webp": {
+    "key": "6eac46163a67368b3879845c22cb1d8db6e5cc33da3f7cf47d81596a87c1b3d0",
+    "outputHash": "1959ed162779208949e0b88dc210cac8d2ebf66d2e9ee2c4f1dc548087450a73"
+  },
+  "/images/product-art/models-v1/nest-hub-2nd-gen-960.webp": {
+    "key": "5f0737a02b8195d95c0fea240d1859714832c67fe64950dc46065cb8874e539a",
+    "outputHash": "14d3d23ca4f4131a9a4d859e09e153b426d74b297c68e438553ae4c225ba567d"
+  },
+  "/images/product-art/models-v1/echo-show-8-3rd-gen-240.webp": {
+    "key": "d988f2d4256f54e651fc142e3d4e114f9903a34cf852d1a91e4d186548fe11ed",
+    "outputHash": "a9388e34483bc07411e3dd01520e59adfbb5df7ef513d0147bca5dace2028daa"
+  },
+  "/images/product-art/models-v1/echo-show-8-3rd-gen-480.webp": {
+    "key": "0ca382ee951b6e00d77d71a78d981487e45b6aa888110281b26798da7a168275",
+    "outputHash": "344e0aacbea593a7ea2d9640d167cedd27f306891cbde587b335648ff27fa4c2"
+  },
+  "/images/product-art/models-v1/echo-show-8-3rd-gen-720.webp": {
+    "key": "355504b9ec3b1e2a17e32c40f6ff66abcd9ee02c18d09740a114c8d73d52abf4",
+    "outputHash": "97655c1df5889b0053304cd69d82f9b889533f03e7450f9d063f5e190161bc3b"
+  },
+  "/images/product-art/models-v1/echo-show-8-3rd-gen-960.webp": {
+    "key": "304ef341ea8774a62cba96920f98296ecb901fdee86c6d839970f60fe439d4c9",
+    "outputHash": "faddcbce11b862d561bc5fa41ed9d37a87e441555ddd0337c685b047e38e24b9"
+  },
+  "/images/product-art/models-v1/eufy-c120-240.webp": {
+    "key": "321b799a1b02bb83f915b9bb97893e0bce888f4ab356f74514eecbf743aac660",
+    "outputHash": "926617f6b860c0f67d852c8abba5d6d79ee1ebb88295fb4b23d01de5e7529150"
+  },
+  "/images/product-art/models-v1/eufy-c120-480.webp": {
+    "key": "a75b08b6c26220bfcd5f715198703c5fa3b84b99213752c14481d1f917d10097",
+    "outputHash": "45a4dacfba048cb4cf9bb4ad1b20b36bbf7e5a600557274b5fb8b722459f97f8"
+  },
+  "/images/product-art/models-v1/eufy-c120-720.webp": {
+    "key": "a551fa9fa26d26dd8e0b25373dbabf278765b2350fdd295d256ca36902aaa855",
+    "outputHash": "86a1c1cf82ddc861f3a1198beda5dccae8c02bfbd1e705199b067a7ac033c668"
+  },
+  "/images/product-art/models-v1/eufy-c120-960.webp": {
+    "key": "2c4a33455d7b3834a4a8b25fd2ecbb9ebd8d93dfefeb2c94d68fe31e8f3f7783",
+    "outputHash": "cf3e8e17529ebbfeeb09ccf77027b589a0f10f5c19c7ab631224e7cc2f472176"
+  },
+  "/images/product-art/models-v1/roborock-q5-plus-240.webp": {
+    "key": "a808a17253723e2e2d351a91a2af0432d14fc80a855f1ae8501e539437d68aaa",
+    "outputHash": "7009e37e8855f1c2dde346a414182bf68c79d5df45f6f16de3b6fd9d5a3e102e"
+  },
+  "/images/product-art/models-v1/roborock-q5-plus-480.webp": {
+    "key": "c5a4d102228413f3b45aedb315c71675cfadf692985d081b57261ee77aeef260",
+    "outputHash": "eee027fb4ea9a38c986b9e130e76b097a139945b935b78868a289fe8303a945d"
+  },
+  "/images/product-art/models-v1/roborock-q5-plus-720.webp": {
+    "key": "013da7b30bf63285a4e4a97bf3f6b58ec4a6eb50fa3dea98f50d612a76a21355",
+    "outputHash": "e319212a504db8c77a22c1ecec4bc36648da1ba8a89742b487583f8345c7142c"
+  },
+  "/images/product-art/models-v1/roborock-q5-plus-960.webp": {
+    "key": "6d3af0197f05e14edec1ea39b89ca982b82257152700bb02605ff35255987900",
+    "outputHash": "75ad9c6287c6b5cd6247a8e350b43601dc9ec1600f6b22b355716397fc75e84e"
+  },
+  "/images/product-art/models-v1/aqara-m2-240.webp": {
+    "key": "df616e183479ae5ebfc4a88c955a02e6bf5d7927e1c2ed897b2296eb1b0d2c7a",
+    "outputHash": "f1acefd148b7539c6a775b07f457dac9f49f523846ba2d6312a0a772dfb20b41"
+  },
+  "/images/product-art/models-v1/aqara-m2-480.webp": {
+    "key": "40f98c3a60f527da1f0c1ebae5f7d3f914af3961c4bccbab2389d901f0220ca5",
+    "outputHash": "a0e3411f34360dffc06a8c39ce4cd846b63d3f5a52fad7b12088f2879ac87f6f"
+  },
+  "/images/product-art/models-v1/aqara-m2-720.webp": {
+    "key": "8de13a83f268b02d5f5e51eadf93d13f95ee5e22f3baa59ca645ef18147c75bc",
+    "outputHash": "235de2ca41a77a336566fe08c83357c324580f92579faa8a76ec5f34296073d6"
+  },
+  "/images/product-art/models-v1/aqara-m2-960.webp": {
+    "key": "b9ba650117faa4f76e2ad2efcfee5ead0a7c43a465bc786e0c00e85ca045aa41",
+    "outputHash": "9ede938249a06c5808ca4cc07cccf9e83425b7873c031024df49b88f1392b4fa"
+  },
+  "/images/product-art/models-v1/hue-562918-240.webp": {
+    "key": "3d392a6611a499c5c47b9f5bd9da2a55b2fa4aaf74e5d1802eeb81a7df4f6269",
+    "outputHash": "bb80e606c4953f9d1d330e84370f3acc9c7f8b369be0c4ff3a8e3e46d3091d2c"
+  },
+  "/images/product-art/models-v1/hue-562918-480.webp": {
+    "key": "c539cbe560f8814f966bf6148a98f1f514b7a76e2f74ebb70bf43d70f0a03887",
+    "outputHash": "cce1655f681906560d89a8b65f4511b71d02522aa49a040ba46ed76e1731abb2"
+  },
+  "/images/product-art/models-v1/hue-562918-720.webp": {
+    "key": "cf213fe88515f87f2c84e3730d3c46694279a25ff7d1dc008fa8cbe34454abab",
+    "outputHash": "37f17e618719a8bc12208175c86eae6dd43e8ca2657af2c57f3c251037856372"
+  },
+  "/images/product-art/models-v1/hue-562918-960.webp": {
+    "key": "6c15bf9e336916f4ffc7c280040b1fb0d062246231ef7f89dd46d2be89878512",
+    "outputHash": "43b2178429991309f159a92b7819b284aea9500512fd39e4e1384771c9770829"
+  },
+  "/images/product-art/models-v1/amazon-smart-thermostat-240.webp": {
+    "key": "45937b79b7eda015e0b59cc72e27bf6bd8f4555974d8bec3a7ecd827cb559428",
+    "outputHash": "ad6124d878d05279acf51032d072ece967d0e15a92deef76c801d5efe9e4a25c"
+  },
+  "/images/product-art/models-v1/amazon-smart-thermostat-480.webp": {
+    "key": "f95ce2ddbe8c4931131b23a74c6ddda724279ff38470bfbb71cb803492b693a9",
+    "outputHash": "7d1a639c6c36ced5d4b986461ab12108397e42f5b9cd4fe7c06eb95316b4716c"
+  },
+  "/images/product-art/models-v1/amazon-smart-thermostat-720.webp": {
+    "key": "5115b73b3805cb9541429f8095616ba07d382fff1636dd81bcde393ebcbd4eff",
+    "outputHash": "ea555c98d1f15592a7a70050621138c1ff6bc52b6917db3c31f95cf8af299c80"
+  },
+  "/images/product-art/models-v1/amazon-smart-thermostat-960.webp": {
+    "key": "2c329eda7868b5e3cfc1c58425a45a3c523f2c701dd4e8248210c612414e653b",
+    "outputHash": "e2acf9414c6147fc06837ef9dc963df48c7e678c292683df292c3b930b5ea286"
+  },
+  "/images/product-art/models-v1/kasa-ep10-240.webp": {
+    "key": "f76e86ab607ddab93a83fc5f200d97dbeab3554e031e72991e8c986f35a3b01b",
+    "outputHash": "2aac2164afbe5bf0aa796120f231c2a39cd4efb197cadeae04dedc91c79c1751"
+  },
+  "/images/product-art/models-v1/kasa-ep10-480.webp": {
+    "key": "5dc1b00346874029b80844855f50a4adff11f1fafe88964058c313c2d60094e6",
+    "outputHash": "15069402506014b5506bdf6445dd23ffcfc7f1829ba0d57dcae895264ef86b04"
+  },
+  "/images/product-art/models-v1/kasa-ep10-720.webp": {
+    "key": "7e1b9b1f5a695a578324956b2d104b5ceefbafe2c3dc423f44eec8f08f44d411",
+    "outputHash": "ba62a7331a394d7400057f7771c0b0662bb1018d4b7da9c0885041458d811952"
+  },
+  "/images/product-art/models-v1/kasa-ep10-960.webp": {
+    "key": "33cd5005cbc25710193a159ec11660f4673f33b3e7ada3daa9125ba79b579df3",
+    "outputHash": "762e30505eda5e5f4462b6b313cb4f9b5bf6fb28832f8c92ad68988d4e13ac9b"
+  },
+  "/images/product-art/models-v1/ring-video-doorbell-wired-240.webp": {
+    "key": "592c4077e24e1ae59787338031fcd4435595251509b2c075c6edb62bfba4fd2d",
+    "outputHash": "981ab22df68456db951eefbcec48fc080101502508a18c06101cb1de88d98963"
+  },
+  "/images/product-art/models-v1/ring-video-doorbell-wired-480.webp": {
+    "key": "8d730a8b93fe65be3275f3dabc2c51624cb32e3dd66b5b05316f67fa16d6efe7",
+    "outputHash": "0eaf46a884f4435748fa99e1351897a0bf79f94b9aa34ca4ccd54ebddeb9cce5"
+  },
+  "/images/product-art/models-v1/ring-video-doorbell-wired-720.webp": {
+    "key": "f6d9c5b9575abf984c8ac7da53f7150aefe834a024c798f6bf35f081cbe4bb8f",
+    "outputHash": "fb17cb777b4c5b56880b602aab462b256cc68c2641c8748992066641bca17976"
+  },
+  "/images/product-art/models-v1/ring-video-doorbell-wired-960.webp": {
+    "key": "f620938ff978653cf717860e5a3af65b01005040397d461962def0b3f16afe5a",
+    "outputHash": "fca226fc007a895d8d297563cd9641a9ec072fb857d2e73d24f2132e4782b233"
+  },
+  "/images/product-art/models-v1/govee-h617c-240.webp": {
+    "key": "85c31b15eebe5d88575fd120f47617843030a911658e3cf86772c4851bba69db",
+    "outputHash": "374f710ee087e7b460d3671eb6077b7002343bac1a6b59a11606a858ca7b8615"
+  },
+  "/images/product-art/models-v1/govee-h617c-480.webp": {
+    "key": "25ef9b8e8e2e1d868ef4b6a64faceaff951cfe550328e2c29dc7a306ef6fd300",
+    "outputHash": "e238199c65ead52ec7841c369bc871981104fb5167e11e2dbfdfbfad465303bb"
+  },
+  "/images/product-art/models-v1/govee-h617c-720.webp": {
+    "key": "15d3d5a2f7897d40b4f9fd26399d79e0bfb7a0353145b18c6b42a9ec7dac5ba4",
+    "outputHash": "7681f7e981872154322f0d96c1e2643bcd474bf7e095d30c971c9de259f1c8f4"
+  },
+  "/images/product-art/models-v1/govee-h617c-960.webp": {
+    "key": "552fdc3381b5a15145a3cb8e747ab52afa9f26e9e39f2cb62f0ca18ce3e4ec29",
+    "outputHash": "75db2ac0166b0a4900eb66497b0d4039b3864d1bb6f58349fbca0a6686ee67e6"
+  },
+  "/images/product-art/models-v1/echo-dot-5th-gen-240.webp": {
+    "key": "58795043cbe555ed07e48fd24d3bb9fed17cfec5bb25e035b1a0051b8f06d417",
+    "outputHash": "631e6bcdd8714d4e30e4c63d64eceeb4d9cf4451118d7ba7a1b95a97e648de18"
+  },
+  "/images/product-art/models-v1/echo-dot-5th-gen-480.webp": {
+    "key": "81d6f7a39dc5b57370be97bd743630a314d578ea613b7b81a1690cf09abc1e59",
+    "outputHash": "c26e577616f30d5f9a833fd9baa03203de39a9478897698a7992d5c74f3c923d"
+  },
+  "/images/product-art/models-v1/echo-dot-5th-gen-720.webp": {
+    "key": "0f35f084e54547d130a53a99072b93171ef95c671c34d163e01ca54431486688",
+    "outputHash": "7ace5c348f4453ecfca92682b200e0c9209face62875296f67bd0814f013b4fe"
+  },
+  "/images/product-art/models-v1/echo-dot-5th-gen-960.webp": {
+    "key": "600dcd1a20f9c867fbc663886cd510b2dd33c098068055f2d6e6f3af4cabb067",
+    "outputHash": "e2743cf8460402f0e8d37c128e864740073d3049122bce27ba8e23ecd5e025a2"
+  }
+}

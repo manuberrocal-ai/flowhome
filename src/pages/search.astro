@@ -1,6 +1,7 @@
 ﻿---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProductImage } from '../lib/product-art';
 import { getCommerceData } from '../lib/commerce-data';
 
 const products = (await getCollection('products')).map((product) => {
@@ -10,11 +11,19 @@ const products = (await getCollection('products')).map((product) => {
     slug: product.data.slug,
     brand: product.data.brand,
     category: product.data.category,
-    ownerRating: product.data.ownerRating,
-    ratingLastChecked: product.data.ratingLastChecked,
-    price: product.data.price,
+    asin: product.data.asin,
+    affiliateUrl: product.data.affiliateUrl,
+    ownerRating: commerce.displayRating,
+    ownerRatingCount: commerce.displayRatingCount,
+    ratingLastChecked: commerce.ratingCapturedAt,
+    ratingSource: commerce.isRatingFresh ? 'amazon-creators-api' : undefined,
+    ratingValidUntil: commerce.ratingExpiresAt,
+    price: commerce.displayPrice,
+    priceSource: commerce.isPriceFresh ? 'amazon-creators-api' : undefined,
+    priceLastChecked: commerce.priceCapturedAt,
+    priceValidUntil: commerce.priceExpiresAt,
     priceLabel: commerce.priceLabel,
-    image: product.data.image || '/images/product-placeholder.svg',
+    image: getProductImage(product.data),
   };
 });
 ---
@@ -27,16 +36,17 @@ const products = (await getCollection('products')).map((product) => {
     <label for="site-search" class="sr-only">Search FlowHome products and guides</label>
     <input id="site-search" type="search" placeholder="Try robot vacuum, camera, thermostat..." class="mt-6 w-full rounded-2xl border border-slate-300 px-5 py-4 text-lg outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
   </section>
+  <noscript><p class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 text-slate-700">Interactive search requires JavaScript. You can still <a href="/products/" class="underline">browse the complete product catalog</a>.</p></noscript>
   <section id="search-results" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite" data-search-products={JSON.stringify(products)}></section>
   <script>
-    type SearchProduct = {
+    import { getProductThumbnailSet } from '../lib/product-thumbnails';
+    import { getProductImageAlt, getProductImageSourceLabel } from '../lib/product-art';
+    import { getCommerceData, type CommerceProduct } from '../lib/commerce-data';
+    type SearchProduct = CommerceProduct & {
       name: string;
       slug: string;
       brand: string;
       category: string;
-      ownerRating: number;
-      ratingLastChecked: string;
-      price: number;
       priceLabel: string;
       image: string;
     };
@@ -57,13 +67,15 @@ const products = (await getCollection('products')).map((product) => {
       const filtered = products.filter((item) => !q || [item.name, item.brand, item.category].join(' ').toLowerCase().includes(q)).slice(0, 24);
       results.innerHTML = filtered.map((item) => {
         const category = item.category.replaceAll('-', ' ');
-        return '<article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">' +
+        const commerce = getCommerceData(item);
+        return '<article data-image-fallback-scope class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">' +
           '<a href="/product/' + encodeURIComponent(item.slug) + '/" class="block">' +
-          '<img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.name) + '" class="mx-auto h-32 w-full object-contain rounded-xl bg-slate-100 p-3" width="320" height="128" loading="lazy" decoding="async" data-fallback-src="/images/product-placeholder.svg" />' +
+          '<img src="' + escapeHtml(item.image) + '" srcset="' + escapeHtml(getProductThumbnailSet(item)) + '" sizes="104px" alt="' + escapeHtml(getProductImageAlt(item)) + '" class="mx-auto h-32 w-full object-contain rounded-xl bg-slate-100 p-3" width="320" height="128" loading="lazy" decoding="async" data-fallback-src="/images/product-placeholder.svg" />' +
+          '<p class="mt-2 text-xs text-slate-600" data-image-source-caption>' + escapeHtml(getProductImageSourceLabel(item)) + '</p>' +
           '<h2 class="mt-4 text-lg font-extrabold text-slate-950">' + escapeHtml(item.name) + '</h2>' +
           '<p class="mt-1 text-sm text-slate-500">' + escapeHtml(item.brand) + ' · ' + escapeHtml(category) + '</p>' +
-          '<p class="mt-2 font-bold text-blue-700">' + escapeHtml(item.priceLabel) + ': $' + escapeHtml(item.price) + ' · Amazon customer rating ' + escapeHtml(item.ownerRating) + '★</p>' +
-          '<p class="mt-1 text-xs text-slate-500">Rating checked ' + escapeHtml(item.ratingLastChecked) + '</p>' +
+          '<p class="mt-2 font-bold text-blue-700">' + (commerce.displayPrice === undefined ? 'Check price on Amazon' : escapeHtml(item.priceLabel) + ': $' + escapeHtml(commerce.displayPrice)) + '</p>' +
+          (commerce.isRatingFresh ? '<p class="mt-1 text-xs text-slate-500">Amazon customer rating ' + escapeHtml(commerce.displayRating) + ' / 5 · checked ' + escapeHtml(commerce.ratingLastCheckedLabel) + '</p>' : '') +
           '</a></article>';
       }).join('');
     }

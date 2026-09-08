@@ -1,0 +1,241 @@
+{
+  "as_of": "2026-09-05",
+  "scope": "Inventario integral, lectura de arquitectura y rutas críticas, revisión de documentación y verificaciones acotadas. No es un escaneo exhaustivo de seguridad ni un ensayo de todos los servicios.",
+  "local": {
+    "project": "C:\\AGENTES\\Proyectos\\flowhome",
+    "branch": "improve/flowhome-v3-2026-09-04",
+    "head": "17a4ec14dcfcbb537df452273335a44c8881da59",
+    "tracked_changed_files_before_this_review": 100,
+    "untracked_files_before_this_review": 42,
+    "inventory": {
+      "source_files": 175,
+      "scripts": 23,
+      "test_files": 87,
+      "supabase_files": 19,
+      "markdown_documents": 56,
+      "local_workflows": 5,
+      "products": 28,
+      "reviews": 15,
+      "guides": 8
+    },
+    "tests_today": {
+      "total": 597,
+      "passed": 597,
+      "failed": 0,
+      "skipped": 0
+    },
+    "source_snapshot": {
+      "at": "2026-09-05T11:16:50.3872513Z",
+      "files": 358,
+      "sha256": "e58d84d3e977d5d3d939fa1dc2e27ff9547e87edb00939733a4249f686eb37f0",
+      "method": "PowerShell sorted rg file paths in src/scripts/test/supabase/data/public/.github; concatenate path:uppercase SHA256 bytes, SHA256 accumulator. Excludes docs and is distinct from the daily run fingerprint."
+    }
+  },
+  "previous_complete_cycle": {
+    "completed_at": "2026-09-04T05:24:11.448Z",
+    "fingerprint": "1f3e875439b3cff4fc2909f028900c9afa22bce4d188dbd39acff387905cd163",
+    "evidence_files": 157,
+    "tests": 597,
+    "browser_cases": 134,
+    "http_checks": 91,
+    "pages": 88,
+    "indexable_pages": 83,
+    "lighthouse_samples": 12,
+    "network": "external HTTPS blocked in local visual/performance harness",
+    "field_inp": null
+  },
+  "github": {
+    "repository": "https://github.com/manuberrocal-ai/flowhome",
+    "visibility": "public",
+    "default_branch": "main",
+    "main_sha": "d038534f3341cc4546e2fc8b66eb19cafdbac771",
+    "comparison_to_local_head": {
+      "status": "diverged",
+      "remote_ahead": 2,
+      "remote_behind": 1,
+      "merge_base": "a22bab91455336295ef87b00ae83039c43034ad4",
+      "note": "GitHub compare is relative to the common ancestor, not a literal direct diff between both working trees."
+    },
+    "main_after_production_commit": {
+      "ahead": 1,
+      "changed_files": [
+        ".github/CODEOWNERS",
+        ".github/dependabot.yml",
+        ".github/pull_request_template.md",
+        ".github/workflows/codeql.yml",
+        "AGENTS.md",
+        "CONTRIBUTING.md",
+        "RULESET.md",
+        "SECURITY.md"
+      ]
+    },
+    "open_prs": [
+      {
+        "number": 11,
+        "title": "chore(deps-dev): bump fast-uri from 3.1.5 to 3.1.7",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/11"
+      },
+      {
+        "number": 10,
+        "title": "chore(deps): bump actions/upload-artifact from 6 to 7",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/10"
+      },
+      {
+        "number": 9,
+        "title": "chore(deps): bump the production-dependencies group with 5 updates",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/9"
+      },
+      {
+        "number": 8,
+        "title": "chore(deps-dev): bump the development-dependencies group with 5 updates",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/8"
+      },
+      {
+        "number": 7,
+        "title": "chore(deps): bump cloudflare/wrangler-action from 3 to 4",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/7"
+      },
+      {
+        "number": 6,
+        "title": "chore(deps): bump actions/checkout from 5 to 7",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/6"
+      },
+      {
+        "number": 5,
+        "title": "chore(deps): bump actions/setup-node from 5 to 7",
+        "url": "https://github.com/manuberrocal-ai/flowhome/pull/5"
+      }
+    ],
+    "connector": "authenticated read successful",
+    "local_gh_cli": "HTTP 401; no token rotation or login changed",
+    "current_ruleset_verification": "not obtained by failed CLI; historical August evidence and remote RULESET.md are distinct from current settings"
+  },
+  "cloudflare": {
+    "project": "flowhome",
+    "domains": [
+      "flowhome-a1b.pages.dev",
+      "flowhome.dev"
+    ],
+    "production_branch": "main",
+    "production_deployments_enabled": false,
+    "preview_deployment_setting": "none",
+    "deployments_enabled": true,
+    "canonical_deployment": {
+      "id": "3e58fd68-5c13-4c5e-a5f1-d3c9b5cb821e",
+      "created_on": "2026-08-10T03:41:34.398977Z",
+      "status": "success",
+      "environment": "production",
+      "commit": "50bad4d9fcec8a436ddfa94763081ad06d7277ab",
+      "trigger": "ad_hoc",
+      "commit_dirty": true
+    },
+    "latest_record": {
+      "id": "da7df48c-4484-4281-a516-3378d9eeaa64",
+      "created_on": "2026-09-03T03:27:07.394063Z",
+      "environment": "preview",
+      "stage": "queued",
+      "status": "idle",
+      "branch": "dependabot/npm_and_yarn/fast-uri-3.1.7",
+      "note": "Latest record does not establish a successful preview deployment."
+    },
+    "production_env_names": [
+      "PUBLIC_SUPABASE_ANON_KEY",
+      "PUBLIC_SUPABASE_URL"
+    ],
+    "note": "Names only; absence here does not establish absence from GitHub build variables or the deployed artifact."
+  },
+  "public_home": {
+    "at": "2026-09-05T11:16:19.6949634Z",
+    "url": "https://flowhome.dev/",
+    "status": 200,
+    "historical_price_text": true,
+    "customer_rating_text": true,
+    "external_qr": true,
+    "local_qr": false,
+    "gtm_identifier_present": true,
+    "gtag_like_identifier_present": true,
+    "csp_header_present": true,
+    "cache_control": [
+      "public, must-revalidate, max-age=0"
+    ],
+    "limits": "GET HTML and header checks; no browser interaction, analytics dispatch or visual outcome proven."
+  },
+  "supabase": {
+    "last_documented_observation": "2026-08-08",
+    "staging": "001–008 applied; database lint 0; 28/28 tables RLS; 0 rows at observation",
+    "production": "documented paused/intact on 2026-08-08",
+    "edge_functions": "not deployed in that observation",
+    "current_remote_state": "not rechecked",
+    "source": "docs/BLOCK12_OPERATIONAL_READINESS.md"
+  },
+  "amazon": {
+    "last_observed": "2026-09-04",
+    "store": "flowhome-20",
+    "api": "unmet access requirements in observed authenticated session",
+    "credentials": "no usable credentials found in authorized project/OpenCode searches",
+    "owner_statement": "Owner confirms having API access; another store/account or entry location remains unresolved",
+    "live_catalog_calls": 0
+  },
+  "business_baseline": {
+    "source_read_at": "2026-09-04",
+    "ga4": {
+      "property": "FlowHome",
+      "property_id": 543571866,
+      "window": "2026-08-07/2026-09-03",
+      "sessions": 14,
+      "engaged_sessions": 7,
+      "key_events": 0
+    },
+    "gsc_queries": {
+      "window": "2026-08-07/2026-09-03",
+      "rows": 135,
+      "impressions": 443,
+      "clicks": 0,
+      "position": 40.61
+    },
+    "gsc_pages": {
+      "window": "2026-08-07/2026-09-03",
+      "rows": 39,
+      "impressions": 628,
+      "clicks": 0,
+      "position": 41.87
+    },
+    "amazon_associates": {
+      "last_updated": "2026-09-02",
+      "last_30_days_clicks": 17,
+      "monthly_clicks": 1,
+      "monthly_orders": 0,
+      "monthly_earnings_usd": 0
+    },
+    "bing": "login required on 2026-09-04",
+    "note": "Different sources, windows and aggregations; never sum them or attribute results to unpublished V3."
+  },
+  "new_findings": {
+    "legacy_internal_scoring": {
+      "manual_products": 28,
+      "approved_in_seed_simulation": 24,
+      "nest_hub_example": {
+        "internal_score": 90,
+        "estimated_commission_usd": 4
+      },
+      "v3_category_only_score": {
+        "points": 15,
+        "coverage_percent": 15
+      },
+      "note": "Read-only pure function invocation, no reports overwritten. Score scales differ and are not growth measurements."
+    },
+    "freshness": {
+      "block8_price_hours": 24,
+      "block12_price_days": 7
+    },
+    "supabase_config": "Fallback URL/public anon key and Google client ID make configured=true without deployment env vars; risk of environment ambiguity, not proof of privileged secret leakage.",
+    "ci": "Overlapping quality/verify runs and mutable main checkout in deploy job; no new workflow execution triggered."
+  },
+  "source_urls": [
+    "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "https://developers.google.com/search/docs/appearance/ai-features",
+    "https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ",
+    "https://docs.github.com/en/rest/actions/artifacts",
+    "https://supabase.com/docs/guides/deployment/database-migrations"
+  ]
+}

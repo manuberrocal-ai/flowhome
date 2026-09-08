@@ -1,6 +1,7 @@
 ﻿---
 import { getCommerceData } from '../lib/commerce-data';
 import type { CommerceProduct } from '../lib/commerce-data';
+import { getComparisonFeatureLabel } from '../lib/comparison-insights';
 
 interface ComparisonProduct extends CommerceProduct {
   slug: string;
@@ -9,6 +10,8 @@ interface ComparisonProduct extends CommerceProduct {
   ownerRatingCount?: number;
   ratingLastChecked?: string;
   matter?: boolean;
+  thread?: boolean;
+  smartthingsIntegration?: boolean;
   alexaCompatible?: boolean;
   googleHomeCompatible?: boolean;
   appleHomeKit?: boolean;
@@ -16,39 +19,44 @@ interface ComparisonProduct extends CommerceProduct {
   category?: string;
   affiliateUrl?: string;
   compatibilityVerificationEnabled?: boolean;
+  compatibilityProvenance?: Record<string, string | null>;
+  compatibilityConditions?: Record<string, string | null>;
 }
 
 interface Props { products: ComparisonProduct[]; }
-type ComparisonRow = readonly [string, (product: ComparisonProduct) => string];
+type ComparisonRow = readonly [string, (product: ComparisonProduct) => string, string?];
 
 const { products } = Astro.props;
 const commerceBySlug = new Map(products.map((p) => [p.slug, getCommerceData(p)]));
-function compatibilityLabel(product: ComparisonProduct, field: 'matter' | 'alexaCompatible' | 'googleHomeCompatible' | 'appleHomeKit'): string {
-  if (product.compatibilityVerificationEnabled && product[field] === undefined) return 'Unknown';
-  return product[field] ? 'Yes' : 'No';
-}
 const rows: ComparisonRow[] = [
   ['Price', (p) => {
     const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
-    return `${c.priceLabel}: $${p.price}${c.priceLastCheckedLabel ? ` (checked ${c.priceLastCheckedLabel})` : ''}`;
+    return c.displayPrice === undefined ? 'Check price on Amazon' : `${c.priceLabel}: $${c.displayPrice} (checked ${c.priceLastCheckedLabel})`;
   }],
   ['Price source', (p) => {
     const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
-    return c.priceSourceLabel;
+    return c.isPriceFresh ? c.priceSourceLabel : 'Current authorized price unavailable';
   }],
-  ['Amazon customer rating', (p) => `${p.ownerRating} / 5`],
-  ['Amazon rating count', (p) => `${p.ownerRatingCount?.toLocaleString() ?? p.ownerRatingCount}`],
-  ['Rating checked', (p) => p.ratingLastChecked ?? 'Not recorded'],
-  ['Matter', (p) => compatibilityLabel(p, 'matter')],
-  ['Alexa', (p) => compatibilityLabel(p, 'alexaCompatible')],
-  ['Google Home', (p) => compatibilityLabel(p, 'googleHomeCompatible')],
-  ['Apple HomeKit', (p) => compatibilityLabel(p, 'appleHomeKit')],
-  ['Energy monitoring', (p) => p.energyMonitoring ? 'Yes' : 'No'],
+  ['Amazon customer rating', (p) => {
+    const c = commerceBySlug.get(p.slug)!;
+    return c.displayRating === undefined ? 'Check current ratings on Amazon' : `${c.displayRating} / 5`;
+  }],
+  ['Amazon rating count', (p) => commerceBySlug.get(p.slug)?.displayRatingCount?.toLocaleString() ?? 'Not currently verified'],
+  ['Rating checked', (p) => commerceBySlug.get(p.slug)?.isRatingFresh ? commerceBySlug.get(p.slug)!.ratingLastCheckedLabel ?? 'Not currently verified' : 'Not currently verified'],
+  ['Matter', (p) => getComparisonFeatureLabel(p, 'matter'), 'matter'],
+  ['Alexa', (p) => getComparisonFeatureLabel(p, 'alexaCompatible'), 'alexaCompatible'],
+  ['Google Home', (p) => getComparisonFeatureLabel(p, 'googleHomeCompatible'), 'googleHomeCompatible'],
+  ['Apple HomeKit', (p) => getComparisonFeatureLabel(p, 'appleHomeKit'), 'appleHomeKit'],
+  ['Thread role / integration', (p) => getComparisonFeatureLabel(p, 'thread'), 'thread'],
+  ['SmartThings role / integration', (p) => getComparisonFeatureLabel(p, 'smartthingsIntegration'), 'smartthingsIntegration'],
+  ['Energy monitoring', (p) => getComparisonFeatureLabel(p, 'energyMonitoring')],
 ];
 ---
-<div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-  <table class="compare-table min-w-full text-sm">
-    <caption>Side-by-side verified product data comparison; horizontal scrolling is available on narrow screens.</caption>
+<div class="space-y-3" data-comparison-table-section>
+  <p id="comparison-table-limits" class="text-sm leading-6 text-slate-600">Unverified yes/no entries are catalog records, not proof of support or incompatibility; check exact-model conditions. On narrow screens, scroll the table horizontally or focus it and use the arrow keys.</p>
+  <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" tabindex="0" role="region" aria-label="Scrollable product comparison" aria-describedby="comparison-table-limits">
+  <table class="compare-table min-w-full text-sm" aria-describedby="comparison-table-limits">
+    <caption class="sr-only">Side-by-side product catalog comparison</caption>
     <thead>
       <tr>
         <th scope="col">Feature</th>
@@ -56,11 +64,12 @@ const rows: ComparisonRow[] = [
       </tr>
     </thead>
     <tbody>
-      {rows.map(([label, getter]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td>{getter(product)}</td>)}</tr>)}
+      {rows.map(([label, getter, field]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td><span data-comparison-field={field} data-comparison-slug={field ? product.slug : undefined}>{getter(product)}</span>{field && <span data-comparison-source={field} data-comparison-slug={product.slug} class="mt-1 block text-xs text-slate-600"></span>}</td>)}</tr>)}
       <tr>
         <th scope="row" class="font-bold text-slate-700">Listing link</th>
-        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={product.discountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
+        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct ?? 0} data-cta-position="compare_table">Check on Amazon</a></td>)}
       </tr>
     </tbody>
   </table>
+  </div>
 </div>

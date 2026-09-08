@@ -9,10 +9,10 @@
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "/images/flowhome-favicon.png",
-      "sizes": "790x716",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }

@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import { generateProductSchema, generateBreadcrumbSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 import { getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../lib/product-art';
+import { getProductThumbnailSet } from '../lib/product-thumbnails.js';
 import { getCommerceData } from '../lib/commerce-data';
 
 interface Props {
@@ -17,8 +18,8 @@ const productImageKind = getProductImageKind(product);
 const sourceLabel = getProductImageSourceLabel(product);
 const commerce = getCommerceData(product);
 const hasDeal = commerce.showPromotion;
-const isHotDeal = hasDeal && Number(product.discountPct) >= 35;
-const rating = Number(product.ownerRating ?? 0);
+const isHotDeal = hasDeal && Number(commerce.displayDiscountPct) >= 35;
+const rating = commerce.displayRating ?? 0;
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
@@ -39,9 +40,10 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
 
 <BaseLayout
   title={`${product.name} - Review, Price & Specs | FlowHome`}
-  description={`${product.name} review: ${commerce.priceLabel.toLowerCase()} $${product.price}, Amazon customer rating ${product.ownerRating}/5, specs, pros, cons, and comparisons.`}
+  description={`${product.name}: specifications, setup considerations and comparisons. Check current price and availability on Amazon.`}
   image={productImage}
   type="product"
+  hasPageAffiliateDisclosure={true}
   canonicalURL={`https://flowhome.dev/product/${product.slug}/`}
 >
   <script type="application/ld+json" set:html={serializeJsonLd(productSchema)} />
@@ -63,10 +65,12 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
     </div>
     <aside class="space-y-6">
       <div class="sticky top-4 overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-xl shadow-slate-200/70">
-        <div class="bg-gradient-to-br from-white via-orange-50 to-blue-50 p-5">
+        <div class="bg-gradient-to-br from-white via-orange-50 to-blue-50 p-5" data-image-fallback-scope>
           <div class="flex h-64 items-center justify-center rounded-2xl bg-white/75 p-4 shadow-inner shadow-slate-100">
             <img
               src={productImage}
+              srcset={getProductThumbnailSet(product)}
+              sizes="240px"
               alt={productImageAlt}
               class="max-h-60 w-full object-contain"
               loading="lazy" decoding="async" fetchpriority="low"
@@ -75,26 +79,26 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
               data-fallback-src={fallbackImage}
             />
           </div>
-          <p class:list={["mt-2 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
+          <p class:list={["mt-2 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']} data-image-source-caption>{sourceLabel}</p>
         </div>
         <div class="space-y-4 p-6">
           <div>
             <p class="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Amazon listing link</p>
-            <h2 class="mt-2 text-2xl font-black leading-tight text-slate-950">{product.name}</h2>
+            <p class="mt-2 text-2xl font-black leading-tight text-slate-950">{product.name}</p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-4">
             <div class="flex items-start justify-between gap-3">
               <div>
                 <p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p>
-                <p class="mt-1 text-4xl font-black text-slate-950">${product.price}</p>
-                {hasDeal && <p class="text-slate-500 line-through">${product.originalPrice}</p>}
+                <p class="mt-1 text-2xl font-black text-slate-950">{commerce.displayPrice === undefined ? 'Check on Amazon' : `$${commerce.displayPrice}`}</p>
+                {hasDeal && <p class="text-slate-500 line-through">${commerce.displayOriginalPrice}</p>}
               </div>
               <div class="product-detail-side-stack">
-                {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{product.discountPct}%</span>}
-                <div class="product-detail-stars product-detail-stars--side" aria-label={`Amazon customer rating ${product.ownerRating} out of 5`}><span aria-hidden="true">{stars.map(({ index, state }) => <span data-star-index={index} class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{product.ownerRating}</strong></div>
+                {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{commerce.displayDiscountPct}%</span>}
+                {commerce.isRatingFresh && <div class="product-detail-stars product-detail-stars--side" aria-label={`Amazon customer rating ${commerce.displayRating} out of 5`}><span aria-hidden="true">{stars.map(({ index, state }) => <span data-star-index={index} class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{commerce.displayRating}</strong></div>}
               </div>
             </div>
-            <p class="mt-2 text-sm text-slate-500">Amazon customer rating from {product.ownerRatingCount?.toLocaleString()} ratings{product.ratingLastChecked ? `, checked ${product.ratingLastChecked}` : ''}. {commerce.priceLastCheckedLabel ? `Price last checked ${commerce.priceLastCheckedLabel}.` : ''}</p>
+            <p class="mt-2 text-sm text-slate-500">{commerce.isRatingFresh ? `Amazon customer rating from ${commerce.displayRatingCount?.toLocaleString()} ratings, checked ${commerce.ratingLastCheckedLabel}.` : 'Current Amazon customer rating not verified.'} {commerce.hasOffer ? `Price checked ${commerce.priceLastCheckedLabel}.` : ''}</p>
           </div>
           <a
             href={product.affiliateUrl}
@@ -104,7 +108,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
             data-fh-amazon-cta
             data-product-slug={product.slug}
             data-category={product.category}
-            data-discount={product.discountPct}
+            data-discount={commerce.displayDiscountPct ?? 0}
             data-cta-position="product_sidebar"
             aria-label={`Check ${product.name} price on Amazon`}
           >

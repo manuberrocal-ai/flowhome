@@ -1,0 +1,324 @@
+{
+  "recordedAt": "2026-09-05T15:14:31.069Z",
+  "task": "FH-07",
+  "scope": "Segundo corte: instalación Tapo C120 y Blink Outdoor 4; no cambio de identidad comercial",
+  "repository": "C:/AGENTES/Proyectos/flowhome",
+  "head": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "uncommitted": true,
+  "published": false,
+  "installation": {
+    "documented": 9,
+    "unknown": 19,
+    "total": 28
+  },
+  "verification": {
+    "directedTests": {
+      "passed": 18,
+      "failed": 0
+    },
+    "allTests": {
+      "passed": 653,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "passed",
+    "typecheck": {
+      "files": 241,
+      "errors": 0,
+      "warnings": 0,
+      "existingHints": 18
+    },
+    "build": {
+      "pages": 88
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "quality": {
+      "reviews": 15,
+      "passed": 15,
+      "notTruthCertification": true
+    },
+    "browser": {
+      "observedAt": "2026-09-05T15:14:31.069Z",
+      "checks": 38,
+      "passed": 38,
+      "clientExceptions": 0,
+      "widths": [
+        1440,
+        390
+      ],
+      "reducedMotion": true,
+      "externalRequests": "blocked",
+      "screenshotsInspected": 6,
+      "helper": "C:/Users/manub/Documents/Codex/2026-09-04/f/work/fh07b-browser-check.js"
+    },
+    "publicationText": {
+      "pages": 3,
+      "candidates": 6,
+      "triage": "Avatares compartidos ocultos con alt vacío explícito; estado autenticado no verificado"
+    },
+    "diff": {
+      "errors": 0,
+      "lfCrLfWarnings": 148
+    },
+    "nonInstallationFieldsPreserved": 28
+  },
+  "sourceAndBuildHashes": [
+    {
+      "path": "src/content/products/tapo-c120-security-camera.yaml",
+      "sha256": "3beb3321b5f557f986f37cf50aa7ab3a5dc2f006375ecd6b7982d1995400636e"
+    },
+    {
+      "path": "src/content/products/blink-outdoor-4.yaml",
+      "sha256": "7be434da3105989c6ca0e94ae037b3497ad82953bbd17405446d7491b20bfa91"
+    },
+    {
+      "path": "test/product-installation.test.mjs",
+      "sha256": "1cd880eaa5fb00809ae6a8127a1f5e7a5d9b230c46329b32194634a557921d51"
+    },
+    {
+      "path": "src/lib/product-installation.ts",
+      "sha256": "c396a2ddad10b6b68857f503abd503c52f86cbefbf4ee76528131c38ee165c5a"
+    },
+    {
+      "path": "src/lib/quiz-recommend.ts",
+      "sha256": "4ed16ea9f1581b65f237078fff858fdbb54ce3f37936d42f7542e32eccbe755c"
+    },
+    {
+      "path": "src/pages/quiz.astro",
+      "sha256": "4e4d6afbee774b8c90099f074b90be17234e16b19d26517242ca54114e4bdc57"
+    },
+    {
+      "path": "src/pages/product/[slug].astro",
+      "sha256": "faadb1a40fdcf532685a5d941e7fe2105e7d8f919bfe707887b7866b03759809"
+    },
+    {
+      "path": "dist/product/tapo-c120-security-camera/index.html",
+      "sha256": "2612f2c0447e802a7a7e1d9a4a982e217ae2c777843569da3da8b29814fac692"
+    },
+    {
+      "path": "dist/product/blink-outdoor-4/index.html",
+      "sha256": "e67c18d955024bb07f640cee286c80d02d52b4f83b0da579bc99bd0788206d84"
+    },
+    {
+      "path": "dist/quiz/index.html",
+      "sha256": "45709c2d1b01ca539e082cf94a152dd56449e274e1288003908ce30efd54b4f2"
+    }
+  ],
+  "catalogPreservation": [
+    {
+      "file": "aeotec-smartthings-hub.yaml",
+      "installation": false,
+      "nonInstallationSha256": "5310d15ecaef910c7732569cbbfeb9ae4f1ababc594f609e8070599e7a4807fb",
+      "sha256": "1f5ab86943db9d773b8cfd4d6dddd70594647753f14298d4e6259466c7563467",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "amazon-smart-thermostat.yaml",
+      "installation": true,
+      "nonInstallationSha256": "b5a5844644df29bca2889b3a72a3c25cb7b5634a68ad8f76df9a41fce678cbb3",
+      "sha256": "8df63a394a08e7c8937a1d9daf51c5c015bbcd412ba265332df48a1d07813a8f",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "aqara-hub-m2.yaml",
+      "installation": false,
+      "nonInstallationSha256": "e39a7836c0849ab95b2f457ef4e4d089301bc7902c1832604ec7b19e1c8c52ba",
+      "sha256": "6a14187952cc274c1007e7f7284d3b58556bc97ad5cfcc9fb7b7dda815b0ea6e",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "aqara-motion-sensor-p1.yaml",
+      "installation": false,
+      "nonInstallationSha256": "ee8406234f305fc2b2f426720d0d18520f79a5497285cd4f2d5964a0be88da72",
+      "sha256": "497b0cbb16c6062dcf80adda75cd712bba735eb681ad1be53a12eb00d3aa8ff6",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "arlo-essential-outdoor-camera.yaml",
+      "installation": false,
+      "nonInstallationSha256": "7f1af0e7ef74c25b65bca31b5d7c0046462d97e5388a861d027116656a81ce8c",
+      "sha256": "09e7d7cf43d953edde57d977121209d2a3729033353b46bc47090d159bacfe9f",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "august-wifi-smart-lock.yaml",
+      "installation": true,
+      "nonInstallationSha256": "d6b64e95fa64df2f4de227701efb51d23538c7855ae1e696396646f3e2592551",
+      "sha256": "4e2c4c413e68bba843aa282697d06716c261f1bd6891b2e8bcc15789da3d7c34",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "blink-outdoor-4.yaml",
+      "installation": true,
+      "nonInstallationSha256": "e63a944ce98d7f0601f8d8a556c5a22e314bb385230d4b1d6edb67f6cd2af36d",
+      "sha256": "7be434da3105989c6ca0e94ae037b3497ad82953bbd17405446d7491b20bfa91",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "echo-dot-5th-gen.yaml",
+      "installation": true,
+      "nonInstallationSha256": "d5102f6727f72186aecf8c89833600a0b7abe2b011000e4ac1061d19a3d6c5a8",
+      "sha256": "c9398b02e661398d2c7e1cab73096f95a101ced274c4f2f1ea191e8d3c26a0af",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "echo-show-8-3rd-gen.yaml",
+      "installation": false,
+      "nonInstallationSha256": "86aee72f669725d6a2bb90fa5cee627cb71b931f48ffc64bc01af65d0596e8ed",
+      "sha256": "fe21c4b30161c947226442bd970f3cda0671299f0a2d64b08871137ce495ea4f",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "ecobee-smart-thermostat-premium.yaml",
+      "installation": true,
+      "nonInstallationSha256": "6bfa4fcb448c6794dd6a560440cb1995b74758dea4b84a76f4148f48b98cb065",
+      "sha256": "f98026434a13ffb54e396d2388f593207f74fb1646cd5ea442bb07fd1534282c",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "eufy-security-indoor-cam-c120.yaml",
+      "installation": false,
+      "nonInstallationSha256": "25689c679d0819dd3ee13e4e8738e78ebc66be380ff01cedad279872278eb487",
+      "sha256": "b74d9b0282e0e2b58b32b441b4baea3ce9be7a355f3939492112dc7d0af4c4bf",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "google-nest-hub-2nd-gen.yaml",
+      "installation": true,
+      "nonInstallationSha256": "e0085e239ba1cc96cd5276510b516e77b0ef2a5a789dcfb13dd6c401c9212fa2",
+      "sha256": "673176984ba38c4e361f23e71580172f1aa54c404fddeed9819a63c31e79f2af",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "govee-rgbic-led-strip-lights.yaml",
+      "installation": false,
+      "nonInstallationSha256": "e0cfc8c423e62548b0d13bb6cddc7261b1d6b0ef52c4508868ca57eabff30688",
+      "sha256": "6a317ea117660b358fd6024986e90c03a0ff408a324f33a58c19ce321898994c",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "irobot-roomba-j7-plus.yaml",
+      "installation": false,
+      "nonInstallationSha256": "a8bd2dc2974cc2f301e6b6d98548eaca72bb4df685e17b4f5561b29f7a433249",
+      "sha256": "2b93114e5361cb7899dd97e995d1bc451e0eb28df05d4fc9ccd195dd1863f4c1",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "levoit-core-300s-air-purifier.yaml",
+      "installation": false,
+      "nonInstallationSha256": "11e46aa6a50bf07c40460543d7102c2827ad005c734a6193d3cd4a9d2db0b401",
+      "sha256": "c1ccebb4efbe4abd7816337fbfb43cadb82eca029945c2a4542a111b10136436",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "meross-smart-garage-door-opener.yaml",
+      "installation": false,
+      "nonInstallationSha256": "74cd3e86395e5399ff150ca666c1b66e6b5b98e42236d0ccf80c808175420b65",
+      "sha256": "94df35cd7fee0b64c77e09bfe988a4ab2dcd881a1947f9e2d032439b40d910a8",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "philips-hue-white-color-starter-kit.yaml",
+      "installation": false,
+      "nonInstallationSha256": "4671e560794dab253e2b2fd4d5323a107c700d9db983d52db392db302cb3d5dd",
+      "sha256": "cff47621ebb4a00a9b4dbd8d848c176f4f17b824eaafae7764476b74e3b3ec7e",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "ring-video-doorbell-wired.yaml",
+      "installation": false,
+      "nonInstallationSha256": "c8593cce57c3b3c3ef9f3869a72bf43bf4ef01a86c9e74bd0598ea0134a016be",
+      "sha256": "91136870d4396b5de3bba1084281d2f049a9878f72945da1293f67776c09211a",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "roborock-q5-plus.yaml",
+      "installation": false,
+      "nonInstallationSha256": "34c2e5ac4fba2ea80312ed2cb953524493bfbc8c16020deab625d8026862449c",
+      "sha256": "4290cb2c91f269b287bcd64832abb744c917cf3185959a990fe5873439b37b5e",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "schlage-encode-smart-wifi-deadbolt.yaml",
+      "installation": false,
+      "nonInstallationSha256": "89c9fa42fabc7184eda5c6fb4687a48b64f1a9bc5eb2a2f12ff389c45a948575",
+      "sha256": "5ad92660d1f13fda868b9d8056b4b356deab6182b3b1316fb0748b4fc60b23d0",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "switchbot-blind-tilt.yaml",
+      "installation": false,
+      "nonInstallationSha256": "38d6504844cb99df73985b834aadaeb9e6a6d1d495ab4968421324667657c420",
+      "sha256": "07601a079299c5c50d6f96c984963070885ac4d84a8a815a0fe4e79031e1d187",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "switchbot-hub-2.yaml",
+      "installation": false,
+      "nonInstallationSha256": "a9ebcf6363856a03f048384b1e9a49cdf7d5a05b34fa808814b5d371c4d6d8b0",
+      "sha256": "4d42d54ca9bec80dd7bbf56ce68ac627a75bbf97f2fcd785c27620e043eb7fa1",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "tapo-c120-security-camera.yaml",
+      "installation": true,
+      "nonInstallationSha256": "180bbe522f236c47f4b56c12c7869f9a0c32a8cf273ec070cea44788536fe2ae",
+      "sha256": "3beb3321b5f557f986f37cf50aa7ab3a5dc2f006375ecd6b7982d1995400636e",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "tp-link-kasa-smart-dimmer-hs220.yaml",
+      "installation": true,
+      "nonInstallationSha256": "91c8700476e4b6309b80b547cad00a2d6925f1514a359a574687c577f16db26a",
+      "sha256": "598dd84678cfc0c430355ac8071fe0ceebed3d7ed86642a8e4667cae924ffaae",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "tp-link-kasa-smart-light-switch-hs200.yaml",
+      "installation": true,
+      "nonInstallationSha256": "2fd316a87326069167bb5e81a083d402a02fb7b1c9a1a8c71ea8742b37a4fb80",
+      "sha256": "8571aaab565dad0a6a925efc5815c6620927de8118b0bb7670aa68b0534f8833",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "tp-link-kasa-smart-plug-mini.yaml",
+      "installation": false,
+      "nonInstallationSha256": "fcab437797a0691248074d2877b59f2e8a16e404852bcb713f31a2736daa75ff",
+      "sha256": "9ae46f0eb956f150e0b38e9be337231433bdc10c22fa4b827dc6a81de55fda33",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "wyze-bulb-color.yaml",
+      "installation": false,
+      "nonInstallationSha256": "26b1a862aaef44defcacc1dc5a7e1dfa939cce3adc79ba3c27936683c5b6b9b8",
+      "sha256": "2b2569dab05da3de6cbaf95c0cf0656a4040f97154cd1b09a9bd19871dadb50d",
+      "nonInstallationFieldsMatchBefore": true
+    },
+    {
+      "file": "yale-assure-lock-2-wifi.yaml",
+      "installation": false,
+      "nonInstallationSha256": "8dc7bcd1b6c68ce38307fcdf1907cc08265c2bd1ae1aabfb7d7174262f61a8d5",
+      "sha256": "25b53e45e70991328b26021e57538062bf24ca59e67303a02bcd37dc98c8f83c",
+      "nonInstallationFieldsMatchBefore": true
+    }
+  ],
+  "loop": {
+    "automationId": "flowhome-desarrollo-integral-con-juzgado",
+    "status": "ACTIVE",
+    "cadence": "hourly",
+    "futureActivationObserved": false,
+    "previousGoalObserved": "blocked after model capacity error",
+    "goalStatusNotModified": true
+  },
+  "limits": [
+    "FH-07 parcial 2/5 global; no cierre por este subconjunto",
+    "No se cotejó ASIN/bundle/hardware de cámaras",
+    "19 instalaciones unknown y booleanos/roles/firmware/servicios pendientes",
+    "Identidad Aqara P1 con destinos de compra oficiales divergentes; no migración",
+    "Pruebas locales, no API/cuentas/fotos reales ni QA completo de release"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "market": "US",
+  "note": "No product-specific commission classifications verified. The standard schedule alone does not classify an ASIN. Fill only after documented review; never infer from a FlowHome category or API access.",
+  "classifications": []
+}

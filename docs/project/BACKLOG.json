@@ -1,0 +1,489 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-09-08",
+  "purpose": "Backlog de la revisión integral. Las dependencias expresan orden de cierre; la preparación local puede avanzar en tareas bloqueadas externamente.",
+  "status_definitions": {
+    "hecho": "Entregable de esta tarea verificado; no significa proyecto completo.",
+    "pendiente": "Trabajo identificado y aún no cerrado.",
+    "parcial": "Hay evidencia previa y faltan criterios explícitos.",
+    "bloqueado_acceso": "La integración real requiere acceso del propietario; preparar contratos locales sigue permitido.",
+    "pendiente_aprobacion": "Preparar y verificar el paquete antes de solicitar publicación o activación concreta.",
+    "diferido": "Pospuesto por prioridad, datos o tiempo; no es un bloqueo del producto mínimo."
+  },
+  "priority_definition": {
+    "P0": "Necesario para una entrega segura o para desbloquear la ruta principal.",
+    "P1": "Necesario para operación y medición confiables.",
+    "P2": "Mejora con evidencia o tras la entrega inicial.",
+    "P3": "Expansión opcional; justificar antes de activar."
+  },
+  "tasks": [
+    {
+      "id": "FH-00",
+      "title": "Dirección y registro únicos",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [],
+      "execution": "local",
+      "owner_role": "Responsable del proyecto",
+      "acceptance": "Prompt, juzgado, evidencia y backlog enlazados; documentos históricos identificados como antecedentes.",
+      "evidence": "docs/project/PROMPT_MAESTRO.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-01",
+      "title": "Reconciliar V3 con main actual",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [
+        "FH-00"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "Copia recuperable del trabajo local; comparar semánticamente 17a4ec1, 50bad4d y d038534; preservar las correcciones V3 y el kit remoto; diff revisable y pruebas de la base integrada.",
+      "evidence": "docs/project/INTEGRACION_FH01_2026-09-05.md; merge 116e04df648d97cae9d4aae03f190e81109937ab; 451 hashes conservados; 597 pruebas, lint, tipos y build aprobados",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-02",
+      "title": "Unir versión, artefacto y despliegue",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "El mismo SHA verificado identifica checkout, artefacto y despliegue; hash del dist y rollback concreto; eliminar dependencia de main móvil durante la espera de aprobación.",
+      "evidence": "docs/project/CIERRE_FH02_2026-09-05.md; implementación aprobada localmente, 614 pruebas y ensayo de 159 archivos; circuito GitHub/Pages real pendiente de FH-13",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-03",
+      "title": "Separar configuración local, staging y producción",
+      "status": "parcial",
+      "priority": "P0",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "Matriz de entornos sin valores secretos; configuración ausente no selecciona silenciosamente un proyecto Supabase; estado real de cada entorno registrado; build valida variables necesarias.",
+      "evidence": "docs/project/AVANCE_FH03_2026-09-05.md; configuración aprobada localmente 3/5, 627 pruebas, seis escenarios de build y navegador. Cierre pendiente: dashboard Supabase requiere sesión del propietario; no repetir sin nueva evidencia. Continuar FH-07.",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-04",
+      "title": "Consolidar calidad y trabajos programados",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "Un control requerido estable por PR; mismo conjunto de validaciones reutilizado; QA por impacto; tareas diarias sin repetir builds idénticos; Actions fijadas y compatibles; controles de rama conservados.",
+      "evidence": "docs/project/FH04D_COBERTURA_IMPACTO_2026-09-06.md; docs/project/FH04C_VALIDACION_DIARIA_2026-09-06.md; docs/project/FH04B_ACTIONS_FIJADAS_2026-09-06.md; docs/project/FH04A_CONTROLES_COMPARTIDOS_2026-09-06.md",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-05",
+      "title": "Reconciliar vigencia comercial entre bloques",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Datos",
+      "acceptance": "Block12, Block8, UI y runbooks usan la misma política vigente; precios no aceptan siete días; probar antes, en y después de 24 h; política de retención ligada a permiso de fuente.",
+      "evidence": "docs/project/CIERRE_FH05_2026-09-05.md; APROBADO LOCAL 3/5: política compartida, límite exclusivo 24h, permiso histórico separado; 121 pruebas dirigidas, 634 completas, lint/tipos/build/SEO. Serving/purga reales siguen en FH-16/FH-18.",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-06",
+      "title": "Sustituir el scoring heredado de datos manuales",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Datos/Editorial",
+      "acceptance": "discover:products deja de aprobar por ratings/precios manuales vencidos; usa señales con cobertura y procedencia; retirar o aislar consumidores heredados; categorías de comisión comprobadas, faltantes null.",
+      "evidence": "docs/project/CIERRE_FH06_2026-09-05.md; APROBADO LOCAL 3/5: scoring compartido, datos manuales sin efecto, campos/consumidores ROI retirados, clasificación desconocida null; 644 pruebas, 30 controles de navegador, paridad y preservación 28/28.",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-07",
+      "title": "Cerrar identidad y hechos del catálogo US",
+      "status": "hecho",
+      "priority": "P0",
+      "depends_on": [
+        "FH-00"
+      ],
+      "execution": "lectura",
+      "owner_role": "Editorial",
+      "acceptance": "28/28 registros con modelo, generación, ASIN, bundle, mercado y fuente por afirmación o unknown explícito; firmware, bridge/controller, suscripción e instalación diferenciados.",
+      "evidence": "docs/project/CIERRE_FH07_2026-09-06.md; cierre documental con desconocidos explícitos, no publicación. 714 pruebas, tipos/lint/build/SEO, 28 HTML y 12 escenarios navegador. Continuar FH-08 y sus gates; seis tareas hechas/26 restantes.",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-08",
+      "title": "Cerrar revisión editorial de las 23 piezas",
+      "status": "hecho",
+      "priority": "P1",
+      "depends_on": [
+        "FH-07"
+      ],
+      "execution": "local",
+      "owner_role": "Editorial",
+      "acceptance": "15 reviews y 8 guías con necesidad propia, fuentes, método, autoría honesta y limitaciones; quitar o matizar afirmaciones sin evidencia; inventario de títulos y contenido coincide con lo visible.",
+      "evidence": "docs/project/CIERRE_FH08_2026-09-06.md",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-09",
+      "title": "Verificar imágenes fieles por modelo, procedencia y rendimiento",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-07"
+      ],
+      "execution": "lectura",
+      "owner_role": "Editorial/UX",
+      "acceptance": "Identificar fielmente cada modelo promocionado con imágenes autorizadas y procedencia verificable; las ilustraciones genéricas rotuladas de FH09B no satisfacen la solicitud actual. No inventar fotos exactas. Mantener fallback y geometría, optimizar peso y medir las plantillas actuales.",
+      "evidence": "docs/project/FH09AN_SITEMAP_RESENAS_2026-09-08.md; 28 ilustraciones específicas/0 genéricas normales. 83 rutas/166 escenarios; índice de reseñas corregido de 18.024.722 a 56.108 B DPR1. Seis escenarios posteriores, 37 pruebas y build88/SEO/lint correctos. Pendientes estados no indexables y consolidación editorial; paquetes concretos no certificados. Sin publicación ni cierre integral.",
+      "reviewed_at": "2026-09-08"
+    },
+    {
+      "id": "FH-10",
+      "title": "Comprobar atribución y consentimiento reales",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-03"
+      ],
+      "execution": "externo",
+      "owner_role": "Analítica",
+      "acceptance": "En entorno autorizado, aceptar produce un solo affiliate_click visible en DebugView; rechazar/revocar detiene analítica; documentar referidos de Google login y discrepancias sin alterar cuentas por inferencia.",
+      "evidence": "src/lib/analytics.ts; docs/audit/current-measurement-v3.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-11",
+      "title": "Probar autenticación y sincronización reales",
+      "status": "bloqueado_acceso",
+      "priority": "P1",
+      "depends_on": [
+        "FH-03"
+      ],
+      "execution": "externo",
+      "owner_role": "Ingeniería",
+      "acceptance": "Cuenta de prueba autorizada: Google/email, dos dispositivos, logout, cambio de cuenta, offline/reintento y RLS; prueba negativa de acceso cruzado; nunca bloquear compra/guardado anónimo.",
+      "evidence": "src/lib/cart-sync.ts",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-12",
+      "title": "Revalidar SEO y accesibilidad de la entrega A",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-01",
+        "FH-08"
+      ],
+      "execution": "local",
+      "owner_role": "SEO/UX",
+      "acceptance": "88 rutas o cambios justificados; 83 indexables según política; canonicals/status/schema/teclado/7 tamaños; producción comprobada tras publicación; INP y CWV de campo separados de Lighthouse.",
+      "evidence": "docs/project/FH12P_RENDIMIENTO_2026-09-08.md; matriz local 4 rutas×3 y portada corregida×3, LCP mediano2706→2407 ms; una muestra TBT301 ms preservada. 968 pruebas, doce escenarios responsive, build88/SEO/lint/tipos correctos. FH12N/O conserva 17 escenarios de navegación; FH12B siete tamaños. Candidato final, online y campo pendientes; no publicado.",
+      "reviewed_at": "2026-09-08"
+    },
+    {
+      "id": "FH-13",
+      "title": "Entregar versión editorial A",
+      "status": "pendiente_aprobacion",
+      "priority": "P0",
+      "depends_on": [
+        "FH-02",
+        "FH-03",
+        "FH-05",
+        "FH-06",
+        "FH-07",
+        "FH-08",
+        "FH-09",
+        "FH-12",
+        "FH-23"
+      ],
+      "execution": "externo",
+      "owner_role": "Propietario/Ingeniería",
+      "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
+      "evidence": "docs/project/FH13H_ENTREGA_LOCAL_2026-09-08.md; 134 casos/91HTTP sobre dist correctos, candidato FH13H nuevo con FH12N/O/P, build88/SEO y smoke390/1440 correctos, inventario421 cotejado. sourceSha null/publishable false. FH13I_RECUPERACION_2026-09-08.md revalida destino/controles y canónico dirty por lectura; tres rutas públicas200 difieren del candidato. Pendientes fuente definitiva, manifiesto, aceptación de rollback/aprobación y comprobación online del candidato. FH13J_CONTROLES_ENTREGA_2026-09-08.md añade rechazo de automatismos habilitados/ausentes en preflight y registro; 970 pruebas y controles generales correctos. Sin publicación.",
+      "reviewed_at": "2026-09-08"
+    },
+    {
+      "id": "FH-14",
+      "title": "Resolver cuenta y entrada Amazon existentes",
+      "status": "bloqueado_acceso",
+      "priority": "P0",
+      "depends_on": [],
+      "execution": "lectura",
+      "owner_role": "Propietario",
+      "acceptance": "Identificar cuenta/tienda aprobada y almacén/nombre de entrada; verificar habilitación sin revelar claves; distinguir Associates, Creators y acceso anterior; no repetir búsqueda agotada sin pista nueva.",
+      "evidence": "docs/audit/credential-location-audit-v3.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-15",
+      "title": "Validar las cuatro operaciones Amazon reales",
+      "status": "bloqueado_acceso",
+      "priority": "P1",
+      "depends_on": [
+        "FH-14"
+      ],
+      "execution": "externo",
+      "owner_role": "Ingeniería/Datos",
+      "acceptance": "Llamadas acotadas de SearchItems, GetItems, GetVariations y GetBrowseNodes con contrato actual, identidad exacta y redacción de secretos; documentar cuotas, errores, permisos y campos realmente disponibles.",
+      "evidence": "scripts/lib/amazon-creators.mjs",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-16",
+      "title": "Diseñar almacenamiento y entrega de datos vigentes",
+      "status": "parcial",
+      "priority": "P0",
+      "depends_on": [
+        "FH-05"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería/Datos",
+      "acceptance": "Decisión revisable que prioriza infraestructura existente; define dato permitido, TTL, purga, cachés, borrado y fallos; HTML y clientes nunca conservan oferta vencida; no basar caducidad en cron.",
+      "evidence": "docs/project/FH16C_LISTA_SIN_PRECIOS_2026-09-08.md; precios heredados omitidos de normalización/migración, identidad conservada; 958 pruebas y navegador aislado correctos. FH16A/B conserva barrera estática. Endpoint efímero, permisos/cuotas y transporte real pendientes; sin activación.",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-17",
+      "title": "Persistir cola e idempotencia entre ejecuciones",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-03",
+        "FH-16"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "Adaptador durable mínimo probado con dos runners, reintento y reinicio; identidad y payload, revisión, estado y auditoría sobreviven; expiración independiente de aprobación.",
+      "evidence": "docs/project/FH17K_AUDITORIA_APROVISIONAMIENTO_2026-09-08.md; 013 registra provisión con baseline/antes/después/sesión, dos suites SQL pasan, consumidor real probado con UID sintético sin duplicar auditoría. Rollback conserva suspensión, seis baselines y dos decisiones previas. FH17I/J cubren concurrencia/reinicio/carreras. Pendientes alta aprobada/evidencia revisada, integración y Auth real; 012/013 siguen drafts.",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-18",
+      "title": "Conectar adquisición, validación y oferta visible",
+      "status": "bloqueado_acceso",
+      "priority": "P1",
+      "depends_on": [
+        "FH-15",
+        "FH-16",
+        "FH-17"
+      ],
+      "execution": "externo",
+      "owner_role": "Ingeniería/Datos",
+      "acceptance": "Una oferta real recorre proveedor→validación→revisión→serving; expira también en caché/HTML/navegador; caída de API oculta datos inválidos; permisos de fuente confirmados antes de persistir.",
+      "evidence": "src/lib/blocks/block8/",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-19",
+      "title": "Activar y observar revisión diaria",
+      "status": "pendiente_aprobacion",
+      "priority": "P1",
+      "depends_on": [
+        "FH-04",
+        "FH-17",
+        "FH-21"
+      ],
+      "execution": "externo",
+      "owner_role": "Propietario/Operaciones",
+      "acceptance": "Primera corrida remota observada y repetición sin duplicados; horario y kill switch; Amazon sigue en dry-run si FH-15 no está cerrado; fallos notifican sólo al destino autorizado; ninguna autopublicación.",
+      "evidence": ".github/workflows/automation.yml",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-20",
+      "title": "Suministrar grafo real de compatibilidad",
+      "status": "parcial",
+      "priority": "P2",
+      "depends_on": [
+        "FH-07"
+      ],
+      "execution": "local",
+      "owner_role": "Editorial/Datos",
+      "acceptance": "Fuente revisada reemplaza proveedor null; relaciones por dispositivo/acción/mercado/firmware; unknown ante contradicción/caducidad; probar quiz, producto, comparación y alternativas.",
+      "evidence": "docs/project/FH20AR_APLICABILIDAD_VERSIONES_2026-09-07.md; restricciones de versión no se generalizan en consultas de producto, 895 pruebas aprobadas; selección/contexto físico real, ocultación real, cuentas/CDN, aprobación y activación pendientes",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-21",
+      "title": "Observabilidad y rollback verificables",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-02"
+      ],
+      "execution": "local",
+      "owner_role": "Operaciones",
+      "acceptance": "Monitor mínimo de disponibilidad/CTA y errores con responsable y destino definido; prueba de incidente y restauración; SLO calibrado a capacidad real, sin tiempos de respuesta ficticios.",
+      "evidence": "docs/project/FH21B_MONITOR_HTTP_2026-09-06.md; tres GET públicos y ensayo HTTP local 503/timeout/restauración; 762 pruebas; responsable/alertas/SLO/activación y recuperación real pendientes",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-22",
+      "title": "Línea de base única con ventanas comparables",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-10"
+      ],
+      "execution": "lectura",
+      "owner_role": "Analítica",
+      "acceptance": "Registrar fuente, fecha de extracción, ventana, denominador, versión, país/dispositivo y consentimiento; conservar julio y septiembre; obtener Bing al iniciar sesión; clicks no equivalen a ventas.",
+      "evidence": "docs/audit/current-measurement-v3.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-23",
+      "title": "Resolver inventario de dependencias y PRs abiertas",
+      "status": "hecho",
+      "priority": "P1",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Ingeniería",
+      "acceptance": "Auditoría posterior utilizable o cada excepción evaluada; conciliar fast-uri local 3.1.7 con PR #11; revisar siete PRs observadas por compatibilidad, sin duplicar parches ni fusionar automáticamente.",
+      "evidence": "docs/project/CIERRE_FH23_2026-09-06.md; siete PRs revisadas sin fusionar; npm audit completo 0 vulnerabilidades; fast-uri conciliado; incompatibilidad TS7 documentada; 737 pruebas aprobadas",
+      "reviewed_at": "2026-09-06"
+    },
+    {
+      "id": "FH-24",
+      "title": "Integrar gobierno remoto y decisión de licencia",
+      "status": "parcial",
+      "priority": "P1",
+      "depends_on": [
+        "FH-01"
+      ],
+      "execution": "local",
+      "owner_role": "Propietario/Ingeniería",
+      "acceptance": "Conservar AGENTS, SECURITY, CONTRIBUTING, CODEOWNERS, Dependabot, CodeQL y plantilla existentes en main; verificar reglas remotas; documentar licencia explícita del titular sin inventar cesión.",
+      "evidence": "docs/project/INTEGRACION_FH01_2026-09-05.md; kit remoto integrado sin cambios; protecciones remotas y decisión de licencia pendientes",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-25",
+      "title": "Medir sostenibilidad económica",
+      "status": "pendiente",
+      "priority": "P2",
+      "depends_on": [
+        "FH-22"
+      ],
+      "execution": "lectura",
+      "owner_role": "Propietario/Analítica",
+      "acceptance": "Costes reales de hosting, ejecuciones, proveedores y edición; comisiones confirmadas netas de devoluciones; contribución y esfuerzo por contenido con periodo común; sin usar ticket×tasa como ROI probado.",
+      "evidence": "docs/INTERNAL_PRODUCT_SELECTION.md; estimadores heredados retirados en FH-06; ingresos, devoluciones y costes reales pendientes.",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-26",
+      "title": "Evaluar CRO con tráfico suficiente",
+      "status": "diferido",
+      "priority": "P2",
+      "depends_on": [
+        "FH-13",
+        "FH-22"
+      ],
+      "execution": "tiempo",
+      "owner_role": "Producto/Analítica",
+      "acceptance": "Hipótesis, métrica primaria, guardrails, tamaño mínimo calculado y ventana comparable; pruebas de usabilidad pueden empezar antes; no usar 30 eventos como garantía de potencia.",
+      "evidence": "src/lib/experiments.ts",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-27",
+      "title": "Activar lifecycle sólo con necesidad demostrada",
+      "status": "diferido",
+      "priority": "P3",
+      "depends_on": [
+        "FH-11",
+        "FH-22"
+      ],
+      "execution": "externo",
+      "owner_role": "Propietario/Ingeniería",
+      "acceptance": "Proveedor y dominio elegidos, consentimiento y baja, DNS/retención, cuota, entrega y reintentos verificados con destinatarios de prueba autorizados; medir beneficio antes de escalar.",
+      "evidence": "supabase/functions/_shared/email-provider.js",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-28",
+      "title": "Probar un canal de adquisición adicional",
+      "status": "diferido",
+      "priority": "P3",
+      "depends_on": [
+        "FH-08",
+        "FH-22",
+        "FH-25"
+      ],
+      "execution": "externo",
+      "owner_role": "Editorial/Propietario",
+      "acceptance": "Un canal con público y formato definidos, derechos y aprobación; API/políticas revalidadas al activarse; coste y tráfico cualificado medidos; descartar expansión sin señal.",
+      "evidence": "src/lib/blocks/block11/",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-29",
+      "title": "Evaluar Canadá u otros comercios",
+      "status": "diferido",
+      "priority": "P3",
+      "depends_on": [
+        "FH-07",
+        "FH-22",
+        "FH-25"
+      ],
+      "execution": "externo",
+      "owner_role": "Propietario",
+      "acceptance": "Demanda y coste justifican mercado/retailer; contratos, moneda, ASIN/SKU, disponibilidad, privacidad y localización propios; hreflang sólo con equivalentes reales.",
+      "evidence": "docs/PROJECT_PLAN.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-30",
+      "title": "Revisiones D30, D60 y D90",
+      "status": "diferido",
+      "priority": "P2",
+      "depends_on": [
+        "FH-13",
+        "FH-22"
+      ],
+      "execution": "tiempo",
+      "owner_role": "Producto/Analítica",
+      "acceptance": "D0 fechado en la entrega medida; fuentes/segmentos comparables, sesgos e intervalos; decidir continuar/revisar/diferir/parar sin garantía de ingresos; corregir fallos sin esperar D90.",
+      "evidence": "docs/BLOCK12_90_DAY_GATE.md",
+      "reviewed_at": "2026-09-05"
+    },
+    {
+      "id": "FH-31",
+      "title": "Liberar ofertas conectadas B",
+      "status": "pendiente_aprobacion",
+      "priority": "P1",
+      "depends_on": [
+        "FH-13",
+        "FH-18",
+        "FH-19",
+        "FH-21"
+      ],
+      "execution": "externo",
+      "owner_role": "Propietario/Ingeniería",
+      "acceptance": "Artefacto y aprobación específicos de la integración conectada; pruebas de caducidad/end-to-end y caída; observar primera operación; autorizar por separado cualquier envío o canal.",
+      "evidence": "docs/data/amazon-integration-v3.md",
+      "reviewed_at": "2026-09-05"
+    }
+  ]
+}

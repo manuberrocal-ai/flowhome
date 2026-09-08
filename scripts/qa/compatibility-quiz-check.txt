@@ -1,0 +1,44 @@
+async page => {
+  const checks = []; let calls = 0; let short = false;
+  const check = (ok, text) => { if (!ok) throw Error(text); checks.push(text); };
+  await page.route('**/*', route => {
+    const url = route.request().url();
+    if (!url.startsWith('http://127.0.0.1:')) return route.abort();
+    if (url.includes('/compatibility/live?')) { calls++; if (short) return route.continue({ url: url.replace('/compatibility/live?', '/compatibility/short?') }); }
+    return route.continue();
+  });
+  const origin = page.url().split('/').slice(0, 3).join('/');
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); calls = 0; short = false;
+    const query = '?goal=security&ecosystem=alexa&budget=open&installation=advanced&extra=open';
+    await page.goto(origin + '/real-quiz/' + query);
+    await page.locator('#quiz-results').waitFor({ state: 'visible' });
+    check(calls === 0, 'No automatic requests at ' + width);
+    check(await page.locator('#quiz-ecosystem-notice').isVisible(), 'Missing evidence explained at ' + width);
+    const button = page.locator('[data-quiz-evidence-refresh]');
+    await button.focus(); await page.keyboard.press('Enter');
+    await page.waitForFunction(() => !document.querySelector('[data-quiz-evidence-refresh]').disabled && document.querySelector('#quiz-ecosystem-notice').hidden);
+    check(calls === 28, 'Explicit refresh checks all 28 identities at ' + width);
+    check((await page.locator('[data-quiz-compatibility]').allTextContents()).some(text => text.includes('Evidence-backed signal')), 'Real cards show evidence at ' + width);
+    check(page.url().endsWith(query), 'Answers retained after refresh at ' + width);
+    await page.locator('#quiz-edit').focus();
+    await page.screenshot({ path: '.playwright-cli/flowhome-quiz-live-' + width + '.png' });
+    await page.context().setOffline(true);
+    try {
+      await page.waitForFunction(() => !document.querySelector('#quiz-ecosystem-notice').hidden && [...document.querySelectorAll('[data-quiz-compatibility]')].every(el => !el.textContent.includes('Evidence-backed signal')));
+      check(await page.evaluate(() => document.activeElement.id === 'quiz-edit'), 'Evidence withdrawal does not steal focus at ' + width);
+      check(page.url().endsWith(query), 'Offline retains all answers at ' + width);
+      check(!(await page.locator('#quiz-results-cards').innerText()).includes('evidence-backed signal'), 'Derived reasons withdrawn at ' + width);
+      check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No page overflow at ' + width);
+      await page.screenshot({ path: '.playwright-cli/flowhome-quiz-withdrawn-' + width + '.png' });
+    } finally { await page.context().setOffline(false); }
+    check(await page.locator('#quiz-ecosystem-notice').isVisible(), 'Reconnect does not restore evidence at ' + width);
+    check(calls === 28, 'Reconnect does not automatically fetch at ' + width);
+    short = true; await button.click();
+    await page.waitForFunction(() => !document.querySelector('[data-quiz-evidence-refresh]').disabled && document.querySelector('#quiz-ecosystem-notice').hidden);
+    await page.waitForFunction(() => !document.querySelector('#quiz-ecosystem-notice').hidden && [...document.querySelectorAll('[data-quiz-compatibility]')].every(el => !el.textContent.includes('Evidence-backed signal')));
+    check(page.url().endsWith(query), 'Actual expiry recomputes cards without changing answers at ' + width);
+    check(await page.locator('.quiz-result-card').count() <= 4, 'Shortlist remains bounded at ' + width);
+  }
+  return { checks: checks.length, results: checks };
+}

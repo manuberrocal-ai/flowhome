@@ -13,6 +13,7 @@ test('deal cards remove promotional UI when their build-time end date has passed
   assert.match(card, /data-deal-end=\{statusInfo\.endIso/);
   assert.match(card, /getDealStatus\(\{ end: card\.dataset\.dealEnd \}, new Date\(\)\)\.status !== 'expired'/);
   assert.match(card, /data-deal-promotion/);
-  assert.match(card, /Historical deal price/);
+  assert.match(card, /Current price unavailable/);
+  assert.match(card, /price\.textContent = 'Check price on Amazon'/);
   assert.match(card, /Check current/);
 });

@@ -1,5 +1,6 @@
 /** Pure, deterministic resilience contracts for Block 10 workers. */
 import { buildIdempotencyKey } from '../block8/ingestion.ts';
+import { canonicalContent, hasLegacyIdempotencyKeys } from '../block8/idempotency.ts';
 import { decideRetry } from '../block8/retry.ts';
 import { RETRY_DEFAULTS } from '../block8/domain.ts';
 import { strictUtc, type HumanApproval } from './domain.ts';
@@ -30,8 +31,10 @@ export function createJob<T>(input: JobInput<T>): QueueJob<T> {
 }
 
 export function enqueueJob<T>(jobs: readonly QueueJob<T>[], input: JobInput<T>): { job: QueueJob<T>; status: 'enqueued' | 'duplicate' } {
+  if (hasLegacyIdempotencyKeys(jobs.map((job) => job.idempotencyKey))) throw new Error('legacy_idempotency_migration_required');
   const candidate = createJob(input);
   const duplicate = jobs.find((job) => job.idempotencyKey === candidate.idempotencyKey);
+  if (duplicate && canonicalContent(duplicate.payload) !== canonicalContent(candidate.payload)) throw new Error('idempotency_content_conflict');
   return duplicate ? { job: duplicate, status: 'duplicate' } : { job: candidate, status: 'enqueued' };
 }
 

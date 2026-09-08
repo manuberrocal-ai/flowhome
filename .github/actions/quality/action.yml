@@ -1,0 +1,29 @@
+name: FlowHome quality gates
+description: Shared mandatory checks for pull requests and manual verification; no publication.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: npm audit --omit=dev --audit-level=moderate
+    - shell: bash
+      run: npm run diff-check
+    - shell: bash
+      run: npm test
+    - shell: bash
+      run: npm run lint
+    - shell: bash
+      run: npm run typecheck
+    - shell: bash
+      run: npm run quality:check
+      env:
+        QUALITY_REPORT_PATH: ${{ runner.temp }}/flowhome-quality-report.json
+    - shell: bash
+      run: npm run links:check
+      env:
+        LINK_CHECK_REPORT_PATH: ${{ runner.temp }}/flowhome-link-report.json
+    - shell: bash
+      run: npm run build
+    - shell: bash
+      run: npm run seo:audit
+      env:
+        SEO_AUDIT_REPORT_PATH: ${{ runner.temp }}/flowhome-seo-report.json

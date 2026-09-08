@@ -1,17 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
 import ProductLayout from '../../layouts/ProductLayout.astro';
+import { getProductDetailSet } from '../../lib/product-thumbnails';
 import PriceHistory from '../../components/PriceHistory.astro';
 import RelatedProducts from '../../components/RelatedProducts.astro';
 import StickyCTA from '../../components/StickyCTA.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getCategoryLabel, getProductImage, getProductImageAlt, getProductImageKind, getProductImageSourceLabel, getProductFallbackImage } from '../../lib/product-art';
 import { getCommerceData } from '../../lib/commerce-data';
-import { getProductFeatures } from '../../lib/product-specs';
+import { getProductFeatures, getEcosystemFeatures } from '../../lib/product-specs';
+import { getInstallationEvidence, INSTALLATION_LABELS } from '../../lib/product-installation';
+import { getIdentityRows } from '../../lib/product-identity';
 import { getEditorialMetadata, EDITORIAL_TEAM } from '../../lib/editorial';
 import { prepareVerifiedProductCompatibility } from '../../lib/blocks/block9/compatibility-adapter.ts';
 import { forCompatibilitySurface, getCompatibilityEnvironment } from '../../lib/blocks/block9/runtime.ts';
 import { selectVerifiedDirectAlternatives } from '../../lib/product-taxonomy.ts';
+import { serializeJsonLd } from '../../lib/json-ld.js';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -29,14 +33,12 @@ const productImageAlt = getProductImageAlt(data);
 const productImageKind = getProductImageKind(data);
 const sourceLabel = getProductImageSourceLabel(data);
 const categoryLabel = getCategoryLabel(data.category);
-const categoryFeatures = getProductFeatures(data);
-const featureList = categoryFeatures.map((f) => f.label + ': ' + f.value);
-const catalogConnect = [data.wifi && 'Wi-Fi', data.bluetooth && 'Bluetooth', data.zigbee && 'Zigbee', data.matter && 'Matter'].filter(Boolean);
-const catalogVoice = [data.alexaCompatible && 'Alexa', data.googleHomeCompatible && 'Google Home', data.appleHomeKit && 'Apple HomeKit'].filter(Boolean);
+const installation = getInstallationEvidence(data);
+const identityRows = getIdentityRows(data);
 const commerce = getCommerceData(data);
 const hasDeal = commerce.showPromotion;
-const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
-const rating = Number(data.ownerRating ?? 0);
+const isHotDeal = hasDeal && Number(commerce.displayDiscountPct) >= 35;
+const rating = commerce.displayRating ?? 0;
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
@@ -44,7 +46,7 @@ const starStates = Array.from({ length: 5 }, (_, index) => {
   const starNumber = index + 1;
   return starNumber <= fullStars ? 'full' : (starNumber === fullStars + 1 && hasHalfStar ? 'half' : (starNumber <= roundedStars ? 'full' : 'empty'));
 });
-const editorial = getEditorialMetadata({ authorId: data.authorId, reviewedBy: data.reviewedBy, humanReviewedDate: data.humanReviewedDate, sources: data.sources });
+const editorial = getEditorialMetadata({ authorId: data.authorId, reviewedBy: data.reviewedBy, humanReviewedDate: data.humanReviewedDate, sources: [...(data.sources ?? []), ...(installation?.sources ?? [])] });
 
 const verifiedCompatibility = prepareVerifiedProductCompatibility(
   data,
@@ -53,29 +55,26 @@ const verifiedCompatibility = prepareVerifiedProductCompatibility(
 );
 const verifiedProduct = verifiedCompatibility.product;
 
-// Surface connectivity/voice only when the catalog boolean survived verification.
-// When the flag is off this is identical to the legacy listing (verifiedProduct === data booleans).
-const verifiedConnect = [verifiedProduct.wifi === true && 'Wi-Fi', verifiedProduct.bluetooth === true && 'Bluetooth', verifiedProduct.zigbee === true && 'Zigbee', verifiedProduct.matter === true && 'Matter'].filter(Boolean);
-const verifiedVoice = [verifiedProduct.alexaCompatible === true && 'Alexa', verifiedProduct.googleHomeCompatible === true && 'Google Home', verifiedProduct.appleHomeKit === true && 'Apple HomeKit'].filter(Boolean);
-const connectivity = compatibilityEnv.enabled && compatibilityEnv.graph
-  ? (verifiedConnect.join(', ') || 'Check listing')
-  : (catalogConnect.join(', ') || 'Check listing');
-const voicePlatforms = compatibilityEnv.enabled && compatibilityEnv.graph
-  ? (verifiedVoice.join(', ') || 'Check listing')
-  : (catalogVoice.join(', ') || 'Check listing');
+const categoryFeatures = getProductFeatures(verifiedProduct);
+const featureList = categoryFeatures;
+const ecosystemFeatures = getEcosystemFeatures(verifiedProduct);
+const ecosystemFields = new Set(ecosystemFeatures.map((feature) => feature.sourceField));
+const specifications = categoryFeatures.filter((feature) => !ecosystemFeatures.some((entry) => entry.label === feature.label));
 const verifiedNotices = verifiedCompatibility.notices;
 ---
 <ProductLayout product={data}>
-  <article class="space-y-8">
+  <article class="space-y-8" data-compatibility-product={data.slug}>
     <AffiliateDisclosure />
 
     <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
       <div class="grid gap-0 md:grid-cols-[0.95fr_1.05fr] md:items-stretch">
-        <div class="relative flex min-h-96 flex-col justify-center bg-gradient-to-br from-white via-blue-50 to-orange-50 p-6">
+        <div class="relative flex min-h-96 flex-col justify-center bg-gradient-to-br from-white via-blue-50 to-orange-50 p-6 md:justify-start md:pt-16" data-image-fallback-scope>
           <span class="absolute left-5 top-5 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</span>
           <div class="flex min-h-80 items-center justify-center rounded-3xl bg-white/75 p-5 shadow-inner shadow-slate-100">
             <img
               src={productImage}
+              srcset={getProductDetailSet(data)}
+              sizes="320px"
               alt={productImageAlt}
               class="max-h-80 w-full object-contain drop-shadow-sm"
               width="500"
@@ -86,23 +85,23 @@ const verifiedNotices = verifiedCompatibility.notices;
               data-fallback-src={fallbackImage}
             />
           </div>
-          <p class:list={["mt-3 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']}>{sourceLabel}</p>
+          <p class:list={["mt-3 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']} data-image-source-caption>{sourceLabel}</p>
         </div>
         <div class="flex flex-col justify-center p-6 md:p-8">
           <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-700">{data.brand} - {categoryLabel}</p>
           <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{data.name}</h1>
-          <p class="mt-4 text-lg leading-relaxed text-slate-600">A practical FlowHome buying profile with compatibility notes, deal context, and the safest Amazon purchase path.</p>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">A FlowHome buying profile with catalog specifications, setup checks and a direct link to the Amazon listing.</p>
           <div class="mt-5 flex flex-wrap gap-2">
-            {featureList.map((feature) => <span class="product-detail-chip product-detail-chip--feature"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.32a1 1 0 0 1-1.42.006L3.29 9.28a1 1 0 0 1 1.42-1.41l4.04 4.04 6.54-6.61a1 1 0 0 1 1.414-.01Z" clip-rule="evenodd" /></svg>{feature}</span>)}
-            {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{data.discountPct}% deal</span>}
+            {featureList.map((feature) => <span class="product-detail-chip product-detail-chip--neutral max-w-full !leading-5" data-product-feature>{feature.label}: <span data-compatibility-value={ecosystemFields.has(feature.sourceField) ? feature.sourceField : undefined}>{feature.value}</span></span>)}
+            {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{commerce.displayDiscountPct}% deal</span>}
             {featureList.length === 0 && <span class="product-detail-chip product-detail-chip--neutral">Core smart-home profile</span>}
           </div>
           <div class="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
-             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p><p class="mt-1 text-2xl font-black text-slate-950">${data.price}</p>{hasDeal && <p class="mt-1 text-sm font-bold text-slate-400 line-through">${data.originalPrice}</p>}{commerce.priceLastCheckedLabel && <p class="mt-1 text-xs text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</p>}</div>
-             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon customer rating</p><div class="product-detail-stars mt-1" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}><span aria-hidden="true">{starStates.map((state) => <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{data.ownerRating}</strong></div><p class="mt-1 text-xs text-slate-500">Checked {data.ratingLastChecked}</p></div>
-             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon rating count</p><p class="mt-1 text-2xl font-black text-slate-950">{data.ownerRatingCount?.toLocaleString()}</p></div>
+             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p>{commerce.displayPrice !== undefined && <p class="mt-1 text-2xl font-black text-slate-950">${commerce.displayPrice}</p>}{hasDeal && <p class="mt-1 text-sm font-bold text-slate-400 line-through">${commerce.displayOriginalPrice}</p>}{commerce.isPriceFresh && <p class="mt-1 text-xs text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</p>}</div>
+             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon customer rating</p>{commerce.isRatingFresh ? <><div class="product-detail-stars mt-1" aria-label={`Amazon customer rating ${commerce.displayRating} out of 5`}><span aria-hidden="true">{starStates.map((state) => <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{commerce.displayRating}</strong></div><p class="mt-1 text-xs text-slate-500">Checked {commerce.ratingLastCheckedLabel}</p></> : <p class="mt-1 text-sm text-slate-600">Check current ratings on Amazon.</p>}</div>
+             <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon rating count</p><p class="mt-1 text-sm font-semibold text-slate-600">{commerce.displayRatingCount?.toLocaleString() ?? 'Not currently verified'}</p></div>
           </div>
-          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={data.discountPct} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+          <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={commerce.displayDiscountPct ?? 0} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
            <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
            <p class="mt-3 text-sm text-slate-600"><strong>By:</strong> <a href={editorial.author.profileUrl} class="text-blue-700 underline">{editorial.author.name}</a> ({editorial.author.role})</p>
            <p class="mt-1 text-xs text-slate-500">Product data updated {data.dateUpdated}. This is not a human review.</p>
@@ -112,24 +111,65 @@ const verifiedNotices = verifiedCompatibility.notices;
 
     <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <h2>Who should buy it?</h2>
-       <p>{data.name} may fit buyers comparing a {categoryLabel.toLowerCase()} who need to check the documented connectivity, voice-platform, price snapshot, and rating context below. Confirm the product listing and household compatibility before buying.</p>
-      <h2>Key specifications</h2>
-      <p class="text-sm text-slate-600">FlowHome only shows specs that are documented in our product data and relevant to {categoryLabel.toLowerCase()}. Specs not listed here are not verified for this category.</p>
+       <p>{data.name} may fit buyers comparing a {categoryLabel.toLowerCase()} who need to check the documented connectivity and voice-platform context below. Confirm the current price, customer ratings, and household compatibility on the product listing before buying.</p>
+      <h2 id="product-specifications" class="scroll-mt-24">Key specifications</h2>
+      <p class="text-sm text-slate-600">These are category-relevant catalog entries, not independent verification of each feature. Check the model-specific sources and limitations below; missing information remains unverified.</p>
       <ul class="mt-2">
-        <li><strong>{commerce.priceLabel}:</strong> {data.price}{commerce.priceLastCheckedLabel && (` (price last checked {commerce.priceLastCheckedLabel})`)}</li>
-        <li><strong>Amazon customer rating:</strong> {data.ownerRating} out of 5 from {data.ownerRatingCount?.toLocaleString()} ratings (checked {data.ratingLastChecked})</li>
-        <li><strong>Connectivity:</strong> {connectivity}</li>
-        <li><strong>Voice platforms:</strong> {voicePlatforms}</li>
-        {categoryFeatures.map((feature) => <li><strong>{feature.label}:</strong> {feature.value}</li>)}
+        <li><strong>Price:</strong> {commerce.displayPrice !== undefined ? `$${commerce.displayPrice} (checked ${commerce.priceLastCheckedLabel})` : 'Check price on Amazon'}</li>
+        <li><strong>Amazon customer rating:</strong> {commerce.isRatingFresh ? `${commerce.displayRating} out of 5 from ${commerce.displayRatingCount?.toLocaleString()} ratings (checked ${commerce.ratingLastCheckedLabel})` : 'Check current ratings on Amazon'}</li>
+        {specifications.map((feature) => <li data-product-spec><strong>{feature.label}:</strong> {feature.value}</li>)}
       </ul>
 
+      <section id="compatibility-checks" class="scroll-mt-24" aria-labelledby="compatibility-checks-title">
+        <h2 id="compatibility-checks-title">Connectivity and platform checks</h2>
+        <p class="text-sm text-slate-600">An unverified yes/no is a catalog record, not proof of support or incompatibility. Evidence-backed signals apply only to the supported function and conditions; they do not establish native connectivity, controller or bridge roles, firmware, or included hardware.</p>
+        <ul>{ecosystemFeatures.map((feature) => <li data-product-compatibility><strong>{feature.label}:</strong> <span data-compatibility-value={feature.sourceField}>{feature.value}</span><span data-compatibility-source={feature.sourceField} class="block text-sm text-slate-600"></span></li>)}</ul>
+        <div data-compatibility-controls hidden>
+          <p data-compatibility-status role="status" class="text-sm text-slate-600"></p>
+          <button data-compatibility-refresh type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-base font-semibold text-slate-900 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Refresh evidence</button>
+          <ul data-compatibility-notices hidden class="text-sm text-slate-700"></ul>
+        </div>
+        <p class="text-sm text-slate-600">Read the model-specific compatibility conditions and sources below before choosing a setup.</p>
+      </section>
+
+      {['security-camera', 'video-doorbell'].includes(data.category) && <section id="service-plan-checks" class="scroll-mt-24" aria-labelledby="service-plan-title">
+        <h2 id="service-plan-title">Service plan checks</h2>
+        <p>Subscription requirements are not yet verified by feature for this catalog model. A single yes/no label cannot establish which functions work without a paid plan. Check the manufacturer's current terms for the recording, storage and alerts you need before buying.</p>
+        <p class="text-sm text-slate-600">Any documented storage or plan conditions in the installation notes below apply only to the functions described; they are not a complete review of current service plans.</p>
+      </section>}
+
+      <section id="identity-evidence" class="scroll-mt-24" aria-labelledby="identity-title">
+        <h2 id="identity-title">Identity and evidence limits</h2>
+        <p>Each documented statement below has its own source and conditions. Missing evidence means not verified, not that a feature is absent. These records do not certify the seller's current package or a physical unit.</p>
+        <dl>{identityRows.map(({ field, label, claim }) => <div class="my-4" data-identity-field={field}>
+          <dt class="font-bold">{label}</dt>
+          <dd class="ml-0">{claim ? <>
+            <p>Documented: {claim.value}. {claim.conditions}</p>
+            <ul>{claim.sources.map(source => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a> — consulted {source.accessedAt}</li>)}</ul>
+            {claim.validUntil && <p class="text-sm">Recheck after {claim.validUntil}; later firmware or service changes may alter this observation.</p>}
+          </> : <p>Not verified for this catalog identity.</p>}</dd>
+        </div>)}</dl>
+      </section>
+
+      <section id="installation-checks" class="scroll-mt-24" aria-labelledby="installation-title">
+        <h2 id="installation-title">Installation checks</h2>
+        {installation ? <>
+          <p><strong>FlowHome setup assessment:</strong> {INSTALLATION_LABELS[installation.assessment]}. This is our estimate from the requirements below, not a hands-on test or a guarantee of difficulty.</p>
+          <ul>{installation.requirements.map((requirement) => <li>{requirement}</li>)}</ul>
+          <p class="text-sm text-slate-600">Documented model: {installation.model}. Target market: {installation.market}. Follow the manufacturer instructions for your exact hardware and household.</p>
+          <ul class="text-sm">{installation.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a> — consulted {source.accessedAt}.</li>)}</ul>
+        </> : <p>Installation requirements are not yet verified for this catalog model. Check the exact variant and the manufacturer instructions before choosing it.</p>}
+        <p class="text-sm text-slate-600">The Amazon ASIN, package contents and hardware revision have not been independently matched to these setup requirements. Confirm the exact listing before buying.</p>
+      </section>
+
       <h2>Pros and cons</h2>
+      {data.compatibilityNotes.length > 0 && <aside class="not-prose mt-4 rounded-2xl bg-amber-50 p-5 text-sm leading-6 text-amber-950"><h2 class="font-bold">Compatibility conditions</h2><ul class="mt-2 list-disc pl-5">{data.compatibilityNotes.map((note) => <li>{note}</li>)}</ul></aside>}
       <div class="not-prose grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Useful checks</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Documented compatibility fields are summarized below</li><li>Price and rating snapshots include their check dates</li><li>Connectivity and voice-platform fields are surfaced before purchase</li></ul></div>
+        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Useful checks</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Compatibility records and evidence limits are shown above</li><li>Current prices and customer ratings can be checked on Amazon</li><li>Connectivity and platform checks are surfaced before purchase</li></ul></div>
          <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Limits to verify</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Amazon listing pricing and availability can change</li><li>Additional app or subscription requirements are not inferred here</li><li>Specs not listed remain unverified for this profile</li></ul></div>
       </div>
       {verifiedNotices.length > 0 && (
-        <section class="not-prose mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+        <section data-compatibility-static-notices class="not-prose mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-5">
           <h2 class="font-bold text-slate-900">Verified compatibility notes</h2>
           <p class="mt-1 text-xs text-slate-600">These notes come from source-attributed compatibility claims surfaced when the compatibility graph is enabled. They degrade or disappear when claims expire or are disputed.</p>
            <ul class="mt-3 list-disc pl-5 text-sm text-slate-700">
@@ -139,18 +179,31 @@ const verifiedNotices = verifiedCompatibility.notices;
       )}
 
             <h2>Editorial methodology</h2>
-      <div class="not-prose rounded-2xl border border-blue-100 bg-blue-50 p-5 text-sm leading-7 text-slate-700">
+      <div class="not-prose rounded-2xl border border-blue-100 bg-blue-50 p-5 text-sm leading-7 text-blue-950">
          <p><strong>Author:</strong> <a href={editorial.author.profileUrl}>{editorial.author.name}</a> ({editorial.author.role}).</p>
-        <p class="mt-2"><strong>Ratings source:</strong> {data.ratingSource}. Ratings and counts are snapshots checked on {data.ratingLastChecked}; they reflect Amazon customer ratings, not FlowHome editorial opinions. FlowHome does not run controlled lab tests.</p>
-        <p class="mt-2"><strong>Price source:</strong> {commerce.priceSourceLabel}. Prices are snapshots checked on {data.priceLastChecked}. Availability may change on Amazon. FlowHome may earn from qualifying purchases.</p>
-         <p class="mt-2"><strong>Specs source:</strong> Public product data and manufacturer listings. Specs not surfaced under Key specifications are not verified for this category.</p>
+        <p class="mt-2"><strong>Ratings source:</strong> {commerce.isRatingFresh ? `Amazon Creators API. The displayed customer rating was checked on ${commerce.ratingLastCheckedLabel}; it is not a FlowHome editorial rating.` : 'A current authorized rating is not available here; check Amazon for customer feedback.'} FlowHome does not run controlled lab tests.</p>
+        <p class="mt-2"><strong>Price source:</strong> {commerce.isPriceFresh ? `Amazon Creators API. The displayed price was checked on ${commerce.priceLastCheckedLabel}.` : 'A current authorized price is not available here.'} Check Amazon for final pricing and availability. FlowHome may earn from qualifying purchases.</p>
+         <p class="mt-2"><strong>Specs source:</strong> Catalog records, with source references below when available. A recorded feature is not proof of independent verification; confirm the exact model, firmware and installation requirements with the manufacturer.</p>
+         {editorial.sources.length === 0 && <p class="mt-2">No primary source citations are recorded for this profile yet.</p>}
          <p class="mt-2"><strong>Disclosure:</strong> {EDITORIAL_TEAM.disclosure}</p>
-         {editorial.sources.length > 0 && <div class="mt-2"><strong>Sources:</strong><ul><li>{editorial.sources.map((source) => <a class="mr-3" href={source.url} rel="noopener noreferrer">{source.label}</a>)}</li></ul></div>}
+         {editorial.sources.length > 0 && <div class="mt-2"><strong>Sources:</strong><ul>{editorial.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a>{source.accessedAt && <span> — consulted {source.accessedAt}; documentary source, not a physical test.</span>}</li>)}</ul></div>}
       </div>
     </section>
 
     <PriceHistory product={data} />
     <RelatedProducts products={related} title="Direct alternatives" />
+    <section data-relationship-product={data.slug} class="rounded-2xl border border-slate-200 bg-white p-6" hidden aria-labelledby="relationship-title">
+      <h2 id="relationship-title" class="text-2xl font-bold text-slate-950">Documented product relationships</h2>
+      <p class="mt-2 text-sm text-slate-600">These source-attributed records are separate from editorial recommendations. A substitute applies only to its stated use case; a complement is not a compatibility guarantee.</p>
+      <p data-relationship-status class="mt-3 text-sm text-slate-600" role="status"></p>
+      <button type="button" data-relationship-refresh class="mt-3 min-h-11 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Refresh relationships</button>
+      <h3 class="mt-6 text-lg font-bold text-slate-950">Substitute records</h3>
+      <ul data-relationship-substitutes class="list-disc pl-5 text-slate-700"></ul>
+      <h3 class="mt-6 text-lg font-bold text-slate-950">Complement records</h3>
+      <ul data-relationship-complements class="list-disc pl-5 text-slate-700"></ul>
+      <ul data-relationship-notices class="mt-4 list-disc pl-5 text-sm text-slate-700" hidden></ul>
+      <script is:inline type="application/json" data-relationship-catalog set:html={serializeJsonLd(allProducts.filter(entry => entry.data.catalogActive).map(entry => ({ slug: entry.data.slug, name: entry.data.name })))} />
+    </section>
   </article>
   <StickyCTA product={data} />
 </ProductLayout>

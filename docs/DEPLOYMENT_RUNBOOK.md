@@ -1,6 +1,8 @@
 # FlowHome Deployment Runbook
 
 ## Status
+Local update 2026-09-05: follow the [verified artifact and recovery runbook](operations/release-artifact-runbook.md). The revised protected workflow is prepared and tested locally, not executed remotely. Historical observations below remain dated evidence.
+
 The project builds locally. An observed Cloudflare Git Integration incident reached an external deployment before branch controls were closed; this is not an approved release and does not establish current production availability. The only authorized future route is the protected manual workflow gate below.
 
 ## GitHub publication
@@ -33,7 +35,7 @@ CLOUDFLARE_ACCOUNT_ID
 
 Remote status verified on 2026-08-08: the GitHub Environment `production` exists with a required reviewer, `prevent_self_review=false`, and a custom deployment branch policy restricted to `main`. The Cloudflare secrets remain repository-level secrets and are referenced only by the protected `deploy-production` job; this runbook does not claim that Environment secrets exist. Future secret rotation or migration to Environment-scoped secrets must be performed manually, without recording secret values here.
 
-`Batched Deploy` runs all verification gates on every push to `main` and on the scheduled trigger, but those triggers never deploy or notify. To deploy production, open **Run workflow**, select the `main` branch, check the `deploy_production` checkbox, optionally provide newline-separated canonical `notification_urls`, and approve the Environment review. Production uses Cloudflare Pages branch `main` and is serialized with the `flowhome-production` concurrency group.
+`Batched Deploy` runs all verification gates on every push to `main` and on the scheduled trigger, but those triggers never deploy or notify. After specific owner approval, open **Run workflow**, select `main`, check `deploy_production`, provide the reviewed current production UUID in `rollback_deployment_id`, optionally provide separately authorized canonical `notification_urls`, and approve the Environment review after inspecting the exact source and artifact hashes. Production checks out the verification job's SHA, not a moving `main`, and is serialized with `flowhome-production`.
 
 ## Append-only deployment incident and control state (2026-08-08)
 
@@ -55,7 +57,7 @@ PUBLIC_GTM_ID
 PUBLIC_CLARITY_ID
 ```
 
-## Manual deployment fallback
+## Local review archives (not a deployment fallback)
 
 Build and package locally:
 
@@ -64,19 +66,13 @@ npm run build
 npm run package:artifacts
 ```
 
-Upload the generated `artifacts/flowhome-dist-*.zip` contents to Cloudflare Pages direct upload.
+These archives are for review or backup only. Do not upload them as an alternative to the protected release chain. The old `deploy:cloudflare` shortcut now refuses unverified publication; use the verified workflow and recovery runbook.
 
 ## Production verification
 
 No current production availability is asserted by this runbook. The only observed deployment event was the automatic Git Integration deployment of `e018301` described above; it was not a protected workflow deployment. `3912e2f` subsequently produced neither a Cloudflare check nor a deployment after automatic production deployments were Disabled and Preview was set to None.
 
-After each major deploy, verify:
-
-```bash
-npm run build
-```
-
-Then, after an explicitly approved manual dispatch, check the approved canonical production endpoint, sitemap, and GitHub Actions run record.
+After an explicitly approved manual dispatch, inspect the preserved `preflight.json` and `deployment.json`, the approved source/artifact identity and the actual canonical production endpoint, sitemap and user journey. Rebuilding locally does not prove which bytes were served. Complete and preserve the separate online smoke verification before treating the release as operationally verified.
 
 
 Do not infer current availability from the historical `e018301` incident. No manual protected production dispatch occurred in this revalidation.

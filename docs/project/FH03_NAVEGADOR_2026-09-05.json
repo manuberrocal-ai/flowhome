@@ -1,0 +1,110 @@
+{
+  "checkedAt": "2026-09-05T12:45:13.379Z",
+  "scope": "Disposable local browser; all external requests intercepted; no sign-in, message or purchase",
+  "checks": [
+    {
+      "name": "Disabled account message visible",
+      "passed": true
+    },
+    {
+      "name": "Sign-in form not visible",
+      "passed": true
+    },
+    {
+      "name": "No Google sign-in scripts",
+      "passed": true
+    },
+    {
+      "name": "No auth configuration in HTML",
+      "passed": true
+    },
+    {
+      "name": "No overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "Touch target 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "No overflow 390",
+      "passed": true
+    },
+    {
+      "name": "Touch target 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "Email mode does not expose unavailable form",
+      "passed": true
+    },
+    {
+      "name": "A stale session hint cannot reactivate auth",
+      "passed": true
+    },
+    {
+      "name": "Saved-list recovery link works",
+      "passed": true
+    },
+    {
+      "name": "Anonymous product save works",
+      "passed": true
+    },
+    {
+      "name": "Direct Amazon CTA preserved",
+      "passed": true
+    },
+    {
+      "name": "Saved product persists between pages",
+      "passed": true
+    },
+    {
+      "name": "No disabled service requests after consent or stale session",
+      "passed": true
+    },
+    {
+      "name": "No page exceptions",
+      "passed": true
+    }
+  ],
+  "visuals": [
+    {
+      "viewport": 1440,
+      "width": 1440,
+      "paragraphColor": "oklch(0.446 0.043 257.281)",
+      "paragraphBackground": "rgb(255, 255, 255)",
+      "paragraphSize": "16px",
+      "lineHeight": "28px",
+      "actionHeight": 49.59375
+    },
+    {
+      "viewport": 390,
+      "width": 390,
+      "paragraphColor": "oklch(0.446 0.043 257.281)",
+      "paragraphBackground": "rgb(255, 255, 255)",
+      "paragraphSize": "16px",
+      "lineHeight": "28px",
+      "actionHeight": 49.59375
+    }
+  ],
+  "errors": [],
+  "blockedExternalAssets": 4,
+  "confirmation": {
+    "checkedAt": "2026-09-05T12:46:23.581Z",
+    "checksPassed": 20,
+    "additionalChecks": ["Paragraph contrast 1440", "Paragraph contrast 390"],
+    "paragraphContrastAt1440": 7.584010363626772,
+    "bothContrastsAtLeast4_5": true,
+    "source": "Successful playwright-cli execution; the output showed all 20 checks passed. Its full echoed-code output was truncated; prior full 18-check result is preserved above.",
+    "screenshots": ["FH03_CUENTA_1440.png", "FH03_CUENTA_390.png"],
+    "visualReview": "Both final main-content screenshots inspected; message, saved-list recovery, focus and wrapping are readable. No further visual changes."
+  }
+}

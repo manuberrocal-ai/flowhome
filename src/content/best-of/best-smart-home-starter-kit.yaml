@@ -1,6 +1,6 @@
 slug: best-smart-home-starter-kit
-title: "Best Smart Home Starter Kit for 2026"
-description: "A practical starter kit for voice control, automation, lighting, and basic security without overspending."
+title: "Smart Home Starter Kit Guide: Choose One Useful Room Routine"
+description: "Plan a starter setup around a specific room, compatible controls, required accessories, and current total cost."
 category: smart-hub
 maxPrice: 250
 productSlugs:
@@ -9,3 +9,22 @@ productSlugs:
   - philips-hue-white-color-starter-kit
   - ring-video-doorbell-wired
 pubDate: 2026-06-28
+intro: "These are separate product candidates, not a tested bundle or a fixed-budget kit. Start with one useful room routine and confirm every device and accessory required to complete it."
+buyingConsiderations:
+  - label: "Choose the control method"
+    detail: "Echo Dot uses the Alexa app for setup; Kasa requires model selection in its setup flow. Hue's Bridge-connected approach is different from direct Wi-Fi bulbs. Confirm which path fits the room and household controls."
+  - label: "Avoid assuming a complete bundle"
+    detail: "Verify Hue bulb generation and included Bridge, and the original Ring Wired's power and chime requirements. Compare current total cost after required accessories and any installation work; no historical catalog amount guarantees a complete setup."
+sources:
+  - label: "Amazon Echo Dot fifth-generation setup"
+    url: "https://digprjsurvey.amazon.com/csad/help/node/TdLI5SX5VhnxC6x6Ct"
+    accessedAt: "2026-09-04"
+  - label: "TP-Link Kasa setup and model selection"
+    url: "https://www.tp-link.com/us/support/faq/946/"
+    accessedAt: "2026-09-04"
+  - label: "Philips Hue Bridge and bulb connection guide"
+    url: "https://www.philips-hue.com/en-us/explore-hue/faq/bulbs/how-to-connect-smart-bulb-to-wifi"
+    accessedAt: "2026-09-04"
+  - label: "Ring original Wired and in-home chime support"
+    url: "https://ring.com/gb/en/support/articles/vk1ml/configuring-your-doorbell-for-an-in-home-chime"
+    accessedAt: "2026-09-04"

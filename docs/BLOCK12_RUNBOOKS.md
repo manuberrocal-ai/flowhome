@@ -2,7 +2,7 @@
 
 ## Common triage and safe rollback
 
-For every incident record UTC time, domain, severity, trigger, evidence kind, connection state, affected segment, owner role, and source reference. Separate `real_local`, `synthetic`, `mocked`, `simulated`, `externally_blocked`, and `time_volume_dependent`. Do not include credentials or personal data. First preserve evidence, then run the local check; never mutate external state. Rollback means a pure simulated disable/restore plan; external mode is blocked. Escalate to the pending domain owner, then Engineering and Product; SEV1 also escalates to Security. Use the same postmortem template for every section.
+For every incident record UTC time, domain, severity, trigger, evidence kind, connection state, affected segment, owner role, and source reference. Separate `real_local`, `synthetic`, `mocked`, `simulated`, `externally_blocked`, and `time_volume_dependent`. Do not include credentials or personal data. First preserve permitted minimal evidence, then run the local check; never mutate external state. Audit preservation is not permission to retain restricted commercial content. Rollback means a pure simulated disable/restore plan; external mode is blocked. Any restored commercial data must pass current identity, permission and freshness checks; otherwise withhold its values and retain the ordinary retailer CTA. Escalate to the pending domain owner, then Engineering and Product; SEV1 also escalates to Security. Use the same postmortem template for every section.
 
 <a id="site_flow_availability"></a>
 ## Site and critical-flow availability
@@ -14,7 +14,7 @@ Run local CTA/link contracts and mark remote destination status Unknown. Preserv
 
 <a id="expired_offers"></a>
 ## Offer freshness and expiry
-Run the local `deals:detect`/quality checks and identify whether input is fixture or report; this is not productive expiry monitoring. Simulate removing the surfaced offer and restoring the last valid snapshot. Escalate to Data then Engineering.
+Run the local `deals:detect`/quality checks and identify whether input is fixture or report; this is not productive expiry monitoring. Price and availability age must be <24h, narrowed by source permission and expiry; public ratings have the same ceiling with their own capture. Test before, at and after the exact boundary. Simulate removing the surfaced commercial fields; never restore expired values or treat approval as a new capture. Historical retention has no default permission (0). Apply the [shared freshness and retention policy](data/commercial-freshness-policy.md). Daily review is not a serving/cache expiry mechanism; persistence, purge and a real monitor remain unverified. Escalate to Data then Engineering.
 
 <a id="ingestion_lag"></a>
 ## Source ingestion lag

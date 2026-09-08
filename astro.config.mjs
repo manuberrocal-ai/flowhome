@@ -2,12 +2,14 @@
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
+import { flowhomeEnvironment } from './scripts/config/astro-environment.mjs';
 
 const sitemapExcludedPaths = new Set(['/account', '/cart', '/preferences', '/search']);
 
 export default defineConfig({
   site: 'https://flowhome.dev',
   integrations: [
+    flowhomeEnvironment(),
     sitemap({
       filter: (page) => !sitemapExcludedPaths.has(new URL(page).pathname.replace(/\/+$/, '') || '/'),
     }),

@@ -7,6 +7,54 @@ const graph = loadBlock9Fixtures();
 const NOW = '2026-07-30T12:00:00Z';
 const productLocation = 'product:alpha-hub:ecosystem-chip';
 
+function contradictoryGraph(status = 'active', expiry = null) {
+  const positive = graph.edges.find((edge) => edge.from === 'p:alpha-hub' && edge.to === 'e:alexa' && edge.relation === 'works-with');
+  assert.ok(positive);
+  const conflict = { ...positive, id: 'edge:alpha-alexa-conflict', relation: 'conflicts', claim: 'Fixture explicit incompatibility', status, expiry };
+  const rows = graph.ledger.filter((row) => row.edgeId === positive.id).map((row) => ({
+    ...row, id: `${row.id}-conflict`, edgeId: conflict.id, claim: conflict.claim, status,
+  }));
+  return { ...graph, edges: [...graph.edges, conflict], ledger: [...graph.ledger, ...rows] };
+}
+
+test('a current evidenced conflict prevents a positive flag on every ledger-backed surface', () => {
+  const conflicting = contradictoryGraph();
+  for (const visibleLocation of [productLocation, 'product:alpha-hub:compatibility', 'quiz:alpha-hub:compatibility']) {
+    assert.equal(getVerifiedFlags(graph, 'alpha-hub', { enabled: true, market: 'US', now: NOW, visibleLocation }).alexa.verified, true);
+    assert.equal(getVerifiedFlags(conflicting, 'alpha-hub', { enabled: true, market: 'US', now: NOW, visibleLocation }).alexa.verified, false);
+    assert.ok(getVerifiedConstraints(conflicting, 'alpha-hub', { enabled: true, market: 'US', now: NOW, visibleLocation }).conflicts.length > 0);
+  }
+});
+
+test('expired or suppressed conflicts do not suppress a current positive claim', () => {
+  for (const conflicting of [contradictoryGraph('suppressed'), contradictoryGraph('active', '2026-07-01T00:00:00Z')]) {
+    assert.equal(getVerifiedFlags(conflicting, 'alpha-hub', { enabled: true, market: 'US', now: NOW, visibleLocation: productLocation }).alexa.verified, true);
+  }
+});
+
+test('comparison and alternatives cannot prefer a positive claim over an evidenced conflict', () => {
+  const conflicting = contradictoryGraph();
+  for (const visibleLocation of ['comparison:alpha-hub:compatibility', 'alternatives:alpha-hub:compatibility']) {
+    const rows = conflicting.ledger.filter((row) => row.visibleLocation === productLocation)
+      .map((row) => ({ ...row, id: `${row.id}-surface`, visibleLocation }));
+    const scoped = { ...conflicting, ledger: [...conflicting.ledger.filter((row) => row.visibleLocation !== visibleLocation), ...rows] };
+    const options = { enabled: true, market: 'US', now: NOW, visibleLocation };
+    assert.equal(getVerifiedFlags({ ...scoped, edges: scoped.edges.filter((edge) => edge.relation !== 'conflicts') }, 'alpha-hub', options).alexa.verified, true);
+    assert.equal(getVerifiedFlags(scoped, 'alpha-hub', options).alexa.verified, false);
+  }
+});
+
+test('opposing local-only and cloud-only evidence cannot yield a verified positive flag', () => {
+  const conflicting = contradictoryGraph();
+  const scoped = { ...conflicting, edges: conflicting.edges.map((edge) => {
+    if (edge.from !== 'p:alpha-hub' || edge.to !== 'e:alexa') return edge;
+    return { ...edge, relation: edge.relation === 'conflicts' ? 'cloud-only' : 'local-only' };
+  }) };
+  const options = { enabled: true, market: 'US', now: NOW, visibleLocation: productLocation };
+  assert.equal(getVerifiedFlags(scoped, 'alpha-hub', options).alexa.verified, false);
+  assert.equal(getVerifiedConstraints(scoped, 'alpha-hub', options).hasCloudPath, true);
+});
+
 test('a graph edge cannot surface without the exact rendered ledger location', () => {
   assert.equal(getVerifiedFlags(graph, 'alpha-hub', { enabled: true, market: 'US', now: NOW }).alexa.verified, false);
   assert.equal(getVerifiedFlags(graph, 'alpha-hub', { enabled: true, market: 'US', now: NOW, visibleLocation: productLocation }).alexa.verified, true);

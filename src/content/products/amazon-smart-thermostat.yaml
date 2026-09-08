@@ -7,7 +7,7 @@ originalPrice: 79.99
 discountPct: 0
 category: smart-thermostat
 affiliateUrl: "https://www.amazon.com/dp/B08J4C8871?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B08J4C8871.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-thermostat.png"
 ownerRating: 4.2
 ownerRatingCount: 22000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,35 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Amazon Smart Thermostat"
+identityEvidence:
+  model: "Amazon Smart Thermostat"
+  asin: B08J4C8871
+  claims:
+    model:
+      value: "Amazon Smart Thermostat"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Amazon Smart Thermostat US installation and safety guide"
+          url: "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Controller for compatible 24 V HVAC wiring"
+      conditions: "Not a line-voltage or millivolt thermostat; power and wiring compatibility must be checked."
+      sources:
+        - label: "Amazon Smart Thermostat US installation and safety guide"
+          url: "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Amazon Smart Thermostat"
+  market: US
+  assessment: advanced
+  requirements:
+    - "Requires compatible 24 V HVAC wiring and a C-wire or compatible C-wire power adapter; not for 120–240 V or millivolt systems."
+    - "Follow the manual's power-isolation precautions and use a professional if you are not comfortable with electrical wiring. Alexa app and 2.4 GHz Wi-Fi setup are also required."
+  sources:
+    - label: "Amazon Smart Thermostat US installation and safety guide"
+      url: "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +62,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 55
-roiApproved: true

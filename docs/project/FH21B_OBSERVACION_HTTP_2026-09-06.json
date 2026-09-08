@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "origin": "https://flowhome.dev",
+  "observedAt": "2026-09-06T22:49:49.711Z",
+  "status": "passed",
+  "scope": "HTTP HTML sentinels only; no browser interaction, retailer requests, alert delivery or uptime SLO",
+  "checks": [
+    {
+      "path": "/",
+      "httpStatus": 200,
+      "codes": [],
+      "ctaCount": 0,
+      "status": "passed",
+      "durationMs": 449
+    },
+    {
+      "path": "/product/amazon-smart-thermostat/",
+      "httpStatus": 200,
+      "codes": [],
+      "ctaCount": 3,
+      "status": "passed",
+      "durationMs": 284
+    },
+    {
+      "path": "/cart/",
+      "httpStatus": 200,
+      "codes": [],
+      "ctaCount": 0,
+      "status": "passed",
+      "durationMs": 372
+    }
+  ]
+}

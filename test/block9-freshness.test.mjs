@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { evaluateClaimFreshness, effectiveClaimStatus, detectEdgeContradictions, detectLedgerContradictions, describeConstraint, confidenceFromClaimFreshness } from '../src/lib/blocks/block9/freshness.ts';
+import { applyClaimOverride } from '../src/lib/blocks/block9/admin.ts';
 
 const NOW = new Date('2026-07-30T12:00:00Z');
 
@@ -20,6 +21,18 @@ test('unknown verifiedAt stays unknown, never fresh', () => {
   const r = evaluateClaimFreshness({ verifiedAt: '2026-07-30', expiry: null }, NOW);
   assert.equal(r.reason, 'unknown_verified_at');
   assert.equal(r.fresh, false);
+});
+
+test('strict-calendar shared helper does not turn a supplied invalid expiry into an unbounded claim', () => {
+  const now = '2026-03-03T12:00:00Z';
+  for (const expiry of ['2026-02-30T12:00:00Z', '2026-03-02T24:00:00Z', '', 'not-a-date']) {
+    const claim = { verifiedAt: '2026-03-01T12:00:00Z', expiry, status: 'active' };
+    const freshness = evaluateClaimFreshness(claim, now);
+    assert.equal(freshness.reason, 'invalid_expiry');
+    assert.equal(effectiveClaimStatus(claim, now).surfaced, false);
+    assert.equal(confidenceFromClaimFreshness(freshness, 'hands-on-tested'), 'unknown');
+    assert.equal(applyClaimOverride({ targetId: 'fixture', targetType: 'claim', action: 'approve', actorId: 'reviewer', note: null, now }, { ...claim, status: 'pending_review' }).outcome, 'blocked_stale');
+  }
 });
 
 test('future verification dates are unknown and never surface as valid claims', () => {

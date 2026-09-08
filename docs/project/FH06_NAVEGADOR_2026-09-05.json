@@ -1,0 +1,59 @@
+{
+  "observedOn": "2026-09-05",
+  "artifactDirectory": "C:/Users/manub/Documents/Codex/2026-09-04/f/outputs/FlowHome-Revision-Integral-2026-09-05",
+  "verdict": "APROBADO LOCAL",
+  "checksPassed": 30,
+  "checksFailed": 0,
+  "profile": "Local preview; external requests blocked; reduced motion; desktop/mobile batched inspection; no live account/provider verification.",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "reasonContrast": 7.584010363626772,
+      "actionHeight": 44
+    },
+    {
+      "width": 390,
+      "height": 1000,
+      "pageWidth": 390,
+      "reasonContrast": 7.584010363626772,
+      "actionHeight": 44
+    }
+  ],
+  "verified": [
+    "No legacy Top pick badge",
+    "Anonymous card save by keyboard and quiz save",
+    "Quiz five steps, disabled empty state, submit and edit",
+    "Two to four recommendations and deterministic desktop/mobile order",
+    "No priority-based reason or retired field in browser payload",
+    "Setup difficulty uncertainty explicit",
+    "No horizontal overflow; reason text contrast >=4.5; action height >=44",
+    "No client exceptions"
+  ],
+  "screenshots": [
+    "FH06_TARJETA_1440.png",
+    "FH06_TARJETA_390.png",
+    "FH06_QUIZ_1440.png",
+    "FH06_QUIZ_390.png"
+  ],
+  "visualRounds": 1,
+  "correctiveVisualRounds": 0,
+  "copyAudit": {
+    "files": 2,
+    "rawBlockers": 0,
+    "rawMajorCandidates": 4,
+    "explanation": "The four missing-alt candidates are duplicated account avatar placeholders across both pages. The observed elements have explicit alt=\"\" and are not visible with account services off; no product image lacked alt. Authenticated avatar states remain FH-11 scope.",
+    "rawReport": "FH06_TEXTO_2026-09-05.json"
+  },
+  "designDetector": {
+    "exitCode": 1,
+    "warnings": 4,
+    "explanation": "Existing gray-on-color heuristic matches in quiz source; no CSS/color change in FH-06. Measured affected reason text contrast 7.58:1. This is not a complete WCAG audit."
+  },
+  "nextFinding": {
+    "id": "FH-07",
+    "description": "Quiz setup-fit still derives from broad category, not exact model; HS200/HS220 appeared among plug-and-play estimates. Validate installation per model before editorial release; not certified by this scoring fix."
+  },
+  "releaseGate": "Not a LISTO PARA PUBLICAR decision for the complete site; catalog/install/compatibility, account services, remote data and release gates remain."
+}

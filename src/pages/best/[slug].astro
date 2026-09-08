@@ -2,6 +2,10 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { generateBreadcrumbSchema, generateItemListSchema } from '../../lib/seo';
+import { serializeJsonLd } from '../../lib/json-ld.js';
+import { getEditorialMetadata, getEvidenceLevel, EDITORIAL_TEAM } from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const lists = await getCollection('best-of');
@@ -15,13 +19,37 @@ const selected = list.data.productSlugs
   .filter((product): product is (typeof products)[number] => Boolean(product));
 const reviews = await getCollection('reviews');
 const relevantReviews = reviews.filter((review) => review.data.category === list.data.category || selected.some((product) => product.data.slug === review.data.productSlug));
+const canonicalURL = `https://flowhome.dev/best/${list.data.slug}/`;
+const breadcrumbItems = [
+  { name: 'Home', href: '/', url: 'https://flowhome.dev/' },
+  { name: 'Buying guides', href: '/best/', url: 'https://flowhome.dev/best/' },
+  { name: list.data.title, url: canonicalURL },
+];
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, url }) => ({ name, url })));
+const itemListSchema = generateItemListSchema(selected.map((product) => product.data), canonicalURL);
+// Preserve references already named in guide copy; a URL alone is not research verification.
+const guideText = [list.data.intro ?? '', ...(list.data.buyingConsiderations ?? []).map((item) => item.detail)].join(' ');
+const recordedSourceUrls = [...new Set((guideText.match(/https:\/\/[^\s<>"']+/g) ?? []).map((url) => url.replace(/[),.;!?]+$/, '')))];
+const sourceRecords = [...recordedSourceUrls.map((url) => ({ label: url, url })), ...(list.data.sources ?? [])];
+const editorial = getEditorialMetadata({ sources: [...new Map(sourceRecords.map((source) => [source.url, source])).values()] });
+const evidenceLabel = getEvidenceLevel(false, false, selected.length > 0).replaceAll('-', ' ');
+const publicationDate = list.data.pubDate instanceof Date && !Number.isNaN(list.data.pubDate.getTime()) ? list.data.pubDate : undefined;
+const publicationLabel = publicationDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
-<BaseLayout title={`${list.data.title} | FlowHome`} description={list.data.description} canonicalURL={`https://flowhome.dev/best/${list.data.slug}/`} image={list.data.pinterestImage} type="article">
+<BaseLayout title={`${list.data.title} | FlowHome`} description={list.data.description} canonicalURL={canonicalURL} image={list.data.pinterestImage} type="article">
+  <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
+  {selected.length > 0 && <script type="application/ld+json" set:html={serializeJsonLd(itemListSchema)} />}
+  <Breadcrumbs items={breadcrumbItems.map(({ name, href }) => ({ name, href }))} />
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Best of FlowHome</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">{list.data.title}</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">{list.data.description}</p>
     {list.data.intro && <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700">{list.data.intro}</p>}
+    <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600">
+      <p>By <a href={editorial.author.profileUrl} class="font-bold text-blue-700 underline">{editorial.author.name}</a></p>
+      {publicationDate && <p>Published <time datetime={publicationDate.toISOString()}>{publicationLabel}</time></p>}
+      <p>Evidence basis: {evidenceLabel}</p>
+    </div>
   </section>
   <section class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{selected.map((product) => <ProductCard product={product} />)}</section>
   {list.data.buyingConsiderations?.length && <section class="mt-10" aria-labelledby="buying-considerations">
@@ -30,6 +58,19 @@ const relevantReviews = reviews.filter((review) => review.data.category === list
       {list.data.buyingConsiderations.map((item) => <li class="rounded-xl border border-slate-200 p-5"><h3 class="font-bold text-slate-950">{item.label}</h3><p class="mt-2 leading-7 text-slate-600">{item.detail}</p></li>)}
     </ul>
   </section>}
+  <section class="mt-10 max-w-3xl border-t border-slate-200 pt-6" aria-labelledby="guide-methodology">
+    <h2 id="guide-methodology" class="text-2xl font-black text-slate-950">Editorial methodology and sources</h2>
+    <div class="mt-3 space-y-3 text-sm leading-7 text-slate-700">
+      <p>{EDITORIAL_TEAM.methodology}</p>
+      <p>No hands-on test or human review is recorded for this guide. Publication is not a verification date; check the linked product profiles for recorded price and rating dates.</p>
+      {editorial.sources.length > 0 ? <div>
+        <p>References named in this guide are listed below. Their presence does not mean every claim has been independently reverified.</p>
+        <ul class="mt-2 list-disc space-y-2 pl-5">{editorial.sources.map((source) => <li><a class="break-words text-blue-700 underline" href={source.url} rel="noopener noreferrer">{source.label}</a>{source.accessedAt && <span> (documentation accessed {source.accessedAt})</span>}</li>)}</ul>
+      </div> : <p>No source citations are recorded for this guide. Treat its recommendations as catalog-based guidance, not independently verified findings.</p>}
+      <p>{EDITORIAL_TEAM.disclosure}</p>
+      <a class="inline-flex min-h-11 items-center font-bold text-blue-700 underline" href="/about/#editorial-team">Read our editorial and corrections policy</a>
+    </div>
+  </section>
   <section class="mt-8 flex flex-wrap gap-3" aria-label="Guide links">
     <a class="inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/category/${list.data.category}/`}>Browse {list.data.category.replaceAll('-', ' ')} category →</a>
     {relevantReviews.slice(0, 4).map((review) => <a class="inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/review/${review.id}/`}>{review.data.title} review →</a>)}

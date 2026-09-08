@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DealCard from '../../components/DealCard.astro';
 import { getDealStatus } from '../../lib/deal-state';
+import { getCommerceData } from '../../lib/commerce-data';
 
 // Live deals first, then upcoming. Expired deals are intentionally hidden from
 // the promoted deals hub. They may still appear on product pages as historical
@@ -12,7 +13,11 @@ const products = await getCollection('products');
 const now = new Date();
 const visibleDeals = allDeals
   .map((deal) => ({ deal, status: getDealStatus({ start: deal.data.startDate, end: deal.data.endDate }, now).status }))
-  .filter((entry) => entry.status === 'active' || entry.status === 'upcoming')
+  .filter((entry) => {
+    const product = products.find((p) => p.data.slug === entry.deal.data.productSlug && p.data.asin === entry.deal.data.asin);
+    return entry.status === 'active' && product && getCommerceData(product.data, now).showPromotion
+      && product.data.price === entry.deal.data.dealPrice;
+  })
   .sort((a, b) => {
     if (a.status !== b.status) return a.status === 'active' ? -1 : 1;
     return b.deal.data.discountPct - a.deal.data.discountPct;
@@ -26,7 +31,7 @@ const visibleDeals = allDeals
   </section>
   <section class="mt-8 grid gap-6 lg:grid-cols-2">
     {visibleDeals.length === 0 ? (
-      <p class="rounded-2xl bg-slate-50 p-6 text-slate-600">No active deals right now. Saved products stay on this device, and we re-check Amazon pricing regularly.</p>
+      <p class="rounded-2xl bg-slate-50 p-6 text-slate-600">No verified active deals are available here right now. Your saved products stay on this device. <a href="/products/" class="font-bold text-blue-700 underline">Browse products</a> and check current prices directly on Amazon.</p>
     ) : (
       visibleDeals.map((deal) => <DealCard deal={deal} product={products.find((p) => p.data.slug === deal.data.productSlug)} />)
     )}

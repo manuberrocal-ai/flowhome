@@ -9,7 +9,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">Review your unique product list before opening Amazon. Final price, availability, shipping, and checkout happen on Amazon.</p>
     </div>
 
-    <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_22rem]">
+    <noscript><style is:inline>[data-cart-interactive] { display: none !important; }</style><p class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 text-slate-700">JavaScript is required to read your saved list. Your saved data has not been changed. <a href="/products/" class="underline">Browse the product catalog</a>.</p></noscript>
+    <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_22rem]" data-cart-interactive>
       <div class="rounded-[1.6rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <div class="mb-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-amber-950" data-cart-page-recovery role="alert" hidden>
           <p class="font-black">Your saved list could not be read.</p>
@@ -38,8 +39,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <strong class="text-xl font-black text-slate-950" data-cart-page-count>0</strong>
           </div>
           <div class="mt-2 flex items-center justify-between gap-3">
-            <span class="text-sm font-bold text-slate-500">Estimated subtotal</span>
-            <strong class="text-xl font-black text-slate-950" data-cart-page-total>$0.00</strong>
+            <span class="text-sm font-bold text-slate-500">Final prices</span>
+            <strong class="text-sm font-black text-slate-950" data-cart-page-total>Check on Amazon</strong>
           </div>
         </div>
         <a class="premium-action mt-5 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-5 py-4 text-center text-base font-black text-white" data-cart-page-buy data-fh-amazon-cta data-cta-position="cart_transfer" target="_blank" rel="nofollow sponsored noopener noreferrer" aria-disabled="true" tabindex="-1">Open Amazon cart</a>

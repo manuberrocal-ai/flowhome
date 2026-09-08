@@ -1,0 +1,70 @@
+{
+  "kind": "local-controlled-incident-not-production-rollback",
+  "requests": 15,
+  "outcomes": [
+    {
+      "mode": "healthy",
+      "status": "passed",
+      "product": {
+        "path": "/product/amazon-smart-thermostat/",
+        "httpStatus": 200,
+        "codes": [],
+        "ctaCount": 3,
+        "status": "passed",
+        "durationMs": 11
+      }
+    },
+    {
+      "mode": "unavailable",
+      "status": "needs_attention",
+      "product": {
+        "path": "/product/amazon-smart-thermostat/",
+        "httpStatus": 503,
+        "codes": [
+          "http_status_unexpected"
+        ],
+        "ctaCount": null,
+        "status": "needs_attention",
+        "durationMs": 4
+      }
+    },
+    {
+      "mode": "restored",
+      "status": "passed",
+      "product": {
+        "path": "/product/amazon-smart-thermostat/",
+        "httpStatus": 200,
+        "codes": [],
+        "ctaCount": 3,
+        "status": "passed",
+        "durationMs": 5
+      }
+    },
+    {
+      "mode": "timeout",
+      "status": "needs_attention",
+      "product": {
+        "path": "/product/amazon-smart-thermostat/",
+        "httpStatus": null,
+        "codes": [
+          "request_timeout"
+        ],
+        "ctaCount": null,
+        "status": "needs_attention",
+        "durationMs": 5016
+      }
+    },
+    {
+      "mode": "restored",
+      "status": "passed",
+      "product": {
+        "path": "/product/amazon-smart-thermostat/",
+        "httpStatus": 200,
+        "codes": [],
+        "ctaCount": 3,
+        "status": "passed",
+        "durationMs": 4
+      }
+    }
+  ]
+}

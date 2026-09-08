@@ -44,8 +44,9 @@ test('search and legacy product details preserve freshness and compatibility tru
   assert.match(search, /const commerce = getCommerceData\(product\.data\)/);
   assert.match(search, /priceLabel: commerce\.priceLabel/);
   assert.match(search, /escapeHtml\(item\.priceLabel\)/);
-  assert.match(product, /data\.wifi && 'Wi-Fi'/);
-  assert.match(product, /data\.alexaCompatible && 'Alexa'/);
+  assert.match(product, /getEcosystemFeatures\(verifiedProduct\)/);
+  assert.match(product, /not proof of support or incompatibility/);
+  assert.doesNotMatch(product, /data\.wifi && 'Wi-Fi'|data\.alexaCompatible && 'Alexa'/);
   assert.doesNotMatch(product, /\['Wi-Fi', data\.bluetooth/);
   assert.doesNotMatch(product, /\['Alexa', data\.googleHomeCompatible/);
 });

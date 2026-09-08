@@ -1,0 +1,97 @@
+{
+  "createdAt": "2026-09-07",
+  "mode": "built-in image_gen",
+  "intent": "Original generic category illustrations; not model photos or package depictions. Local replacement authorized by owner; publication not authorized.",
+  "assets": [
+    {
+      "key": "smart-speaker",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-b2b6bca8-e366-464b-80d7-21d3e2c5a543.png",
+      "path": "public/images/product-art/illustrations-v1/smart-speaker.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial smart-home category illustration, not an actual model photograph. Primary request: an original square illustration of one generic smart speaker, using an invented simple cylindrical design with a small abstract sound-wave motif. Style: restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. No brand logos, trademarks, model-specific design, packaging, claims, lettering, watermark or rendered text. Not photorealistic."
+    },
+    {
+      "key": "smart-thermostat",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-fd99eafa-8b3b-49c2-a407-eddcd0c1cfad.png",
+      "path": "public/images/product-art/illustrations-v1/smart-thermostat.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic wall thermostat, rounded rectangular face, abstract dial with no numbers. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "security-camera",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-8ea818af-b9a2-47be-aba4-18bb760dafba.png",
+      "path": "public/images/product-art/illustrations-v1/security-camera.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic home security camera with a lens and simple adjustable stand. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "video-doorbell",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-b00019c9-7319-4d85-aa23-ff855b7c667c.png",
+      "path": "public/images/product-art/illustrations-v1/video-doorbell.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic vertical video doorbell with a lens and a circular doorbell button. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-lock",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-f3634bb5-b683-4a74-ad18-f5a4ce3f4c07.png",
+      "path": "public/images/product-art/illustrations-v1/smart-lock.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic electronic door lock with a simple keypad of blank dots and a lever. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "robot-vacuum",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-ea35cfae-2747-469e-b3b4-1e8e5b6c5926.png",
+      "path": "public/images/product-art/illustrations-v1/robot-vacuum.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic round robotic vacuum with a simple brush peeking underneath. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-lighting",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-aa279813-74a8-4665-9a28-b57cef71266f.png",
+      "path": "public/images/product-art/illustrations-v1/smart-lighting.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic light bulb beside a simple wall light switch, representing lighting as a category rather than a sold kit. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-plug",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-4794152a-c6cf-47d9-9233-60f234bbfa00.png",
+      "path": "public/images/product-art/illustrations-v1/smart-plug.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic compact US smart electrical plug adapter with a front outlet. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-display",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-3839e4fa-0692-4eb1-9f97-d939326ecd22.png",
+      "path": "public/images/product-art/illustrations-v1/smart-display.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic tabletop home display with an abstract blank screen and small stand. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-hub",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-d3d51474-7d6d-4212-9c64-1343bd2cd841.png",
+      "path": "public/images/product-art/illustrations-v1/smart-hub.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic compact home automation hub, low rounded box with a tiny status light. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "motion-sensor",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-469f2261-246d-4cac-80ab-1026cddb81c1.png",
+      "path": "public/images/product-art/illustrations-v1/motion-sensor.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic compact motion detector with a faceted translucent sensing window. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "air-purifier",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-8bd205c9-a37f-4c77-8e00-8cacacb870a7.png",
+      "path": "public/images/product-art/illustrations-v1/air-purifier.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic cylindrical room air purifier with simple vent perforations. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "garage-door-opener",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-cc1fa808-804f-4670-935d-234242ea7dc5.png",
+      "path": "public/images/product-art/illustrations-v1/garage-door-opener.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a generic home garage door partly raised, with a small wireless controller beside it, a conceptual category scene not an installation diagram. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-blinds",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-a62f21d9-65d4-41a3-94de-73e4e082bf7b.png",
+      "path": "public/images/product-art/illustrations-v1/smart-blinds.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a simple window with horizontal venetian blinds and a small generic tilt controller. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    },
+    {
+      "key": "smart-home-device",
+      "source": "C:\\Users\\manub\\.codex\\generated_images\\01a06a65-7181-7690-82b0-02a4494be038\\exec-8eaf2909-9416-41bc-8b60-07c2079e2ca8.png",
+      "path": "public/images/product-art/illustrations-v1/smart-home-device.png",
+      "prompt": "Use case: stylized-concept. Asset type: FlowHome editorial category illustration, not an actual model photograph. Create an original square illustration of a simple little house with an abstract connected-device motif, a neutral generic smart-home illustration. Restrained editorial gouache and clean dimensional shapes, clearly illustrated, soft white background, navy and slate with a restrained teal accent, generous margins, centered subject, legible at thumbnail size. Invented generic design. No brands, logos, trademarks, model-specific design, packaging, lettering, numbers, watermark or text. Not photorealistic."
+    }
+  ]
+}

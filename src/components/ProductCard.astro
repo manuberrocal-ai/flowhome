@@ -1,9 +1,10 @@
 ﻿---
-import { getCategoryLabel, getProductImage, getProductImageAlt, getProductFallbackImage } from '../lib/product-art';
+import { getCategoryLabel, getProductImageSourceLabel, getProductImage, getProductImageAlt, getProductFallbackImage } from '../lib/product-art';
 import { getCommerceData } from '../lib/commerce-data';
+import { getProductThumbnailSet } from '../lib/product-thumbnails';
 
-interface Props { product: any; compact?: boolean; }
-const { product, compact = false } = Astro.props;
+interface Props { product: any; compact?: boolean; editorialReason?: string; }
+const { product, compact = false, editorialReason } = Astro.props;
 const data = product.data ?? product;
 const slug = data.slug ?? product.slug;
 const productImage = getProductImage(data);
@@ -12,8 +13,8 @@ const productImageAlt = getProductImageAlt(data);
 const categoryLabel = getCategoryLabel(data.category);
 const commerce = getCommerceData(data);
 const hasDeal = commerce.showPromotion;
-const isHotDeal = hasDeal && Number(data.discountPct) >= 35;
-const rating = Number(data.ownerRating ?? 0);
+const isHotDeal = hasDeal && Number(commerce.displayDiscountPct) >= 35;
+const rating = commerce.displayRating ?? 0;
 const fullStars = Math.floor(rating);
 const hasHalfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
 const roundedStars = Math.round(rating);
@@ -24,13 +25,14 @@ const stars = Array.from({ length: 5 }, (_, index) => {
   return { index, state };
 });
 ---
-<article class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
+<article data-image-fallback-scope class:list={["product-card group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/80", compact && "product-card--compact", isHotDeal && "product-card--hot-deal"]}>
   <a href={`/product/${slug}/`} class="product-card-media-link relative block bg-gradient-to-br from-slate-100 via-white to-sky-50 p-3 transition-all duration-200" aria-label={`Read the ${data.name} product profile`}>
     <div class="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</div>
-    {!hasDeal && data.priority === 'featured' && <div class="absolute right-3 top-3 z-10 rounded-full bg-blue-600 px-3 py-1 text-xs font-black text-white shadow-lg shadow-blue-200">Top pick</div>}
     <div class="product-card-media flex h-44 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white p-1 shadow-inner shadow-slate-100 ring-1 ring-white/80">
       <img
         src={productImage}
+        srcset={getProductThumbnailSet(data)}
+        sizes="200px"
         alt={productImageAlt}
         class="product-card-image h-full max-h-none w-full object-contain drop-shadow-sm transition duration-200 ease-out"
         loading="lazy"
@@ -41,33 +43,35 @@ const stars = Array.from({ length: 5 }, (_, index) => {
         data-fallback-src={fallbackImage}
       />
     </div>
+    <p class="mt-2 text-center text-xs text-slate-600" data-image-source-caption>{getProductImageSourceLabel(data)}</p>
   </a>
   <div class="product-card-body flex flex-1 flex-col space-y-3 p-4 pt-3 transition-all duration-200">
     <div>
       <p class="product-card-brand text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">{data.brand}</p>
+      {editorialReason && <p class="mt-2 text-sm leading-5 text-slate-600">{editorialReason}</p>}
       <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-200"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
-      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-200">Amazon customer rating: {data.ownerRating} / 5 from {data.ownerRatingCount?.toLocaleString()} ratings{data.ratingLastChecked ? ` · checked ${data.ratingLastChecked}` : ''}</p>}
+      {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-200">{commerce.isRatingFresh ? `Amazon customer rating: ${commerce.displayRating} / 5 from ${commerce.displayRatingCount?.toLocaleString()} ratings · checked ${commerce.ratingLastCheckedLabel}` : 'Check current customer ratings on Amazon.'}</p>}
     </div>
 
     <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-200">
       <div class="flex items-end justify-between gap-3">
         <div>
           <div class="text-[10px] font-black uppercase tracking-wide text-slate-500">{commerce.priceLabel}</div>
-          <div class="mt-0.5 text-2xl font-black leading-none text-slate-950">${data.price}</div>
-          {hasDeal && <div class="mt-1 text-xs font-bold text-slate-400 line-through">${data.originalPrice}</div>}
-          {commerce.priceLastCheckedLabel && <div class="mt-1 text-[10px] font-semibold text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</div>}
+          {commerce.displayPrice !== undefined && <div class="mt-0.5 text-2xl font-black leading-none text-slate-950">${commerce.displayPrice}</div>}
+          {hasDeal && <div class="mt-1 text-xs font-bold text-slate-400 line-through">${commerce.displayOriginalPrice}</div>}
+          {commerce.isPriceFresh && <div class="mt-1 text-[10px] font-semibold text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</div>}
         </div>
         <div class="product-card-stat-stack min-w-[4.6rem] text-right">
           {hasDeal && <div class="product-card-stat-line product-card-stat-line--deal text-lg font-black text-orange-600">
             <svg class="product-card-stat-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>
-            -{data.discountPct}%
+            -{commerce.displayDiscountPct}%
           </div>}
-          <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Amazon customer rating ${data.ownerRating} out of 5`}>
+          {commerce.isRatingFresh && <div class="product-card-stat-line product-card-stat-line--rating text-xs font-black" aria-label={`Amazon customer rating ${commerce.displayRating} out of 5`}>
             <span class="product-card-stars" aria-hidden="true">
               {stars.map(({ index, state }) => <span data-star-index={index} class:list={["product-card-star", `product-card-star--${state}`]}>{'\u2605'}</span>)}
             </span>
-            <span class="product-card-rating-value">{data.ownerRating}</span>
-          </div>
+            <span class="product-card-rating-value">{commerce.displayRating}</span>
+          </div>}
         </div>
       </div>
       <div class:list={["product-card-action-row mt-3", compact && "product-card-action-row--compact"]} data-product-action-row>
@@ -78,12 +82,12 @@ const stars = Array.from({ length: 5 }, (_, index) => {
            data-asin={data.asin}
            data-product-slug={slug}
            data-category={data.category}
-           data-discount={data.discountPct}
+           data-discount={commerce.displayDiscountPct ?? 0}
            data-cta-position="product_card"
           class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300/50"
             aria-label={`View ${data.name} on Amazon`} data-fh-amazon-cta
         >
-          <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="amazon-cta-compact-icon" aria-hidden="true"><svg viewBox="0 0 64 18"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="amazon-cta-label"><span class="amazon-cta-prefix">Check on</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
         </a>}
         <a
           href={`/product/${slug}/`}
@@ -92,7 +96,7 @@ const stars = Array.from({ length: 5 }, (_, index) => {
           title="View details"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.06 12.35a1 1 0 0 1 0-.7C3.65 7.55 7.38 5 12 5s8.35 2.55 9.94 6.65a1 1 0 0 1 0 .7C20.35 16.45 16.62 19 12 19s-8.35-2.55-9.94-6.65Z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span class="product-card-side-action-label" aria-hidden="true">Details</span>
+          <span class="product-card-side-action-label" aria-hidden="true">View details</span>
           <span class="sr-only">View details</span>
         </a>
         <button
@@ -106,14 +110,13 @@ const stars = Array.from({ length: 5 }, (_, index) => {
            data-cta-position="product_card_list"
            data-fh-track="list_add"
            data-name={data.name}
-          data-price={data.price}
           data-image={productImage}
            data-url={`/product/${slug}/`}
            aria-label={`Add ${data.name} to your FlowHome list`}
            aria-pressed="false"
            title="Add to list"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
           <span class="product-card-side-action-label" aria-hidden="true">Add to list</span>
           <span class="sr-only">Add to list</span>
           <span class="flow-cart-button-count" data-flow-cart-item-count hidden>0</span>

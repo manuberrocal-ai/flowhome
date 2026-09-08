@@ -1,11 +1,10 @@
-import { buildAmazonCartUrl, getUniqueItemCount, getCartStore, getCartSubtotal } from './cart-store.js';
+import { buildAmazonCartUrl, getUniqueItemCount, getCartStore } from './cart-store.js';
+import { getProductThumbnailSet } from './product-thumbnails.js';
+
+import { getLocalProductIllustration, getIllustrationCaption, getIllustrationAlt } from './product-image-policy.js';
 
 export function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
-}
-
-function formatMoney(value) {
-  return `$${Number(value).toFixed(2)}`;
 }
 
 const SAVED_LABEL = 'Saved';
@@ -75,7 +74,6 @@ export function setupCartDock() {
       asin: button.dataset.asin,
       slug: button.dataset.slug,
       name: button.dataset.name,
-      price: button.dataset.price,
       image: button.dataset.image,
       url: button.dataset.url,
     });
@@ -113,7 +111,7 @@ export function setupCartPage() {
   const render = (items) => {
     const uniqueCount = getUniqueItemCount(items);
     if (count) count.textContent = String(uniqueCount);
-    if (total) total.textContent = formatMoney(getCartSubtotal(items));
+    if (total) total.textContent = 'Check on Amazon';
     if (empty) empty.hidden = items.length > 0;
     if (recovery) recovery.hidden = !store.getRecoveryState().hasCorruptSavedList;
     if (feedback) feedback.textContent = items.length
@@ -136,16 +134,16 @@ export function setupCartPage() {
     if (!list) return;
     list.innerHTML = items.map((item) => {
       const productUrl = item.url || `/product/${item.slug}/`;
-      return `<article class="flow-cart-page-item" data-asin="${escapeHtml(item.asin || item.slug)}">
-        <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__image"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" width="88" height="88" loading="lazy" decoding="async" data-fallback-src="/images/product-placeholder.svg"></a>
+      return `<article class="flow-cart-page-item" data-image-fallback-scope data-asin="${escapeHtml(item.asin || item.slug)}">
+        <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__image"><img src="${escapeHtml(getLocalProductIllustration(item))}" srcset="${escapeHtml(getProductThumbnailSet(item))}" sizes="88px" alt="${escapeHtml(getIllustrationAlt(item))}" width="88" height="88" loading="lazy" decoding="async" data-fallback-src="/images/product-placeholder.svg"></a>
         <div class="min-w-0">
+          <p class="text-xs text-slate-600" data-image-source-caption>${escapeHtml(getIllustrationCaption(item))}</p>
           <a href="${escapeHtml(productUrl)}" class="flow-cart-page-item__name">${escapeHtml(item.name)}</a>
-          <p class="mt-1 text-sm font-bold text-slate-500">${formatMoney(item.price)}</p>
+          <p class="mt-1 text-sm font-bold text-slate-500">Check current price on Amazon</p>
           <div class="flow-cart-page-item__controls mt-3">
             <button type="button" class="flow-cart-page-remove" data-cart-page-remove>Remove</button>
           </div>
         </div>
-        <strong class="flow-cart-page-item__line">${formatMoney(item.price)}</strong>
       </article>`;
     }).join('');
   };

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { setupCartDock, syncProductButtons, escapeHtml } from '../src/lib/cart-client.js';
+import { setupCartDock, setupCartPage, syncProductButtons, escapeHtml } from '../src/lib/cart-client.js';
+import { createCartStore } from '../src/lib/cart-store.js';
 
 class FakeButton {
   constructor(asin, slug, name) {
@@ -77,4 +78,46 @@ test('sanitizes HTML and synchronizes shortlist buttons through setup once', () 
   cleanup();
   delete globalThis.document;
   delete globalThis.window;
+});
+
+test('saved legacy prices never become a current subtotal while selected ASINs still transfer', () => {
+  const window = new EventTarget();
+  const store = createCartStore({ eventTarget: window });
+  window.__flowhomeCartStore = store;
+  store.add({ asin: 'B012345678', slug: 'legacy', name: 'Legacy <product>', price: 1234.56, image: '/legacy.png', url: '/product/legacy/' });
+  class Anchor {
+    constructor() { this.attrs = new Map(); this.classList = { add() {}, remove() {} }; }
+    setAttribute(name, value) { this.attrs.set(name, value); }
+    removeAttribute(name) { this.attrs.delete(name); }
+  }
+  const list = { innerHTML: '', addEventListener() {}, removeEventListener() {} };
+  const total = { textContent: '' };
+  const count = { textContent: '' };
+  const buy = new Anchor();
+  const document = { querySelector: (selector) => ({
+    '[data-cart-page-items]': list, '[data-cart-page-total]': total,
+    '[data-cart-page-count]': count, '[data-cart-page-buy]': buy,
+  })[selector] ?? null };
+  const previous = { document: globalThis.document, window: globalThis.window, HTMLAnchorElement: globalThis.HTMLAnchorElement };
+  Object.assign(globalThis, { document, window, HTMLAnchorElement: Anchor });
+  let cleanup;
+  try {
+    cleanup = setupCartPage();
+    assert.equal(count.textContent, '1');
+    assert.equal(total.textContent, 'Check on Amazon');
+    assert.match(list.innerHTML, /Legacy &lt;product&gt;/);
+    assert.doesNotMatch(list.innerHTML, /legacy\.png/);
+    assert.match(list.innerHTML, /illustrations-v1\/smart-home-device\.webp/);
+    assert.match(list.innerHTML, /Category illustration — not a product photo/);
+    assert.match(list.innerHTML, /Check current price on Amazon/);
+    assert.doesNotMatch(list.innerHTML, /1234\.56|\$|subtotal/i);
+    assert.equal(new URL(buy.href).searchParams.get('ASIN.1'), 'B012345678');
+    assert.equal(new URL(buy.href).searchParams.get('Quantity.1'), '1');
+  } finally {
+    cleanup?.();
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete globalThis[key];
+      else globalThis[key] = value;
+    }
+  }
 });

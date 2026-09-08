@@ -1,0 +1,291 @@
+{
+  "observedAt": "2026-09-05T17:25:11.360Z",
+  "checks": [
+    {
+      "name": "28 products retain nine installation profiles",
+      "passed": true
+    },
+    {
+      "name": "All quiz products omit subscription provenance and unused ease flags",
+      "passed": true
+    },
+    {
+      "name": "Title canonical description and H1 retained",
+      "passed": true
+    },
+    {
+      "name": "Two empty-alt candidates remain hidden avatars",
+      "passed": true
+    },
+    {
+      "name": "No priority warning for no extra choice 1440",
+      "passed": true
+    },
+    {
+      "name": "Fifth question remains incomplete until selection 1440",
+      "passed": true
+    },
+    {
+      "name": "All three choices disclose ranking limits 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy notice visible and independent of relaxed filter 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy order equals open 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy unsupported claims absent while setup conditions remain 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy URL retains priority 1440",
+      "passed": true
+    },
+    {
+      "name": "privacy edit restores selected option 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control notice visible and independent of relaxed filter 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control order equals open 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control unsupported claims absent while setup conditions remain 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control URL retains priority 1440",
+      "passed": true
+    },
+    {
+      "name": "local-control edit restores selected option 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use notice visible and independent of relaxed filter 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use order equals open 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use unsupported claims absent while setup conditions remain 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use URL retains priority 1440",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use edit restores selected option 1440",
+      "passed": true
+    },
+    {
+      "name": "Legacy URL shows warning after reload 1440",
+      "passed": true
+    },
+    {
+      "name": "Results heading clears sticky header on entry 1440",
+      "passed": true
+    },
+    {
+      "name": "Anonymous keyboard save 1440",
+      "passed": true
+    },
+    {
+      "name": "Direct Amazon links retained 1440",
+      "passed": true
+    },
+    {
+      "name": "Priority notice contrast 1440",
+      "passed": true
+    },
+    {
+      "name": "Priority and relaxed warnings coexist 1440",
+      "passed": true
+    },
+    {
+      "name": "Best-value removes old priority warning 1440",
+      "passed": true
+    },
+    {
+      "name": "Restart retains first step validation 1440",
+      "passed": true
+    },
+    {
+      "name": "No priority warning for no extra choice 390",
+      "passed": true
+    },
+    {
+      "name": "Fifth question remains incomplete until selection 390",
+      "passed": true
+    },
+    {
+      "name": "All three choices disclose ranking limits 390",
+      "passed": true
+    },
+    {
+      "name": "privacy notice visible and independent of relaxed filter 390",
+      "passed": true
+    },
+    {
+      "name": "privacy order equals open 390",
+      "passed": true
+    },
+    {
+      "name": "privacy unsupported claims absent while setup conditions remain 390",
+      "passed": true
+    },
+    {
+      "name": "privacy no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "privacy URL retains priority 390",
+      "passed": true
+    },
+    {
+      "name": "privacy edit restores selected option 390",
+      "passed": true
+    },
+    {
+      "name": "local-control notice visible and independent of relaxed filter 390",
+      "passed": true
+    },
+    {
+      "name": "local-control order equals open 390",
+      "passed": true
+    },
+    {
+      "name": "local-control unsupported claims absent while setup conditions remain 390",
+      "passed": true
+    },
+    {
+      "name": "local-control no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "local-control URL retains priority 390",
+      "passed": true
+    },
+    {
+      "name": "local-control edit restores selected option 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use notice visible and independent of relaxed filter 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use order equals open 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use unsupported claims absent while setup conditions remain 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use URL retains priority 390",
+      "passed": true
+    },
+    {
+      "name": "ease-of-use edit restores selected option 390",
+      "passed": true
+    },
+    {
+      "name": "Legacy URL shows warning after reload 390",
+      "passed": true
+    },
+    {
+      "name": "Results heading clears sticky header on entry 390",
+      "passed": true
+    },
+    {
+      "name": "Anonymous keyboard save 390",
+      "passed": true
+    },
+    {
+      "name": "Direct Amazon links retained 390",
+      "passed": true
+    },
+    {
+      "name": "Priority notice contrast 390",
+      "passed": true
+    },
+    {
+      "name": "Priority and relaxed warnings coexist 390",
+      "passed": true
+    },
+    {
+      "name": "Best-value removes old priority warning 390",
+      "passed": true
+    },
+    {
+      "name": "Restart retains first step validation 390",
+      "passed": true
+    },
+    {
+      "name": "720 CSS px reflow, not native browser zoom",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "metrics": [
+    {
+      "width": 1440,
+      "contrast": 14.465587811642001,
+      "fontSize": "14px",
+      "headingY": -563,
+      "headerBottom": 69,
+      "context": "After keyboard save; scroll follows the focused card, not the heading",
+      "entryPosition": {
+        "headingY": 96,
+        "headerBottom": 69,
+        "scrollY": 267
+      }
+    },
+    {
+      "width": 390,
+      "contrast": 14.465587811642001,
+      "fontSize": "14px",
+      "headingY": -393,
+      "headerBottom": 69,
+      "context": "After keyboard save; scroll follows the focused card, not the heading",
+      "entryPosition": {
+        "headingY": 96,
+        "headerBottom": 69,
+        "scrollY": 427
+      }
+    }
+  ],
+  "errors": [],
+  "profile": "Local preview, external requests blocked, reduced motion, keyboard, 1440/390 plus 720 CSS px reflow; no real device/account/online image proof."
+}

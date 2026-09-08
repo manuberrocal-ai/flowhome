@@ -8,8 +8,8 @@ const read = (path) => readFile(new URL(path, root), 'utf8');
 test('BaseLayout emits no analytics loader, queue, or noscript fallback before consent', async () => {
   const layout = await read('src/layouts/BaseLayout.astro');
   assert.doesNotMatch(layout, /gtag\/js|googletagmanager\.com\/ns\.html|gtm\.js\}\);/);
-  assert.match(layout, /const GTM_ID = import\.meta\.env\.PUBLIC_GTM_ID \|\| '';/);
-  assert.match(layout, /const CLARITY_ID = import\.meta\.env\.PUBLIC_CLARITY_ID \|\| '';/);
+  assert.match(layout, /const GTM_ID = publicConfig\.gtmId;/);
+  assert.match(layout, /const CLARITY_ID = publicConfig\.clarityId;/);
   assert.doesNotMatch(layout, /GTM-KX37WSZQ|xdyay13jq0/);
   assert.match(layout, /setupAnalytics/);
   assert.match(layout, /data-gtm-id/);

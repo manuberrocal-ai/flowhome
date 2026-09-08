@@ -7,7 +7,7 @@ originalPrice: 29.99
 discountPct: 17
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B079775ZZQ?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B079775ZZQ.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-lighting.png"
 ownerRating: 4.6
 ownerRatingCount: 28000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,35 @@ dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "HS220"
+identityEvidence:
+  model: "HS220"
+  asin: B079775ZZQ
+  claims:
+    model:
+      value: "HS220"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Kasa HS220 US specifications and dimming requirements"
+          url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220"
+          accessedAt: "2026-09-05"
+    role:
+      value: "In-wall dimmer"
+      conditions: "Electrical wiring, neutral and compatible dimming loads must be checked; not a plug-in controller."
+      sources:
+        - label: "Kasa HS220 US specifications and dimming requirements"
+          url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220"
+          accessedAt: "2026-09-05"
+installation:
+  model: "HS220"
+  market: US
+  assessment: advanced
+  requirements:
+    - "This in-wall dimmer requires electrical wiring and a neutral wire; it is not a plug-in device."
+    - "Check the bulb's dimming type and the manufacturer's load limits before installation."
+  sources:
+    - label: "Kasa HS220 US specifications and dimming requirements"
+      url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +62,3 @@ lidarMapping: false
 rgb: false
 dimmable: true
 subscriptionRequired: false
-priority: featured
-priorityScore: 63
-roiApproved: true

@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "task": "FH-06",
+  "verdict": "APROBADO LOCAL",
+  "maturity": 3,
+  "recordedAt": "2026-09-05T13:44:40.9221230Z",
+  "head": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "versionLimit": "Uncommitted V3/FH-02/FH-03/FH-05/FH-06 working tree; HEAD alone is not the delivered version.",
+  "before": {
+    "totalProducts": 28,
+    "automatedApprovals": 24,
+    "nestHub": {
+      "score": 90,
+      "estimatedCommission": 4,
+      "source": "manual price/rating with generic fee mapping"
+    }
+  },
+  "after": {
+    "totalProducts": 28,
+    "reviewCandidates": 28,
+    "automatedApprovals": 0,
+    "unknownCommissionClassifications": 28,
+    "dealScore": 15,
+    "dealCoveragePercent": 15,
+    "opportunityScore": 15,
+    "opportunityCoveragePercent": 15,
+    "trendScore": 30,
+    "trendCoveragePercent": 30
+  },
+  "validation": {
+    "directedTests": {
+      "passed": 35,
+      "failed": 0
+    },
+    "fullSuite": {
+      "passed": 644,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lintExitCode": 0,
+    "typecheck": {
+      "files": 239,
+      "errors": 0,
+      "warnings": 0,
+      "existingHints": 18
+    },
+    "build": {
+      "pages": 88,
+      "exitCode": 0
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "diffCheck": {
+      "exitCode": 0,
+      "note": "LF/CRLF warnings only"
+    },
+    "cliRealLocal": true,
+    "browser": {
+      "passed": 30,
+      "failed": 0,
+      "viewports": [
+        1440,
+        390
+      ],
+      "visualRounds": 1
+    },
+    "catalog": {
+      "productsPreservedExceptRetiredLines": 28,
+      "removedFields": 84
+    },
+    "dailyParity": {
+      "products": 28,
+      "providerCalled": false,
+      "qualityRunner": "fixture-only; full QA reported separately"
+    },
+    "copyScanner": {
+      "rawBlockers": 0,
+      "rawMajorCandidates": 4,
+      "triage": "Hidden account avatar placeholders with explicit empty alt in the observed disabled-account state; see browser evidence."
+    },
+    "designDetector": {
+      "exitCode": 1,
+      "existingStyleWarnings": 4,
+      "changedReasonTextContrast": 7.584010363626772
+    }
+  },
+  "rightsVerifiedForRealProducts": false,
+  "actualCommissionIncomeVerified": false,
+  "noExternalActions": true,
+  "pending": [
+    "FH-07: identity/claims and model-specific installation, including quiz category-based estimates",
+    "FH-14/FH-15: real Amazon access and rights",
+    "FH-25: qualified revenue, returns and costs",
+    "FH-13: approved publication and online checks"
+  ],
+  "nextTask": "FH-07",
+  "deleted": [
+    {
+      "path": "scripts/lib/internal-roi.mjs",
+      "previousSha256": "a128665e6fdd77baf959749095e89fc7beebe58c454834b1591c4e641c2a77b5",
+      "recovery": "git show 116e04df648d97cae9d4aae03f190e81109937ab:scripts/lib/internal-roi.mjs"
+    },
+    {
+      "path": "src/lib/roi.ts",
+      "previousSha256": "5c673a2ece8878d531aa4eeca36731d9c006a0ca519d0b06b2b3c2cd0ddce7cc",
+      "recovery": "git show 116e04df648d97cae9d4aae03f190e81109937ab:src/lib/roi.ts"
+    },
+    {
+      "path": "src/lib/commission-rates.ts",
+      "previousSha256": "14f001cc8ec87368fc7d287a496f7d6965efd5016384de49855577f2ac10d793",
+      "recovery": "git show 116e04df648d97cae9d4aae03f190e81109937ab:src/lib/commission-rates.ts"
+    },
+    {
+      "path": "data/internal-product-radar.json",
+      "previousSha256": "96a705982bfd425450f9ef8f506db20671ae9d1e3d8790b89735cc504c97a0b6",
+      "recovery": "git show 116e04df648d97cae9d4aae03f190e81109937ab:data/internal-product-radar.json"
+    },
+    {
+      "path": "data/product-discovery-report.json",
+      "previousSha256": "9144b1f0b27a676aab5ef6bf41e1899f084092513c6e2a02d0ccc0df07b3b33b",
+      "recovery": "git show 116e04df648d97cae9d4aae03f190e81109937ab:data/product-discovery-report.json"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "c5b00e2422f91582cc93e861cccd663d95a5f306a1effc3d664d528fffaf86f7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ad30b81da6167dd28d2d22be1c7a4b7a4ef9a9affb4c8e5b947832ef5f0c2bd0"
+    },
+    {
+      "path": "scripts/lib/catalog-prioritization.mjs",
+      "sha256": "26ac05b91e81d6b4be47add535179c899ab5ad5b9321c33ccba36f76abae305f"
+    },
+    {
+      "path": "scripts/lib/commission-evidence.mjs",
+      "sha256": "42a8b3c724a934e17e9aa2e826d67216e3baf81acbb448ef788df985897215a6"
+    },
+    {
+      "path": "scripts/discovery/product-discovery.mjs",
+      "sha256": "f3533d02c40575e2befd8a76036caf70216b83fc2c12ceb9d304087132844daa"
+    },
+    {
+      "path": "scripts/flowhome-daily.mjs",
+      "sha256": "1054ebc24fcea2f886d4a045e35b9c9a358bd2d7096eef2edfed4f937552cee6"
+    },
+    {
+      "path": "data/amazon-commission-classifications.json",
+      "sha256": "147bfb8004d79ed839c42d37b492d83423e1680b7480c1575134322fb1b15281"
+    },
+    {
+      "path": "src/content.config.ts",
+      "sha256": "1c81f0d28089bd6ed1127bfb0a916ac81c7172bf98c5b685ad0fbb45f61f7e00"
+    },
+    {
+      "path": "src/components/ProductCard.astro",
+      "sha256": "2c74300230ac95d1d2c3a3fa05d516c0f870b0852544d42e9ec50260252552dd"
+    },
+    {
+      "path": "src/pages/quiz.astro",
+      "sha256": "4a19848bf7f0e136e655fc0777a4ceb7f464a25260f996f988266e357f170212"
+    },
+    {
+      "path": "src/lib/quiz-recommend.ts",
+      "sha256": "cf7780c107372387bf0e2f0d21e73c04229c9fc0bb4fcbf6d4311ccfd6836e76"
+    },
+    {
+      "path": "test/product-discovery.test.mjs",
+      "sha256": "6903de346854a2f858671829cc5256a8d9350c0782f789be1966a43080839d96"
+    },
+    {
+      "path": "test/flowhome-daily.test.mjs",
+      "sha256": "ac8961b0f8f75e6ddf0d39fe3a0643746dcb7d977abb0964c0265ad1f49103ec"
+    },
+    {
+      "path": "test/quiz-recommend.test.mjs",
+      "sha256": "94ff066a5b94cf9f9a0788934d3b76368348df09d4ad5dbfc6b7323149f15ebe"
+    },
+    {
+      "path": "docs/INTERNAL_PRODUCT_SELECTION.md",
+      "sha256": "c292a9fb9469792a6976bc799b8fa44734361a4449a38e8551a96a92a620d4b5"
+    },
+    {
+      "path": "docs/data/deal-score-methodology-v3.md",
+      "sha256": "788025a8f8cf884896ea36a8461cb243f9cbade84995544c4651fb2304bcab53"
+    },
+    {
+      "path": "docs/LAUNCH_REPORT.md",
+      "sha256": "579fab35d89956f4e154846a393d9763c4e2375e37e7a6ce5c419d46c2e222aa"
+    },
+    {
+      "path": "src/content/products/aeotec-smartthings-hub.yaml",
+      "sha256": "1f5ab86943db9d773b8cfd4d6dddd70594647753f14298d4e6259466c7563467"
+    },
+    {
+      "path": "src/content/products/amazon-smart-thermostat.yaml",
+      "sha256": "cb2dd7a8ea74545b0d369c115a1e96204c07c126a27b6ea17c9ca9c7b43281c8"
+    },
+    {
+      "path": "src/content/products/aqara-hub-m2.yaml",
+      "sha256": "6a14187952cc274c1007e7f7284d3b58556bc97ad5cfcc9fb7b7dda815b0ea6e"
+    },
+    {
+      "path": "src/content/products/aqara-motion-sensor-p1.yaml",
+      "sha256": "497b0cbb16c6062dcf80adda75cd712bba735eb681ad1be53a12eb00d3aa8ff6"
+    },
+    {
+      "path": "src/content/products/arlo-essential-outdoor-camera.yaml",
+      "sha256": "09e7d7cf43d953edde57d977121209d2a3729033353b46bc47090d159bacfe9f"
+    },
+    {
+      "path": "src/content/products/august-wifi-smart-lock.yaml",
+      "sha256": "2f7db546e99c54ae7ae24449d6f8a29e4247c9de98b2a7e418774d6fe72dbd8d"
+    },
+    {
+      "path": "src/content/products/blink-outdoor-4.yaml",
+      "sha256": "e054aa0d6bb5f6aab074f93bc568bd4f50d20e1ece2b6baff577c429680bd96a"
+    },
+    {
+      "path": "src/content/products/echo-dot-5th-gen.yaml",
+      "sha256": "999830e2cc772e6e4dbf04cb15ef4c29b38c7c3bf22eb3e8fd10062ccfca3724"
+    },
+    {
+      "path": "src/content/products/echo-show-8-3rd-gen.yaml",
+      "sha256": "fe21c4b30161c947226442bd970f3cda0671299f0a2d64b08871137ce495ea4f"
+    },
+    {
+      "path": "src/content/products/ecobee-smart-thermostat-premium.yaml",
+      "sha256": "6bb5eb0876196e8ff52c2a1160a3b8483edd0f3e4e361956e4c90c9232651d7a"
+    },
+    {
+      "path": "src/content/products/eufy-security-indoor-cam-c120.yaml",
+      "sha256": "b74d9b0282e0e2b58b32b441b4baea3ce9be7a355f3939492112dc7d0af4c4bf"
+    },
+    {
+      "path": "src/content/products/google-nest-hub-2nd-gen.yaml",
+      "sha256": "83d0006edddfc83c826255556bc096a85ec0ded535c8fcc95f0e0b02139de694"
+    },
+    {
+      "path": "src/content/products/govee-rgbic-led-strip-lights.yaml",
+      "sha256": "6a317ea117660b358fd6024986e90c03a0ff408a324f33a58c19ce321898994c"
+    },
+    {
+      "path": "src/content/products/irobot-roomba-j7-plus.yaml",
+      "sha256": "2b93114e5361cb7899dd97e995d1bc451e0eb28df05d4fc9ccd195dd1863f4c1"
+    },
+    {
+      "path": "src/content/products/levoit-core-300s-air-purifier.yaml",
+      "sha256": "c1ccebb4efbe4abd7816337fbfb43cadb82eca029945c2a4542a111b10136436"
+    },
+    {
+      "path": "src/content/products/meross-smart-garage-door-opener.yaml",
+      "sha256": "94df35cd7fee0b64c77e09bfe988a4ab2dcd881a1947f9e2d032439b40d910a8"
+    },
+    {
+      "path": "src/content/products/philips-hue-white-color-starter-kit.yaml",
+      "sha256": "cff47621ebb4a00a9b4dbd8d848c176f4f17b824eaafae7764476b74e3b3ec7e"
+    },
+    {
+      "path": "src/content/products/ring-video-doorbell-wired.yaml",
+      "sha256": "91136870d4396b5de3bba1084281d2f049a9878f72945da1293f67776c09211a"
+    },
+    {
+      "path": "src/content/products/roborock-q5-plus.yaml",
+      "sha256": "4290cb2c91f269b287bcd64832abb744c917cf3185959a990fe5873439b37b5e"
+    },
+    {
+      "path": "src/content/products/schlage-encode-smart-wifi-deadbolt.yaml",
+      "sha256": "5ad92660d1f13fda868b9d8056b4b356deab6182b3b1316fb0748b4fc60b23d0"
+    },
+    {
+      "path": "src/content/products/switchbot-blind-tilt.yaml",
+      "sha256": "07601a079299c5c50d6f96c984963070885ac4d84a8a815a0fe4e79031e1d187"
+    },
+    {
+      "path": "src/content/products/switchbot-hub-2.yaml",
+      "sha256": "4d42d54ca9bec80dd7bbf56ce68ac627a75bbf97f2fcd785c27620e043eb7fa1"
+    },
+    {
+      "path": "src/content/products/tapo-c120-security-camera.yaml",
+      "sha256": "5fa97359468e2ae13ba97006addfe8314ac6e1856acf6cb6b36f13139b522fe8"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-dimmer-hs220.yaml",
+      "sha256": "0a343087f19a9d6c9dac88441f41f52906247012b4b20f2cca192869c0d10899"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-light-switch-hs200.yaml",
+      "sha256": "7ab7b28fb181ecd3aaa2bcc77a49c504be6d7a21ec158ec325de6c84d2da5bfb"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-plug-mini.yaml",
+      "sha256": "9ae46f0eb956f150e0b38e9be337231433bdc10c22fa4b827dc6a81de55fda33"
+    },
+    {
+      "path": "src/content/products/wyze-bulb-color.yaml",
+      "sha256": "2b2569dab05da3de6cbaf95c0cf0656a4040f97154cd1b09a9bd19871dadb50d"
+    },
+    {
+      "path": "src/content/products/yale-assure-lock-2-wifi.yaml",
+      "sha256": "25b53e45e70991328b26021e57538062bf24ca59e67303a02bcd37dc98c8f83c"
+    }
+  ]
+}

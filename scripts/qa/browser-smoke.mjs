@@ -1,11 +1,12 @@
 import { spawn } from 'node:child_process';
-import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { join, resolve } from 'node:path';
 import ts from 'typescript';
+import { viewportCases, catalogEvidenceCases } from './viewport-cases.mjs';
 
 const PROJECT_ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const PREVIEW_HOST = '127.0.0.1';
@@ -17,15 +18,15 @@ const REPORT_PATH = join(OUTPUT_DIR, 'report.json');
 const VIEWPORT_HEIGHT = 900;
 const LOCAL_HOSTS = new Set(['127.0.0.1', 'localhost', '::1']);
 const CASES = [
-  ...[320, 375, 768, 1024, 1440].map((width) => ({ name: `home-${width}`, path: '/', width })),
-  ...[320, 1440].map((width) => ({ name: `quiz-${width}`, path: '/quiz/', width })),
-  ...[320, 1440].map((width) => ({ name: `preferences-${width}`, path: '/preferences/', width })),
-  ...[375, 1024].map((width) => ({ name: `compare-${width}`, path: '/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/', width })),
-  ...[375, 1440].map((width) => ({ name: `product-${width}`, path: '/product/amazon-smart-thermostat/', width })),
-  { name: 'cart-375', path: '/cart/', width: 375 },
+  ...viewportCases(process.env.BROWSER_QA_PROFILE || 'full'),
+  ...catalogEvidenceCases(),
+  { name: 'menu-open-390', path: '/', width: 390, height: 844, setup: 'open-menu' },
+  { name: 'home-reduced-motion-390', path: '/', width: 390, height: 844, setup: 'reduced-motion' },
+  ...[320, 390, 1440].map((width) => ({ name: `hero-actions-${width}`, path: '/', width, height: 900, setup: 'hero-actions' })),
   { name: 'home-saved-375', path: '/', width: 375, setup: 'save-and-scroll-end' },
   { name: 'contract-anonymous-save', path: '/', width: 375, setup: 'anonymous-save' },
   { name: 'contract-amazon-cta', path: '/product/amazon-smart-thermostat/', width: 375, setup: 'amazon-cta' },
+  { name: 'contract-calculator-390', path: '/calculator/', width: 390, height: 844, setup: 'calculator' },
   { name: 'contract-consent-events', path: '/product/amazon-smart-thermostat/', width: 375, setup: 'consent-events' },
   { name: 'contract-home-experiment-inactive', path: '/', width: 375, setup: 'home-experiment-inactive' },
 ];
@@ -48,6 +49,7 @@ const HTTP_CHECKS = [
   { path: '/robots.txt', expectedStatus: 200 },
   { path: '/sitemap-index.xml', expectedStatus: 200 },
   { path: '/__flowhome-block4-missing__/', expectedStatus: 404 },
+  { path: '/__flowhome-v3-missing__/', expectedStatus: 404 },
 ];
 const report = {
   startedAt: new Date().toISOString(),
@@ -180,16 +182,23 @@ async function closeServer(server) {
 }
 
 async function runHttpChecks() {
-  for (const check of HTTP_CHECKS) {
+  const built = [];
+  async function visit(directory, parts = []) {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.isDirectory()) await visit(join(directory, entry.name), [...parts, entry.name]);
+      else if (entry.name === 'index.html') built.push({ path: `/${parts.length ? `${parts.join('/')}/` : ''}`, expectedStatus: 200 });
+    }
+  }
+  await visit(join(PROJECT_ROOT, 'dist'));
+  const checks = [...new Map([...HTTP_CHECKS, ...built].map((check) => [check.path, check])).values()];
+  for (const check of checks) {
     const url = new URL(check.path, `${BASE_URL}/`).href;
     try {
       const response = await fetchWithTimeout(url);
       const result = { path: check.path, url, expectedStatus: check.expectedStatus, actualStatus: response.status, status: response.status === check.expectedStatus ? 'PASS' : 'FAIL' };
       report.httpChecks.push(result);
-      if (result.status === 'FAIL') throw new Error(`HTTP status mismatch for ${check.path}: expected ${check.expectedStatus}, received ${response.status}`);
     } catch (error) {
       if (!report.httpChecks.some((result) => result.path === check.path)) report.httpChecks.push({ path: check.path, url, expectedStatus: check.expectedStatus, actualStatus: null, status: 'FAIL', error: truncate(error.message || error) });
-      throw error;
     }
   }
 }
@@ -436,7 +445,25 @@ const INSPECTION_EXPRESSION = `(() => {
     bodyPaddingBottom: Number.parseFloat(getComputedStyle(document.body).paddingBottom) || 0,
     overlaps: dockOverlaps,
   };
-  return { title: document.title, readyState: document.readyState, jsonLdErrors, smallControls, overflow, dock, documentScrollWidth: document.documentElement.scrollWidth, viewportWidth };
+  const brokenImages = [...document.querySelectorAll('img')].filter(visible)
+    .filter((image) => image.complete && image.naturalWidth === 0 && image.getAttribute('src'))
+    .map((image) => ({ selector: locator(image), src: image.getAttribute('src'), alt: image.alt }));
+  const hero = document.querySelector('[data-hero-showcase]');
+  const heroFailures = [];
+  if (hero) {
+    const cta = hero.querySelector('[data-hero-amazon]');
+    const stage = hero.querySelector('.hero-product-stage');
+    const slide = hero.querySelector('[data-hero-slide]');
+    const controls = document.querySelector('[data-hero-controls]');
+    if (!cta || !stage || !slide || !controls) heroFailures.push('Missing hero region');
+    else {
+      const action = cta.getBoundingClientRect();
+      const media = stage.getBoundingClientRect();
+      if (!visible(cta) || action.left < media.left - 1 || action.right > media.right + 1 || action.top < media.top - 1 || action.bottom > media.bottom + 1) heroFailures.push('Amazon action is clipped by its stage');
+      if (slide.getBoundingClientRect().bottom > controls.getBoundingClientRect().top + 1) heroFailures.push('Product content overlaps carousel controls');
+    }
+  }
+  return { title: document.title, readyState: document.readyState, jsonLdErrors, smallControls, overflow, dock, brokenImages, heroFailures, documentScrollWidth: document.documentElement.scrollWidth, viewportWidth };
 })()`;
 
 async function runCase(testCase) {
@@ -447,24 +474,54 @@ async function runCase(testCase) {
   try {
     await pageClient.send('Emulation.setDeviceMetricsOverride', {
       width: testCase.width,
-      height: VIEWPORT_HEIGHT,
+      height: testCase.height || VIEWPORT_HEIGHT,
       deviceScaleFactor: 1,
       mobile: testCase.width < 768,
       screenWidth: testCase.width,
-      screenHeight: VIEWPORT_HEIGHT,
+      screenHeight: testCase.height || VIEWPORT_HEIGHT,
       positionX: 0,
       positionY: 0,
     });
+    await pageClient.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: testCase.setup === 'reduced-motion' ? 'reduce' : 'no-preference' }] });
     const navigation = await pageClient.send('Page.navigate', { url });
     if (navigation.errorText) result.failures.push(`Navigation failed: ${navigation.errorText}`);
     await waitForPageReady();
     await evaluate('document.fonts?.ready ? document.fonts.ready.then(() => true) : true');
     await sleep(250);
+    if (testCase.setup === 'empty-cart') {
+      await evaluate(`localStorage.removeItem('flowhome-amazon-list')`);
+      await pageClient.send('Page.reload', { ignoreCache: true });
+      await waitForPageReady();
+    }
+    if (testCase.setup === 'open-menu') {
+      const opened = await evaluate(`(() => { const button = document.querySelector('.mobile-menu-btn'); button?.click(); return button?.getAttribute('aria-expanded') === 'true' && !document.querySelector('#mobile-menu')?.hidden; })()`);
+      if (!opened) result.failures.push('Mobile navigation did not open accessibly');
+      await evaluate(`Promise.all(document.querySelector('#mobile-menu').getAnimations({ subtree: true }).map((animation) => animation.finished.catch(() => {})))`);
+      if (!await evaluate(`getComputedStyle(document.querySelector('#mobile-menu')).opacity === '1'`)) result.failures.push('Mobile menu did not settle to an opaque readable state');
+    }
+    if (testCase.setup === 'reduced-motion') {
+      if (!await evaluate(`document.querySelector('[data-hero-showcase]')?.dataset.reducedMotion === 'true'`)) result.failures.push('Hero did not respect reduced motion');
+    }
+    if (testCase.setup === 'hero-actions') {
+      const hitTest = await evaluate(`(async () => {
+        const cta = document.querySelector('[data-hero-amazon]');
+        if (!cta) return false;
+        cta.focus({ preventScroll: true });
+        cta.scrollIntoView({ block: 'center', behavior: 'instant' });
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const rect = cta.getBoundingClientRect();
+        const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        return Boolean(hit && (hit === cta || cta.contains(hit)));
+      })()`);
+      if (!hitTest) result.failures.push('Hero Amazon action cannot receive pointer input');
+    }
     if (testCase.setup === 'save-and-scroll-end') {
       const saved = await evaluate(`(() => { const button = document.querySelector('[data-flow-cart-add]'); if (!button) return false; button.click(); return true; })()`);
       if (!saved) result.failures.push('Could not activate a shortlist control for dock verification');
       await sleep(150);
-      await evaluate(`new Promise((resolve) => { window.scrollTo(0, document.documentElement.scrollHeight); requestAnimationFrame(() => requestAnimationFrame(resolve)); })`);
+      await evaluate(`new Promise((resolve) => { window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }); requestAnimationFrame(() => requestAnimationFrame(resolve)); })`);
+      await sleep(150);
+      if (!await evaluate(`document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 2`)) result.failures.push('Footer/dock inspection did not reach the document end');
     }
     if (testCase.setup === 'anonymous-save') {
       await evaluate(`localStorage.removeItem('flowhome-amazon-list')`);
@@ -475,6 +532,23 @@ async function runCase(testCase) {
       if (state.missing || !state.activeEntry) result.failures.push('Anonymous save did not create an active persisted cart entry');
       if (!state.savedIndicator) result.failures.push('Anonymous save did not update a saved UI indicator');
       if (state.authPrompt) result.failures.push('Anonymous save opened an auth prompt');
+    }
+    if (testCase.setup === 'calculator') {
+      const checks = await evaluate(`(() => {
+        const form = document.querySelector('#savings-form');
+        const submit = () => { form.requestSubmit(); return document.querySelector('#result').textContent; };
+        const normal = submit();
+        document.querySelector('#watts').value = '0';
+        const zero = submit();
+        document.querySelector('#watts').value = '';
+        const empty = submit();
+        document.querySelector('#watts').value = '60';
+        const restored = submit();
+        return { normal, zero, empty, restored };
+      })()`);
+      if (!checks.normal.includes('monthly savings: $0.92') || !checks.normal.includes('annual savings: $11.02') || !checks.normal.includes('27.2 months')) result.failures.push('Calculator arithmetic or formatted estimate is incorrect');
+      if (!checks.zero.includes('above zero') || !checks.empty.includes('valid non-negative') || checks.restored !== checks.normal) result.failures.push('Calculator zero/empty/recovery states are incorrect');
+      await evaluate(`new Promise((resolve) => { document.querySelector('#result').scrollIntoView({ block: 'center', behavior: 'instant' }); requestAnimationFrame(() => requestAnimationFrame(resolve)); })`);
     }
     if (testCase.setup === 'amazon-cta') {
       const contract = await evaluate(`(() => { const anchor = document.querySelector('[data-fh-amazon-cta]'); if (!anchor) return { missing: true }; let appPrevented = false; let href = ''; let target = ''; let rel = ''; const guard = (event) => { const clicked = event.target instanceof Element ? event.target.closest('[data-fh-amazon-cta]') : null; if (!clicked) return; appPrevented = event.defaultPrevented; href = clicked.href; target = clicked.target; rel = clicked.rel; event.preventDefault(); }; document.addEventListener('click', guard); try { anchor.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); } finally { document.removeEventListener('click', guard); } let validUrl = false; try { const url = new URL(href); const parameters = [...url.searchParams.entries()]; const segments = url.pathname.split('/').filter(Boolean); validUrl = url.protocol === 'https:' && url.hostname === 'www.amazon.com' && !url.username && !url.password && !url.port && !url.hash && segments.length === 2 && segments[0] === 'dp' && /^[A-Z0-9]{10}$/.test(segments[1]) && parameters.length === 1 && parameters[0][0] === 'tag' && parameters[0][1] === 'flowhome-20'; } catch {} return { href, target, rel, appPrevented, validUrl }; })()`);
@@ -490,18 +564,36 @@ async function runCase(testCase) {
       const contract = await evaluate(`(() => { window.dataLayer = []; const cta = document.querySelector('[data-fh-home-primary-cta]'); const before = cta?.textContent?.trim(); return { flag: document.body.dataset.homePrimaryCtaV1, funnelFlag: document.body.dataset.funnelExperimentV1, before, exposure: window.dataLayer.filter((entry) => entry.event === 'experiment_exposure').length, variant: cta?.getAttribute('data-experiment-variant') || null }; })()`);
       if (contract.flag !== 'off' || contract.funnelFlag !== 'off' || contract.before !== 'Find my setup' || contract.exposure !== 0 || contract.variant) result.failures.push(`Inactive default/build contract failed: ${JSON.stringify(contract)}`);
     }
+    if (testCase.evidenceTerms) {
+      result.evidenceCopy = await evaluate(`(async () => {
+        const terms = ${JSON.stringify(testCase.evidenceTerms)};
+        const main = document.querySelector('main');
+        const text = main?.innerText ?? '';
+        const missing = terms.filter((term) => !text.includes(term));
+        const paragraph = [...(main?.querySelectorAll('p, li') ?? [])].find((element) => element.innerText.includes(terms[0]));
+        paragraph?.scrollIntoView({ block: 'center', behavior: 'instant' });
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const rect = paragraph?.getBoundingClientRect();
+        const inViewport = Boolean(rect && rect.top >= 0 && rect.bottom <= innerHeight);
+        return { missing, inViewport };
+      })()`);
+      if (result.evidenceCopy.missing.length || !result.evidenceCopy.inViewport) result.failures.push(`Documentary evidence is missing or not readable in viewport: ${JSON.stringify(result.evidenceCopy)}`);
+    }
     result.inspection = await evaluate(INSPECTION_EXPRESSION);
-    result.diagnostics = activeDiagnostics;
-    if (activeDiagnostics.length) result.failures.push(`${activeDiagnostics.length} console/runtime/log error(s)`);
+    result.expectedDiagnostics = testCase.expectedStatus === 404 ? activeDiagnostics.filter((entry) => entry.type === 'log' && entry.url === url && /status of 404 \(Not Found\)/.test(entry.message)) : [];
+    result.diagnostics = activeDiagnostics.filter((entry) => !result.expectedDiagnostics.includes(entry));
+    if (result.diagnostics.length) result.failures.push(`${result.diagnostics.length} console/runtime/log error(s)`);
     if (result.inspection.jsonLdErrors.length) result.failures.push(`${result.inspection.jsonLdErrors.length} invalid JSON-LD block(s)`);
     if (result.inspection.smallControls.length) result.failures.push(`${result.inspection.smallControls.length} control(s) smaller than 44px`);
     if (result.inspection.overflow.length) result.failures.push(`${result.inspection.overflow.length} uncontained horizontal overflow element(s)`);
+    if (result.inspection.brokenImages.length) result.failures.push(`${result.inspection.brokenImages.length} failed image(s) without a working fallback`);
+    result.failures.push(...result.inspection.heroFailures);
     if (testCase.setup === 'save-and-scroll-end') {
       if (!result.inspection.dock.visible) result.failures.push('Shortlist dock did not become visible');
       if (result.inspection.dock.overlaps.length) result.failures.push(`Shortlist dock overlaps: ${result.inspection.dock.overlaps.join(', ')}`);
       if (result.inspection.dock.bodyPaddingBottom < result.inspection.dock.height + 16) result.failures.push('Document reservation is smaller than the visible dock plus safe gap');
     }
-    const screenshot = await pageClient.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
+    const screenshot = await pageClient.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
     result.screenshot = join(OUTPUT_DIR, `${testCase.name}.png`);
     await writeFile(result.screenshot, Buffer.from(screenshot.data, 'base64'));
   } catch (error) {
@@ -510,7 +602,10 @@ async function runCase(testCase) {
   }
   const uniqueAttempts = uniqueExternalAttempts(externalAttempts);
   result.blockedExternalAssets = uniqueAttempts.filter((attempt) => PASSIVE_EXTERNAL_RESOURCE_TYPES.has(attempt.resourceType));
-  result.forbiddenExternalRequests = uniqueAttempts.filter((attempt) => !PASSIVE_EXTERNAL_RESOURCE_TYPES.has(attempt.resourceType));
+  // Offline account rendering intentionally blocks its documented identity SDK.
+  // This is not a live sign-in test or permission to execute any remote script.
+  result.blockedIdentityRequests = uniqueAttempts.filter((attempt) => testCase.path === '/account/' && attempt.resourceType === 'Script' && attempt.url === 'https://accounts.google.com/gsi/client');
+  result.forbiddenExternalRequests = uniqueAttempts.filter((attempt) => !PASSIVE_EXTERNAL_RESOURCE_TYPES.has(attempt.resourceType) && !result.blockedIdentityRequests.includes(attempt));
   if (result.forbiddenExternalRequests.length) {
     result.failures.push(`Forbidden external network request(s): ${result.forbiddenExternalRequests.map((attempt) => `${attempt.resourceType} ${attempt.url}`).join(', ')}`);
   }
@@ -637,5 +732,5 @@ try {
   console.log(`Browser QA report: ${REPORT_PATH}`);
   console.log(`Browser QA screenshots: ${OUTPUT_DIR}`);
   console.log(`Browser QA summary: ${report.summary.passed}/${report.summary.total} PASS, ${report.summary.failed} FAIL, ${report.summary.setupErrors} setup error(s)`);
-  if (report.summary.passed !== report.summary.total || report.summary.failed || report.summary.setupErrors || report.summary.cleanupErrors) process.exitCode = 1;
+  if (report.summary.passed !== report.summary.total || report.summary.failed || report.summary.setupErrors || report.summary.cleanupErrors || report.httpChecks.some((check) => check.status !== 'PASS')) process.exitCode = 1;
 }

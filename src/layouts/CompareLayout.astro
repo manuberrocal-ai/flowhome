@@ -6,6 +6,8 @@ import { generateBreadcrumbSchema, generateItemListSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
 import { buildVerifiedComparisonInsights, prepareVerifiedComparisonProducts } from '../lib/blocks/block9/comparison-insights-verified.ts';
 import { getCompatibilityEnvironment } from '../lib/blocks/block9/runtime.ts';
+import { getCommerceData } from '../lib/commerce-data';
+import { getComparisonFeatureLabel } from '../lib/comparison-insights';
 interface Props { products: any[]; title: string; description: string; angle: string; guidance: string; updatedThrough?: string; relatedComparisons: any[]; }
 const { products, title, description, angle, guidance, updatedThrough, relatedComparisons } = Astro.props;
 const compatibilityEnvironment = getCompatibilityEnvironment(import.meta.env);
@@ -20,7 +22,8 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
   <script type="application/ld+json" set:html={serializeJsonLd(itemListSchema)} />
   <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
   <Breadcrumbs items={breadcrumbItems.map(({ name, href }) => ({ name, href }))} />
-  <section class="space-y-6">
+  <section class="space-y-6" data-comparison-presentation>
+    <script is:inline type="application/json" data-comparison-base set:html={serializeJsonLd(products.map(({ slug, name, category, formFactor }) => ({ slug, name, category, formFactor })))} />
     <div class="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-8 text-white">
       <p class="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-100">FlowHome Compare</p>
       <h1 class="mt-3 text-4xl font-extrabold md:text-5xl">{title}</h1>
@@ -29,64 +32,69 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
     <section class="rounded-3xl border border-blue-100 bg-blue-50/70 p-6" aria-labelledby="comparison-angle">
       <h2 id="comparison-angle" class="text-2xl font-black text-slate-950">What this comparison helps you decide</h2>
       <p class="mt-3 text-lg leading-8 text-slate-700">{angle}</p>
-       <p class="mt-3 text-sm font-semibold text-slate-600">Prices are historical snapshots unless recently checked. Ratings and rating counts are Amazon customer ratings{updatedThrough ? `; source data dates: ${updatedThrough}` : ''}; listings can change.</p>
+       <p class="mt-3 text-sm font-semibold text-slate-600">Prices and Amazon customer ratings are shown only when current authorized data is available. Otherwise they remain unverified{updatedThrough ? `. Catalog record dates: ${updatedThrough}` : ''}; listings can change.</p>
     </section>
     <CompareTable products={comparisonProducts} />
+    <div data-comparison-controls hidden>
+      <p data-comparison-status role="status" class="text-sm text-slate-600"></p>
+      <button data-comparison-refresh type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-base font-semibold text-slate-900 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Refresh evidence</button>
+    </div>
     <section class="grid gap-6 md:grid-cols-2" aria-label="Comparison insights">
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-black text-slate-950">Key tradeoffs</h2>
-        <ul class="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-700">{insights.tradeoffs.map((item) => <li>{item}</li>)}</ul>
+        <ul data-comparison-tradeoffs class="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-700">{insights.tradeoffs.map((item) => <li>{item}</li>)}</ul>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-black text-slate-950">Who should buy each option</h2>
-        {insights.buyerFits.map((fit) => <div class="mt-4"><h3 class="font-bold text-slate-950">{products.find((product) => product.slug === fit.slug)?.name ?? fit.slug}</h3><ul class="list-disc pl-5 text-sm leading-6 text-slate-700">{fit.reasons.map((reason) => <li>{reason}</li>)}</ul></div>)}
+        {insights.buyerFits.map((fit) => <div class="mt-4"><h3 class="font-bold text-slate-950">{products.find((product) => product.slug === fit.slug)?.name ?? fit.slug}</h3><ul data-comparison-buyer={fit.slug} class="list-disc pl-5 text-sm leading-6 text-slate-700">{fit.reasons.map((reason) => <li>{reason}</li>)}</ul></div>)}
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-2xl font-black text-slate-950">Best fit by verified signal</h2>
-        <p class="mt-3 leading-7 text-slate-700">{insights.bestFitBySignal}</p>
-        {insights.ecosystemLeaders.length > 0 && <ul class="mt-3 list-disc pl-5 text-sm leading-6 text-slate-700">{insights.ecosystemLeaders.map((leader) => <li>{leader.reason}</li>)}</ul>}
+        <h2 class="text-2xl font-black text-slate-950">Compatibility evidence</h2>
+        <p data-comparison-best-fit class="mt-3 leading-7 text-slate-700">{insights.bestFitBySignal}</p>
+        <ul data-comparison-leaders hidden={insights.ecosystemLeaders.length === 0} class="mt-3 list-disc pl-5 text-sm leading-6 text-slate-700">{insights.ecosystemLeaders.map((leader) => <li>{leader.reason}</li>)}</ul>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-black text-slate-950">Final recommendation</h2>
-        <p class="mt-3 leading-7 text-slate-700">{insights.finalRecommendation}</p>
+        <p data-comparison-final class="mt-3 leading-7 text-slate-700">{insights.finalRecommendation}</p>
       </div>
     </section>
     <section class="rounded-3xl border border-amber-200 bg-amber-50 p-6" aria-labelledby="evidence-limits">
       <h2 id="evidence-limits" class="text-2xl font-black text-slate-950">Evidence limits</h2>
-      <ul class="mt-3 list-disc space-y-2 pl-5 leading-7 text-amber-950">{insights.evidenceLimits.map((item) => <li>{item}</li>)}</ul>
+      <ul data-comparison-limits class="mt-3 list-disc space-y-2 pl-5 leading-7 text-amber-950">{insights.evidenceLimits.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]" aria-labelledby="quick-decision">
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 id="quick-decision" class="text-2xl font-black text-slate-950">Quick decision framework</h2>
         <ol class="mt-4 list-decimal space-y-3 pl-5 leading-7 text-slate-700">
-          <li>Filter by the compatibility and feature fields that your home actually needs.</li>
-          <li>Compare the price snapshot with Amazon customer rating and rating count as context.</li>
+          <li>Identify the task, exact model and installation requirements; treat unverified compatibility fields as questions to resolve, not filters that certify support.</li>
+          <li>Check current prices and customer feedback on Amazon when verified data is unavailable here.</li>
           <li>Open the product profile and current Amazon listing before purchasing.</li>
         </ol>
         <p class="mt-5 rounded-2xl bg-amber-50 p-4 text-sm font-semibold leading-6 text-amber-900">Decision guidance: {guidance}</p>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-        {comparisonProducts.map((product) => (
+        {comparisonProducts.map((product) => { const commerce = getCommerceData(product); return (
           <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-black uppercase tracking-wide text-blue-700">{product.category.replaceAll('-', ' ')}</p>
             <h2 class="mt-2 text-xl font-black text-slate-950"><a class="hover:text-blue-700 hover:underline" href={`/product/${product.slug}/`}>{product.name}</a></h2>
             <ul class="mt-3 space-y-1 text-sm leading-6 text-slate-600">
-              <li><strong>Price snapshot:</strong> ${product.price} - checked {product.priceLastChecked}</li>
-              <li><strong>Amazon customer rating:</strong> {product.ownerRating} / 5 from {product.ownerRatingCount?.toLocaleString()} ratings - checked {product.ratingLastChecked}</li>
-              <li><strong>Compatibility:</strong> {[product.matter && 'Matter', product.alexaCompatible && 'Alexa', product.googleHomeCompatible && 'Google Home', product.appleHomeKit && 'Apple HomeKit'].filter(Boolean).join(', ') || 'Check profile'}</li>
+              <li><strong>Price:</strong> {commerce.displayPrice === undefined ? 'Check on Amazon' : `$${commerce.displayPrice} — checked ${commerce.priceLastCheckedLabel}`}</li>
+              <li><strong>Amazon customer rating:</strong> {commerce.isRatingFresh ? `${commerce.displayRating} / 5 from ${commerce.displayRatingCount?.toLocaleString()} ratings — checked ${commerce.ratingLastCheckedLabel}` : 'Not verified'}</li>
+              {(['matter', 'alexaCompatible', 'googleHomeCompatible', 'appleHomeKit'] as const).map((field, index) => <li><strong>{['Matter', 'Alexa', 'Google Home', 'Apple HomeKit'][index]}:</strong> <span data-comparison-field={field} data-comparison-slug={product.slug}>{getComparisonFeatureLabel(product, field)}</span></li>)}
+              {(product.compatibilityNotes ?? []).map((note: string) => <li class="rounded-lg bg-amber-50 p-3 text-amber-950"><strong>Conditions:</strong> {note}</li>)}
             </ul>
             <a class="mt-3 inline-flex min-h-11 items-center font-bold text-blue-700 hover:underline" href={`/category/${product.category}/`}>Browse {product.category.replaceAll('-', ' ')} category</a>
           </article>
-        ))}
+        ); })}
       </div>
     </section>
     <section class="rounded-3xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="comparison-methodology">
       <h2 id="comparison-methodology" class="text-2xl font-black text-slate-950">Editorial methodology</h2>
       <div class="mt-3 text-sm leading-7 text-slate-700">
         <p><strong>Author:</strong> FlowHome Editorial Team.</p>
-        <p class="mt-2"><strong>Ratings source:</strong> Amazon customer ratings, not FlowHome controlled lab tests. Ratings and counts are snapshots checked on the dates shown above; they may change on Amazon.</p>
-        <p class="mt-2"><strong>Price source:</strong> Historical snapshots from product data, not live Amazon pricing. Prices, discounts, and availability may change after publication. FlowHome may earn from qualifying purchases.</p>
-        <p class="mt-2"><strong>Feature fields:</strong> Compatibility and feature flags come from public product data and manufacturer listings. Specs not surfaced in the table are not verified for these products.</p>
+        <p class="mt-2"><strong>Ratings source:</strong> Current authorized Amazon customer ratings, when available, not FlowHome controlled lab tests. Unverified ratings and counts are withheld.</p>
+        <p class="mt-2"><strong>Price source:</strong> Current authorized Amazon observations, when available. Manual and expired prices are withheld. Confirm price, discounts and availability on Amazon. FlowHome may earn from qualifying purchases.</p>
+        <p class="mt-2"><strong>Feature fields:</strong> These are catalog records, not proof of independently verified compatibility. Confirm the exact model, firmware, hub requirements and ecosystem support with the manufacturer.</p>
       </div>
     </section>
     <nav class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" aria-labelledby="related-comparisons">

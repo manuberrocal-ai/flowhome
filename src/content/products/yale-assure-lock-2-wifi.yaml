@@ -7,7 +7,7 @@ originalPrice: 259.99
 discountPct: 8
 category: smart-lock
 affiliateUrl: "https://www.amazon.com/dp/B0CPLS7F28?tag=flowhome-20"
-image: "https://images.thdstatic.com/productImages/a1a306c9-bf7e-426c-820b-195ed60ce0f8/svn/yale-electronic-deadbolts-yrd420-wf1-619-64_600.jpg"
+image: "/images/product-art/illustrations-v1/smart-lock.png"
 ownerRating: 4.3
 ownerRatingCount: 7600
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,51 @@ catalogActive: true
 dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
-model: "Assure Lock 2 Wi-Fi"
+model: "YRD420-WF1-619"
+identityEvidence:
+  model: "YRD420-WF1-619"
+  asin: B0CPLS7F28
+  claims:
+    model:
+      value: "YRD420-WF1-619"
+      conditions: "The reviewed title identifies the keyed Wi-Fi touchscreen variant. Do not transfer Touch, Plus, key-free or default website finish details."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0CPLS7F28"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B0CPLS7F28"
+      conditions: "This identifies the reviewed indexed destination. It does not renew historical commercial data or certify the current seller's package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0CPLS7F28"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Replacement keyed deadbolt with Wi-Fi module"
+      conditions: "The YRD410/YRD420 guide covers lock replacement and module setup. It does not inspect the user's door or certify other Yale variants."
+      sources:
+        - label: "Yale — keyed YRD410/YRD420 installation guide"
+          url: "https://images.salsify.com/image/upload/s--gKFHxEcu--/yw8tyifbsuqunupyfe6p.pdf"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing identity — YRD420-WF1-619, Wi-Fi touchscreen, satin nickel"
+    url: "https://www.amazon.com/dp/B0CPLS7F28"
+    accessedAt: "2026-09-05"
+installation:
+  model: "YRD420-WF1-619"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "This keyed YRD420 replaces the deadbolt, rather than retaining the existing exterior lock. Yale specifies 1-3/8 to 2-1/4 inch door thickness, 2-3/8 or 2-3/4 inch backset, and a 2-1/8 or 1-1/2 inch face bore. Verify the door and required adapter before buying."
+    - "The guided-setup assessment assumes a prepared, compatible door and surface-mounted DoorSense. Flush mounting the sensor requires drilling; door or frame alterations need a separate assessment. Confirm smooth bolt movement and follow the manual's mounting checks."
+    - "Use four AA batteries and the correct Wi-Fi module; remove batteries before inserting or removing a Yale Smart Module. Follow the Yale app setup, calibrate DoorSense and check open/closed readings. This is the standard keyed Assure Lock 2, not Touch, Plus or a key-free variant; the seller's hardware has not been inspected."
+  sources:
+    - label: "Yale US — standard keyed Assure Lock 2 touchscreen Wi-Fi family specifications"
+      url: "https://shopyalehome.com/products/yale-assure-lock-2-touchscreen-with-wi-fi"
+      accessedAt: "2026-09-05"
+    - label: "Yale YRD410/YRD420 keyed installation guide — module, batteries and DoorSense"
+      url: "https://images.salsify.com/image/upload/s--gKFHxEcu--/yw8tyifbsuqunupyfe6p.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
@@ -33,6 +77,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: standard
-priorityScore: 58
-roiApproved: true

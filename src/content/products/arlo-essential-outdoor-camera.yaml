@@ -7,7 +7,7 @@ originalPrice: 129.99
 discountPct: 23
 category: security-camera
 affiliateUrl: "https://www.amazon.com/dp/B0DVNSQSD7?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B0DVNSQSD7.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/security-camera.png"
 ownerRating: 4.1
 ownerRatingCount: 11500
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,51 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "Arlo Essential Outdoor Camera"
+model: "Essential Outdoor HD Camera (2nd Generation)"
+identityEvidence:
+  model: "Essential Outdoor HD Camera (2nd Generation)"
+  asin: B0DVNSQSD7
+  claims:
+    model:
+      value: "Essential Outdoor HD Camera (2nd Generation)"
+      conditions: "The indexed title identifies second-generation HD. It says one camera while other listing text says three; package quantity remains unverified."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0DVNSQSD7"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B0DVNSQSD7"
+      conditions: "This identifies the reviewed indexed destination. It does not renew historical commercial data or certify the current seller's package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0DVNSQSD7"
+          accessedAt: "2026-09-05"
+    generation:
+      value: "Second generation, HD listing"
+      conditions: "This is the generation in the reviewed listing, not an inspected hardware revision. Package quantity remains inconsistent."
+      sources:
+        - label: "Amazon indexed listing — generation only; package quantity unresolved"
+          url: "https://www.amazon.com/dp/B0DVNSQSD7"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing — second-generation HD; package quantity is inconsistent"
+    url: "https://www.amazon.com/dp/B0DVNSQSD7"
+    accessedAt: "2026-09-05"
+installation:
+  model: "Essential Outdoor HD Camera (2nd Generation)"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Charge this second-generation camera indoors: the supplied USB-C charging cable is for indoor use only, and the battery is integrated rather than removable. An outdoor-rated camera does not make its charging cable suitable for outdoor use."
+    - "Set up the camera in the Arlo Secure app on 2.4 GHz Wi-Fi and check signal strength at the intended location. Use the wall plate, mount and appropriate fixings, adjust the view, and test motion detection after placement; do not assume mounting alone verifies coverage."
+    - "These checks concern Essential Outdoor HD, 2nd Generation, not the 2K, XL or newer generations. Confirm the exact package: the consulted listing title says one camera but its bullets mention a three-pack. Hardware, included accessories and recording-plan terms have not been independently verified."
+  sources:
+    - label: "Arlo US — Essential Outdoor second-generation support"
+      url: "https://us.arlo.com/pages/arlo-essential-outdoor-support-page"
+      accessedAt: "2026-09-05"
+    - label: "Arlo Essential Outdoor second-generation manual — pages 8-15"
+      url: "https://downloads.arlo.com/files/QSG/UM_VMC2050_VMC3050_VMC2052_VMC3052_EN.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +77,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: true
-priority: standard
-priorityScore: 50
-roiApproved: true

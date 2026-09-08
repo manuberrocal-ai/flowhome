@@ -27,12 +27,14 @@ async function writeSitemap(dist, urls) {
   await writeFile(path.join(dist, 'sitemap-0.xml'), `<urlset>${urls.map((url) => `<url><loc>${url}</loc></url>`).join('')}</urlset>`);
 }
 
-test('automation retains operations but has no discovery notifications', async () => {
+test('daily automation queues review without deployment or discovery notifications', async () => {
   const automation = await source('automation.yml');
-  for (const command of ['discover:products', 'deals:detect', 'syndicate', 'maintenance:weekly', 'npm run build', 'upload-artifact']) {
+  for (const command of ['npm run flowhome:daily', 'upload-artifact', 'FLOWHOME_DAILY_SCHEDULE_ENABLED', 'DAILY_AUTOPUBLISH']) {
     assert.match(automation, new RegExp(command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
   }
-  assert.doesNotMatch(automation, /websub:publish|indexnow:submit/i);
+  assert.doesNotMatch(automation, /websub:publish|indexnow:submit|deploy:cloudflare|git push/i);
+  assert.match(automation, /contents: read/);
+  assert.match(automation, /persist-credentials: false/);
 });
 
 test('preparation policy skips schedule and first pushes without reading dist directories', () => {
@@ -107,16 +109,17 @@ test('batched deploy verifies on push and cron, while production deploy is manua
   assert.match(workflow, /deploy-production:\s*\n\s*needs: verify/);
   assert.match(workflow, /environment:\s*production/);
   assert.match(workflow, /group:\s*flowhome-production[\s\S]*cancel-in-progress:\s*false/);
-  assert.match(workflow, /actions\/upload-artifact@v7/);
-  assert.match(workflow, /actions\/download-artifact@v8/);
+  assert.match(workflow, /actions\/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a/);
+  assert.match(workflow, /actions\/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c/);
   assert.match(workflow, /has_urls:\s*\$\{\{ steps\.notification-urls\.outputs\.has_urls \}\}/);
 
   const verify = workflow.slice(workflow.indexOf('  verify:'), workflow.indexOf('  deploy-production:'));
   const production = workflow.slice(workflow.indexOf('  deploy-production:'));
   assert.doesNotMatch(verify, /wrangler-action|Deploy to Cloudflare Pages|websub:publish|indexnow:submit/);
   assert.match(production, /if:\s*\$\{\{ github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main' && inputs\.deploy_production == true \}\}/);
-  assert.match(production, /- uses: actions\/checkout@v7\s+with:\s+ref: main/);
-  assert.match(production, /cloudflare\/wrangler-action@v3/);
+  assert.match(production, /- uses: actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7\s+with:\s+ref: \$\{\{ needs\.verify\.outputs\.source_sha \}\}/);
+  assert.doesNotMatch(production, /ref: main/);
+  assert.match(production, /cloudflare\/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd/);
   assert.match(production, /needs\.verify\.outputs\.has_urls/);
   assert.match(production, /deployment-urls\/deployed-urls\.txt/);
 
@@ -125,4 +128,34 @@ test('batched deploy verifies on push and cron, while production deploy is manua
   assert.match(workflow, /id: notification-decision/);
   assert.match(production, /name: Publish WebSub update[\s\S]*name: Submit IndexNow via default endpoint/);
   assert.match(production, /steps\.notification-decision\.outputs\.notify == 'true'/);
+});
+
+test('release artifacts are pinned by immutable ID and checked before credentials and deployment', async () => {
+  const workflow = await source('batched-deploy.yml');
+  const verify = workflow.slice(workflow.indexOf('  verify:'), workflow.indexOf('  deploy-production:'));
+  const production = workflow.slice(workflow.indexOf('  deploy-production:'));
+  assert.match(verify, /ref: \$\{\{ github\.sha \}\}/);
+  assert.match(verify, /QUALITY_REPORT_PATH: \$\{\{ runner\.temp \}\}\/quality-report\.json/);
+  assert.match(verify, /source_sha: \$\{\{ steps\.release-manifest\.outputs\.source_sha \}\}/);
+  assert.match(verify, /manifest_sha256: \$\{\{ steps\.release-manifest\.outputs\.manifest_sha256 \}\}/);
+  assert.ok(verify.indexOf('npm run seo:audit') < verify.indexOf('release-artifact.mjs create'));
+  assert.ok(verify.indexOf('release-artifact.mjs create') < verify.indexOf('Upload static artifact'));
+  assert.match(verify, /include-hidden-files: true/);
+  assert.match(verify, /flowhome-dist-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/);
+  for (const artifact of ['artifact_id', 'manifest_artifact_id', 'urls_artifact_id']) {
+    assert.match(production, new RegExp(`artifact-ids: \\$\\{\\{ needs\\.verify\\.outputs\\.${artifact} \\}\\}`));
+  }
+  for (const command of ['Require Cloudflare credentials', 'npm run deploy:check', 'release-record.mjs preflight', 'Deploy to Cloudflare Pages']) {
+    assert.ok(production.indexOf('release-artifact.mjs verify') < production.indexOf(command));
+  }
+  assert.ok(production.indexOf('release-record.mjs preflight') < production.indexOf('Deploy to Cloudflare Pages'));
+  assert.ok(production.indexOf('Deploy to Cloudflare Pages') < production.indexOf('release-record.mjs record'));
+  assert.match(production, /--commit-hash \$\{\{ needs\.verify\.outputs\.source_sha \}\} --commit-dirty=false/);
+  assert.match(production, /DEPLOYMENT_OUTCOME: \$\{\{ steps\.release-record\.outcome \}\}/);
+  assert.match(production, /Preserve release and recovery evidence\s+if: \$\{\{ always\(\) \}\}/);
+  assert.match(production, /RELEASE_DEPLOYMENT_URL: \$\{\{ steps\.deploy\.outputs\.deployment-url \}\}/);
+  assert.match(production, /NPM_CONFIG_SAVE: 'false'/);
+  assert.match(production, /NPM_CONFIG_PACKAGE_LOCK: 'false'/);
+  assert.match(production, /wranglerVersion: '4\.129\.0'/);
+  assert.match(production, /preCommands: node scripts\/deploy\/release-artifact\.mjs verify/);
 });
