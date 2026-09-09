@@ -112,9 +112,16 @@ test('the build uses Vite mode-specific dotenv precedence and only injects valid
   flowhomeEnvironment().hooks['astro:config:setup']({ updateConfig: (config) => { plugin = config.vite.plugins[0]; } });
   const load = () => JSON.parse(plugin.config({ root }, { mode: 'staging' }).define.__FLOWHOME_PUBLIC_CONFIG__);
   const previous = process.env.PUBLIC_APP_ENV;
+  const previousRelease = process.env.RELEASE_DEPLOY_PRODUCTION;
   delete process.env.PUBLIC_APP_ENV;
-  t.after(() => { if (previous === undefined) delete process.env.PUBLIC_APP_ENV; else process.env.PUBLIC_APP_ENV = previous; });
+  delete process.env.RELEASE_DEPLOY_PRODUCTION;
+  t.after(() => {
+    if (previous === undefined) delete process.env.PUBLIC_APP_ENV; else process.env.PUBLIC_APP_ENV = previous;
+    if (previousRelease === undefined) delete process.env.RELEASE_DEPLOY_PRODUCTION; else process.env.RELEASE_DEPLOY_PRODUCTION = previousRelease;
+  });
   assert.equal(load().environment, 'staging');
+  process.env.RELEASE_DEPLOY_PRODUCTION = 'true';
+  assert.throws(load, /must be production for a production release/);
   process.env.PUBLIC_APP_ENV = 'production';
   assert.equal(load().environment, 'production');
   assert.ok(!JSON.stringify(load()).includes('must-not-be-projected'));
