@@ -2,7 +2,7 @@
 
 Vista derivada de [BACKLOG.json](BACKLOG.json). Estados y criterios se editan allí; este plan no mantiene una segunda versión manual.
 
-32 tareas: 8 hechas en su alcance y 24 parciales, pendientes, bloqueadas o diferidas. Hecho no significa publicado ni operación real.
+32 tareas: 7 hechas en su alcance y 25 parciales, pendientes, bloqueadas o diferidas. Hecho no significa publicado ni operación real.
 
 Dirección y siguiente acción: [prompt maestro](PROMPT_MAESTRO.md). Valoración y límites: [juzgado integral](JUZGADO_INTEGRAL.md). [Plan anterior preservado](PLAN_DE_TRABAJO_HISTORICO_FH00B_2026-09-08.md).
 
@@ -33,7 +33,7 @@ Dirección y siguiente acción: [prompt maestro](PROMPT_MAESTRO.md). Valoración
 | FH-20 | P2 | Suministrar grafo real de compatibilidad | parcial | FH-07 |
 | FH-21 | P1 | Observabilidad y rollback verificables | parcial | FH-02 |
 | FH-22 | P1 | Línea de base única con ventanas comparables | parcial | FH-10 |
-| FH-23 | P1 | Resolver inventario de dependencias y PRs abiertas | hecho | FH-01 |
+| FH-23 | P1 | Resolver inventario de dependencias y PRs abiertas | parcial | FH-01 |
 | FH-24 | P1 | Integrar gobierno remoto y decisión de licencia | parcial | FH-01 |
 | FH-25 | P2 | Medir sostenibilidad económica | pendiente | FH-22 |
 | FH-26 | P2 | Evaluar CRO con tráfico suficiente | diferido | FH-13, FH-22 |
@@ -187,7 +187,7 @@ Registrar fuente, fecha de extracción, ventana, denominador, versión, país/di
 
 ### FH-23 — Resolver inventario de dependencias y PRs abiertas
 
-Estado: hecho. Responsabilidad: Ingeniería. Ejecución: local.
+Estado: parcial. Responsabilidad: Ingeniería. Ejecución: local.
 
 Auditoría posterior utilizable o cada excepción evaluada; conciliar fast-uri local 3.1.7 con PR #11; revisar siete PRs observadas por compatibilidad, sin duplicar parches ni fusionar automáticamente.
 

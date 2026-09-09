@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-09-08",
+  "as_of": "2026-09-09",
   "purpose": "Backlog de la revisión integral. Las dependencias expresan orden de cierre; la preparación local puede avanzar en tareas bloqueadas externamente.",
   "status_definitions": {
     "hecho": "Entregable de esta tarea verificado; no significa proyecto completo.",
@@ -195,8 +195,8 @@
       "execution": "local",
       "owner_role": "SEO/UX",
       "acceptance": "88 rutas o cambios justificados; 83 indexables según política; canonicals/status/schema/teclado/7 tamaños; producción comprobada tras publicación; INP y CWV de campo separados de Lighthouse.",
-      "evidence": "docs/project/FH12S_ETIQUETAS_CONTRASTE_2026-09-08.md: corrección local posterior de contraste y nombres accesibles, validación dirigida propia. FH13Q conserva2ec3e0a:135/135 navegador y91HTTP; FH12R cuatro rutas×3, presupuestos aprobados. FH12P y sus outliers se conservan como históricos. No certifica accesibilidad integral; nuevo candidato, release aprobado, online y campo pendientes.",
-      "reviewed_at": "2026-09-08"
+      "evidence": "docs/project/FH23D_PORTADA_TRAZA_2026-09-09.md: fuente e79ac6f,1059 pruebas, SEO88,142/142 navegador y91HTTP; siete tamaños/foco/scroll/impresión correctos. Portada dirigida tres muestras97/TBT0; matriz completa FH13U4×3 correcta, rendimiento97–99 y seis avisos de limpieza conservados. Históricos FH12S/FH13Q/FH12R preservados. No certifica accesibilidad integral; release, online y campo pendientes.",
+      "reviewed_at": "2026-09-09"
     },
     {
       "id": "FH-13",
@@ -217,8 +217,8 @@
       "execution": "externo",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
-      "evidence": "docs/project/FH13R_REVISION_ACTUALIZADA_2026-09-08.md; candidato ac1ee54 limpio,1033 pruebas y135 casos/91HTTP; lint/tipos/calidad/enlaces/build88/SEO correctos.421 archivos inventariados, perfil production sin servicios, distinto del dist local FH12S; original HEAD/índice/status preservados al crear snapshot. PR12 conserva último envío autorizado5cc6c95; actualizar requiere aprobación. Rendimiento propio según informe; revisión externa/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
-      "reviewed_at": "2026-09-08"
+      "evidence": "docs/project/FH13T_ENVIO_PR12_2026-09-09.md; FH13S/1651f6a enviado con autorización a PR12, sin merge ni publicación. Quality falló en audit; Analyze terminó correctamente. docs/project/FH23B_DEPENDENCIAS_Y_WORKFLOW_2026-09-09.md registra corrección aislada posterior aún no enviada. Revisión remota, candidato actualizado, manifiesto, rollback, aprobación de publicación y online pendientes.",
+      "reviewed_at": "2026-09-09"
     },
     {
       "id": "FH-14",
@@ -352,7 +352,7 @@
     {
       "id": "FH-23",
       "title": "Resolver inventario de dependencias y PRs abiertas",
-      "status": "hecho",
+      "status": "parcial",
       "priority": "P1",
       "depends_on": [
         "FH-01"
@@ -360,8 +360,8 @@
       "execution": "local",
       "owner_role": "Ingeniería",
       "acceptance": "Auditoría posterior utilizable o cada excepción evaluada; conciliar fast-uri local 3.1.7 con PR #11; revisar siete PRs observadas por compatibilidad, sin duplicar parches ni fusionar automáticamente.",
-      "evidence": "docs/project/CIERRE_FH23_2026-09-06.md; siete PRs revisadas sin fusionar; npm audit completo 0 vulnerabilidades; fast-uri conciliado; incompatibilidad TS7 documentada; 737 pruebas aprobadas",
-      "reviewed_at": "2026-09-06"
+      "evidence": "Cierre histórico: docs/project/CIERRE_FH23_2026-09-06.md. Reabierto por CI; FH23B corrige dependencias/workflow, FH23D optimiza portada y FH23E evalúa alerta43. Fuente local e79ac6f con instalación limpia, auditoría producción0,1059 pruebas y142 casos/91HTTP. Nuevo parche no incorporado a PR12; no atribuirlo al SHA remoto ni dar por resueltas sus alertas.",
+      "reviewed_at": "2026-09-09"
     },
     {
       "id": "FH-24",
