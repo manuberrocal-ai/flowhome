@@ -161,7 +161,7 @@ const heroProducts = showcaseProducts.map((product) => {
 
 
 
-  <section class="mt-16 rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
+  <section class="home-review-notes mt-16 rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
     <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
     <div class="home-surface brand-aurora-surface min-h-full rounded-[1.75rem] p-6 text-white shadow-xl shadow-slate-950/25 ring-1 ring-white/10">
        <div class="relative z-10">
@@ -229,6 +229,22 @@ const heroProducts = showcaseProducts.map((product) => {
   </script>
 
   <style is:inline>
+    /* Preserve every card in HTML and keyboard order; skip only distant layout. */
+    .featured-products .product-card {
+      content-visibility: auto;
+      contain-intrinsic-block-size: auto 36rem;
+    }
+    .home-review-notes {
+      content-visibility: auto;
+      contain-intrinsic-block-size: auto 96rem;
+    }
+    @media (min-width: 1024px) {
+      .home-review-notes { contain-intrinsic-block-size: auto 40rem; }
+    }
+    @media print {
+      .featured-products .product-card, .home-review-notes { content-visibility: visible; }
+    }
+
     body {
       background: #f1f5f9;
     }

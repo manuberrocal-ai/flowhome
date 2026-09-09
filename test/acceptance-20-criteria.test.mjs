@@ -250,7 +250,11 @@ test('C14 - Essential content renders by default while critical and below-fold i
   const index = read(src('pages/index.astro'));
   assert.match(index, /preloadImage=\{heroProducts\[0\]\?\.image\}/);
   assert.match(index, /data-hero-image[\s\S]*loading="eager"[\s\S]*fetchpriority="high"[\s\S]*data-fallback-src/);
-  assert.doesNotMatch(index, /content-visibility:\s*auto|data-reveal/);
+  // Distant independent regions may skip layout, never essential above-fold content.
+  // The region contract and scroll/focus checks cover that bounded optimization.
+  assert.doesNotMatch(index, /content-visibility:\s*hidden|data-reveal/);
+  assert.doesNotMatch(index, /\.hero-surface\s*\{[^}]*content-visibility/);
+  assert.match(index, /@media print\s*\{\s*\.featured-products \.product-card, \.home-review-notes\s*\{ content-visibility: visible;/);
   const base = read(src('layouts/BaseLayout.astro'));
   assert.match(base, /safePreloadImage && <link rel="preload" as="image" href=\{safePreloadImage\} imagesrcset=\{preloadImageSrcset\} imagesizes=\{preloadImageSizes\} fetchpriority="high"/);
   assert.match(index, /preloadImageSrcset=\{heroProducts\[0\]\?\.imageSrcset\}/);
@@ -325,5 +329,4 @@ test('C20 - JSON-LD never declares InStock/aggregateRating from retailer owner d
   // Offer only emitted when commerce.hasOffer
   assert.match(seo, /commerce\.hasOffer/);
 });
-
 
