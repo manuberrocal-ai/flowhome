@@ -149,7 +149,7 @@ test('prepaint consent, deferred authenticated sync, and approved PNG wordmarks 
   assert.match(prepaint, /document\.documentElement\.dataset\.flowhomeConsent = choice/);
   assert.match(layout, /const safePreloadImage = \(\(\) =>/);
   assert.match(layout, /candidate\.origin === Astro\.url\.origin/);
-  assert.match(layout, /type="image\/svg\+xml" href="\/favicon\.svg"/);
+  assert.match(layout, /type="image\/png" href="\/images\/flowhome-favicon\.png"/);
   assert.match(layout, /import\('\.\.\/lib\/cart-sync\.ts'\)/);
   assert.match(layout, /import\('\.\.\/lib\/supabase-client'\)/);
   assert.doesNotMatch(layout, /import \{ createCartSync \}/);

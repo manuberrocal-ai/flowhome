@@ -3,17 +3,28 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import sharp from 'sharp';
 
-test('favicon and manifest share a square scalable navy/teal brand mark', async () => {
-  const svg = await readFile(new URL('../public/favicon.svg', import.meta.url), 'utf8');
+test('favicon and manifest use the original transparent PNG without a white tile', async () => {
+  const layout = await readFile(new URL('../src/layouts/BaseLayout.astro', import.meta.url), 'utf8');
+  const png = await readFile(new URL('../public/images/flowhome-favicon.png', import.meta.url));
+  const metadata = await sharp(png).metadata();
   const manifest = JSON.parse(await readFile(new URL('../public/site.webmanifest', import.meta.url), 'utf8'));
-  assert.match(svg, /viewBox="0 0 64 64"/);
-  assert.match(svg, /#12304f/);
-  assert.match(svg, /#00bda5/);
-  assert.doesNotMatch(svg, /#f97316|<script|href=/);
-  assert.deepEqual(manifest.icons, [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }]);
+  assert.match(layout, /rel="icon" type="image\/png" href="\/images\/flowhome-favicon\.png"/);
+  assert.doesNotMatch(layout, /rel="icon"[^>]*favicon\.svg/);
+  assert.equal(metadata.format, 'png');
+  assert.equal(metadata.hasAlpha, true);
+  assert.deepEqual(manifest.icons, [{ src: '/images/flowhome-favicon.png', sizes: `${metadata.width}x${metadata.height}`, type: 'image/png', purpose: 'any' }]);
+  const { data, info } = await sharp(png).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  let transparent = 0;
+  let opaqueWhite = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] === 0) transparent++;
+    if (data[i] > 245 && data[i + 1] > 245 && data[i + 2] > 245 && data[i + 3] > 240) opaqueWhite++;
+  }
+  assert.ok(transparent > info.width * info.height * 0.3, 'Background must remain transparent');
+  assert.equal(opaqueWhite, 0, 'No opaque white frame or background');
 });
 
-test('Apple touch icon is a square opaque raster of the current favicon', async () => {
+test('Apple touch icon retains its separate square opaque platform asset', async () => {
   const layout = await readFile(new URL('../src/layouts/BaseLayout.astro', import.meta.url), 'utf8');
   assert.match(layout, /rel="apple-touch-icon" sizes="180x180" href="\/images\/flowhome-touch-180\.png"/);
   const source = await readFile(new URL('../public/favicon.svg', import.meta.url));
