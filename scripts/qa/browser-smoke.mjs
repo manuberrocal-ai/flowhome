@@ -8,6 +8,7 @@ import { join, resolve } from 'node:path';
 import ts from 'typescript';
 import { viewportCases, catalogEvidenceCases } from './viewport-cases.mjs';
 import { inspectSearchContract } from './search-contract.mjs';
+import { ownedPreviewEnvironment } from './preview-environment.mjs';
 
 const PROJECT_ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const PREVIEW_HOST = '127.0.0.1';
@@ -261,9 +262,9 @@ async function startPreview() {
   await closeServer(previewReservation);
   previewReservation = undefined;
   if (process.platform === 'win32') {
-    previewProcess = spawnLogged(process.env.ComSpec || 'cmd.exe', ['/d', '/s', '/c', `npm.cmd run preview -- --host ${PREVIEW_HOST} --port ${reservation.port}`], { cwd: PROJECT_ROOT });
+    previewProcess = spawnLogged(process.env.ComSpec || 'cmd.exe', ['/d', '/s', '/c', `npm.cmd run preview -- --host ${PREVIEW_HOST} --port ${reservation.port}`], { cwd: PROJECT_ROOT, env: ownedPreviewEnvironment() });
   } else {
-    previewProcess = spawnLogged('npm', ['run', 'preview', '--', '--host', PREVIEW_HOST, '--port', String(reservation.port)], { cwd: PROJECT_ROOT });
+    previewProcess = spawnLogged('npm', ['run', 'preview', '--', '--host', PREVIEW_HOST, '--port', String(reservation.port)], { cwd: PROJECT_ROOT, env: ownedPreviewEnvironment() });
   }
   createdPreview = true;
   const deadline = Date.now() + 30000;

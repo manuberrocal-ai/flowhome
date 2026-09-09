@@ -4,6 +4,7 @@ import { spawn } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ownedPreviewEnvironment } from './preview-environment.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const BASE_URL = (process.env.LIGHTHOUSE_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
@@ -68,7 +69,7 @@ async function findBrave() {
   throw new Error('Brave was not found. Set LIGHTHOUSE_CHROME_PATH or BRAVE_PATH.');
 }
 async function serving() { try { return (await fetch(BASE_URL, { signal: AbortSignal.timeout(1500) })).ok; } catch { return false; } }
-function spawnLogged(command, args) { return spawn(command, args, { cwd: ROOT, stdio: 'ignore', windowsHide: true }); }
+function spawnLogged(command, args) { return spawn(command, args, { cwd: ROOT, env: ownedPreviewEnvironment(), stdio: 'ignore', windowsHide: true }); }
 async function startPreview() {
   if (await serving()) return;
   preview = process.platform === 'win32' ? spawnLogged(process.env.ComSpec || 'cmd.exe', ['/d', '/s', '/c', 'npm.cmd run preview -- --host 127.0.0.1 --port 4321']) : spawnLogged('npm', ['run', 'preview', '--', '--host', '127.0.0.1', '--port', '4321']); createdPreview = true;
