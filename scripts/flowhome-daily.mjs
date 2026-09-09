@@ -13,6 +13,7 @@ import { persistReviewQueue } from './lib/persist-review-queue.mjs';
 import { reviewPersistenceSummary } from './lib/review-persistence-summary.mjs';
 import { getDealStatus } from '../src/lib/deal-state.ts';
 import { DAILY_QUALITY_COMMANDS, qualityCommandSkipReason, qualityCommandEnvironment } from './qa/quality-plan.mjs';
+import { verifyFullLighthouseEvidence } from './qa/lighthouse-evidence.mjs';
 
 const PROJECT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const JSON_FILES = ['seo', 'visual', 'amazon-candidates', 'expired-deals', 'tests', 'anomalies', 'review-queue', 'review-persistence'];
@@ -62,6 +63,9 @@ function projectRevision(project) {
 }
 
 async function evidenceDigests(reportDir, checks, { qualityOnly = false } = {}) {
+  if (checks.some(check => check.command === 'lighthouse:mobile' && check.status === 'passed')) {
+    await verifyFullLighthouseEvidence(join(reportDir, 'lighthouse'));
+  }
   const files = qualityOnly ? [] : [...JSON_FILES.map((name) => `${name}.json`), 'summary.md'];
   for (const [command, artifact] of [['quality:check', 'editorial-quality.json'], ['links:check', 'commercial-links.json']]) {
     if (checks.some((check) => check.command === command && check.status === 'passed')) files.push(artifact);

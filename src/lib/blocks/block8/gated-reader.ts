@@ -51,11 +51,19 @@ export function createGatedCommerceReader(dependencies: GatedCommerceReaderDepen
       if (await dependencies.reserveAttempt(structuredClone(initial), signal) !== true || signal.aborted) return null;
       const acquiredAt = clock().getTime();
       if (!Number.isFinite(acquiredAt) || acquiredAt < authorizedAt || !validGrant(initial, acquiredAt)) return null;
+      // Reservation can wait on a shared account lock. Recheck authority after
+      // that wait, before contacting the provider; a consumed attempt is not refunded.
+      const beforeAcquire = structuredClone(await dependencies.authorize({ ...input }, signal));
+      const reauthorizedAt = clock().getTime();
+      if (signal.aborted || !Number.isFinite(reauthorizedAt) || reauthorizedAt < acquiredAt
+        || !validGrant(initial, reauthorizedAt) || !validGrant(beforeAcquire, reauthorizedAt)
+        || beforeAcquire.accountRef !== initial.accountRef || beforeAcquire.revision !== initial.revision) return null;
+      initial.expiresAt = new Date(Math.min(Date.parse(initial.expiresAt), Date.parse(beforeAcquire.expiresAt))).toISOString();
       const snapshot = structuredClone(await dependencies.acquireReviewedSnapshot({ ...input }, structuredClone(initial), signal));
       if (!snapshot || signal.aborted) return null;
       const current = await dependencies.authorize({ ...input }, signal);
       const completedAt = clock().getTime();
-      if (signal.aborted || !Number.isFinite(completedAt) || completedAt < acquiredAt
+      if (signal.aborted || !Number.isFinite(completedAt) || completedAt < reauthorizedAt
         || !validGrant(current, completedAt) || !validGrant(initial, completedAt)
         || current.accountRef !== initial.accountRef || current.revision !== initial.revision
         || !toStrictUtc(snapshot.authorizationExpiresAt)) return null;

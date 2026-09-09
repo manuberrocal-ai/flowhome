@@ -45,9 +45,9 @@ test('quota refusal and errors fail closed before acquisition', async () => {
 test('revocation, account switches and revision changes during acquisition discard the result', async () => {
   for (const next of [null, { ...grant(), revision: 'revision-2' }, { ...grant(), accountRef: 'other-account' }, { ...grant(), expiresAt: NOW }]) {
     let reads = 0;
-    const read = createGatedCommerceReader(settings({ authorize: async () => reads++ ? next : grant() }));
+    const read = createGatedCommerceReader(settings({ authorize: async () => reads++ >= 2 ? next : grant() }));
     assert.equal(await read(context, signal()), null);
-    assert.equal(reads, 2);
+    assert.equal(reads, 3);
   }
 });
 
@@ -57,13 +57,48 @@ test('integration preserves the earliest authorization and reprojects each respo
     reserveAttempt: async value => { order.push('reserve'); value.expiresAt = '2099-01-01T00:00:00Z'; return true; },
     acquireReviewedSnapshot: async (identity, authority, signal) => {
       order.push('acquire'); assert.deepEqual(identity, context); assert.equal(authority.accountRef, 'test-account');
-      assert.equal(authority.expiresAt, grant().expiresAt); assert.equal(signal.aborted, false); return stored;
+      assert.equal(Date.parse(authority.expiresAt), Date.parse(grant().expiresAt)); assert.equal(signal.aborted, false); return stored;
     } }));
   const response = await serveCommerceRequest(new Request(`https://flowhome.dev/test?asin=${context.asin}&market=US`), { enabled: true, readAuthorizedSnapshot: read, clock: () => new Date(NOW) });
   assert.equal(response.status, 200);
   assert.equal((await response.json()).validUntil, '2026-07-30T12:00:30.000Z');
-  assert.deepEqual(order, ['authorize', 'reserve', 'acquire', 'authorize']);
+  assert.deepEqual(order, ['authorize', 'reserve', 'authorize', 'acquire', 'authorize']);
   assert.equal(stored.authorizationExpiresAt, '2026-07-30T12:10:00Z');
+});
+
+test('revocation while reserving quota prevents provider contact without refunding', async () => {
+  for (const changed of [null, { ...grant(), revision: 'revoked-2' }, { ...grant(), accountRef: 'different-account' }, { ...grant(), expiresAt: NOW }]) {
+    let reserved = false; let acquisitions = 0; let attempts = 0;
+    const read = createGatedCommerceReader(settings({
+      authorize: async () => reserved ? changed : grant(),
+      reserveAttempt: async () => { attempts++; reserved = true; return true; },
+      acquireReviewedSnapshot: async () => { acquisitions++; return snapshot(); },
+    }));
+    assert.equal(await read(context, signal()), null);
+    assert.equal(attempts, 1);
+    assert.equal(acquisitions, 0);
+  }
+});
+
+test('shorter pre-acquisition permission caps provider grant and delivered lease', async () => {
+  let authorizations = 0;
+  const deadline = '2026-07-30T12:00:10.000Z';
+  const read = createGatedCommerceReader(settings({
+    authorize: async () => ++authorizations === 2 ? { ...grant(), expiresAt: deadline } : grant(),
+    acquireReviewedSnapshot: async (_context, authority) => { assert.equal(authority.expiresAt, deadline); return snapshot(); },
+  }));
+  assert.equal((await read(context, signal())).authorizationExpiresAt, deadline);
+  assert.equal(authorizations, 3);
+});
+
+test('cancellation during pre-acquisition reauthorization prevents provider contact', async () => {
+  const controller = new AbortController(); let authorizations = 0; let acquisitions = 0;
+  const read = createGatedCommerceReader(settings({
+    authorize: async () => { if (++authorizations === 2) controller.abort(); return grant(); },
+    acquireReviewedSnapshot: async () => { acquisitions++; return snapshot(); },
+  }));
+  assert.equal(await read(context, controller.signal), null);
+  assert.equal(acquisitions, 0);
 });
 
 test('cancellation after consuming a quota attempt never starts acquisition or refunds', async () => {
@@ -109,4 +144,58 @@ test('reader acquires only after the quota transport confirms its commit policy'
     assert.equal(Boolean(await read(context, signal())), preference === 'tx=commit');
     assert.equal(acquisitions, preference === 'tx=commit' ? 1 : 0);
   }
+});
+
+test('HTTP cancellation retires late results at every gated reader boundary', { timeout: 3000 }, async () => {
+  const stages = ['initial-authority', 'reserve', 'pre-acquire-authority', 'acquire', 'final-authority'];
+  for (const held of stages) {
+    const controller = new AbortController();
+    let release; let entered; let authorizations = 0; let readerResult;
+    const blocked = new Promise(resolve => { release = resolve; });
+    const started = new Promise(resolve => { entered = resolve; });
+    const calls = [];
+    const step = async (stage, result) => {
+      calls.push(stage);
+      if (stage === held) { entered(); await blocked; } // Deliberately ignores abort.
+      return result;
+    };
+    const read = createGatedCommerceReader(settings({
+      authorize: async () => step(['initial-authority', 'pre-acquire-authority', 'final-authority'][authorizations++], grant()),
+      reserveAttempt: async () => step('reserve', true),
+      acquireReviewedSnapshot: async () => step('acquire', snapshot()),
+    }));
+    const responsePending = serveCommerceRequest(new Request(`https://flowhome.dev/test?asin=${context.asin}&market=US`, { signal: controller.signal }), {
+      enabled: true, clock: () => new Date(NOW),
+      readAuthorizedSnapshot: (input, signal) => { readerResult = read(input, signal); return readerResult; },
+    });
+    await started;
+    controller.abort();
+    const response = await responsePending;
+    assert.equal(response.status, 503, held);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.deepEqual(await response.json(), { status: 'unavailable' });
+    release();
+    assert.equal(await readerResult, null, held);
+    assert.deepEqual(calls, stages.slice(0, stages.indexOf(held) + 1), held);
+  }
+});
+
+test('HTTP timeout during quota reservation prevents a late provider acquisition', { timeout: 5000 }, async () => {
+  let release; let readerResult; let readerSignal; let attempts = 0; let acquired = 0;
+  const blocked = new Promise(resolve => { release = resolve; });
+  const read = createGatedCommerceReader(settings({
+    reserveAttempt: async () => { attempts++; await blocked; return true; },
+    acquireReviewedSnapshot: async () => { acquired++; return snapshot(); },
+  }));
+  const response = await serveCommerceRequest(new Request(`https://flowhome.dev/test?asin=${context.asin}&market=US`), {
+    enabled: true, clock: () => new Date(NOW),
+    readAuthorizedSnapshot: (input, signal) => { readerSignal = signal; readerResult = read(input, signal); return readerResult; },
+  });
+  assert.equal(response.status, 503);
+  assert.equal(readerSignal.aborted, true);
+  assert.equal(response.headers.get('cdn-cache-control'), 'no-store');
+  release();
+  assert.equal(await readerResult, null);
+  assert.equal(attempts, 1);
+  assert.equal(acquired, 0);
 });

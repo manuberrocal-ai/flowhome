@@ -82,7 +82,7 @@
       "execution": "local",
       "owner_role": "Ingeniería",
       "acceptance": "Un control requerido estable por PR; mismo conjunto de validaciones reutilizado; QA por impacto; tareas diarias sin repetir builds idénticos; Actions fijadas y compatibles; controles de rama conservados.",
-      "evidence": "docs/project/FH04D_COBERTURA_IMPACTO_2026-09-06.md; docs/project/FH04C_VALIDACION_DIARIA_2026-09-06.md; docs/project/FH04B_ACTIONS_FIJADAS_2026-09-06.md; docs/project/FH04A_CONTROLES_COMPARTIDOS_2026-09-06.md",
+      "evidence": "docs/project/FH04G_BUSQUEDA_EN_QA_2026-09-08.md: búsqueda incorporada a full/weekly siete tamaños y daily dos;1051 pruebas y142/142 casos con91HTTP en árbol local posterior a FH13R. FH04F exige cuatro rutas/doce muestras antes de persistir/cerrar/reutilizar; FH04E impide selectores reducidos heredados. FH04D conserva cobertura por impacto, FH04C validación diaria, FH04B Actions fijadas y FH04A controles compartidos. Operación y protecciones remotas pendientes.",
       "reviewed_at": "2026-09-06"
     },
     {
@@ -152,7 +152,7 @@
       "execution": "lectura",
       "owner_role": "Editorial/UX",
       "acceptance": "Identificar fielmente cada modelo promocionado con imágenes autorizadas y procedencia verificable; las ilustraciones genéricas rotuladas de FH09B no satisfacen la solicitud actual. No inventar fotos exactas. Mantener fallback y geometría, optimizar peso y medir las plantillas actuales.",
-      "evidence": "docs/project/FH09AN_SITEMAP_RESENAS_2026-09-08.md; 28 ilustraciones específicas/0 genéricas normales. 83 rutas/166 escenarios; índice de reseñas corregido de 18.024.722 a 56.108 B DPR1. Seis escenarios posteriores, 37 pruebas y build88/SEO/lint correctos. Pendientes estados no indexables y consolidación editorial; paquetes concretos no certificados. Sin publicación ni cierre integral.",
+      "evidence": "docs/project/FH09AP_BUSQUEDA_2026-09-08.md: búsqueda local28×3, imágenes distintas asociadas al registro, recuento completo, estado vacío y recuperación por teclado. Cambio posterior a FH13R, no incluido en PR12. FH09AO conserva lista poblada28×4 en FH13R y FH09AN mapa83 rutas/166 escenarios. No certifica fidelidad física ni fotos oficiales; estados restantes y entrega integral pendientes.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -217,7 +217,7 @@
       "execution": "externo",
       "owner_role": "Propietario/Ingeniería",
       "acceptance": "Paquete exacto con cambios, pruebas y rollback aprobado; publicar sólo contenido sustentado y guardado anónimo, sin ofertas no verificadas ni promesas de funciones inactivas; smoke online del SHA; iniciar D0.",
-      "evidence": "docs/project/FH13Q_REVISION_ACTUALIZADA_2026-09-08.md; candidato2ec3e0a limpio,1032 pruebas y135 casos/91HTTP; lint/tipos/calidad/enlaces/build88/SEO correctos.421 archivos inventariados iguales a vista local; original HEAD/índice/status preservados al crear snapshot. PR12 conserva5cc6c95 por lectura actual; actualizar requiere aprobación. Lighthouse del candidato, revisión externa/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
+      "evidence": "docs/project/FH13R_REVISION_ACTUALIZADA_2026-09-08.md; candidato ac1ee54 limpio,1033 pruebas y135 casos/91HTTP; lint/tipos/calidad/enlaces/build88/SEO correctos.421 archivos inventariados, perfil production sin servicios, distinto del dist local FH12S; original HEAD/índice/status preservados al crear snapshot. PR12 conserva último envío autorizado5cc6c95; actualizar requiere aprobación. Rendimiento propio según informe; revisión externa/manifiesto/rollback/aprobación y online pendientes; sin publicación.",
       "reviewed_at": "2026-09-08"
     },
     {
@@ -257,7 +257,7 @@
       "execution": "local",
       "owner_role": "Ingeniería/Datos",
       "acceptance": "Decisión revisable que prioriza infraestructura existente; define dato permitido, TTL, purga, cachés, borrado y fallos; HTML y clientes nunca conservan oferta vencida; no basar caducidad en cron.",
-      "evidence": "docs/project/FH16T_TRANSPORTE_RESERVA_2026-09-08.md; transporte de cuota integrado con lector y política explícita de commit,1032 pruebas. HTTP simulado no verifica JWT/PostgREST real. FH16S conserva borrador014 privado,12 solicitudes/3 admitidas y reinicio sin reset; sin grants. FH16P84+28 comprobaciones. FH16L/FH16Q requieren entorno distinto. Configuración/autoridad/cuotas/adquisición reales, BFCache, HTTP/CDN y otros campos pendientes; sin activación.",
+      "evidence": "docs/project/FH16U_REVALIDACION_TRAS_CUOTA_2026-09-08.md; reautoriza después de reserva y antes de adquisición, con cuota consumida y vencimiento mínimo;1036 pruebas. FH16T integra transporte con política de commit. HTTP simulado no verifica JWT/PostgREST real. FH16S conserva borrador014 privado,12 solicitudes/3 admitidas y reinicio sin reset; sin grants. FH16P84+28 comprobaciones. FH16L/FH16Q requieren entorno distinto. Configuración/autoridad/cuotas/adquisición reales, BFCache, HTTP/CDN y otros campos pendientes; sin activación.",
       "reviewed_at": "2026-09-08"
     },
     {

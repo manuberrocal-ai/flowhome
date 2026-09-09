@@ -16,6 +16,6 @@ test('V3 full viewport matrix and economical daily subset are explicit and uniqu
   assert.deepEqual(VIEWPORTS, [[320, 800], [375, 812], [390, 844], [768, 1024], [1024, 768], [1280, 800], [1440, 900]]);
   assert.equal(viewportCases().length, TEMPLATES.length * 7);
   assert.equal(new Set(viewportCases().map((item) => item.name)).size, viewportCases().length);
-  assert.equal(viewportCases('daily').length, 8);
+  assert.equal(viewportCases('daily').length, 10);
   assert.throws(() => viewportCases('unknown'));
 });

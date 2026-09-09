@@ -6,13 +6,13 @@ export const TEMPLATES = Object.freeze([
   ['compare', '/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/'],
   ['quiz', '/quiz/'], ['calculator', '/calculator/'], ['cart', '/cart/'],
   ['account', '/account/'], ['about', '/about/'], ['privacy', '/privacy/'],
-  ['preferences', '/preferences/'], ['404', '/__flowhome-v3-missing__/'],
+  ['preferences', '/preferences/'], ['search', '/search/'], ['404', '/__flowhome-v3-missing__/'],
 ]);
 export function viewportCases(profile = 'full') {
   if (!['full', 'weekly', 'daily'].includes(profile)) throw new Error('invalid_browser_profile');
-  const templates = profile === 'daily' ? TEMPLATES.filter(([name]) => ['home', 'product', 'deals', 'cart'].includes(name)) : TEMPLATES;
+  const templates = profile === 'daily' ? TEMPLATES.filter(([name]) => ['home', 'product', 'deals', 'cart', 'search'].includes(name)) : TEMPLATES;
   const viewports = profile === 'daily' ? VIEWPORTS.filter(([width]) => width === 390 || width === 1440) : VIEWPORTS;
-  return templates.flatMap(([name, path]) => viewports.map(([width, height]) => ({ name: `${name}-${width}`, path, width, height, expectedStatus: name === '404' ? 404 : 200, ...(name === 'cart' ? { setup: 'empty-cart' } : {}) })));
+  return templates.flatMap(([name, path]) => viewports.map(([width, height]) => ({ name: `${name}-${width}`, path, width, height, expectedStatus: name === '404' ? 404 : 200, ...(name === 'cart' ? { setup: 'empty-cart' } : name === 'search' ? { setup: 'search' } : {}) })));
 }
 
 // These source-backed corrections need their own rendered-page coverage, not

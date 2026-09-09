@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
 import { CORE_QUALITY_COMMANDS, DAILY_QUALITY_COMMANDS, qualityCommandSkipReason, qualityCommandEnvironment } from '../scripts/qa/quality-plan.mjs';
+import { parseLighthouseRoutes, parseLighthouseRuns } from '../scripts/qa/lighthouse-mobile.mjs';
 
 test('CI and daily share the same mandatory core and exactly one build', () => {
   const action = parse(readFileSync(new URL('../.github/actions/quality/action.yml', import.meta.url), 'utf8'));
@@ -35,4 +36,18 @@ test('command environment preserves selected flags and isolates reports from sou
   assert.equal(result.LINK_CHECK_REPORT_PATH, join('reports/case', 'commercial-links.json'));
   assert.equal(env.QUALITY_REPORT_PATH, 'source-data.json');
   assert.equal(result.BROWSER_QA_PROFILE, 'daily');
+});
+
+test('coordinated audits cannot inherit reduced Lighthouse coverage from a manual run', () => {
+  for (const profile of ['daily', 'full', 'weekly']) {
+    const env = { LIGHTHOUSE_ROUTES: '/product/amazon-smart-thermostat/', LIGHTHOUSE_RUNS: '1', PUBLIC_APP_ENV: 'production' };
+    const result = qualityCommandEnvironment({ env, reportDir: 'reports/case', profile });
+    assert.equal(Object.hasOwn(result, 'LIGHTHOUSE_ROUTES'), false);
+    assert.equal(Object.hasOwn(result, 'LIGHTHOUSE_RUNS'), false);
+    assert.equal(parseLighthouseRoutes(result.LIGHTHOUSE_ROUTES).length, 4);
+    assert.equal(parseLighthouseRuns(result.LIGHTHOUSE_RUNS), 3);
+    assert.equal(result.PUBLIC_APP_ENV, 'production');
+    assert.equal(env.LIGHTHOUSE_RUNS, '1', 'Caller environment remains untouched');
+    assert.equal(env.LIGHTHOUSE_ROUTES, '/product/amazon-smart-thermostat/');
+  }
 });

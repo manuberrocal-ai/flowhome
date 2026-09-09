@@ -311,6 +311,24 @@ test('daily reconciles a committed write with lost acknowledgement without dupli
   assert.equal(reads, 2, 'reuse is historical evidence, not a live queue query');
 });
 
+test('weekly reported success with partial Lighthouse evidence cannot persist or be reused', async t => {
+  const options = await fixture(t);
+  let calls = 0;
+  const reviewStore = { targetId: 'fixture-partial-matrix', lookup: async () => { calls++; }, enqueue: async () => { calls++; } };
+  const checkRunner = async context => {
+    const checks = await completeFixtureChecks(context);
+    await mkdir(join(context.reportDir, 'lighthouse'), { recursive: true });
+    await writeFile(join(context.reportDir, 'lighthouse/summary.json'), JSON.stringify({ scope: 'targeted', sampleCount: 1, failures: [] }));
+    return [...checks, { command: 'lighthouse:mobile', status: 'passed' }];
+  };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const result = await runDaily({ ...options, profile: 'weekly', reviewStore, checkRunner });
+    assert.equal(result.status, 'needs_attention');
+    assert.equal(calls, 0);
+    assert.equal(JSON.parse(await readFile(join(result.reportDir, 'review-persistence.json'), 'utf8')).status, 'skipped_quality');
+  }
+});
+
 test('daily persistence target changes invalidate reuse and incomplete quality cannot write', async (t) => {
   const options = await fixture(t);
   const disabled = await runDaily(options);

@@ -32,13 +32,20 @@ const products = (await getCollection('products')).map((product) => {
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Search</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">Search FlowHome</h1>
     <p class="mt-4 max-w-3xl text-lg text-slate-600">Find smart home products by brand, category, or product name.</p>
-    <label class="sr-only" for="site-search">Search products</label>
-    <label for="site-search" class="sr-only">Search FlowHome products and guides</label>
-    <input id="site-search" type="search" placeholder="Try robot vacuum, camera, thermostat..." class="mt-6 w-full rounded-2xl border border-slate-300 px-5 py-4 text-lg outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+    <label for="site-search" class="mt-6 block font-bold text-slate-950">Search products</label>
+    <input id="site-search" type="search" placeholder="Try robot vacuum, camera, thermostat..." class="mt-2 w-full rounded-2xl border border-slate-300 px-5 py-4 text-lg placeholder:text-slate-600 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
   </section>
   <noscript><p class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 text-slate-700">Interactive search requires JavaScript. You can still <a href="/products/" class="underline">browse the complete product catalog</a>.</p></noscript>
-  <section id="search-results" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite" data-search-products={JSON.stringify(products)}></section>
+  <p id="search-status" role="status" aria-atomic="true" class="mt-8 text-sm font-semibold text-slate-600"></p>
+  <div id="search-empty" hidden class="mt-4 rounded-2xl border border-slate-200 bg-white p-6">
+    <h2 class="text-xl font-bold text-slate-950">No matching products</h2>
+    <p class="mt-2 text-slate-600">Try a different product name, brand, or category, or clear your search to see every product.</p>
+    <button id="search-clear" type="button" class="mt-4 rounded-xl bg-brand-dark px-5 py-3 font-bold text-white">Clear search</button>
+    <a href="/products/" class="ml-3 inline-block py-3 font-semibold text-brand underline underline-offset-4">Browse the catalog</a>
+  </div>
+  <section id="search-results" aria-label="Product results" class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-search-products={JSON.stringify(products)}></section>
   <script>
+    import { matchesCatalogQuery } from '../lib/catalog-filter.js';
     import { getProductThumbnailSet } from '../lib/product-thumbnails';
     import { getProductImageAlt, getProductImageSourceLabel } from '../lib/product-art';
     import { getCommerceData, type CommerceProduct } from '../lib/commerce-data';
@@ -57,6 +64,9 @@ const products = (await getCollection('products')).map((product) => {
     };
     const input = requiredElement<HTMLInputElement>('#site-search');
     const results = requiredElement<HTMLElement>('#search-results');
+    const status = requiredElement<HTMLElement>('#search-status');
+    const empty = requiredElement<HTMLElement>('#search-empty');
+    const clear = requiredElement<HTMLButtonElement>('#search-clear');
     const products: SearchProduct[] = JSON.parse(results.dataset.searchProducts || '[]');
     const htmlEscapes: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
     function escapeHtml(value: unknown) {
@@ -64,7 +74,11 @@ const products = (await getCollection('products')).map((product) => {
     }
     function render(query = '') {
       const q = query.trim().toLowerCase();
-      const filtered = products.filter((item) => !q || [item.name, item.brand, item.category].join(' ').toLowerCase().includes(q)).slice(0, 24);
+      const filtered = products.filter((item) => matchesCatalogQuery(item, q));
+      status.textContent = q
+        ? `${filtered.length} ${filtered.length === 1 ? 'product' : 'products'} found.`
+        : `Showing all ${filtered.length} products.`;
+      empty.hidden = filtered.length !== 0;
       results.innerHTML = filtered.map((item) => {
         const category = item.category.replaceAll('-', ' ');
         const commerce = getCommerceData(item);
@@ -74,7 +88,7 @@ const products = (await getCollection('products')).map((product) => {
           '<p class="mt-2 text-xs text-slate-600" data-image-source-caption>' + escapeHtml(getProductImageSourceLabel(item)) + '</p>' +
           '<h2 class="mt-4 text-lg font-extrabold text-slate-950">' + escapeHtml(item.name) + '</h2>' +
           '<p class="mt-1 text-sm text-slate-500">' + escapeHtml(item.brand) + ' · ' + escapeHtml(category) + '</p>' +
-          '<p class="mt-2 font-bold text-blue-700">' + (commerce.displayPrice === undefined ? 'Check price on Amazon' : escapeHtml(item.priceLabel) + ': $' + escapeHtml(commerce.displayPrice)) + '</p>' +
+          '<p class="mt-2 font-bold text-blue-700">' + (commerce.displayPrice === undefined ? 'View product details' : escapeHtml(item.priceLabel) + ': $' + escapeHtml(commerce.displayPrice)) + '</p>' +
           (commerce.isRatingFresh ? '<p class="mt-1 text-xs text-slate-500">Amazon customer rating ' + escapeHtml(commerce.displayRating) + ' / 5 · checked ' + escapeHtml(commerce.ratingLastCheckedLabel) + '</p>' : '') +
           '</a></article>';
       }).join('');
@@ -86,5 +100,10 @@ const products = (await getCollection('products')).map((product) => {
     });
     input.value = initialQuery;
     render(initialQuery);
+    clear.addEventListener('click', () => {
+      input.value = '';
+      render();
+      input.focus();
+    });
   </script>
 </BaseLayout>

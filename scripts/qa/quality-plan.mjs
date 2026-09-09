@@ -10,11 +10,16 @@ export function qualityCommandSkipReason(command, results) {
 }
 
 export function qualityCommandEnvironment({ env, reportDir, profile }) {
-  return { ...env,
+  const result = { ...env,
     QUALITY_REPORT_PATH: join(reportDir, 'editorial-quality.json'),
     LINK_CHECK_REPORT_PATH: join(reportDir, 'commercial-links.json'),
     BROWSER_QA_OUTPUT: join(reportDir, 'screenshots'), BROWSER_QA_PROFILE: profile,
     SEO_AUDIT_REPORT_PATH: join(reportDir, 'seo-audit/report.json'),
     LIGHTHOUSE_OUTPUT_DIR: join(reportDir, 'lighthouse'),
   };
+  // Targeted CLI audits may override routes/samples; a coordinated quality run
+  // must use the runner's full median-of-three defaults, not inherited shell state.
+  delete result.LIGHTHOUSE_ROUTES;
+  delete result.LIGHTHOUSE_RUNS;
+  return result;
 }

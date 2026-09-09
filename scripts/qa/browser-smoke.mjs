@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { join, resolve } from 'node:path';
 import ts from 'typescript';
 import { viewportCases, catalogEvidenceCases } from './viewport-cases.mjs';
+import { inspectSearchContract } from './search-contract.mjs';
 
 const PROJECT_ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const PREVIEW_HOST = '127.0.0.1';
@@ -493,6 +494,10 @@ async function runCase(testCase) {
       await evaluate(`localStorage.removeItem('flowhome-amazon-list')`);
       await pageClient.send('Page.reload', { ignoreCache: true });
       await waitForPageReady();
+    }
+    if (testCase.setup === 'search') {
+      result.search = await evaluate(`(${inspectSearchContract.toString()})(document, Event)`);
+      result.failures.push(...result.search.failures);
     }
     if (testCase.setup === 'open-menu') {
       const opened = await evaluate(`(() => { const button = document.querySelector('.mobile-menu-btn'); button?.click(); return button?.getAttribute('aria-expanded') === 'true' && !document.querySelector('#mobile-menu')?.hidden; })()`);
