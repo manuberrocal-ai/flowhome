@@ -41,7 +41,7 @@
     "@supabase/supabase-js": "^2.110.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.1",
-    "astro": "^7.1.6",
+    "astro": "^7.2.8",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {

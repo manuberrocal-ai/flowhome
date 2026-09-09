@@ -39,12 +39,16 @@ jobs:
       PUBLIC_AUTH_ENABLED: 'false' # Enable only after FH-11 and a reviewed account configuration.
       PUBLIC_ANALYTICS_ENABLED: ${{ vars.PUBLIC_ANALYTICS_ENABLED || 'false' }}
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
-      QUALITY_REPORT_PATH: ${{ runner.temp }}/quality-report.json
       RELEASE_SOURCE_SHA: ${{ github.sha }}
-      RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest.json
       RELEASE_ROLLBACK_DEPLOYMENT_ID: ${{ inputs.rollback_deployment_id }}
       RELEASE_DEPLOY_PRODUCTION: ${{ inputs.deploy_production }}
     steps:
+      - name: Initialize runner-local evidence paths
+        env:
+          QUALITY_REPORT_PATH: ${{ runner.temp }}/quality-report.json
+          RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest.json
+        run: |
+          printf '%s\n' "QUALITY_REPORT_PATH=$QUALITY_REPORT_PATH" "RELEASE_MANIFEST_PATH=$RELEASE_MANIFEST_PATH" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.sha }}
@@ -129,14 +133,18 @@ jobs:
       RELEASE_SOURCE_SHA: ${{ needs.verify.outputs.source_sha }}
       RELEASE_MANIFEST_SHA256: ${{ needs.verify.outputs.manifest_sha256 }}
       RELEASE_ARTIFACT_ID: ${{ needs.verify.outputs.artifact_id }}
-      RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest/release-manifest.json
-      RELEASE_EVIDENCE_PATH: ${{ runner.temp }}/release-evidence
       RELEASE_ROLLBACK_DEPLOYMENT_ID: ${{ inputs.rollback_deployment_id }}
       RELEASE_DEPLOY_PRODUCTION: 'true'
     permissions:
       contents: read
       deployments: write
     steps:
+      - name: Initialize runner-local evidence paths
+        env:
+          RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest/release-manifest.json
+          RELEASE_EVIDENCE_PATH: ${{ runner.temp }}/release-evidence
+        run: |
+          printf '%s\n' "RELEASE_MANIFEST_PATH=$RELEASE_MANIFEST_PATH" "RELEASE_EVIDENCE_PATH=$RELEASE_EVIDENCE_PATH" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ needs.verify.outputs.source_sha }}
