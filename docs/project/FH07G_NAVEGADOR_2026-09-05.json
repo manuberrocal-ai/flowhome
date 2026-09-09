@@ -1,0 +1,1071 @@
+{
+  "observedAt": "2026-09-05T18:11:43.811Z",
+  "checks": [
+    {
+      "name": "Eight distinct comparison routes",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ qualified feature rows 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ visible notice explains limits 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ no claimed raw winner 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ cards use same qualified labels 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ scroll contained by wrapper 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ keyboard focus on scroll region 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ qualified feature rows 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ visible notice explains limits 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ no claimed raw winner 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ cards use same qualified labels 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ no page overflow 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ scroll contained by wrapper 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ keyboard focus on scroll region 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ keyboard scroll reaches other columns 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "routes": [
+    {
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/",
+      "width": 1440,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    },
+    {
+      "path": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/",
+      "width": 390,
+      "featureRows": [
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)",
+          "Catalog: Yes (unverified)"
+        ],
+        [
+          "Catalog: Yes (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ],
+        [
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)",
+          "Catalog: No (unverified)"
+        ]
+      ]
+    }
+  ],
+  "errors": [],
+  "profile": "Local preview; existing explicit local-only network routing; all eight tables at 1440/390. Graph positive path tested separately with fixtures, never installed into public runtime."
+}

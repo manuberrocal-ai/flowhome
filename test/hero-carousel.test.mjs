@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyProduct, setupHeroCarousel } from '../src/lib/hero-carousel.js';
+import { applyProduct, normalizeProduct, setupHeroCarousel } from '../src/lib/hero-carousel.js';
 
 class Node {
   constructor() { this.attrs = {}; this.dataset = {}; this.children = []; this.listeners = {}; this.classList = { values: new Set(), toggle: (name, on) => on ? this.classList.values.add(name) : this.classList.values.delete(name) }; }
@@ -21,7 +21,7 @@ const product = (slug, title) => ({ id: slug, slug, title, image: `/${slug}.jpg`
 
 function fixture() {
   const root = new Node();
-  const fields = ['title', 'category', 'price', 'price-context', 'original-price', 'rating', 'rating-count', 'rating-source', 'quote', 'badges'];
+  const fields = ['title', 'category', 'price', 'price-context', 'original-price', 'rating', 'rating-count', 'rating-source', 'quote', 'badges', 'image-caption'];
   root.map = Object.fromEntries(fields.map((name) => [`[data-hero-field="${name}"]`, new Node()]));
   root.map['[data-hero-image]'] = new Node();
   root.map['[data-hero-photo-link]'] = new Node();
@@ -37,15 +37,100 @@ function fixture() {
   return root;
 }
 
+test('responsive image candidates follow the product and clear on a legacy slide', () => {
+  const root = fixture();
+  const first = { ...product('one', 'First'), imageSrcset: '/one-480.webp 480w, /one.jpg 1024w', imageSizes: '352px' };
+  applyProduct(root, first);
+  const image = root.map['[data-hero-image]'];
+  assert.equal(image.srcset, first.imageSrcset);
+  assert.equal(image.sizes, '352px');
+  assert.deepEqual(normalizeProduct(normalizeProduct(first)), normalizeProduct(first));
+  applyProduct(root, product('two', 'Second'));
+  assert.equal(image.srcset, '');
+  assert.equal(image.sizes, '');
+  assert.equal(image.src, '/two.jpg');
+});
+
+test('visible playback control pauses, resumes and respects reduced motion', () => {
+  const root = fixture();
+  const playback = new Node();
+  root.map['[data-hero-playback]'] = playback;
+  const doc = new Node();
+  doc.visibilityState = 'visible';
+  const media = new Node();
+  media.matches = false;
+  let starts = 0;
+  let stops = 0;
+  const win = { matchMedia: () => media, setInterval: () => ++starts, clearInterval: () => stops++ };
+  const cleanup = setupHeroCarousel({ root, products: [product('one', 'First'), product('two', 'Second')], windowRef: win, documentRef: doc });
+  assert.equal(playback.textContent, 'Pause rotation');
+  playback.dispatch('click');
+  assert.equal(playback.textContent, 'Resume rotation');
+  assert.equal(stops, 1);
+  playback.dispatch('click');
+  assert.equal(starts, 2);
+  assert.equal(playback.textContent, 'Pause rotation');
+  media.matches = true;
+  media.dispatch('change');
+  assert.equal(playback.disabled, true);
+  assert.equal(playback.textContent, 'Autoplay off');
+  root.map['[data-hero-slide]'].dispatch('keydown', { key: 'ArrowRight', preventDefault() {} });
+  assert.equal(root.map['[data-hero-live]'].textContent, 'Selected Second');
+  assert.equal(root.map['[data-hero-details]'].href, '/product/two/');
+  cleanup();
+});
+
+test('product normalization preserves the same complete product on repeated passes', () => {
+  const normalized = normalizeProduct(product('one', 'First'));
+  assert.deepEqual(normalizeProduct(normalized), normalized);
+  assert.equal(normalized.ownerRating, 4.5);
+  assert.equal(normalized.ownerRatingCount, 12);
+});
+
+test('carousel initialization and rotation keep rating, image, price, and destination together', () => {
+  const root = fixture();
+  const doc = new Node();
+  doc.visibilityState = 'visible';
+  doc.querySelectorAll = () => [];
+  const media = new Node();
+  media.matches = false;
+  let tick;
+  const win = { matchMedia: () => media, setInterval: (fn) => { tick = fn; return 1; }, clearInterval() {} };
+  const cleanup = setupHeroCarousel({ root, products: [product('one', 'First'), product('two', 'Second')], windowRef: win, documentRef: doc });
+
+  const assertSlide = (slug, title, rating, count, price) => {
+    assert.equal(root.map['[data-hero-field="title"]'].textContent, title);
+    assert.equal(root.map['[data-hero-image]'].src, `/${slug}.jpg`);
+    assert.equal(root.map['[data-hero-field="price"]'].textContent, price);
+    assert.equal(root.map['[data-hero-field="rating"]'].textContent, String(rating));
+    assert.equal(root.map['[data-hero-field="rating-count"]'].textContent, String(count));
+    assert.equal(root.map['[data-hero-rating-stars]'].attrs['aria-label'], `Amazon customer rating ${rating} out of 5 stars`);
+    assert.equal(root.map['[data-hero-star]'].filter((star) => star.classList.values.has('text-amber-300')).length, Math.round(rating));
+    assert.equal(root.map['[data-hero-details]'].href, `/product/${slug}/`);
+    assert.equal(root.map['[data-hero-amazon]'].href, `https://amazon.test/${slug}`);
+    assert.equal(root.map['[data-hero-amazon]'].dataset.productSlug, slug);
+  };
+
+  assertSlide('one', 'First', 4.5, 12, '$10');
+  tick();
+  assertSlide('two', 'Second', 2, 34, '$20');
+  root.map['[data-hero-slide]'].dispatch('keydown', { key: 'ArrowLeft', preventDefault() {} });
+  assertSlide('one', 'First', 4.5, 12, '$10');
+  cleanup();
+});
+
 test('applying a product updates every field without mixing products', () => {
   const root = fixture();
   const first = product('one', 'First');
   const second = product('two', 'Second');
+  first.imageCaption = 'First model illustration — not a product photo';
+  second.imageCaption = 'Second category illustration — not a product photo';
   applyProduct(root, first, 0);
   applyProduct(root, second, 1);
   assert.equal(root.map['[data-hero-field="title"]'].textContent, 'Second');
   assert.equal(root.map['[data-hero-image]'].src, '/two.jpg');
   assert.equal(root.map['[data-hero-image]'].alt, 'Second alt');
+  assert.equal(root.map['[data-hero-field="image-caption"]'].textContent, second.imageCaption);
   assert.equal(root.map['[data-hero-image]'].dataset.fallbackSrc, '/images/product-placeholder.svg');
   assert.equal(root.map['[data-hero-field="price"]'].textContent, '$20');
   assert.equal(root.map['[data-hero-field="price-context"]'].textContent, 'Historical price snapshot');
@@ -64,7 +149,7 @@ test('applying a product updates every field without mixing products', () => {
   assert.equal(root.map['[data-hero-details]'].href, '/product/two/');
   assert.equal(root.map['[data-hero-photo-link]'].href, '/product/two/');
   assert.equal(root.map['[data-hero-field="category"]'].textContent, 'Lighting');
-  assert.equal(root.map['[data-hero-field="quote"]'].textContent, '"Second quote"');
+  assert.equal(root.map['[data-hero-field="quote"]'].textContent, 'Second quote');
   assert.equal(root.map['[data-hero-indicator]'].textContent, '2');
   assert.equal(root.map['[data-hero-field="badges"]'].children[0].textContent, 'New');
   assert.equal(root.map['[data-hero-star]'][0].classList.values.has('text-amber-300'), true);

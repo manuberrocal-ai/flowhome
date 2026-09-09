@@ -1,0 +1,270 @@
+{
+  "recordedAt": "2026-09-05T13:42:48.288Z",
+  "normalizedCatalogPreserved": 28,
+  "removedFields": 84,
+  "preservationRule": "Original UTF-8 content, normalized LF, minus exactly priority/priorityScore/roiApproved lines; every other line unchanged.",
+  "catalogEvidence": [
+    {
+      "path": "src/content/products/aeotec-smartthings-hub.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 60",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "61d5de1d3e1d75614d73fc46ff3e06b6c2141e88fb54ab71bd4a12cf5391570c"
+    },
+    {
+      "path": "src/content/products/amazon-smart-thermostat.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 55",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "7648a571a439cc5d2ea16694463c3beb634c7e13dc5d81d655211d1df2dd3b16"
+    },
+    {
+      "path": "src/content/products/aqara-hub-m2.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 53",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "b4c87c6afd247b4c7afac4d0e03f34115a4cbe1122f60ea00b616c3ef42797c6"
+    },
+    {
+      "path": "src/content/products/aqara-motion-sensor-p1.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 52",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "a9b4411aa875937decc6e202551f0659ab0b5d0db8f29dbd6d6b6605aff42c3a"
+    },
+    {
+      "path": "src/content/products/arlo-essential-outdoor-camera.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 50",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "37265045732d09f307e8815fc892fed491fd7534340d82c1673161c0b90f2350"
+    },
+    {
+      "path": "src/content/products/august-wifi-smart-lock.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 64",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "2494ccfa4cc1d711d23d947493c9df229770abd980386386dc9de0ad39d1f974"
+    },
+    {
+      "path": "src/content/products/blink-outdoor-4.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 61",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "61d3b8f2f43db7277baa5f8288551f61586319cdce88fa62f594f8d1356e1573"
+    },
+    {
+      "path": "src/content/products/echo-dot-5th-gen.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 78",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "7ecd5b8709fd3e4588068aeb03453f37ab873261cb21dc8f5e38d074538f8672"
+    },
+    {
+      "path": "src/content/products/echo-show-8-3rd-gen.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 72",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "250e394b9d77c9fb9c3c8adba26ff0e22611052ae3b269b04c1712df401872a8"
+    },
+    {
+      "path": "src/content/products/ecobee-smart-thermostat-premium.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 71",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "9f1a6a6743ca73a1241933becb19ec76d876954eac8512d242efcd3a6fe71966"
+    },
+    {
+      "path": "src/content/products/eufy-security-indoor-cam-c120.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 65",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "27a55e3f751e875012d67631c91699253b2a837466a676a25f50be3de18eaaa3"
+    },
+    {
+      "path": "src/content/products/google-nest-hub-2nd-gen.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 72",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "0c595382ed707471b6f3ed1bb1ed5c9ccd61d3796a3984a805712877cfe47816"
+    },
+    {
+      "path": "src/content/products/govee-rgbic-led-strip-lights.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 49",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "260416c2f311270b326f92abba43fa4ae0edb36886983de74217cf6866e983fb"
+    },
+    {
+      "path": "src/content/products/irobot-roomba-j7-plus.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 86",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "1c2f82ba6d1c42a69b2dcbb69f21b3b442f4cf9539f9d61c333771b32d4faf2a"
+    },
+    {
+      "path": "src/content/products/levoit-core-300s-air-purifier.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 67",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "29f2c57a8da0e3a2880a5f0196b48fdb91e972e8924d69ed5e920056c68ca822"
+    },
+    {
+      "path": "src/content/products/meross-smart-garage-door-opener.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 47",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "3a3efe9a3c212f62b79dd08de5696ed12dc21aa40c4fa6b377a1d07cfd4b14a2"
+    },
+    {
+      "path": "src/content/products/philips-hue-white-color-starter-kit.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 80",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "eb6fe618435e9ea2f347439cdf6bd9ad8c8d01cb41eb38a681f5211766152de4"
+    },
+    {
+      "path": "src/content/products/ring-video-doorbell-wired.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 68",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "7309fb8bb083c897dee9fed208859be9302afd4a5921be8eb8593e8098fe6467"
+    },
+    {
+      "path": "src/content/products/roborock-q5-plus.yaml",
+      "removed": [
+        "priority: hero",
+        "priorityScore: 88",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "faae30ae1ab49fcb74440f8979e3b42b49564e2cc4af51c6df761971d605c6ca"
+    },
+    {
+      "path": "src/content/products/schlage-encode-smart-wifi-deadbolt.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 67",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "5185a9fde29c54ed302512f28525ed38ec7c1bb5e0bb142b37359dce27ce2c3e"
+    },
+    {
+      "path": "src/content/products/switchbot-blind-tilt.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 42",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "b59becd5938310c19b8875bdd9918f643c74f9533b72b606caf5a77db3b26f9a"
+    },
+    {
+      "path": "src/content/products/switchbot-hub-2.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 66",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "7e39495ce4669d0008359527d29c819f173f749bf33f1268c01a198aefa473f0"
+    },
+    {
+      "path": "src/content/products/tapo-c120-security-camera.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 62",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "92fa7fd593d4a7bd8b5c9a8544ecce056e2342e5b8e577ea7333aa16fc029355"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-dimmer-hs220.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 63",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "e7e89c435a3478a66d70984b72b5e5b5bc7136bd43e63ce2755108e97ae14842"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-light-switch-hs200.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 64",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "7792aa8deec8547714e9b64640daa96786006849a8671c90dc4e43a46358af4b"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-plug-mini.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 69",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "89d2317b49d4ae535bd5256ff596561b5d69afde57bc1ef064eae5436f3656a2"
+    },
+    {
+      "path": "src/content/products/wyze-bulb-color.yaml",
+      "removed": [
+        "priority: featured",
+        "priorityScore: 57",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "e6c994b643c5af0a74cd80552ba427ed84bef81af148d375c33725fc359b2521"
+    },
+    {
+      "path": "src/content/products/yale-assure-lock-2-wifi.yaml",
+      "removed": [
+        "priority: standard",
+        "priorityScore: 58",
+        "roiApproved: true"
+      ],
+      "preservedSha256": "f86c46d84f254ae7a8820803afb18ce3d6064b11bf16667e180a81a1bace80ea"
+    }
+  ],
+  "discoveryDailyParity": 28,
+  "providerCalled": false,
+  "dailyQuality": "fixture-only; not a repeated full QA run or remote validation",
+  "isolatedDailyOutput": "C:/Users/manub/Documents/Codex/2026-09-04/f/work/fh06-daily-dcmZ47",
+  "discovery": {
+    "totalProducts": 28,
+    "reviewCandidates": 28,
+    "automatedApprovals": 0,
+    "unknownCommissions": 28
+  }
+}

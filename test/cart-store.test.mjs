@@ -15,6 +15,20 @@ import { serializeJsonLd } from '../src/lib/json-ld.js';
 const ASIN = 'B012345678';
 const OTHER_ASIN = 'B087654321';
 
+test('legacy prices are omitted from normalized items and subsequent writes without dropping products', () => {
+  const input = { asin: ASIN, name: 'Legacy', price: 123.45, url: '/product/legacy/' };
+  const normalized = normalizeCartItems([input]);
+  assert.equal(normalized.length, 1);
+  assert.equal(Object.hasOwn(normalized[0], 'price'), false);
+  assert.equal(input.price, 123.45, 'normalization must not mutate caller input');
+  const storage = createStorage(JSON.stringify([input]));
+  const store = createCartStore({ storage });
+  assert.equal(store.initialize()[0].asin, ASIN);
+  assert.equal(Object.hasOwn(store.getSyncPayload().entries[0], 'price'), false);
+  assert.equal(Object.hasOwn(JSON.parse(storage.value()).entries[0], 'price'), false);
+  assert.equal(store.getItems()[0].url, input.url);
+});
+
 function createStorage(initialValue = null) {
   const values = new Map([[CART_STORAGE_KEY, initialValue]]);
   let writes = 0;
@@ -39,7 +53,7 @@ function createEventTarget() {
 test('migrates v1 arrays to a v2 per-ASIN state', () => {
   const storage = createStorage(JSON.stringify([{ asin: ASIN.toLowerCase(), quantity: 2, name: ' Legacy product ' }, { asin: ASIN, quantity: 4, name: 'Duplicate' }]));
   const store = createCartStore({ storage });
-  assert.deepEqual(store.initialize(), [{ asin: ASIN, slug: '', name: 'Legacy product', price: 0, image: '', url: '' }]);
+  assert.deepEqual(store.initialize(), [{ asin: ASIN, slug: '', name: 'Legacy product', image: '', url: '' }]);
   const payload = JSON.parse(storage.value());
   assert.equal(payload.version, CART_STORAGE_VERSION);
   assert.equal(payload.entries[0].clock, 1);
@@ -50,7 +64,7 @@ test('shortlist toggle is unique and counts products rather than units', () => {
   const storage = createStorage();
   const store = createCartStore({ storage });
   const item = { asin: ASIN, quantity: 4, name: 'Product' };
-  assert.deepEqual(store.add(item), [{ asin: ASIN, slug: '', name: 'Product', price: 0, image: '', url: '' }]);
+  assert.deepEqual(store.add(item), [{ asin: ASIN, slug: '', name: 'Product', image: '', url: '' }]);
   assert.equal(store.getItems().length, 1);
   const writesAfterFirstAdd = storage.writes();
   const clockAfterFirstAdd = store.getSyncPayload().clock;
@@ -119,7 +133,7 @@ test('keeps anonymous and authenticated namespaces separate and merges once', ()
 });
 
 test('normalizes invalid values and retains existing cart interactions', () => {
-  assert.deepEqual(normalizeCartItems([{ asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' }]), [{ asin: ASIN, slug: '', name: 'Name', price: 0, image: '', url: '' }]);
+  assert.deepEqual(normalizeCartItems([{ asin: ASIN, quantity: Number.NaN, price: -3, name: 'Name\u0000', url: 'javascript:alert(1)' }]), [{ asin: ASIN, slug: '', name: 'Name', image: '', url: '' }]);
   const target = createEventTarget();
   const store = createCartStore({ storage: createStorage(), eventTarget: target });
   const notifications = [];

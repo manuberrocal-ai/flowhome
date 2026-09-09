@@ -1,6 +1,6 @@
 slug: best-smart-hubs-for-matter-zigbee
-title: "Best Smart Hubs for Matter and Zigbee: Aqara vs SwitchBot vs Aeotec"
-description: "Compare three structured smart-hub profiles by Matter, Zigbee, ecosystem support, app control, and catalog price context."
+title: "Smart Hub Buying Guide: Aqara, SwitchBot, and Aeotec Roles"
+description: "Compare documented bridge and controller roles, exact-device support, and ecosystem requirements before choosing a hub."
 category: smart-hub
 maxPrice: 200
 productSlugs:
@@ -9,17 +9,43 @@ productSlugs:
   - aeotec-smartthings-hub
 pubDate: 2026-07-15
 pinterestImage: /images/pinterest/smart-hubs-guide.png
-intro: "This guide uses FlowHome's structured product profiles to compare three smart hubs without treating changing prices, ratings, or availability as permanent facts. The right choice depends on the protocols and ecosystems your home already uses."
+intro: "This is a role-based documentary shortlist, not a compatibility certification or price ranking. Identify the actual accessories and desired actions before selecting a hub."
 buyingConsiderations:
+  - label: "Power, package, and setup differences"
+    detail: "The M2 manual specifies a separately purchased power adapter; Ethernet does not replace USB power. Hub 2 needs its sensor-equipped USB-C cable, not an ordinary substitute. Aeotec recommends Ethernet for initial setup and requires SmartThings registration with a Samsung account. Check each model's installation documentation and current seller package."
+  - label: "Identity before ecosystem logos"
+    detail: "This catalog documents Aeotec GP-AEOHUBV3US, not Smart Home Hub 2; regional Z-Wave radios differ. Manufacturer setup sources for M2 and SwitchBot Hub 2 establish the model family but do not independently match their catalog Amazon ASINs. Check the linked product profiles for identity evidence and unknowns before following a retailer link."
   - label: "Matter and Zigbee support"
-    detail: "The Aqara Hub M2 profile lists Zigbee but not Matter, SwitchBot Hub 2 lists Matter but not Zigbee, and Aeotec SmartThings Hub lists both."
-  - label: "Platform coverage"
-    detail: "All three profiles list Alexa, Google Home, and app control. Aqara and SwitchBot also list Apple HomeKit, while Aeotec does not."
-  - label: "Catalog price context"
-    detail: "The profiles list $59.99 for Aqara Hub M2, $69.99 for SwitchBot Hub 2, and $134.99 for Aeotec SmartThings Hub; check the current listing before buying."
+    detail: "Aqara documents a Matter bridge path for supported M2-connected Zigbee accessories. SwitchBot Hub 2 bridges supported SwitchBot and infrared devices. Aeotec documents a SmartThings controller. A Matter label does not make these roles interchangeable."
+  - label: "Platform and firmware requirements"
+    detail: "Confirm the receiving platform, controller requirements, hub generation, region, firmware, and exact accessory functions. The M2 firmware announcement is historical; it does not validate firmware installed on a unit today."
+  - label: "Current buying cost"
+    detail: "Compare current seller terms, required controllers or accessories, and migration work. Prices and ratings have not been verified for this guide; historical catalog values do not establish a cheapest option."
 comparisonSlug: "aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub"
 comparisonLabel: "Read the Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec comparison"
 reviewSlugs:
   - aqara-hub-m2-review
   - switchbot-hub-2-review
   - aeotec-smartthings-hub-review
+sources:
+  - label: "Aqara M2 manual, power and initial setup"
+    url: "https://cdn.shopify.com/s/files/1/0710/9220/7830/files/smart_hub_m2_manual.pdf?v=1723627820"
+    accessedAt: "2026-09-05"
+  - label: "SwitchBot Hub 2 power and sensor-equipped cable"
+    url: "https://support.switch-bot.com/hc/en-us/articles/13506998775575-What-Should-I-Do-if-Hub-Mini-Hub-2-Does-Not-Start-Up-After-Power-On"
+    accessedAt: "2026-09-05"
+  - label: "Aeotec Smart Home Hub initial setup"
+    url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240326-how-to-setup-smart-home-hub"
+    accessedAt: "2026-09-05"
+  - label: "Aeotec V3 regional models and technical specifications"
+    url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications"
+    accessedAt: "2026-09-05"
+  - label: "Aqara M2 documented Matter bridge update"
+    url: "https://www.aqara.com/en/aqara-hub-m2-matter-update-has-started-to-roll-out/"
+    accessedAt: "2026-09-04"
+  - label: "SwitchBot Matter device and feature matrix"
+    url: "https://www.switch-bot.com/pages/matter"
+    accessedAt: "2026-09-04"
+  - label: "Aeotec Smart Home Hub protocols and role"
+    url: "https://aeotec.com/products/aeotec-smartthings-hub/"
+    accessedAt: "2026-09-04"

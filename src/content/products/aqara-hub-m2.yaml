@@ -7,7 +7,7 @@ originalPrice: 69.99
 discountPct: 14
 category: smart-hub
 affiliateUrl: "https://www.amazon.com/dp/B08Y1PJZZH?tag=flowhome-20"
-image: "https://www.aqara.com/wp-content/uploads/2023/04/Hub-M2-Zigbee-supported.jpg"
+image: "/images/product-art/illustrations-v1/smart-hub.png"
 ownerRating: 4.3
 ownerRatingCount: 4300
 ratingSource: "Amazon customer ratings"
@@ -17,10 +17,49 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Aqara Hub M2"
+identityEvidence:
+  model: "Aqara Hub M2"
+  asin: B08Y1PJZZH
+  claims:
+    model:
+      value: "Aqara Hub M2"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Aqara Hub M2 US specifications — HM2-G01 and power"
+          url: "https://www.aqara.com/us/product/hub-m2/specs/"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Aqara hub for compatible accessories"
+      conditions: "The setup document covers HM2-G01. It does not certify every accessory or the firmware of a seller's unit."
+      sources:
+        - label: "Aqara Hub M2 US specifications — HM2-G01 and power"
+          url: "https://www.aqara.com/us/product/hub-m2/specs/"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Aqara Hub M2"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "For the documented HM2-G01 model, connect Micro-USB power using a 5 V, 1 A or 2 A adapter. The manual says the adapter is purchased separately; check the exact package before buying."
+    - "Use the Aqara Home app with your phone on 2.4 GHz Wi-Fi for setup. An RJ45 Ethernet cable can connect the hub to the router's LAN port; USB power is still required."
+    - "Place the hub indoors and avoid metal obstructions around it. Follow the manufacturer placement and accessory-pairing instructions for your exact hardware."
+  sources:
+    - label: "Aqara Hub M2 US specifications — HM2-G01 and power"
+      url: "https://www.aqara.com/us/product/hub-m2/specs/"
+      accessedAt: "2026-09-05"
+    - label: "Aqara Hub M2 manual linked by US support — setup pages 01-05"
+      url: "https://cdn.shopify.com/s/files/1/0710/9220/7830/files/smart_hub_m2_manual.pdf?v=1723627820"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: true
-matter: false
+matter: true
+compatibilityNotes:
+  - "The documented M2 update bridges supported Zigbee accessories into Matter. Check installed firmware and the receiving platform; this does not establish compatibility for every accessory or convert Zigbee devices to Thread."
+sources:
+  - label: "Aqara M2 Matter update announcement — bridge scope and firmware conditions"
+    url: "https://www.aqara.com/en/aqara-hub-m2-matter-update-has-started-to-roll-out/"
+    accessedAt: "2026-09-04"
 alexaCompatible: true
 googleHomeCompatible: true
 appleHomeKit: true
@@ -33,6 +72,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 53
-roiApproved: true

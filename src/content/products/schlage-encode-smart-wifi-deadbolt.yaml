@@ -7,7 +7,7 @@ originalPrice: 299.99
 discountPct: 17
 category: smart-lock
 affiliateUrl: "https://www.amazon.com/dp/B07HXMLCBT?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B07HXMLCBT.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-lock.png"
 ownerRating: 4.5
 ownerRatingCount: 16000
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,51 @@ catalogActive: true
 dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
-model: "Encode Smart WiFi Deadbolt"
+model: "BE489WB CEN 622"
+identityEvidence:
+  model: "BE489WB CEN 622"
+  asin: B07HXMLCBT
+  claims:
+    model:
+      value: "BE489WB CEN 622"
+      conditions: "The reviewed listing identifies BE489WBCEN622. It is not Encode Plus; the seller's hardware revision has not been inspected."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B07HXMLCBT"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B07HXMLCBT"
+      conditions: "This identifies the reviewed indexed destination. It does not renew historical commercial data or certify the current seller's package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B07HXMLCBT"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Replacement deadbolt"
+      conditions: "This replaces the deadbolt rather than retaining the existing exterior lock. Door preparation remains a separate check."
+      sources:
+        - label: "Schlage US — Encode BE489 Century"
+          url: "https://www.schlage.com/en/home/products/BE489WBCENFFF.html"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing identity — BE489WBCEN622, Century trim, matte black"
+    url: "https://www.amazon.com/dp/B07HXMLCBT"
+    accessedAt: "2026-09-05"
+installation:
+  model: "BE489WB CEN 622"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Encode BE489 replaces the deadbolt; it does not retain the existing exterior lock like a retrofit accessory. Standard fit is a 1-3/8 to 1-3/4 inch thick door with a 2-3/8 or 2-3/4 inch backset (door edge to hole center). Measure before buying."
+    - "This guided-setup assessment assumes a compatible, already-prepared door. Check the manufacturer's door-preparation guide and bolt alignment; door or frame alterations need a separate assessment. Ask a locksmith if unsure, and confirm any thick-door kit with Schlage rather than assuming it is included."
+    - "The lock uses four AA alkaline batteries, not household hardwiring. Plan 2.4 GHz Wi-Fi coverage and Schlage Home app setup. These requirements concern Encode BE489, not Encode Plus; seller package contents and actual door fit have not been physically checked."
+  sources:
+    - label: "Schlage US — Encode BE489 Century specifications and setup"
+      url: "https://www.schlage.com/en/home/products/BE489WBCENFFF.html"
+      accessedAt: "2026-09-05"
+    - label: "Schlage BE489 — door preparation with existing holes"
+      url: "https://www.schlage.com/content/dam/sch-us/documents/pdf/installation-manuals/schlage-encode-door-prep-with-holes.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +77,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 67
-roiApproved: true

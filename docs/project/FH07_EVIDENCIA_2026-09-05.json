@@ -1,0 +1,268 @@
+{
+  "recordedAt": "2026-09-05T14:36:03.415Z",
+  "task": "FH-07",
+  "status": "parcial",
+  "localInstallationVerdict": "APROBADO LOCAL",
+  "installationMaturity": 3,
+  "wholeTaskMaturity": 2,
+  "head": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "branch": "improve/flowhome-v3-2026-09-04",
+  "uncommitted": true,
+  "published": false,
+  "newDependencies": 0,
+  "productRows": 28,
+  "installationDocumented": 7,
+  "installationUnknown": 21,
+  "otherCatalogFieldsPreserved": 28,
+  "validation": {
+    "directedInitial": 24,
+    "directedAfterVisual": 40,
+    "finalSuite": {
+      "tests": 652,
+      "passed": 652,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "passed",
+    "typecheck": {
+      "files": 241,
+      "errors": 0,
+      "warnings": 0,
+      "existingHints": 18
+    },
+    "buildPages": 88,
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "quality": "15 review files passed; not factual validation",
+    "diffCheck": {
+      "exitCode": 0,
+      "lineEndingWarnings": 148
+    },
+    "browser": {
+      "finalChecks": 61,
+      "passed": 61,
+      "visualRounds": 2,
+      "widths": [
+        1440,
+        390
+      ],
+      "reflowCssWidth": 720,
+      "clientExceptions": 0,
+      "noticeContrast": 14.465587811642001,
+      "setupLinkHeightPx": 44
+    },
+    "publicationScanner": {
+      "files": 29,
+      "majorCandidates": 58,
+      "review": "56 product-page and two quiz-page empty-alt candidates map to the existing hidden avatar component, not missing product image alternatives."
+    },
+    "designDetector": {
+      "heuristicWarnings": 4,
+      "disposition": "Existing gray-on-color heuristics; no global design rewrite or full WCAG assertion."
+    }
+  },
+  "limits": [
+    "Installation scope only. Model documentation does not verify Amazon ASIN, bundle, hardware revision or delivery market.",
+    "21 installation profiles and other product claims remain incomplete.",
+    "No live account, API, publication, remote asset availability, physical product or native-zoom validation.",
+    "Browser external requests blocked. Native actions tested in local preview.",
+    "No Lighthouse rerun or full seven-width release matrix."
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/content.config.ts",
+      "sha256": "96811f290cc796819a833f3d38f7900c10dc48832e2eb9e2a06c33585536ea9e"
+    },
+    {
+      "path": "src/lib/product-installation.ts",
+      "sha256": "c396a2ddad10b6b68857f503abd503c52f86cbefbf4ee76528131c38ee165c5a"
+    },
+    {
+      "path": "src/lib/quiz-recommend.ts",
+      "sha256": "4ed16ea9f1581b65f237078fff858fdbb54ce3f37936d42f7542e32eccbe755c"
+    },
+    {
+      "path": "src/pages/quiz.astro",
+      "sha256": "4e4d6afbee774b8c90099f074b90be17234e16b19d26517242ca54114e4bdc57"
+    },
+    {
+      "path": "src/pages/product/[slug].astro",
+      "sha256": "faadb1a40fdcf532685a5d941e7fe2105e7d8f919bfe707887b7866b03759809"
+    },
+    {
+      "path": "test/product-installation.test.mjs",
+      "sha256": "9c5fea7cd26a86d7d220e89d3b5bdc4e7e2431b1ed345bbf2f079c131ae7d549"
+    },
+    {
+      "path": "test/quiz-recommend.test.mjs",
+      "sha256": "5596230257dddbfad0f362322418717066acb239acffaf7e7f8f06a9cbcb2b74"
+    },
+    {
+      "path": "test/acceptance-20-criteria.test.mjs",
+      "sha256": "c0940dcf168a137869949f35d063b5ddf5d4241b845f53b9a7f778cbf12ce0f2"
+    },
+    {
+      "path": "docs/content/claim-ledger-v3.md",
+      "sha256": "c2947653503aacde1e6550572b0f1faa6d0be62819ac17ff1a0ee79232c0616c"
+    },
+    {
+      "path": "docs/project/PROMPT_MAESTRO.md",
+      "sha256": "75f0506fae72d44b6064142871530145343a52806486d343d7cd5ad917fd7398"
+    },
+    {
+      "path": "docs/project/JUZGADO_INTEGRAL.md",
+      "sha256": "c2a8eb3cc661feec6ca38d8b1a81eb17ba1905c693e4b08365c87436dcf2f0d3"
+    },
+    {
+      "path": "docs/project/PLAN_DE_TRABAJO.md",
+      "sha256": "c643784016b0e17018a251a425983fc7837b4b9f173ea9a489ca61a8c6264616"
+    },
+    {
+      "path": "docs/project/BACKLOG.json",
+      "sha256": "74b9fa57e3a8a675ffd57df84192b0f9dade9e71cd87597279a21b23c9952047"
+    },
+    {
+      "path": "docs/project/AVANCE_FH07_INSTALACION_2026-09-05.md",
+      "sha256": "2662d121105a668efe15fea7949c1c1aeabab45a98f6c2051428f86255e41ba3"
+    },
+    {
+      "path": "docs/project/FH07_CONTRATO_INSTALACION_2026-09-05.md",
+      "sha256": "038f84f4f63f731f45e434237b1f6cf4fd7c065646a2a7a6659550654a975558"
+    },
+    {
+      "path": "docs/project/FH07_NAVEGADOR_2026-09-05.json",
+      "sha256": "53e47d40aecce563cfff8556a3e59eacbe6457776c489c022aa1c13d57892a18"
+    },
+    {
+      "path": "docs/project/FH07_CATALOGO_INSTALACION_2026-09-05.json",
+      "sha256": "39883fc9fe124180b485bb0ad07359166f5118bad695e28ea999d4cf0365a2ff"
+    },
+    {
+      "path": "dist/quiz/index.html",
+      "sha256": "274cc3450e1671faef95083794a587e96905fccbc617c28b89f9fe81337c6d31"
+    },
+    {
+      "path": "dist/product/tp-link-kasa-smart-dimmer-hs220/index.html",
+      "sha256": "bc0220443d53462c97d0737eeee69c850c87694c2261bc57cb69fd2ec84d0600"
+    },
+    {
+      "path": "dist/product/govee-rgbic-led-strip-lights/index.html",
+      "sha256": "684fcd5ddd63139637ea12be49decde7263ce9780017bc09fa01b762f29c2c51"
+    },
+    {
+      "path": "src/content/products/aeotec-smartthings-hub.yaml",
+      "sha256": "1f5ab86943db9d773b8cfd4d6dddd70594647753f14298d4e6259466c7563467"
+    },
+    {
+      "path": "src/content/products/amazon-smart-thermostat.yaml",
+      "sha256": "8df63a394a08e7c8937a1d9daf51c5c015bbcd412ba265332df48a1d07813a8f"
+    },
+    {
+      "path": "src/content/products/aqara-hub-m2.yaml",
+      "sha256": "6a14187952cc274c1007e7f7284d3b58556bc97ad5cfcc9fb7b7dda815b0ea6e"
+    },
+    {
+      "path": "src/content/products/aqara-motion-sensor-p1.yaml",
+      "sha256": "497b0cbb16c6062dcf80adda75cd712bba735eb681ad1be53a12eb00d3aa8ff6"
+    },
+    {
+      "path": "src/content/products/arlo-essential-outdoor-camera.yaml",
+      "sha256": "09e7d7cf43d953edde57d977121209d2a3729033353b46bc47090d159bacfe9f"
+    },
+    {
+      "path": "src/content/products/august-wifi-smart-lock.yaml",
+      "sha256": "4e2c4c413e68bba843aa282697d06716c261f1bd6891b2e8bcc15789da3d7c34"
+    },
+    {
+      "path": "src/content/products/blink-outdoor-4.yaml",
+      "sha256": "e054aa0d6bb5f6aab074f93bc568bd4f50d20e1ece2b6baff577c429680bd96a"
+    },
+    {
+      "path": "src/content/products/echo-dot-5th-gen.yaml",
+      "sha256": "c9398b02e661398d2c7e1cab73096f95a101ced274c4f2f1ea191e8d3c26a0af"
+    },
+    {
+      "path": "src/content/products/echo-show-8-3rd-gen.yaml",
+      "sha256": "fe21c4b30161c947226442bd970f3cda0671299f0a2d64b08871137ce495ea4f"
+    },
+    {
+      "path": "src/content/products/ecobee-smart-thermostat-premium.yaml",
+      "sha256": "f98026434a13ffb54e396d2388f593207f74fb1646cd5ea442bb07fd1534282c"
+    },
+    {
+      "path": "src/content/products/eufy-security-indoor-cam-c120.yaml",
+      "sha256": "b74d9b0282e0e2b58b32b441b4baea3ce9be7a355f3939492112dc7d0af4c4bf"
+    },
+    {
+      "path": "src/content/products/google-nest-hub-2nd-gen.yaml",
+      "sha256": "673176984ba38c4e361f23e71580172f1aa54c404fddeed9819a63c31e79f2af"
+    },
+    {
+      "path": "src/content/products/govee-rgbic-led-strip-lights.yaml",
+      "sha256": "6a317ea117660b358fd6024986e90c03a0ff408a324f33a58c19ce321898994c"
+    },
+    {
+      "path": "src/content/products/irobot-roomba-j7-plus.yaml",
+      "sha256": "2b93114e5361cb7899dd97e995d1bc451e0eb28df05d4fc9ccd195dd1863f4c1"
+    },
+    {
+      "path": "src/content/products/levoit-core-300s-air-purifier.yaml",
+      "sha256": "c1ccebb4efbe4abd7816337fbfb43cadb82eca029945c2a4542a111b10136436"
+    },
+    {
+      "path": "src/content/products/meross-smart-garage-door-opener.yaml",
+      "sha256": "94df35cd7fee0b64c77e09bfe988a4ab2dcd881a1947f9e2d032439b40d910a8"
+    },
+    {
+      "path": "src/content/products/philips-hue-white-color-starter-kit.yaml",
+      "sha256": "cff47621ebb4a00a9b4dbd8d848c176f4f17b824eaafae7764476b74e3b3ec7e"
+    },
+    {
+      "path": "src/content/products/ring-video-doorbell-wired.yaml",
+      "sha256": "91136870d4396b5de3bba1084281d2f049a9878f72945da1293f67776c09211a"
+    },
+    {
+      "path": "src/content/products/roborock-q5-plus.yaml",
+      "sha256": "4290cb2c91f269b287bcd64832abb744c917cf3185959a990fe5873439b37b5e"
+    },
+    {
+      "path": "src/content/products/schlage-encode-smart-wifi-deadbolt.yaml",
+      "sha256": "5ad92660d1f13fda868b9d8056b4b356deab6182b3b1316fb0748b4fc60b23d0"
+    },
+    {
+      "path": "src/content/products/switchbot-blind-tilt.yaml",
+      "sha256": "07601a079299c5c50d6f96c984963070885ac4d84a8a815a0fe4e79031e1d187"
+    },
+    {
+      "path": "src/content/products/switchbot-hub-2.yaml",
+      "sha256": "4d42d54ca9bec80dd7bbf56ce68ac627a75bbf97f2fcd785c27620e043eb7fa1"
+    },
+    {
+      "path": "src/content/products/tapo-c120-security-camera.yaml",
+      "sha256": "5fa97359468e2ae13ba97006addfe8314ac6e1856acf6cb6b36f13139b522fe8"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-dimmer-hs220.yaml",
+      "sha256": "598dd84678cfc0c430355ac8071fe0ceebed3d7ed86642a8e4667cae924ffaae"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-light-switch-hs200.yaml",
+      "sha256": "8571aaab565dad0a6a925efc5815c6620927de8118b0bb7670aa68b0534f8833"
+    },
+    {
+      "path": "src/content/products/tp-link-kasa-smart-plug-mini.yaml",
+      "sha256": "9ae46f0eb956f150e0b38e9be337231433bdc10c22fa4b827dc6a81de55fda33"
+    },
+    {
+      "path": "src/content/products/wyze-bulb-color.yaml",
+      "sha256": "2b2569dab05da3de6cbaf95c0cf0656a4040f97154cd1b09a9bd19871dadb50d"
+    },
+    {
+      "path": "src/content/products/yale-assure-lock-2-wifi.yaml",
+      "sha256": "25b53e45e70991328b26021e57538062bf24ca59e67303a02bcd37dc98c8f83c"
+    }
+  ]
+}

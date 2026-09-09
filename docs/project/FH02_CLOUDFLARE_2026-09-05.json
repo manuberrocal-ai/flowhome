@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-09-05T12:13:28.532Z",
+  "success": true,
+  "name": "flowhome",
+  "production_branch": "main",
+  "domains": [
+    "flowhome-a1b.pages.dev",
+    "flowhome.dev"
+  ],
+  "subdomain": "flowhome-a1b.pages.dev",
+  "canonical_deployment": {
+    "id": "3e58fd68-5c13-4c5e-a5f1-d3c9b5cb821e",
+    "environment": "production",
+    "latest_stage": {
+      "name": "deploy",
+      "status": "success"
+    },
+    "deployment_trigger": {
+      "metadata": {
+        "branch": "main",
+        "commit_hash": "50bad4d9fcec8a436ddfa94763081ad06d7277ab",
+        "commit_dirty": true
+      }
+    },
+    "created_on": "2026-08-10T03:41:34.398977Z",
+    "url": "https://3e58fd68.flowhome-a1b.pages.dev"
+  },
+  "production_deployments_enabled": false,
+  "preview_deployment_setting": "none"
+}

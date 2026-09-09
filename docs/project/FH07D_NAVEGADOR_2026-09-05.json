@@ -1,0 +1,249 @@
+{
+  "observedAt": "2026-09-05T17:34:58.147Z",
+  "checks": [
+    {
+      "name": "Catalog carries 28 products and eleven installation profiles",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 requirements and non-hands-on assessment 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 exact listing limits retained 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 dated source links 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 anchor heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 metadata 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 empty-alt candidates are hidden avatars 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 direct affiliate destination 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 source link receives keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 requirements and non-hands-on assessment 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 exact listing limits retained 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 dated source links 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 anchor heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 metadata 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 empty-alt candidates are hidden avatars 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 direct affiliate destination 1440",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 source link receives keyboard focus 1440",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 requirements and non-hands-on assessment 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 exact listing limits retained 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 dated source links 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 anchor heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 metadata 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 empty-alt candidates are hidden avatars 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 direct affiliate destination 390",
+      "passed": true
+    },
+    {
+      "name": "aqara-hub-m2 source link receives keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 requirements and non-hands-on assessment 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 exact listing limits retained 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 dated source links 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 anchor heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 metadata 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 empty-alt candidates are hidden avatars 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 direct affiliate destination 390",
+      "passed": true
+    },
+    {
+      "name": "switchbot-hub-2 source link receives keyboard focus 390",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "pages": [
+    {
+      "slug": "aqara-hub-m2",
+      "width": 1440,
+      "meta": {
+        "title": "Aqara Hub M2 - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/aqara-hub-m2/",
+        "description": "Aqara Hub M2: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "width": 1440,
+      "meta": {
+        "title": "SwitchBot Hub 2 - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/switchbot-hub-2/",
+        "description": "SwitchBot Hub 2: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "width": 390,
+      "meta": {
+        "title": "Aqara Hub M2 - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/aqara-hub-m2/",
+        "description": "Aqara Hub M2: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "width": 390,
+      "meta": {
+        "title": "SwitchBot Hub 2 - Review, Price & Specs | FlowHome",
+        "h1": 1,
+        "canonical": "https://flowhome.dev/product/switchbot-hub-2/",
+        "description": "SwitchBot Hub 2: specifications, setup considerations and comparisons. Check current price and availability on Amazon.",
+        "emptyAlts": [
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          },
+          {
+            "hasAlt": true,
+            "hidden": true,
+            "avatar": true
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "profile": "Existing local-only browser routing retained; reduced motion; 1440/390 CSS px. No account, remote image, physical device or complete release certification."
+}

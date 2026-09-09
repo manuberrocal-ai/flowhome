@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { SYNTHETIC_CONTENT_QUEUE } from '../data/blocks/block11/synthetic-content-queue.ts';
-import { assessAttribution, buildCanonicalUtmUrl, CHANNEL_UTM, containsPiiOrSecret, createMockOfficialAdapter, DEFAULT_CONCENTRATION_GUARDRAILS, evaluateConcentration, normalizeUtm, OFFICIAL_INTEGRATIONS, rankEditorial, transitionContent, validateAllChannelVariants, validateAttribution, validateCreatorBrief, validateDisclosure, validateQueueState, validateRights, validateVariant } from '../src/lib/blocks/block11/index.ts';
+import { assessAttribution, buildCanonicalUtmUrl, CHANNEL_UTM, containsPiiOrSecret, createMockOfficialAdapter, DEFAULT_CONCENTRATION_GUARDRAILS, evaluateConcentration, isApprovedFlowHomeUrl, normalizeUtm, OFFICIAL_INTEGRATIONS, rankEditorial, transitionContent, validateAllChannelVariants, validateAttribution, validateCreatorBrief, validateDisclosure, validateQueueState, validateRights, validateVariant } from '../src/lib/blocks/block11/index.ts';
 
 const NOW = '2026-08-01T12:00:00.000Z';
 const approval = (state = 'approved', expiresAt = '2026-08-02T12:00:00.000Z') => ({ id: 'approval:publish', action: 'publish', actorId: 'reviewer', state, reason: 'Reviewed publication package', approvedAt: NOW, expiresAt });
@@ -57,8 +57,53 @@ test('stored UTMs must be normalized and match the channel attribution mapping',
   assert.throws(() => normalizeUtm({ source: 'x', medium: 'social', campaign: 'a@b.com', content: 'hero' }), /unsafe/);
   assert.throws(() => normalizeUtm({ source: 'x', medium: 'social', campaign: 'https://tracker.test', content: 'hero' }), /unsafe/);
   assert.throws(() => normalizeUtm({ source: 'x', medium: 'social', campaign: 'launch', content: 'hero', click_id: 'x' }), /keys/);
-  assert.match(buildCanonicalUtmUrl(approvedVariants[0].cta, utm), /^https:\/\/flowhome\.com\/guides\/measured-room-upgrade\?utm_source=tiktok/);
+  assert.match(buildCanonicalUtmUrl(approvedVariants[0].cta, utm), /^https:\/\/flowhome\.dev\/guides\/measured-room-upgrade\?utm_source=tiktok/);
   assert.throws(() => buildCanonicalUtmUrl({ label: 'Buy', canonicalUrl: 'https://amazon.com/item' }, utm), /retailer/);
+});
+
+test('canonical CTA accepts only the FlowHome HTTPS origins across URL building and queue gates', () => {
+  const variant = approvedVariants[0];
+  for (const canonicalUrl of [
+    'https://flowhome.dev/guides/measured-room-upgrade',
+    'https://www.flowhome.dev/guides/measured-room-upgrade',
+    'https://FLOWHOME.DEV:443/guides/measured-room-upgrade',
+  ]) {
+    const cta = { ...variant.cta, canonicalUrl };
+    assert.equal(isApprovedFlowHomeUrl(canonicalUrl), true, canonicalUrl);
+    assert.equal(validateVariant({ ...variant, cta }, NOW, true), null, canonicalUrl);
+    const result = new URL(buildCanonicalUtmUrl(cta, variant.utm));
+    assert.equal(result.pathname, '/guides/measured-room-upgrade');
+    assert.equal(result.searchParams.get('utm_source'), variant.utm.source);
+    assert.equal(result.username, '');
+    assert.equal(result.password, '');
+    assert.equal(result.port, '');
+  }
+  for (const canonicalUrl of [
+    'https://flowhome.com/guides/measured-room-upgrade',
+    'https://www.flowhome.com/guides/measured-room-upgrade',
+    'https://flowhome.dev.evil.example/guide',
+    'https://www.flowhome.dev.evil.example/guide',
+    'https://evilflowhome.dev/guide',
+    'https://flowhome.dev@evil.example/guide',
+    'https://user@flowhome.dev/guide',
+    'https://:fixture@flowhome.dev/guide',
+    'https://user:fixture@www.flowhome.dev/guide',
+    'https://flowhome.dev:8443/guide',
+    'http://flowhome.dev/guide',
+    'ftp://flowhome.dev/guide',
+    'javascript:alert(1)',
+    '//flowhome.dev/guide',
+    'https://flowhome.dev/guide?utm_source=unreviewed',
+    'https://flowhome.dev/guide#fragment',
+  ]) {
+    const cta = { ...variant.cta, canonicalUrl };
+    assert.equal(isApprovedFlowHomeUrl(canonicalUrl), false, canonicalUrl);
+    assert.throws(() => buildCanonicalUtmUrl(cta, variant.utm), /retailer_or_noncanonical_cta_forbidden/, canonicalUrl);
+    const variants = [{ ...variant, cta }, ...approvedVariants.slice(1)];
+    assert.equal(validateVariant(variants[0], NOW, true), 'variant_required_fields_invalid', canonicalUrl);
+    assert.equal(transitionContent({ ...readyQueue, variants }, 'publication_ready', NOW).reason, 'variant_required_fields_invalid', canonicalUrl);
+    assert.equal(validateQueueState({ ...readyQueue, state: 'publication_ready', variants }, NOW), 'variant_required_fields_invalid', canonicalUrl);
+  }
 });
 
 test('sponsored and editorial material connections require hard-to-miss matching disclosures', () => {

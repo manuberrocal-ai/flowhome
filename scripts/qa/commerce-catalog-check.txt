@@ -1,0 +1,41 @@
+async page => {
+  const results = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  const mount = mode => page.evaluate(async mode => {
+    window.catalogCommerceCleanup?.();
+    const { mountCatalogCommerce } = await import('/commerce-catalog-presentation.js');
+    const mounted = mountCatalogCommerce(document.querySelector('[data-commerce-catalog]'), { enabled: true, endpoint: '/commerce/' + mode, pageUrl: location.href });
+    window.catalogCommerceCleanup = mounted.dispose;
+  }, mode);
+  const empty = () => page.waitForFunction(() => [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(el => el.textContent === ''));
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.reload();
+    check(await page.locator('[data-commerce-observation]').evaluateAll(panels => panels.length === 28 && panels.every(panel => panel.hidden && panel.dataset.commerceObservation === panel.closest('article').querySelector('[data-asin]').dataset.asin)), 'All 28 inert slots match their card identity at ' + width);
+    check(await page.evaluate(() => performance.getEntriesByType('resource').filter(r => r.name.includes('/commerce/')).length === 0), 'No initial commercial request at ' + width);
+    const links = await page.locator('article [data-asin]').evaluateAll(els => els.map(el => el.getAttribute('href')));
+    await mount('partial');
+    const button = page.locator('[data-commerce-refresh]'); await button.focus(); await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.querySelector('[data-commerce-refresh]').getAttribute('aria-busy') === 'false');
+    const counts = await page.locator('[data-commerce-observation]').evaluateAll(panels => ({ visible: panels.filter(panel => !panel.hidden).length, denied: panels.find(panel => panel.dataset.commerceObservation === 'B09B8V1LZ3').querySelector('[data-commerce-price]').textContent }));
+    check(counts.visible === 27 && counts.denied === '', 'One denied product does not erase 27 peers at ' + width);
+    check((await page.locator('[data-commerce-status]').textContent()).startsWith('27 of 28'), 'Partial status counts identities at ' + width);
+    await page.locator('#catalog-search').fill('Echo Dot');
+    check(await page.locator('[data-catalog-item]').evaluateAll(els => els.filter(el => !el.hidden).length === 1), 'Search still filters after price refresh at ' + width);
+    await page.locator('#catalog-reset').click();
+    await page.evaluate(() => { const notice = document.createElement('p'); notice.textContent = 'LOCAL TEST ONLY — synthetic prices, not Amazon offers'; notice.style.cssText = 'background:white;color:black;padding:8px;font-weight:bold'; document.querySelector('[data-commerce-catalog-controls]').prepend(notice); });
+    await button.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: '.playwright-cli/fh16n-catalog-' + width + '.png' });
+    await page.context().setOffline(true);
+    try { await empty(); } finally { await page.context().setOffline(false); }
+    check((await page.locator('[data-commerce-status]').textContent()).startsWith('0 of 28'), 'Offline withdraws every displayed price at ' + width);
+    await mount('short'); await button.focus(); await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.querySelector('[data-commerce-status]').textContent.startsWith('28 of 28'));
+    await empty();
+    check(await page.evaluate(() => document.activeElement.hasAttribute('data-commerce-refresh')), 'Expiry retains focus at ' + width);
+    await page.evaluate(() => window.catalogCommerceCleanup());
+    check(await page.locator('[data-commerce-catalog-controls]').evaluate(el => el.hidden), 'Cleanup hides inactive controls at ' + width);
+    check(JSON.stringify(await page.locator('article [data-asin]').evaluateAll(els => els.map(el => el.getAttribute('href')))) === JSON.stringify(links), 'Amazon links unchanged at ' + width);
+  }
+  return { checks: results.length, results };
+}

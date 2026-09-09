@@ -13,6 +13,8 @@
  * [`docs/BLOCK8_OFFER_TREND_RUNBOOK.md`](../../../docs/BLOCK8_OFFER_TREND_RUNBOOK.md).
  */
 
+import { COMMERCIAL_DATA_POLICY } from '../../commercial-policy.ts';
+
 // ---------------------------------------------------------------------------
 // Enums
 // ---------------------------------------------------------------------------
@@ -51,7 +53,7 @@ export type TrendScoreLabel = 'rising' | 'falling' | 'stable' | 'unknown';
 // Strict UTC timestamp helpers
 // ---------------------------------------------------------------------------
 
-const STRICT_UTC_ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/;
+const STRICT_UTC_ISO = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d{1,3}))?Z$/;
 
 /** Returns a normalised UTC ISO string or `null` when the value is not strict UTC. */
 export function toStrictUtc(value: string | Date | null | undefined): string | null {
@@ -60,15 +62,17 @@ export function toStrictUtc(value: string | Date | null | undefined): string | n
     if (Number.isNaN(value.getTime())) return null;
     return value.toISOString();
   }
-  const trimmed = value.trim();
-  if (!STRICT_UTC_ISO.test(trimmed)) return null;
-  const parsed = new Date(trimmed);
-  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
+  if (typeof value !== 'string') return null;
+  const match = STRICT_UTC_ISO.exec(value);
+  if (!match) return null;
+  const parsed = new Date(value);
+  if (!Number.isFinite(parsed.getTime())) return null;
+  const expected = `${match[1]}.${(match[2] ?? '').padEnd(3, '0')}Z`;
+  return parsed.toISOString() === expected ? expected : null;
 }
 
 export function nowUtc(now?: Date | string): string {
-  const ref = now instanceof Date ? now : now ? new Date(now) : new Date();
-  return ref.toISOString();
+  return toStrictUtc(now === undefined ? new Date() : now) ?? '';
 }
 
 // ---------------------------------------------------------------------------
@@ -307,19 +311,19 @@ export interface AdminAuditEntry {
 }
 
 // ---------------------------------------------------------------------------
-// Configuration constants (defaults; override via ingestion policies)
+// Configuration ceilings (permissions may narrow, never extend commercial TTL)
 // ---------------------------------------------------------------------------
 
-export const FRESHNESS_WINDOWS_MS = {
+export const FRESHNESS_WINDOWS_MS = Object.freeze({
   /** Price snapshot usable age for DealScore, mirrors commerce-data priceMs. */
-  price: 7 * 24 * 60 * 60 * 1000,
+  price: COMMERCIAL_DATA_POLICY.priceMs,
   /** Availability freshness mirrors commerce-data availabilityMs. */
-  availability: 24 * 60 * 60 * 1000,
+  availability: COMMERCIAL_DATA_POLICY.availabilityMs,
   /** Trend signal usable age; longer than price to allow weekly aggregates. */
   trend: 14 * 24 * 60 * 60 * 1000,
-  /** Price snapshot retained for history even after it leaves the fresh window. */
-  history: 90 * 24 * 60 * 60 * 1000,
-} as const;
+  /** No history permission by default. A reviewed source grant must define it. */
+  history: COMMERCIAL_DATA_POLICY.defaultHistoryRetentionMs,
+});
 
 export const ANOMALY_DEFAULTS = {
   /** A price move beyond 40% of the previous good snapshot is anomalous. */

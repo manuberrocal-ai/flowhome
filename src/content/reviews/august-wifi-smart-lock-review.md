@@ -2,42 +2,47 @@
 title: "August Wi-Fi Smart Lock Review: Retrofit Access Without Replacing Keys"
 description: "A practical FlowHome review of August Wi-Fi Smart Lock with retrofit setup notes, compatibility, access-control tradeoffs, and buying timing."
 pubDate: 2026-06-28
+updatedDate: 2026-09-06
 productSlug: august-wifi-smart-lock
 category: smart-lock
 tags: ["smart home", "review", "smart-lock", "access control"]
 featured: false
 qualityScore: 8
+sources:
+  - label: "August Wi-Fi Smart Lock product and installation overview"
+    url: "https://august.com/products/august-wifi-smart-lock"
+    accessedAt: "2026-09-04"
 ---
 
 ## Quick verdict
 
-August Wi-Fi Smart Lock is a strong fit when you want smart access control but do not want to replace the exterior side of your existing deadbolt. That matters for renters, shared homes, and anyone who wants app control while keeping familiar physical keys as a fallback.
+August Wi-Fi Smart Lock is a retrofit option for a compatible existing deadbolt. August documents installation inside the door while retaining exterior hardware and original keys. Renters still need to check their lease and obtain any required permission. This is document-based guidance, not a physical evaluation or a security certification.
 
 ## Specifications and setup notes
 
 The most important setup check is mechanical compatibility. Before buying, confirm your deadbolt type, door alignment, interior clearance, and whether the thumb-turn area has enough room. Smart locks fail as an experience when the door already sticks or requires extra force; fix that before adding automation.
 
-This model supports Wi-Fi, Bluetooth, app control, and broad assistant compatibility across Alexa, Google Home, and Apple HomeKit. That makes it more flexible than many single-ecosystem locks, especially if your household uses mixed phones or voice assistants.
+August documents built-in Wi-Fi, Bluetooth, app operation, and Alexa, Google Home, and Apple HomeKit integration. Confirm the particular command, remote-access requirements, and account permissions you need; a platform label does not establish every automation.
 
 ## Pros and cons
 
-Pros include retrofit installation, broad ecosystem support, app-based access, key fallback, and a useful balance between smart features and everyday practicality. Cons include battery maintenance, installation sensitivity, and the fact that any connected lock raises privacy and account-security responsibilities.
+The documented retrofit format retains the exterior hardware and physical keys. The named platform integrations are starting points for checking the commands and access permissions you need, not evidence of universal compatibility or a measured convenience advantage. Battery maintenance, mechanical fit, and account permissions remain separate ownership responsibilities.
 
 ## Comparison context
 
-Compared with full replacement smart locks, August is less visually disruptive from outside the door. Compared with keypad-first locks, it is better for app and automation workflows but may be less convenient if guests expect a visible keypad without extra accessories.
+The comparison with a replacement deadbolt is about installation format, not measured reliability or security. August retains exterior hardware; a separate keypad accessory may be relevant if guests need code access without an app. Check the actual bundle.
 
 ## Best fit in a real home
 
-August is most compelling when the outside of the door needs to stay unchanged. That can be important for apartment leases, shared entryways, HOA rules, or households where some people still prefer a normal key. The retrofit design also reduces the visual change guests see from outside, which makes the lock feel less intrusive than a full keypad replacement.
+Consider the retrofit format when retaining the exterior hardware and original keys is a requirement. That design does not establish permission to modify a rented or shared door. Check the [model evidence](/product/august-wifi-smart-lock/#identity-evidence) and [installation requirements](/product/august-wifi-smart-lock/#installation-checks), including the actual deadbolt and mounting clearance, before selecting a seller package.
 
 The tradeoff is that convenience depends on the existing deadbolt working smoothly. If the bolt rubs, catches, or needs the door to be lifted before locking, a smart motor will not magically fix that. FlowHome would treat door alignment as part of the purchase decision, not as an afterthought.
 
 ## Buying advice
 
-Choose this lock if app access, auto-lock routines, guest permissions, and mixed household compatibility matter more than having a keypad built into the front hardware. Compare it carefully against keypad-first locks if visitors, cleaners, or short-term guests will need frequent code access.
+List the access methods each household member or guest needs: original key, app, or keypad. Confirm the exact supported permissions and any required accessory before choosing the bundle. If code access is essential, compare the complete keypad setup rather than assuming the retrofit lock alone provides it.
 
-Before checkout, review the exact bundle on Amazon, because accessories and bridge requirements can vary by listing. Also plan your battery routine: smart locks are worth it only when the household knows how alerts, spare batteries, and physical-key fallback will be handled.
+Before checkout, confirm the model number and accessories. The Wi-Fi model has built-in Wi-Fi; do not confuse it with older August products requiring a separate Wi-Fi bridge. Plan battery alerts and physical-key fallback. This article has not verified seller prices, ratings, battery endurance, or resistance to attack.
 
 ## FAQ
 

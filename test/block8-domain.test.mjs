@@ -27,10 +27,10 @@ test('nowUtc accepts Date and string and falls back to current time', () => {
 });
 
 test('constants document the Block 8 windows and defaults used by scoring and ingestion', () => {
-  assert.equal(FRESHNESS_WINDOWS_MS.price, 7 * 24 * 60 * 60 * 1000);
+  assert.equal(FRESHNESS_WINDOWS_MS.price, 24 * 60 * 60 * 1000);
   assert.equal(FRESHNESS_WINDOWS_MS.availability, 24 * 60 * 60 * 1000);
   assert.equal(FRESHNESS_WINDOWS_MS.trend, 14 * 24 * 60 * 60 * 1000);
-  assert.equal(FRESHNESS_WINDOWS_MS.history, 90 * 24 * 60 * 60 * 1000);
+  assert.equal(FRESHNESS_WINDOWS_MS.history, 0);
   assert.equal(ANOMALY_DEFAULTS.relativeThreshold, 0.4);
   assert.equal(ANOMALY_DEFAULTS.absoluteFloor, 0.5);
   assert.equal(ANOMALY_DEFAULTS.absoluteCeiling, 1_000_000);

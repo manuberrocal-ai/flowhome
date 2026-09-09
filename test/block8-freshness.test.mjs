@@ -5,13 +5,19 @@ import {
   isTrendSignalFresh,
   evaluateOfferFreshness,
   isOfferAvailabilityFresh,
-  isOfferPromotable,
+  isOfferPromotable as checkPromotable,
   confidenceFromFreshness,
 } from '../src/lib/blocks/block8/freshness.ts';
 import { FRESHNESS_WINDOWS_MS } from '../src/lib/blocks/block8/domain.ts';
+import { offerFixture, evidenceFixture } from './helpers/block8-fixtures.mjs';
+
+function isOfferPromotable(input, now) {
+  const offer = offerFixture(input);
+  return checkPromotable(offer, now, evidenceFixture(offer));
+}
 
 const NOW = new Date('2026-07-30T12:00:00Z');
-const freshIso = '2026-07-29T12:00:00Z';
+const freshIso = '2026-07-30T11:00:00Z';
 const staleIso = new Date(NOW.getTime() - FRESHNESS_WINDOWS_MS.price - 1).toISOString();
 const expiredIso = new Date(NOW.getTime() - 1).toISOString();
 
@@ -40,9 +46,9 @@ test('an offer with expiresAt in the past is expired', () => {
   assert.equal(f.reason, 'expired');
 });
 
-test('a fresh offer within window but past its own expiresAt is expired even if capturedAt is recent', () => {
+test('an expiry before capture is invalid even when the offer capture is recent', () => {
   const f = evaluateOfferFreshness({ capturedAt: freshIso, expiresAt: '2026-07-15T12:00:00Z' }, NOW);
-  assert.equal(f.reason, 'expired');
+  assert.equal(f.reason, 'invalid_expiry');
 });
 
 test('trend signals use the longer trend window', () => {

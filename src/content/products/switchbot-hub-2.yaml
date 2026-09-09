@@ -7,7 +7,7 @@ originalPrice: 69.99
 discountPct: 0
 category: smart-hub
 affiliateUrl: "https://www.amazon.com/dp/B0BM8VS13P?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B0BM8VS13P.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-hub.png"
 ownerRating: 4.3
 ownerRatingCount: 8200
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,42 @@ dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Hub 2"
+identityEvidence:
+  model: "Hub 2"
+  asin: B0BM8VS13P
+  claims:
+    model:
+      value: "Hub 2"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "SwitchBot Hub 2 setup — app and 2.4 GHz Wi-Fi"
+          url: "https://support.switch-bot.com/hc/en-us/articles/17784047699479-How-to-Set-up-SwitchBot-Hub-2"
+          accessedAt: "2026-09-05"
+    role:
+      value: "App-configured SwitchBot hub"
+      conditions: "Initial pairing is documented; this does not establish a particular Matter action or accessory pairing."
+      sources:
+        - label: "SwitchBot Hub 2 setup — app and 2.4 GHz Wi-Fi"
+          url: "https://support.switch-bot.com/hc/en-us/articles/17784047699479-How-to-Set-up-SwitchBot-Hub-2"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Hub 2"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "Power Hub 2 with a 5 V, 2 A supply and its sensor-equipped USB-C cable. The temperature and humidity sensors are in that cable; an ordinary replacement cable is not equivalent."
+    - "Complete pairing in the SwitchBot app using a 2.4 GHz Wi-Fi network. Follow the current app instructions for your installed firmware."
+    - "Keep the cable sensor's air vent clear and away from heat sources that could affect its readings. Check the exact package for the correct cable and US power adapter."
+  sources:
+    - label: "SwitchBot Hub 2 setup — app and 2.4 GHz Wi-Fi"
+      url: "https://support.switch-bot.com/hc/en-us/articles/17784047699479-How-to-Set-up-SwitchBot-Hub-2"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Hub 2 power requirements and unique sensor cable"
+      url: "https://support.switch-bot.com/hc/en-us/articles/13506998775575-What-Should-I-Do-if-Hub-Mini-Hub-2-Does-Not-Start-Up-After-Power-On"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Hub 2 sensor placement — ventilation and heat sources"
+      url: "https://support.switch-bot.com/hc/en-us/articles/9747052703895-What-should-I-do-if-Hub2-s-temperature-and-humidity-data-are-wrong"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
@@ -33,6 +69,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 66
-roiApproved: true

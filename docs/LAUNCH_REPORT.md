@@ -2,6 +2,8 @@
 
 ## Production URLs
 
+Historical report. The product-selection implementation and generated reports named below were retired locally in FH-06 on 2026-09-05; use [the current review-only method](INTERNAL_PRODUCT_SELECTION.md). This note does not establish current deployment state or publish the local correction.
+
 - Production domain: https://flowhome.dev
 - Cloudflare Pages fallback: https://flowhome-a1b.pages.dev
 - GitHub repository: https://github.com/manuberrocal-ai/flowhome

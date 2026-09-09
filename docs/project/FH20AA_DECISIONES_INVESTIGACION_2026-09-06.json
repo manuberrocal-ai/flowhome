@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-09-07T01:15:00.000Z",
+  "scope": "Internal research decisions only. No public approval, YAML mutation, compatibility edge or resolved count change.",
+  "reopenPolicy": "Do not repeat these searches in every loop. Reopen on new manufacturer evidence, identified hardware/firmware, a changed source, or the next review date.",
+  "reviewDueAt": "2026-10-07T01:15:00.000Z",
+  "items": [
+    {
+      "slug": "aqara-hub-m2",
+      "field": "bluetooth",
+      "rawValue": true,
+      "decision": "insufficient-functional-evidence",
+      "reason": "M2 lists a BLE radio but its page also says no BLE child devices are currently available. A hardware listing and future promise do not justify a works-with accessory signal.",
+      "nextEvidence": "Current manufacturer-supported BLE device and function list for the exact M2 firmware.",
+      "sources": [
+        "https://www.aqara.com/us/product/hub-m2/"
+      ]
+    },
+    {
+      "slug": "aeotec-smartthings-hub",
+      "field": "bluetooth",
+      "rawValue": true,
+      "decision": "insufficient-functional-evidence",
+      "reason": "GP-AEOHUBV3 specifications omit Bluetooth. The settings guide's Bluetooth toggle concerns the smartphone, not hub accessory support. Hub 2 material is a different generation. Omission alone is not proof of incompatibility.",
+      "nextEvidence": "Manufacturer documentation tying a Bluetooth function to GP-AEOHUBV3US, not the phone or Hub 2.",
+      "sources": [
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications",
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240597-smart-home-hub-settings"
+      ]
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "field": "matter",
+      "rawValue": false,
+      "decision": "qualified-path-versus-raw-boolean",
+      "reason": "Candidate describes a bridge through a Matter-capable Aqara hub. P1 remains Zigbee, not native Matter or Thread. Do not flip the raw boolean or call this a verified contradiction without an explicit catalog field meaning.",
+      "nextEvidence": "Approved field meaning, exact receiving controller/hub firmware and exposed sensor functions.",
+      "sources": [
+        "https://us.aqara.com/products/motion-sensor-p1"
+      ]
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "field": "apple",
+      "rawValue": false,
+      "decision": "qualified-path-versus-raw-boolean",
+      "reason": "Arlo lists Essential Outdoor HD second generation for Apple Home when connected to a supported Arlo base. Direct router connection is excluded. The candidate is conditional, not universal Apple compatibility.",
+      "nextEvidence": "Exact camera/base model, firmware and Apple Home setup; approved field meaning before changing raw data.",
+      "sources": [
+        "https://kb.arlo.com/000063184"
+      ]
+    }
+  ]
+}

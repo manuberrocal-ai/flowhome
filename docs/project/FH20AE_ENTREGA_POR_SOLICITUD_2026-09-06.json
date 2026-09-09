@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-09-07T01:43:38Z",
+  "scope": "Unregistered server request contract and local loopback HTTP test; authorization supplied by test dependencies, not a real account.",
+  "directedTests": 10,
+  "fullTests": 849,
+  "lint": "passed",
+  "types": {
+    "files": 325,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 18
+  },
+  "build": {
+    "pages": 88,
+    "exitCode": 0
+  },
+  "diffCheck": "passed",
+  "contract": {
+    "defaultEnabled": false,
+    "methods": [
+      "GET"
+    ],
+    "markets": [
+      "US"
+    ],
+    "surfaces": [
+      "product",
+      "quiz",
+      "comparison",
+      "alternatives"
+    ],
+    "responseLeaseCapMs": 60000,
+    "sourceTimeoutMs": 3000,
+    "noStoreOnSuccessAndError": true,
+    "etagOr304Fallback": false,
+    "priorResponseFallback": false,
+    "rawGraphExposed": false,
+    "internalReviewMetadataExposed": false
+  },
+  "localHttp": {
+    "loopbackOnly": true,
+    "freshResponse": 200,
+    "revokedResponse": 503,
+    "cacheControl": "no-store",
+    "serverClosedAfterTest": true
+  },
+  "notVerified": [
+    "Authenticated snapshot approval and revocation with a real account.",
+    "Deployment, CDN response policy, origin/CORS or a live route.",
+    "Browser validation, retiring a previously displayed response, tab suspension and out-of-order requests."
+  ]
+}

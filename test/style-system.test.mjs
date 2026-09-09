@@ -78,7 +78,7 @@ test('brand aurora and finite sheen are applied to the restored surfaces and pri
   assert.match(home, /home-surface brand-aurora-surface[\s\S]*Shortlist confidence/);
   assert.match(home, /data-fh-home-primary-cta class="brand-sheen/);
   assert.match(home, /data-hero-amazon[\s\S]*class="brand-sheen/);
-  assert.match(home, /href="\/account\/" class="brand-sheen/);
+  assert.match(home, /href="\/cart\/" class="brand-sheen/);
   assert.match(account, /account-hero brand-aurora-surface brand-aurora-surface--account/);
   assert.match(account, /class="brand-sheen[\s\S]*Continue with email/);
   assert.match(footer, /footer-surface brand-aurora-surface/);
@@ -146,7 +146,7 @@ test('hero carousel and mobile menu retain 44px interaction targets', async () =
 
 test('hot-deal cards use a gold hover and focus treatment without override debt', async () => {
   const css = await stylesheet();
-  const hotDealRules = css.match(/\.product-card--hot-deal:hover[\s\S]*?\.product-card-action-row\.is-details-open/)?.[0] || '';
+  const hotDealRules = css.match(/\.product-card--hot-deal:hover[\s\S]*?\.amazon-cta-label/)?.[0] || '';
   assert.match(hotDealRules, /product-card-amazon-action/);
   assert.match(hotDealRules, /product-card-side-action/);
   assert.match(hotDealRules, /#edc24a/);

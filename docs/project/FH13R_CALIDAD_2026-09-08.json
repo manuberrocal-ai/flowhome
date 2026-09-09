@@ -1,0 +1,650 @@
+{
+  "generatedAt": "2026-09-08T23:47:32.729Z",
+  "results": [
+    {
+      "file": "src\\content\\reviews\\aeotec-smartthings-hub-review.md",
+      "title": "Aeotec SmartThings Hub Review: Controller Role and Compatibility Checks",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "549 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\amazon-smart-thermostat-review.md",
+      "title": "Amazon Smart Thermostat Review: Wiring Checks for Alexa Homes",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "493 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\aqara-hub-m2-review.md",
+      "title": "Aqara Hub M2 Review: Zigbee Devices and Matter Bridging",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "523 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\august-wifi-smart-lock-review.md",
+      "title": "August Wi-Fi Smart Lock Review: Retrofit Access Without Replacing Keys",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "486 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "7 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\blink-outdoor-4-review.md",
+      "title": "Blink Outdoor 4 Review: Wireless Security for Alexa Homes",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "488 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "7 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
+      "title": "Echo Dot 5th Gen Review: Alexa Controls and Matter Requirements",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "519 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\ecobee-smart-thermostat-premium-review.md",
+      "title": "ecobee Smart Thermostat Premium Review: Room Sensors and HVAC Checks",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "452 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\eufy-security-indoor-cam-c120-review.md",
+      "title": "Eufy Indoor Cam C120 Review: Indoor Placement and Storage Choices",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "479 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\google-nest-hub-2nd-gen-review.md",
+      "title": "Google Nest Hub 2nd Gen Review: A Smart Display for Google Home Routines",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "558 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\irobot-roomba-j7-plus-review.md",
+      "title": "iRobot Roomba j7+ Review: Smart Mapping, Compatibility, and Tradeoffs",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "677 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "7 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\philips-hue-white-color-starter-kit-review.md",
+      "title": "Philips Hue Starter Kit 562918 Review: Two E26 Bulbs and Bridge Setup",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "480 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\ring-video-doorbell-wired-review.md",
+      "title": "Ring Video Doorbell Wired Review: Installation and Recording Tradeoffs",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "528 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\roborock-q5-plus-review.md",
+      "title": "Roborock Q5+ Review: A Smart Robot Vacuum for Routine Floor Care",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "744 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\switchbot-hub-2-review.md",
+      "title": "SwitchBot Hub 2 Review: Matter Bridging and Device Limits",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "533 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "6 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    },
+    {
+      "file": "src\\content\\reviews\\tp-link-kasa-smart-plug-mini-review.md",
+      "title": "Kasa EP10P2 Review: Two-Pack Identity and On/Off Control Checks",
+      "passed": true,
+      "score": 7,
+      "checks": [
+        {
+          "name": "wordCount",
+          "passed": true,
+          "detail": "555 words"
+        },
+        {
+          "name": "h2Structure",
+          "passed": true,
+          "detail": "8 H2 sections"
+        },
+        {
+          "name": "specifications",
+          "passed": true,
+          "detail": "specification language"
+        },
+        {
+          "name": "prosCons",
+          "passed": true,
+          "detail": "pros/cons language"
+        },
+        {
+          "name": "faq",
+          "passed": true,
+          "detail": "FAQ section"
+        },
+        {
+          "name": "comparison",
+          "passed": true,
+          "detail": "comparison context"
+        },
+        {
+          "name": "affiliateDisclosure",
+          "passed": true,
+          "detail": "affiliate disclosure"
+        }
+      ]
+    }
+  ]
+}

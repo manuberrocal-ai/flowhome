@@ -5,12 +5,12 @@ const { source = 'site' } = Astro.props;
 <section class="brand-aurora-surface relative isolate overflow-hidden rounded-[2rem] p-6 text-white shadow-xl shadow-slate-950/25 md:p-8">
   <div class="relative z-10 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-center">
     <div>
-      <p class="inline-flex rounded-full bg-cyan-300/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-cyan-100 ring-1 ring-cyan-200/20">Weekly brief</p>
-      <h2 class="mt-3 text-3xl font-black leading-tight">Get the smart home deal brief</h2>
-      <p class="mt-3 text-slate-300">One concise update with price drops, practical picks, and setup ideas. No spam, no daily noise.</p>
+      <p class="inline-flex rounded-full bg-cyan-300/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-cyan-100 ring-1 ring-cyan-200/20">FlowHome RSS</p>
+      <h2 class="mt-3 text-3xl font-black leading-tight">Follow new guides in your feed reader</h2>
+      <p class="mt-3 text-slate-300">Add FlowHome to your RSS reader to see reviews, guides, and published deal updates as they appear.</p>
     </div>
     <div class="grid gap-3">
-      <p class="text-sm leading-6 text-slate-300">We do not collect email addresses. Follow the RSS feed in your reader for new guides and deal updates.</p>
+      <p class="text-sm leading-6 text-slate-300">RSS brings updates from websites into a reader app. This is a feed link, not an email subscription.</p>
       <a href="/rss.xml" class="brand-sheen premium-action inline-flex min-h-12 w-fit items-center justify-center rounded-2xl px-5 py-3 font-black text-white" data-fh-track="feed_follow" data-cta-position={`newsletter_${source}`}>Follow via RSS</a>
     </div>
   </div>

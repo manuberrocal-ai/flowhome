@@ -30,6 +30,6 @@ export function parseFlatYaml(text) {
 export function readProducts() { return listFiles('src/content/products', '.yaml').map((file) => ({ file, ...parseFlatYaml(readText(file)) })); }
 export function readDeals() { return listFiles('src/content/deals', '.yaml').map((file) => ({ file, ...parseFlatYaml(readText(file)) })); }
 export function frontmatterMarkdown(text) {
-  const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   return match ? { data: parseFlatYaml(match[1]), body: match[2] } : { data: {}, body: text };
 }

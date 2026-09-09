@@ -7,7 +7,7 @@ originalPrice: 134.99
 discountPct: 0
 category: smart-hub
 affiliateUrl: "https://www.amazon.com/dp/B08TWDNQ5Q?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/I/61tMoVGYglL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
+image: "/images/product-art/illustrations-v1/smart-hub.png"
 ownerRating: 4.4
 ownerRatingCount: 2600
 ratingSource: "Amazon customer ratings"
@@ -16,7 +16,58 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "Aeotec SmartThings Hub"
+model: "GP-AEOHUBV3US"
+identityEvidence:
+  model: "GP-AEOHUBV3US"
+  asin: B08TWDNQ5Q
+  claims:
+    model:
+      value: "GP-AEOHUBV3US"
+      conditions: "The listing identifies GP-AEOHUBV3US and also names IM6001-V3P as a part. This is not Smart Home Hub 2; the unit and firmware have not been inspected."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B08TWDNQ5Q"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B08TWDNQ5Q"
+      conditions: "This identifies the reviewed indexed destination. It does not renew historical commercial data or certify the current seller's package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B08TWDNQ5Q"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Smart Home Hub for SmartThings"
+      conditions: "Initial setup uses the Samsung account and SmartThings app. This role does not certify an accessory pairing, routine or migration."
+      sources:
+        - label: "Aeotec — Smart Home Hub setup"
+          url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240326-how-to-setup-smart-home-hub"
+          accessedAt: "2026-09-05"
+    market:
+      value: "US regional model GP-AEOHUBV3US"
+      conditions: "The regional specification is model-specific. Confirm the unit label; regional Z-Wave versions are not interchangeable."
+      sources:
+        - label: "Aeotec — regional V3 hub specifications"
+          url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing — GP-AEOHUBV3US; unit not inspected"
+    url: "https://www.amazon.com/dp/B08TWDNQ5Q"
+    accessedAt: "2026-09-05"
+installation:
+  model: "GP-AEOHUBV3US"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "For initial hub setup, use the supplied power adapter and a broadband internet connection. Aeotec recommends Ethernet for initial setup; wireless connection uses 2.4 GHz Wi-Fi with WPA2. Place the hub centrally, away from large metal objects, and check the connection at its final location."
+    - "Use the SmartThings app and a Samsung account to register the hub with its QR code or serial number. Allow registration and firmware updates to finish. This assessment covers powering and registering the hub, not migrating an existing home or pairing and validating every accessory and routine."
+    - "Confirm the US model GP-AEOHUBV3US before buying; regional Z-Wave radios differ. These requirements do not cover Smart Home Hub 2. The unit, firmware and individual device integrations have not been physically verified, and successful setup does not establish cloud-free operation."
+  sources:
+    - label: "Aeotec — Smart Home Hub initial setup"
+      url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240326-how-to-setup-smart-home-hub"
+      accessedAt: "2026-09-05"
+    - label: "Aeotec — V3 regional models, power and network requirements"
+      url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: true
@@ -33,6 +84,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 60
-roiApproved: true

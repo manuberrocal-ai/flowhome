@@ -35,7 +35,7 @@ test('internal-link loops are present in both directions', () => {
 });
 
 test('curated comparison cluster contains exactly eight valid comparison definitions', () => {
-  const source = read('src/pages/compare/[...slugs].astro');
+  const source = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const expected = [
     'amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium',
     'roborock-q5-plus-vs-irobot-roomba-j7-plus',
@@ -52,7 +52,7 @@ test('curated comparison cluster contains exactly eight valid comparison definit
 });
 
 test('comparison pages have unique SEO guidance and substantive safe content contracts', () => {
-  const page = read('src/pages/compare/[...slugs].astro');
+  const page = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const layout = read('src/layouts/CompareLayout.astro');
   const titles = [...page.matchAll(/title: '([^']+)'/g)].map((match) => match[1]);
   const descriptions = [...page.matchAll(/description: '([^']+)'/g)].map((match) => match[1]);
@@ -61,8 +61,9 @@ test('comparison pages have unique SEO guidance and substantive safe content con
   assert.equal(new Set(descriptions).size, 8);
   assert.equal(new Set(guidance).size, 8);
   assert.match(layout, /Quick decision framework/);
-  for (const section of ['Key tradeoffs', 'Who should buy each option', 'Best fit by verified signal', 'Final recommendation', 'Evidence limits']) assert.match(layout, new RegExp(section));
-  assert.match(layout, /source data dates/);
+  for (const section of ['Key tradeoffs', 'Who should buy each option', 'Compatibility evidence', 'Final recommendation', 'Evidence limits']) assert.match(layout, new RegExp(section));
+  assert.doesNotMatch(layout, /Best fit by verified signal/);
+  assert.match(layout, /Catalog record dates/);
   assert.match(layout, /href=\{`\/product\/\$\{product\.slug\}/);
   assert.match(layout, /href=\{`\/category\/\$\{product\.category\}/);
   assert.match(layout, /href=\{`\/compare\/\$\{comparison\.slugs\.join\('-vs-'\)\}/);
@@ -70,7 +71,7 @@ test('comparison pages have unique SEO guidance and substantive safe content con
 });
 
 test('comparison data and table semantics stay consistent', () => {
-  const page = read('src/pages/compare/[...slugs].astro');
+  const page = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const table = read('src/components/CompareTable.astro');
   const q5 = read('src/content/products/roborock-q5-plus.yaml');
   const roomba = read('src/content/products/irobot-roomba-j7-plus.yaml');
@@ -86,7 +87,9 @@ test('comparison data and table semantics stay consistent', () => {
   assert.match(page, /both.*vacuum-only/i);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">\{label\}<\/th>/);
   assert.match(table, /<th scope="row" class="font-bold text-slate-700">Listing link<\/th>/);
-  assert.match(table, /<caption>Side-by-side verified product data comparison/);
+  assert.match(table, /<caption class="sr-only">Side-by-side product catalog comparison/);
+  assert.match(table, /id="comparison-table-limits"/);
+  assert.match(table, /tabindex="0" role="region" aria-label="Scrollable product comparison" aria-describedby="comparison-table-limits"/);
   assert.match(table, /<th scope="col">Feature<\/th>/);
 });
 
@@ -112,7 +115,7 @@ test('robot vacuum editorial cluster has optional guide fields and exact links',
   assert.match(roomba, /## (Key specifications|Setup and compatibility|Strengths and tradeoffs|FAQ)/g);
   assert.ok(roomba.split(/\s+/).length >= 500, 'Roomba review should remain substantive');
   assert.ok(q5.split(/\s+/).length >= 500, 'Q5+ review should remain substantive');
-  assert.match(q5, /^updatedDate: 2026-07-18$/m);
+  assert.match(q5, /^updatedDate: 2026-09-06$/m);
   assert.match(roomba, /^updatedDate: 2026-07-18$/m);
   assert.match(`${guide}\n${q5}`, /PreciSense(?: Precision)? LiDAR/i);
   assert.match(`${guide}\n${roomba}`, /PrecisionVision(?: Navigation)?/i);
@@ -129,7 +132,7 @@ test('robot-vacuum corrections reject affirmative mopping and shared-LiDAR claim
   const guide = read('src/content/best-of/best-robot-vacuums-for-smart-homes.yaml');
   const q5Review = read('src/content/reviews/roborock-q5-plus-review.md');
   const roombaReview = read('src/content/reviews/irobot-roomba-j7-plus-review.md');
-  const comparison = read('src/pages/compare/[...slugs].astro');
+  const comparison = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const editorial = `${guide}\n${q5Review}\n${roombaReview}\n${comparison}`;
 
   assert.doesNotMatch(q5, /^hasMop: true$/m);
@@ -147,7 +150,7 @@ test('smart-hub editorial cluster has exact products, reviews, comparison, and h
     read('src/content/reviews/switchbot-hub-2-review.md'),
     read('src/content/reviews/aeotec-smartthings-hub-review.md'),
   ];
-  const comparison = read('src/pages/compare/[...slugs].astro');
+  const comparison = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const all = `${guide}\n${reviews.join('\n')}`;
   const slugs = ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'];
   const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
@@ -174,7 +177,7 @@ test('smart-lighting room-control guide has exact editorial links and source-bac
     read('src/content/products/wyze-bulb-color.yaml'),
   ];
   const review = read('src/content/reviews/philips-hue-white-color-starter-kit-review.md');
-  const comparison = read('src/pages/compare/[...slugs].astro');
+  const comparison = read('src/pages/compare/[...slugs].astro') + read('src/lib/comparison-content.ts');
   const bestPage = read('src/pages/best/[slug].astro');
   const rss = read('src/pages/rss.xml.js');
   const productBlock = guide.match(/productSlugs:\n([\s\S]*?)pubDate:/)?.[1] ?? '';
@@ -189,18 +192,20 @@ test('smart-lighting room-control guide has exact editorial links and source-bac
   assert.match(guide, /Bulb or strip installation/);
   assert.match(guide, /Wall-switch and always-powered behavior/);
   assert.match(guide, /Ecosystem and app control/);
-  assert.match(guide, /Catalog price context/);
-  assert.match(guide, /time-sensitive catalog snapshots/);
+  assert.match(guide, /Current buying cost/);
+  assert.match(guide, /Prices and ratings have not been verified/);
+  assert.doesNotMatch(guide, /\$\d|\d(?:\.\d)?-star|\d[\d,]* ratings/);
   assert.match(guide, /wall switches should usually stay on/);
-  assert.match(guide, /current listing before buying/);
-  assert.match(review, /wall switches should usually stay on/);
+  assert.match(guide, /current listing terms[\s\S]*before buying/);
+  assert.match(review, /maintain power to connected bulbs/);
   assert.match(comparison, /'philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'/);
   for (const product of products) {
     assert.match(product, /^category: smart-lighting$/m);
     assert.match(product, /^rgb: true$/m);
     assert.match(product, /^dimmable: true$/m);
   }
-  assert.match(bestPage, /canonicalURL={`https:\/\/flowhome\.dev\/best\/\$\{list\.data\.slug\}\//);
+  assert.match(bestPage, /const canonicalURL = `https:\/\/flowhome\.dev\/best\/\$\{list\.data\.slug\}\/`;/);
+  assert.match(bestPage, /<BaseLayout[^>]*canonicalURL=\{canonicalURL\}/);
   assert.match(bestPage, /`\/category\/\$\{list\.data\.category\}\//);
   assert.match(bestPage, /`\/review\/\$\{review\.id\}\//);
   assert.match(bestPage, /`\/compare\/\$\{list\.data\.comparisonSlug\}\//);

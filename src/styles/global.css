@@ -100,6 +100,8 @@ body[data-flow-cart-dock-visible="true"] { padding-bottom: calc(6.5rem + env(saf
 .brand-aurora-surface::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(125, 211, 252, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(125, 211, 252, .07) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .7), transparent 88%); opacity: .45; }
 .brand-aurora-surface--account::before { background-image: radial-gradient(circle at 88% 10%, rgba(45, 212, 191, .42), transparent 24%), radial-gradient(circle at 8% 12%, rgba(59, 130, 246, .64), transparent 34%), radial-gradient(circle at 50% 110%, rgba(8, 145, 178, .36), transparent 42%), linear-gradient(135deg, rgba(2, 6, 23, .96), rgba(15, 42, 82, .86) 52%, rgba(8, 47, 73, .82)); }
 .brand-sheen, .premium-action { position: relative; isolation: isolate; overflow: hidden; transition: filter var(--fh-motion-base) var(--fh-ease), transform var(--fh-motion-base) var(--fh-ease); }
+/* The sheen's positioned context must not displace this overlay below its clipped stage. */
+.hero-showcase [data-hero-amazon] { position: absolute; top: 50%; max-width: calc(100% - 1.5rem); transform: translateY(-50%); }
 .brand-sheen::after, .premium-action::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit; background: linear-gradient(105deg, transparent 24%, rgba(255, 255, 255, .08) 38%, rgba(255, 255, 255, .7) 50%, rgba(255, 255, 255, .14) 61%, transparent 76%); opacity: 0; transform: translateX(-115%); transition: opacity var(--fh-motion-fast) ease, transform var(--fh-motion-slow) var(--fh-ease); }
 .brand-sheen > *, .premium-action > * { position: relative; z-index: 1; }
 .brand-sheen:hover::after, .brand-sheen:focus-within::after, .premium-action:hover::after, .premium-action:focus-within::after { opacity: .82; transform: translateX(115%); }
@@ -110,11 +112,11 @@ body[data-flow-cart-dock-visible="true"] { padding-bottom: calc(6.5rem + env(saf
 .product-card { transition: transform var(--fh-motion-base) var(--fh-ease), box-shadow var(--fh-motion-base) var(--fh-ease); }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.1); }
 .product-card-media-link { transition: padding var(--fh-motion-slow) var(--fh-ease), background-color var(--fh-motion-slow) var(--fh-ease); }
-.product-card-media { cursor: zoom-in; transition: height var(--fh-motion-slow) var(--fh-ease), box-shadow var(--fh-motion-slow) var(--fh-ease); }
+.product-card-media { transition: box-shadow var(--fh-motion-slow) var(--fh-ease); }
 .product-card-image { transform-origin: var(--product-zoom-x, 50%) var(--product-zoom-y, 50%); transition: transform var(--fh-motion-slow) var(--fh-ease); }
-.product-card.is-image-zooming .product-card-media { height: 11.65rem; box-shadow: inset 0 0 0 1px rgba(249, 115, 22, .10), var(--fh-shadow-sm); }
+.product-card.is-image-zooming .product-card-media { box-shadow: inset 0 0 0 1px rgba(249, 115, 22, .10), var(--fh-shadow-sm); }
 .product-card.is-image-zooming .product-card-image { transform: scale(1.2); }
-.product-card.is-image-zooming .product-card-media-link { padding: .68rem; }
+.product-card-action-row > * { scroll-margin-block: 8rem 15rem; }
 
 @keyframes brand-star-reveal { from { opacity: 0; transform: translateY(3px) scale(.72); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .hero-star { animation: brand-star-reveal var(--fh-motion-slow) var(--fh-ease) both; }
@@ -143,34 +145,27 @@ body[data-flow-cart-dock-visible="true"] { padding-bottom: calc(6.5rem + env(saf
 .product-card--hot-deal::after { content: "Hot deal"; position: absolute; top: .85rem; right: .85rem; z-index: 2; pointer-events: none; border: 1px solid rgba(237,194,74,.65); border-radius: var(--fh-radius-pill); background: linear-gradient(135deg, rgba(120,53,15,.96), rgba(245,158,11,.94)); padding: .28rem .56rem; color: #fff7ed; font-size: .62rem; font-weight: 820; letter-spacing: .035em; text-transform: uppercase; }
 
 /* Canonical ProductCard action row: same hover and keyboard state, no legacy overrides. */
-.product-card-action-row:not(.product-card-action-row--compact) { display: grid; grid-template-columns: minmax(8.2rem, 1fr) 2.75rem 2.75rem; align-items: stretch; gap: .42rem; width: 100%; overflow: visible; transition: grid-template-columns var(--fh-motion-slow) var(--fh-ease); }
-.product-card-amazon-action, .product-card-side-action { position: relative; display: flex; min-width: 0; min-height: 2.75rem; align-items: center; justify-content: center; overflow: visible; border-radius: var(--fh-radius-md); text-decoration: none; transition: padding var(--fh-motion-slow) var(--fh-ease), color var(--fh-motion-base) var(--fh-ease), background-position var(--fh-motion-base) var(--fh-ease), box-shadow var(--fh-motion-base) var(--fh-ease); }
+.product-card-action-row:not(.product-card-action-row--compact) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: .5rem; width: 100%; overflow: visible; }
+.product-card-action-row > .product-card-amazon-action { grid-column: 1 / -1; }
+.product-card-amazon-action, .product-card-side-action { position: relative; display: flex; min-width: 0; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: var(--fh-radius-md); text-decoration: none; transition: color var(--fh-motion-base) var(--fh-ease), background-color var(--fh-motion-base) var(--fh-ease); }
+.product-card-side-action:hover { filter: brightness(.96); }
+.product-card-action-row > :focus-visible { outline: 3px solid #12304f; outline-offset: 3px; }
+.product-card-side-action--list[aria-pressed="true"] { background: #065f46; color: #fff; border-color: #065f46; }
+.product-card-side-action--list[aria-pressed="true"] svg { fill: currentColor; }
 .product-card-amazon-action { width: 100%; padding-inline: .7rem; background: linear-gradient(135deg, var(--fh-color-orange-dark), #c2410c 24%, var(--fh-color-orange) 48%, #ff8a00 72%, #b83a00); color: #fff; box-shadow: 0 12px 22px rgba(124,45,18,.26), inset 0 1px 0 rgba(255,255,255,.24); }
-.product-card-side-action { width: 100%; padding: 0; background: linear-gradient(135deg, #475569, #334155 48%, #1f2937); color: var(--fh-color-cyan-light); box-shadow: 0 8px 16px rgba(30,41,59,.15), inset 0 1px 0 rgba(255,255,255,.16); }
-.product-card-side-action--details { color: #38bdf8; }
-.product-card-side-action--list.is-added { background: linear-gradient(135deg, #047857, #059669 48%, #34d399); color: #fff; }
+.product-card-side-action { width: 100%; min-width: 2.75rem; padding: .5rem .35rem; background: #f1f5f9; color: #12304f; border: 1px solid #cbd5e1; box-shadow: none; }
+.product-card-side-action--details { color: #12304f; }
+.product-card-side-action--list.is-added { background: #065f46; color: #fff; }
 .product-card-side-action svg { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; }
-.product-card-side-action-label { max-width: 0; margin-left: 0; overflow: hidden; opacity: 0; transform: translateX(-.35rem); color: inherit; font-size: .78rem; font-weight: 900; line-height: 1; white-space: nowrap; transition: max-width var(--fh-motion-slow) var(--fh-ease), margin-left var(--fh-motion-slow) var(--fh-ease), opacity var(--fh-motion-base) ease, transform var(--fh-motion-slow) var(--fh-ease); }
-.product-card:hover .product-card-side-action--details, .product-card:focus-within .product-card-side-action--details { background: linear-gradient(135deg, #1d4ed8, #2563eb 42%, #38bdf8); color: #fff; }
-.product-card:hover .product-card-side-action--list, .product-card:focus-within .product-card-side-action--list { background: linear-gradient(135deg, var(--fh-color-teal), var(--fh-color-cyan) 45%, var(--fh-color-cyan-light)); color: #fff; }
-.product-card:hover .product-card-amazon-action, .product-card:focus-within .product-card-amazon-action { filter: brightness(1.06); }
+.product-card-side-action-label { margin-left: .4rem; color: inherit; font-size: .78rem; font-weight: 750; line-height: 1.3; text-align: center; }
 .product-card--hot-deal:hover .product-card-amazon-action, .product-card--hot-deal:focus-within .product-card-amazon-action, .product-card--hot-deal:hover .product-card-side-action, .product-card--hot-deal:focus-within .product-card-side-action { background: linear-gradient(135deg, #8a5707, #d79a18 34%, #edc24a 54%, #fff2a6 58%, #bd7f0b); color: #fff8d6; box-shadow: 0 12px 24px rgba(146,91,12,.30), inset 0 1px 0 rgba(255,255,255,.42); text-shadow: 0 1px 2px rgba(61,35,3,.55); }
 .product-card--hot-deal .product-card-amazon-action::after, .product-card--hot-deal .product-card-side-action::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit; background: linear-gradient(105deg, transparent 22%, rgba(255,255,255,.12) 38%, rgba(255,255,255,.78) 50%, rgba(255,248,214,.34) 60%, transparent 76%); opacity: 0; transform: translateX(-120%); transition: opacity var(--fh-motion-fast) ease, transform var(--fh-motion-slow) var(--fh-ease); }
 .product-card--hot-deal .product-card-amazon-action > *, .product-card--hot-deal .product-card-side-action > * { position: relative; z-index: 1; }
 .product-card--hot-deal:hover .product-card-amazon-action::after, .product-card--hot-deal:focus-within .product-card-amazon-action::after, .product-card--hot-deal:hover .product-card-side-action::after, .product-card--hot-deal:focus-within .product-card-side-action::after { opacity: .82; transform: translateX(120%); }
-.product-card-action-row.is-details-open { grid-template-columns: 2.85rem minmax(7.4rem, 1fr) 2.45rem; }
-.product-card-action-row.is-list-open { grid-template-columns: 2.85rem 2.45rem minmax(8.1rem, 1fr); }
-.product-card-action-row.is-details-open .product-card-amazon-action, .product-card-action-row.is-list-open .product-card-amazon-action { padding-inline: 0; }
-.product-card-action-row.is-details-open .amazon-cta-label, .product-card-action-row.is-list-open .amazon-cta-label { opacity: 0; transform: scale(.82); }
 .amazon-cta-label { display: inline-flex; align-items: center; justify-content: center; gap: .24rem; width: 100%; line-height: 1; white-space: nowrap; transition: opacity var(--fh-motion-base) ease, transform var(--fh-motion-base) var(--fh-ease); }
 .amazon-cta-word { position: relative; display: inline-flex; font-size: .82rem; font-weight: 900; letter-spacing: -.05em; }
 .amazon-cta-prefix { font-size: .68rem; font-weight: 900; line-height: 1; }
 .amazon-cta-smile { position: absolute; top: .9em; left: 50%; width: 2.05em; height: .48em; transform: translateX(-50%); color: rgba(63,20,7,.8); }
-.amazon-cta-compact-icon { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transform: scale(.82); color: rgba(63,20,7,.86); transition: opacity var(--fh-motion-base) ease, transform var(--fh-motion-base) var(--fh-ease); }
-.amazon-cta-compact-icon svg { width: 1.85rem; height: auto; }
-.product-card-action-row.is-details-open .amazon-cta-compact-icon, .product-card-action-row.is-list-open .amazon-cta-compact-icon { opacity: 1; transform: scale(1); }
-.product-card-action-row.is-details-open .product-card-side-action--details, .product-card-action-row.is-list-open .product-card-side-action--list { gap: .5rem; padding-inline: .82rem; color: #fff; }
-.product-card-action-row.is-details-open .product-card-side-action--details .product-card-side-action-label, .product-card-action-row.is-list-open .product-card-side-action--list .product-card-side-action-label { max-width: 6.8rem; margin-left: .42rem; opacity: 1; transform: translateX(0); }
 .flow-cart-button-count { position: absolute; top: -.72rem; right: -.58rem; z-index: 3; display: grid; width: 1.2rem; min-width: 1.2rem; height: 1.2rem; place-items: center; pointer-events: none; border: 2px solid #fff; border-radius: var(--fh-radius-pill); background: #dc2626; color: #fff; font-size: .62rem; font-weight: 900; line-height: 1; box-shadow: 0 8px 17px rgba(220,38,38,.46); }
 .flow-cart-button-count[hidden] { display: none; }
 .product-card--compact .product-card-price-panel { overflow: hidden; padding: .72rem; }

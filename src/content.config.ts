@@ -1,6 +1,14 @@
-﻿import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { CANONICAL_CATEGORIES, RELATIONSHIP_TYPES } from './lib/product-taxonomy';
+
+const identityClaimSchema = z.object({
+  value: z.string(),
+  conditions: z.string(),
+  validUntil: z.string().optional(),
+  sources: z.array(z.object({ label: z.string(), url: z.string(), accessedAt: z.string() })),
+});
 
 const productsCollection = defineCollection({
   loader: glob({ base: './src/content/products', pattern: '**/*.{yaml,yml}' }),
@@ -20,6 +28,7 @@ const productsCollection = defineCollection({
       source: z.string().optional(),
       verifiedAt: z.string().optional(),
     })).default([]),
+    compatibilityNotes: z.array(z.string()).default([]),
     affiliateUrl: z.string(),
     image: z.string().optional(),
     ownerRating: z.number().default(0),
@@ -45,6 +54,31 @@ const productsCollection = defineCollection({
 
     // General
     model: z.string().optional(),
+    identityEvidence: z.object({
+      model: z.string(),
+      asin: z.string(),
+      claims: z.object({
+        model: identityClaimSchema.optional(),
+        asin: identityClaimSchema.optional(),
+        generation: identityClaimSchema.optional(),
+        bundle: identityClaimSchema.optional(),
+        market: identityClaimSchema.optional(),
+        firmware: identityClaimSchema.optional(),
+        role: identityClaimSchema.optional(),
+        subscription: identityClaimSchema.optional(),
+      }),
+    }).optional(),
+    installation: z.object({
+      model: z.string(),
+      market: z.enum(['US']),
+      assessment: z.enum(['plug-and-play', 'light-setup', 'advanced']),
+      requirements: z.array(z.string()),
+      sources: z.array(z.object({
+        label: z.string(),
+        url: z.string().refine((value) => value.startsWith('https://') && URL.canParse(value), 'Sources must be valid HTTPS URLs'),
+        accessedAt: z.string(),
+      })),
+    }).optional(),
     releaseDate: z.string().optional(),
     weight: z.string().optional(),
     dimensions: z.string().optional(),
@@ -63,7 +97,7 @@ const productsCollection = defineCollection({
     // Power
     voltage: z.string().optional(),
     powerWatts: z.number().optional(),
-    batteryIncluded: z.boolean().default(false),
+    batteryIncluded: z.boolean().optional(),
     batteryLife: z.string().optional(),
     standbyPowerWatts: z.number().optional(),
 
@@ -81,7 +115,7 @@ const productsCollection = defineCollection({
     dustCapacity: z.number().optional(),
     hasMop: z.boolean().default(false),
     lidarMapping: z.boolean().default(false),
-    obstacleDetection: z.boolean().default(false),
+    obstacleDetection: z.boolean().optional(),
     noiseLevel: z.number().optional(),
 
     // Smart Lighting
@@ -92,19 +126,15 @@ const productsCollection = defineCollection({
 
     // Smart Plug
     amperage: z.number().optional(),
-    energyMonitoring: z.boolean().default(false),
-    surgeProtection: z.boolean().default(false),
-    usbPorts: z.number().default(0),
+    energyMonitoring: z.boolean().optional(),
+    surgeProtection: z.boolean().optional(),
+    usbPorts: z.number().optional(),
 
     // Display/Audio
     screenSize: z.string().optional(),
     screenResolution: z.string().optional(),
     speakers: z.string().optional(),
 
-    // ROI System
-    priority: z.enum(['rejected', 'standard', 'featured', 'hero']).default('standard'),
-    priorityScore: z.number().default(0),
-    roiApproved: z.boolean().default(true),
   }),
 });
 
@@ -160,7 +190,12 @@ const bestOfCollection = defineCollection({
     category: z.string(),
     maxPrice: z.number(),
     productSlugs: z.array(z.string()),
-    pubDate: z.coerce.date().default(() => new Date()),
+    pubDate: z.coerce.date(),
+    sources: z.array(z.object({
+      label: z.string(),
+      url: z.string().url().refine((value) => value.startsWith('https://'), 'Sources must use HTTPS'),
+      accessedAt: z.string().optional(),
+    })).optional(),
     intro: z.string().optional(),
     buyingConsiderations: z.array(z.object({
       label: z.string(),

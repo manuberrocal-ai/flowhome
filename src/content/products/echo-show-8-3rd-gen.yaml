@@ -7,7 +7,7 @@ originalPrice: 149.99
 discountPct: 0
 category: smart-display
 affiliateUrl: "https://www.amazon.com/dp/B0BLS3Y632?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B0BLS3Y632.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-display.png"
 ownerRating: 4.6
 ownerRatingCount: 42000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,50 @@ dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Echo Show 8 3rd Gen"
+identityEvidence:
+  model: "Echo Show 8 3rd Gen"
+  asin: B0BLS3Y632
+  claims:
+    model:
+      value: "Echo Show 8 3rd Gen"
+      conditions: "The reviewed listing identifies Echo Show 8 third generation. Firmware, seller accessories and service terms are not certified."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0BLS3Y632"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B0BLS3Y632"
+      conditions: "This identifies the reviewed indexed destination. It does not renew historical commercial data or certify the current seller's package."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not live stock"
+          url: "https://www.amazon.com/dp/B0BLS3Y632"
+          accessedAt: "2026-09-05"
+    generation:
+      value: "Third generation (2023 release)"
+      conditions: "The reviewed Amazon generation table documents this release, not the hardware revision or firmware of a particular unit."
+      sources:
+        - label: "Amazon indexed listing — generation table"
+          url: "https://www.amazon.com/dp/B0BLS3Y632"
+          accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing — Echo Show 8 third generation, 2023 release"
+    url: "https://www.amazon.com/dp/B0BLS3Y632"
+    accessedAt: "2026-09-05"
+installation:
+  model: "Echo Show 8 3rd Gen"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "Use the included power adapter in an accessible outlet and place the display on a heat-resistant surface away from sinks, steam and heat sources. Amazon's US safety guide identifies third-generation model R85SD6; confirm the unit and included adapter before buying."
+    - "Have an Amazon account and your internet-connected Wi-Fi network name and password ready. Complete language, network and account setup on the display. This assessment covers initial display setup, not mounting accessories or configuring every connected smart-home device."
+    - "Review the microphone/camera controls, built-in camera shutter and voice-history settings with the household. The shutter does not establish cloud-free operation. Check any optional service and subscription terms separately; hardware, firmware and individual device pairings have not been physically verified."
+  sources:
+    - label: "Amazon US — Echo Show 8 third-generation setup and privacy controls"
+      url: "https://digprjsurvey.amazon.com/csad/help/node/Tg5QWRNDN7gW3Q968N"
+      accessedAt: "2026-09-05"
+    - label: "Amazon US — Echo Show 8 third-generation safety and model"
+      url: "https://digprjsurvey.amazon.com/csad/help/node/TqPCgJORlaxedTdjIv"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: true
@@ -35,6 +79,3 @@ dimmable: false
 subscriptionRequired: false
 screenSize: "8 in"
 speakers: "Spatial audio"
-priority: featured
-priorityScore: 72
-roiApproved: true

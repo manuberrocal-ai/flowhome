@@ -13,6 +13,10 @@ on:
         description: 'Optional newline-separated canonical URLs to notify after a successful deployment'
         required: false
         type: string
+      rollback_deployment_id:
+        description: 'Required for production: approved current successful Pages deployment UUID to restore if needed'
+        required: false
+        type: string
   push:
     branches: [main]
 
@@ -23,14 +27,34 @@ jobs:
   verify:
     outputs:
       has_urls: ${{ steps.notification-urls.outputs.has_urls }}
+      source_sha: ${{ steps.release-manifest.outputs.source_sha }}
+      manifest_sha256: ${{ steps.release-manifest.outputs.manifest_sha256 }}
+      dist_sha256: ${{ steps.release-manifest.outputs.dist_sha256 }}
+      artifact_id: ${{ steps.static-artifact.outputs.artifact-id }}
+      manifest_artifact_id: ${{ steps.manifest-artifact.outputs.artifact-id }}
+      urls_artifact_id: ${{ steps.urls-artifact.outputs.artifact-id }}
     runs-on: ubuntu-latest
     env:
+      PUBLIC_APP_ENV: 'production'
+      PUBLIC_AUTH_ENABLED: 'false' # Enable only after FH-11 and a reviewed account configuration.
+      PUBLIC_ANALYTICS_ENABLED: ${{ vars.PUBLIC_ANALYTICS_ENABLED || 'false' }}
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      RELEASE_SOURCE_SHA: ${{ github.sha }}
+      RELEASE_ROLLBACK_DEPLOYMENT_ID: ${{ inputs.rollback_deployment_id }}
+      RELEASE_DEPLOY_PRODUCTION: ${{ inputs.deploy_production }}
     steps:
-      - uses: actions/checkout@v7
+      - name: Initialize runner-local evidence paths
+        env:
+          QUALITY_REPORT_PATH: ${{ runner.temp }}/quality-report.json
+          RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest.json
+        run: |
+          printf '%s\n' "QUALITY_REPORT_PATH=$QUALITY_REPORT_PATH" "RELEASE_MANIFEST_PATH=$RELEASE_MANIFEST_PATH" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ github.sha }}
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: npm
@@ -45,9 +69,12 @@ jobs:
       - run: npm run links:check
       - run: npm run build
       - run: npm run seo:audit
+      - name: Seal verified static artifact
+        id: release-manifest
+        run: node scripts/deploy/release-artifact.mjs create
       - name: Check out previous push revision
         if: ${{ github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000' }}
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.event.before }}
           path: previous-source
@@ -63,16 +90,35 @@ jobs:
           DEPLOYED_URLS_MANUAL_INPUT: ${{ inputs.notification_urls }}
         run: |
           node scripts/deploy/deployed-urls.mjs --prepare --event-name "$DEPLOYMENT_EVENT_NAME" --before-sha "$DEPLOYMENT_BEFORE_SHA" --current-dist dist --previous-dist previous-source/dist --output "$RUNNER_TEMP/deployed-urls.txt" --github-output "$GITHUB_OUTPUT"
+      - name: Confirm sealed artifact before upload
+        env:
+          RELEASE_MANIFEST_SHA256: ${{ steps.release-manifest.outputs.manifest_sha256 }}
+        run: node scripts/deploy/release-artifact.mjs verify
       - name: Upload static artifact
-        uses: actions/upload-artifact@v7
+        id: static-artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: flowhome-dist
+          name: flowhome-dist-${{ github.run_id }}-${{ github.run_attempt }}
           path: dist
-      - name: Upload deployment URL artifact
-        uses: actions/upload-artifact@v7
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
+      - name: Upload verified release manifest
+        id: manifest-artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: flowhome-deployment-urls
+          name: flowhome-release-manifest-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/release-manifest.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload deployment URL artifact
+        id: urls-artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: flowhome-deployment-urls-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/deployed-urls.txt
+          if-no-files-found: error
+          retention-days: 30
 
   deploy-production:
     needs: verify
@@ -83,29 +129,49 @@ jobs:
       group: flowhome-production
       cancel-in-progress: false
     timeout-minutes: 30
+    env:
+      RELEASE_SOURCE_SHA: ${{ needs.verify.outputs.source_sha }}
+      RELEASE_MANIFEST_SHA256: ${{ needs.verify.outputs.manifest_sha256 }}
+      RELEASE_ARTIFACT_ID: ${{ needs.verify.outputs.artifact_id }}
+      RELEASE_ROLLBACK_DEPLOYMENT_ID: ${{ inputs.rollback_deployment_id }}
+      RELEASE_DEPLOY_PRODUCTION: 'true'
     permissions:
       contents: read
       deployments: write
     steps:
-      - uses: actions/checkout@v7
+      - name: Initialize runner-local evidence paths
+        env:
+          RELEASE_MANIFEST_PATH: ${{ runner.temp }}/release-manifest/release-manifest.json
+          RELEASE_EVIDENCE_PATH: ${{ runner.temp }}/release-evidence
+        run: |
+          printf '%s\n' "RELEASE_MANIFEST_PATH=$RELEASE_MANIFEST_PATH" "RELEASE_EVIDENCE_PATH=$RELEASE_EVIDENCE_PATH" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: main
-      - uses: actions/setup-node@v6
+          ref: ${{ needs.verify.outputs.source_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci
       - name: Download static artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: flowhome-dist
+          artifact-ids: ${{ needs.verify.outputs.artifact_id }}
           path: dist
-      - name: Download deployment URL artifact
-        uses: actions/download-artifact@v8
+      - name: Download verified release manifest
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: flowhome-deployment-urls
-          path: deployment-urls
+          artifact-ids: ${{ needs.verify.outputs.manifest_artifact_id }}
+          path: ${{ runner.temp }}/release-manifest
+      - name: Download deployment URL artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          artifact-ids: ${{ needs.verify.outputs.urls_artifact_id }}
+          path: ${{ runner.temp }}/deployment-urls
+      - name: Reject mismatched source or artifact
+        run: node scripts/deploy/release-artifact.mjs verify
       - name: Require Cloudflare credentials
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -117,19 +183,44 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Verify approved rollback deployment
+        run: node scripts/deploy/release-record.mjs preflight
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3, reviewed 2026-09-05
+        env:
+          NPM_CONFIG_SAVE: 'false'
+          NPM_CONFIG_PACKAGE_LOCK: 'false'
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name flowhome --branch main
+          wranglerVersion: '4.129.0'
+          preCommands: node scripts/deploy/release-artifact.mjs verify
+          command: pages deploy dist --project-name flowhome --branch main --commit-hash ${{ needs.verify.outputs.source_sha }} --commit-dirty=false
+      - name: Record canonical deployment identity
+        id: release-record
+        run: node scripts/deploy/release-record.mjs record
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          RELEASE_DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+      - name: Preserve release and recovery evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: flowhome-release-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/release-evidence
+          if-no-files-found: warn
+          retention-days: 30
       - name: Decide deployment notifications
         id: notification-decision
         if: ${{ always() }}
         env:
           DEPLOYMENT_EVENT_NAME: ${{ github.event_name }}
-          DEPLOYMENT_OUTCOME: ${{ steps.deploy.outcome }}
+          DEPLOYMENT_OUTCOME: ${{ steps.release-record.outcome }}
           DEPLOYMENT_HAS_URLS: ${{ needs.verify.outputs.has_urls }}
         run: |
           node scripts/deploy/deployed-urls.mjs --decide-notifications --event-name "$DEPLOYMENT_EVENT_NAME" --deploy-outcome "$DEPLOYMENT_OUTCOME" --has-urls "$DEPLOYMENT_HAS_URLS" --github-output "$GITHUB_OUTPUT"
@@ -142,12 +233,12 @@ jobs:
         if: ${{ steps.notification-decision.outputs.notify == 'true' }}
         run: npm run indexnow:submit
         env:
-          INDEXNOW_URLS_FILE: ${{ github.workspace }}/deployment-urls/deployed-urls.txt
+          INDEXNOW_URLS_FILE: ${{ runner.temp }}/deployment-urls/deployed-urls.txt
           INDEXNOW_SOFT_FAIL: 'true'
       - name: Submit IndexNow via Yandex fallback
         if: ${{ steps.notification-decision.outputs.notify == 'true' }}
         run: npm run indexnow:submit
         env:
-          INDEXNOW_URLS_FILE: ${{ github.workspace }}/deployment-urls/deployed-urls.txt
+          INDEXNOW_URLS_FILE: ${{ runner.temp }}/deployment-urls/deployed-urls.txt
           INDEXNOW_ENDPOINT: 'https://yandex.com/indexnow'
           INDEXNOW_SOFT_FAIL: 'true'

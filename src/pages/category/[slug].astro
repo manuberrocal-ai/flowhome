@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { generateBreadcrumbSchema, generateItemListSchema } from '../../lib/seo';
+import { serializeJsonLd } from '../../lib/json-ld.js';
 
 export async function getStaticPaths() {
   const categories = await getCollection('categories');
@@ -15,8 +18,19 @@ const products = (await getCollection('products'))
 const [guides, reviews] = await Promise.all([getCollection('best-of'), getCollection('reviews')]);
 const relevantGuides = guides.filter((guide) => guide.data.category === category.data.slug);
 const relevantReviews = reviews.filter((review) => review.data.category === category.data.slug);
+const canonicalURL = `https://flowhome.dev/category/${category.data.slug}/`;
+const breadcrumbItems = [
+  { name: 'Home', href: '/', url: 'https://flowhome.dev/' },
+  { name: 'Products', href: '/products/', url: 'https://flowhome.dev/products/' },
+  { name: category.data.name, url: canonicalURL },
+];
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, url }) => ({ name, url })));
+const itemListSchema = generateItemListSchema(products.map((product) => product.data), canonicalURL);
 ---
-<BaseLayout title={category.data.name + ' | FlowHome'} description={category.data.description} canonicalURL={'https://flowhome.dev/category/' + category.data.slug + '/'}>
+<BaseLayout title={category.data.name + ' | FlowHome'} description={category.data.description} canonicalURL={canonicalURL}>
+  <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />
+  {products.length > 0 && <script type="application/ld+json" set:html={serializeJsonLd(itemListSchema)} />}
+  <Breadcrumbs items={breadcrumbItems.map(({ name, href }) => ({ name, href }))} />
   <section class="premium-page-hero">
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Category</p>
     <h1 class="mt-2 text-4xl font-black text-slate-950">{category.data.name}</h1>

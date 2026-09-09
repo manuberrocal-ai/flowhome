@@ -1,0 +1,2530 @@
+{
+  "asOf": "2026-09-07T01:12:36.184Z",
+  "scope": "Documentary candidate only; unknown is not incompatible. Resolved evidence is not publication approval, seller-variant matching or a physical test.",
+  "publicActivation": "not_approved",
+  "researchQueueScope": "Raw catalog booleans are unverified research leads, not public-render records. Missing or false is not proof of incompatibility; qualified candidate signals may differ in scope. This queue does not audit prose, certify variants or rank commercial value.",
+  "summary": {
+    "catalogModels": 28,
+    "candidateModels": 28,
+    "uncoveredModels": 0,
+    "modelsWithCurrentSignalsOnAllSurfaces": 28,
+    "relations": 115,
+    "proposedLocations": 460,
+    "rawCatalogAffirmations": 108,
+    "unresolvedCatalogAffirmations": 2,
+    "rawNegationsWithCandidateSignals": 2,
+    "resolvedFieldLocations": 460
+  },
+  "uncovered": [],
+  "categoriesWithoutCandidate": [],
+  "errors": [],
+  "orphanModels": [],
+  "incompleteLocations": [],
+  "researchQueue": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "unresolvedAffirmations": [
+        {
+          "field": "bluetooth",
+          "catalogField": "bluetooth",
+          "missingSurfaces": [
+            "product",
+            "quiz",
+            "comparison",
+            "alternatives"
+          ]
+        }
+      ],
+      "negationsWithCandidateSignals": []
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "unresolvedAffirmations": [
+        {
+          "field": "bluetooth",
+          "catalogField": "bluetooth",
+          "missingSurfaces": [
+            "product",
+            "quiz",
+            "comparison",
+            "alternatives"
+          ]
+        }
+      ],
+      "negationsWithCandidateSignals": []
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "unresolvedAffirmations": [],
+      "negationsWithCandidateSignals": [
+        "matter"
+      ]
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "unresolvedAffirmations": [],
+      "negationsWithCandidateSignals": [
+        "apple"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "category": "smart-hub",
+      "model": "GP-AEOHUBV3US",
+      "candidateRelations": 7,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "smartthings",
+        "matter",
+        "thread",
+        "zigbee",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "matter",
+        "zigbee",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [
+        {
+          "field": "bluetooth",
+          "catalogField": "bluetooth",
+          "missingSurfaces": [
+            "product",
+            "quiz",
+            "comparison",
+            "alternatives"
+          ]
+        }
+      ],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://aeotec.com/products/aeotec-smartthings-hub/",
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240326-how-to-setup-smart-home-hub",
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240427-installing-removing-devices-smart-home-hub",
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240465-voice-control-smart-home-hub",
+        "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications"
+      ],
+      "earliestReviewDue": "2026-10-06T23:28:41.000Z"
+    },
+    {
+      "slug": "amazon-smart-thermostat",
+      "category": "smart-thermostat",
+      "model": "Amazon Smart Thermostat",
+      "candidateRelations": 2,
+      "allSurfaces": [
+        "alexa",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://digprjsurvey.amazon.com/csad/help/node/GLJEMJYYPUGXV2A4",
+        "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
+      ],
+      "earliestReviewDue": "2026-10-07T00:08:56.000Z"
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "category": "smart-hub",
+      "model": "Aqara Hub M2",
+      "candidateRelations": 6,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "zigbee",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "zigbee",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [
+        {
+          "field": "bluetooth",
+          "catalogField": "bluetooth",
+          "missingSurfaces": [
+            "product",
+            "quiz",
+            "comparison",
+            "alternatives"
+          ]
+        }
+      ],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.aqara.com/en/aqara-hub-m2-matter-update-has-started-to-roll-out/",
+        "https://www.aqara.com/us/product/hub-m2/"
+      ],
+      "earliestReviewDue": "2026-10-06T23:22:53.000Z"
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "category": "motion-sensor",
+      "model": "MS-S02",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "zigbee"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "zigbee"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "zigbee"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [
+        "matter"
+      ],
+      "sources": [
+        "https://us.aqara.com/products/motion-sensor-p1"
+      ],
+      "earliestReviewDue": "2026-10-06T23:22:53.000Z"
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "category": "security-camera",
+      "model": "Essential Outdoor HD Camera (2nd Generation)",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "smartthings",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [
+        "apple"
+      ],
+      "sources": [
+        "https://kb.arlo.com/000062278/What-smart-home-and-voice-assistant-systems-can-I-use-with-my-Arlo-devices",
+        "https://kb.arlo.com/000063184",
+        "https://kb.arlo.com/000063761/Arlo-Essential-Outdoor-2nd-Generation-Spec-Sheet"
+      ],
+      "earliestReviewDue": "2026-10-07T00:33:40.000Z"
+    },
+    {
+      "slug": "august-wifi-smart-lock",
+      "category": "smart-lock",
+      "model": "August Wi-Fi Smart Lock",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://august.com/products/august-wifi-smart-lock"
+      ],
+      "earliestReviewDue": "2026-10-06T23:59:35.000Z"
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "category": "security-camera",
+      "model": "Blink Outdoor 4",
+      "candidateRelations": 2,
+      "allSurfaces": [
+        "alexa",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq",
+        "https://support.blinkforhome.com/en_US/outdoor4-camera-tech-specs"
+      ],
+      "earliestReviewDue": "2026-10-07T00:28:30.000Z"
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "category": "smart-speaker",
+      "model": "Echo Dot 5th Gen",
+      "candidateRelations": 4,
+      "allSurfaces": [
+        "alexa",
+        "matter",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "matter",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://developer.amazon.com/docs/alexaplus/smarthome/matter-support.html",
+        "https://digprjsurvey.amazon.com/csad/help/node/TR7RlV0WehGNoLYxKM"
+      ],
+      "earliestReviewDue": "2026-10-07T00:44:26.000Z"
+    },
+    {
+      "slug": "echo-show-8-3rd-gen",
+      "category": "smart-display",
+      "model": "Echo Show 8 3rd Gen",
+      "candidateRelations": 6,
+      "allSurfaces": [
+        "alexa",
+        "matter",
+        "thread",
+        "zigbee",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "matter",
+        "zigbee",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://developer.amazon.com/docs/alexaplus/smarthome/matter-support.html",
+        "https://digprjsurvey.amazon.com/csad/help/node/Tg5QWRNDN7gW3Q968N",
+        "https://press.aboutamazon.com/2023/9/amazon-unveils-next-generation-echo-show-8-all-new-echo-hub-and-new-echo-frames"
+      ],
+      "earliestReviewDue": "2026-10-07T00:44:26.000Z"
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "category": "smart-thermostat",
+      "model": "ecobee Smart Thermostat Premium",
+      "candidateRelations": 6,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "smartthings",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+      ],
+      "earliestReviewDue": "2026-10-07T00:08:56.000Z"
+    },
+    {
+      "slug": "eufy-security-indoor-cam-c120",
+      "category": "security-camera",
+      "model": "Eufy Security Indoor Cam C120",
+      "candidateRelations": 4,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://service.eufy.com/article-description/Differences-Between-eufy-Indoor-Cams"
+      ],
+      "earliestReviewDue": "2026-10-07T00:37:12.000Z"
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "category": "smart-display",
+      "model": "Google Nest Hub 2nd Gen",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "google",
+        "matter",
+        "thread",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "google",
+            "matter",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "apple",
+            "smartthings",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "google",
+            "matter",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "apple",
+            "smartthings",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "google",
+            "matter",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "apple",
+            "smartthings",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "google",
+            "matter",
+            "thread",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "apple",
+            "smartthings",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "google",
+        "matter",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.google.com/googlehome/answer/12391458?hl=en",
+        "https://support.google.com/googlehome/answer/7072284?hl=en"
+      ],
+      "earliestReviewDue": "2026-10-07T00:44:26.000Z"
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "category": "smart-lighting",
+      "model": "H617C",
+      "candidateRelations": 1,
+      "allSurfaces": [
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "bluetooth"
+          ],
+          "unknown": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://community.govee.com/support/faqs/specs"
+      ],
+      "earliestReviewDue": "2026-10-07T00:23:41.000Z"
+    },
+    {
+      "slug": "irobot-roomba-j7-plus",
+      "category": "robot-vacuum",
+      "model": "iRobot Roomba j7+",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://prod-help-content.care.irobotapi.com/files/og-online-only/j7-robot-plusadd-na-onlineonly.pdf",
+        "https://www.irobot.com/en_US/roomba-j7-robot-vacuum/J715020.html?cgid=us&pr_rd_page=2"
+      ],
+      "earliestReviewDue": "2026-10-07T00:18:24.000Z"
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "category": "air-purifier",
+      "model": "Levoit Core 300S Smart Air Purifier",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://files.vesync.com/desc/LEVOIT_Core300S_USER_MANUAL.pdf"
+      ],
+      "earliestReviewDue": "2026-10-06T23:51:43.000Z"
+    },
+    {
+      "slug": "meross-smart-garage-door-opener",
+      "category": "garage-door-opener",
+      "model": "MSG100",
+      "candidateRelations": 4,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://shop.meross.com/products/smart-wifi-garage-door-opener"
+      ],
+      "earliestReviewDue": "2026-10-07T00:48:29.000Z"
+    },
+    {
+      "slug": "philips-hue-white-color-starter-kit",
+      "category": "smart-lighting",
+      "model": "562918 (2 E26 color bulbs + Hue Bridge)",
+      "candidateRelations": 7,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "smartthings",
+        "matter",
+        "zigbee",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "zigbee",
+            "bluetooth"
+          ],
+          "unknown": [
+            "thread",
+            "wifi"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "zigbee",
+            "bluetooth"
+          ],
+          "unknown": [
+            "thread",
+            "wifi"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "zigbee",
+            "bluetooth"
+          ],
+          "unknown": [
+            "thread",
+            "wifi"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "zigbee",
+            "bluetooth"
+          ],
+          "unknown": [
+            "thread",
+            "wifi"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "zigbee",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.philips-hue.com/en-us/explore-hue/works-with/matter",
+        "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+      ],
+      "earliestReviewDue": "2026-10-07T00:23:41.000Z"
+    },
+    {
+      "slug": "ring-video-doorbell-wired",
+      "category": "video-doorbell",
+      "model": "Ring Video Doorbell Wired",
+      "candidateRelations": 2,
+      "allSurfaces": [
+        "alexa",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "wifi"
+          ],
+          "unknown": [
+            "google",
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://ring.com/support/products/doorbells/video-doorbell-wired?page=1"
+      ],
+      "earliestReviewDue": "2026-10-07T00:48:29.000Z"
+    },
+    {
+      "slug": "roborock-q5-plus",
+      "category": "robot-vacuum",
+      "model": "Roborock Q5+ Robot Vacuum",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.roborock.com/hc/en-us/article_attachments/5983654392089",
+        "https://us.roborock.com/pages/roborock-q5"
+      ],
+      "earliestReviewDue": "2026-10-07T00:18:24.000Z"
+    },
+    {
+      "slug": "schlage-encode-smart-wifi-deadbolt",
+      "category": "smart-lock",
+      "model": "BE489WB CEN 622",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.schlage.com/en/home/products/BE489WBCENFFF.html"
+      ],
+      "earliestReviewDue": "2026-10-06T23:56:06.000Z"
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "category": "smart-blinds",
+      "model": "SwitchBot Blind Tilt",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee",
+            "wifi"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.switch-bot.com/hc/en-us/articles/13282638111127-Which-SwitchBot-Devices-Can-Be-Added-to-Apple-Home-As-Sub-devices-via-Matter",
+        "https://support.switch-bot.com/hc/en-us/articles/13918677096471-SwitchBot-Blind-Tilt-Google-Setup-Guide",
+        "https://support.switch-bot.com/hc/en-us/articles/13918769034519-SwitchBot-Blind-Tilt-Alexa-Setup-Guide",
+        "https://support.switch-bot.com/hc/en-us/articles/38979658026519-SwitchBot-Device-Matter-Compatibility",
+        "https://us.switch-bot.com/pages/switchbot-blind-tilt"
+      ],
+      "earliestReviewDue": "2026-10-06T23:16:35.000Z"
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "category": "smart-hub",
+      "model": "Hub 2",
+      "candidateRelations": 6,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "matter",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "matter",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.switch-bot.com/hc/en-us/articles/17784047699479-How-to-Set-up-SwitchBot-Hub-2",
+        "https://support.switch-bot.com/hc/en-us/articles/35214812208023-SwitchBot-Hub-2-Matter-Setup-iOS",
+        "https://support.switch-bot.com/hc/en-us/articles/38979658026519-SwitchBot-Device-Matter-Compatibility",
+        "https://us.switch-bot.com/products/switchbot-hub-2"
+      ],
+      "earliestReviewDue": "2026-10-06T23:16:35.000Z"
+    },
+    {
+      "slug": "tapo-c120-security-camera",
+      "category": "security-camera",
+      "model": "Tapo C120",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.tapo.com/us/product/smart-camera/tapo-c120/v1/"
+      ],
+      "earliestReviewDue": "2026-10-06T23:01:08.000Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-dimmer-hs220",
+      "category": "smart-lighting",
+      "model": "HS220",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220"
+      ],
+      "earliestReviewDue": "2026-10-06T23:47:23.000Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-light-switch-hs200",
+      "category": "smart-lighting",
+      "model": "HS200",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200"
+      ],
+      "earliestReviewDue": "2026-10-06T23:47:23.000Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-plug-mini",
+      "category": "smart-plug",
+      "model": "EP10 (EP10P2 two-pack)",
+      "candidateRelations": 3,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee",
+            "bluetooth"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-plug-mini-ep10"
+      ],
+      "earliestReviewDue": "2026-10-06T23:47:23.000Z"
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "category": "smart-lighting",
+      "model": "Wyze Bulb Color",
+      "candidateRelations": 4,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "apple",
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://support.wyze.com/hc/en-us/articles/360056417672-Wyze-Bulb-Color-Setup-Guide",
+        "https://www.wyze.com/products/wyze-bulb-color"
+      ],
+      "earliestReviewDue": "2026-10-07T00:23:41.000Z"
+    },
+    {
+      "slug": "yale-assure-lock-2-wifi",
+      "category": "smart-lock",
+      "model": "YRD420-WF1-619",
+      "candidateRelations": 5,
+      "allSurfaces": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi",
+        "bluetooth"
+      ],
+      "bySurface": {
+        "product": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "quiz": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "comparison": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        },
+        "alternatives": {
+          "resolved": [
+            "alexa",
+            "google",
+            "apple",
+            "wifi",
+            "bluetooth"
+          ],
+          "unknown": [
+            "smartthings",
+            "matter",
+            "thread",
+            "zigbee"
+          ]
+        }
+      },
+      "rawCatalogAffirmations": [
+        "alexa",
+        "google",
+        "apple",
+        "wifi",
+        "bluetooth"
+      ],
+      "unresolvedCatalogAffirmations": [],
+      "rawNegationsWithCandidateSignals": [],
+      "sources": [
+        "https://shopyalehome.com/products/yale-assure-lock-2-touchscreen-with-wi-fi"
+      ],
+      "earliestReviewDue": "2026-10-06T23:59:35.000Z"
+    }
+  ]
+}

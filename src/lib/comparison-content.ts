@@ -1,0 +1,58 @@
+export const comparisonConfigs = [
+  {
+    slugs: ['amazon-smart-thermostat', 'ecobee-smart-thermostat-premium'],
+    title: 'Amazon Smart Thermostat vs ecobee Smart Thermostat Premium',
+    description: 'Compare thermostat control needs, room-sensor plans, HVAC installation, and evidence limits.',
+    angle: 'Start with HVAC compatibility and the temperature-control task, then check the exact app and assistant functions.',
+    guidance: 'Check wiring and complete installation requirements before selecting either thermostat. Compare the documented Alexa setup and ecobee room-sensor approach in the linked reviews; no comfort, savings, interface or price advantage is established here.',
+  },
+  {
+    slugs: ['roborock-q5-plus', 'irobot-roomba-j7-plus'],
+    title: 'Roborock Q5+ vs iRobot Roomba j7+',
+    description: 'Compare original Q5+ and j7+ navigation documentation, vacuum-only roles, dock planning, and model checks.',
+    angle: 'These original models use different documented navigation approaches; feature names are not measured cleaning results.',
+    guidance: 'Q5+ documentation names PreciSense Precision LiDAR; j7+ documentation names PrecisionVision and Imprint Smart Mapping. Both are vacuum-only. Check exact model, dock clearance and app routines; no obstacle-handling or cleaning winner is established by these labels.',
+  },
+  {
+    slugs: ['august-wifi-smart-lock', 'schlage-encode-smart-wifi-deadbolt', 'yale-assure-lock-2-wifi'],
+    title: 'August vs Schlage vs Yale Smart Locks',
+    description: 'Compare retrofit and replacement lock formats, door fit, access methods, and exact-model requirements.',
+    angle: 'Decide whether to retain exterior hardware or replace the deadbolt before comparing connected access.',
+    guidance: 'Check mechanical fit, original-key or keypad needs, permissions, and the actual model and accessories. Catalog platform flags do not certify commands, battery endurance, security or reliability.',
+  },
+  {
+    slugs: ['blink-outdoor-4', 'arlo-essential-outdoor-camera'],
+    title: 'Blink Outdoor 4 vs Arlo Essential Outdoor Camera',
+    description: 'Compare outdoor-camera placement, power, recording dependencies, and model-specific evidence.',
+    angle: 'Start with the event and mounting location, then verify recording, module and account requirements.',
+    guidance: 'Confirm exact generation and package, power, recording destination, and the actions you need. Night-vision or audio fields alone do not establish detection quality, storage availability or a supported assistant command.',
+  },
+  {
+    slugs: ['eufy-security-indoor-cam-c120', 'tapo-c120-security-camera'],
+    title: 'Eufy Security Indoor Cam C120 vs Tapo C120',
+    description: 'Compare C120 camera identities, placement, power, storage choices, and integration limits.',
+    angle: 'Similar C120 names do not identify the same manufacturer, installation limits, or recording workflow.',
+    guidance: 'Check each camera model, installation documentation, storage requirements and desired assistant function separately. Do not transfer indoor or outdoor suitability, HomeKit limits, or service terms between these products.',
+  },
+  {
+    slugs: ['echo-dot-5th-gen', 'echo-show-8-3rd-gen'],
+    title: 'Echo Dot 5th Gen vs Echo Show 8 3rd Gen',
+    description: 'Compare voice-only and display formats by intended room tasks, account settings, and supported functions.',
+    angle: 'A screen addresses a different need from voice-only access; neither format proves a convenience or audio advantage.',
+    guidance: 'Choose a specific room task, then verify the required service and commands for the account and device generation. Consider screen visibility and household permissions; sound quality and convenience have not been measured here.',
+  },
+  {
+    slugs: ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'],
+    title: 'Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec SmartThings Hub',
+    description: 'Compare hub bridge and controller roles, accessory scope, power, and regional model requirements.',
+    angle: 'Aqara and SwitchBot bridge paths differ from the Aeotec SmartThings controller role; Matter labels do not make them interchangeable.',
+    guidance: 'List exact accessories and actions first. Check bridge or controller requirements, firmware, power accessories and regional hardware using the linked profiles and hub guide. Protocol flags do not certify an accessory pairing.',
+  },
+  {
+    slugs: ['philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'],
+    title: 'Philips Hue vs Govee RGBIC vs Wyze Bulb Color',
+    description: 'Compare bulb and strip formats, exact kit identities, mounting needs, and documented control paths.',
+    angle: 'Fixture and control choices come before generic RGB or dimming labels; output and color quality are not measured here.',
+    guidance: 'Check the Hue 562918 kit, Govee H617C strip and Wyze Bulb Color profiles separately. H617C is Bluetooth-controlled and not cuttable; do not transfer assistant support from another RGBIC model. Confirm package contents and current requirements before choosing.',
+  },
+];

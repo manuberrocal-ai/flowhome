@@ -7,7 +7,7 @@ originalPrice: 249.99
 discountPct: 0
 category: smart-thermostat
 affiliateUrl: "https://www.amazon.com/dp/B09XXTQP3B?tag=flowhome-20"
-image: "https://images.thdstatic.com/productImages/1b78d244-05c7-4fc9-9f91-063dedcbe16f/svn/black-ecobee-programmable-thermostats-eb-state6-01-64_600.jpg"
+image: "/images/product-art/illustrations-v1/smart-thermostat.png"
 ownerRating: 4.5
 ownerRatingCount: 3500
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,35 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "ecobee Smart Thermostat Premium"
+identityEvidence:
+  model: "ecobee Smart Thermostat Premium"
+  asin: B09XXTQP3B
+  claims:
+    model:
+      value: "ecobee Smart Thermostat Premium"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "ecobee Smart Thermostat Premium US wiring and powering methods"
+          url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Controller for compatible 24 VAC HVAC systems"
+      conditions: "Check wiring and powering method; the catalog identity does not establish compatibility with a household system."
+      sources:
+        - label: "ecobee Smart Thermostat Premium US wiring and powering methods"
+          url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+          accessedAt: "2026-09-05"
+installation:
+  model: "ecobee Smart Thermostat Premium"
+  market: US
+  assessment: advanced
+  requirements:
+    - "Requires compatible 24 VAC HVAC wiring; check your system with ecobee's compatibility checker before purchase."
+    - "Power uses a C-wire or a compatible Power Extender Kit installation. Check wiring and installation needs with the manufacturer or an HVAC professional."
+  sources:
+    - label: "ecobee Smart Thermostat Premium US wiring and powering methods"
+      url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
@@ -33,6 +62,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: hero
-priorityScore: 71
-roiApproved: true

@@ -1,5 +1,4 @@
 ﻿---
-import { supabaseAnonKey, supabaseUrl } from '../lib/supabase-client';
 
 const navItems = [
   {
@@ -50,7 +49,7 @@ const navItems = [
 ];
 ---
 
-<header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl" data-supabase-url={supabaseUrl} data-supabase-anon-key={supabaseAnonKey}>
+<header class="site-header sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
     <a href="/" class="flex min-w-0 items-center" aria-label="FlowHome home">
       <img src="/images/flowhome-logo.png" srcset="/images/flowhome-logo-430.png 430w, /images/flowhome-logo.png 1076w" sizes="(max-width: 404px) 170px, 195px" alt="FlowHome" class="h-9 w-auto max-w-[260px] object-contain sm:h-11" width="1076" height="250" decoding="async" fetchpriority="high" />
@@ -59,19 +58,19 @@ const navItems = [
     <nav class="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
       {navItems.map((item) => item.children.length > 0 ? (
         <div class="nav-dropdown" data-menu={item.label.toLowerCase()}>
-          <a class="nav-link inline-flex items-center gap-1.5" href={item.href} aria-haspopup="true">
+          <a class="nav-link inline-flex items-center gap-1.5" href={item.href} aria-controls={`desktop-submenu-${item.label.toLowerCase()}`}>
             {item.label}
             <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
-          <div class="nav-menu" role="menu">
-            <a href={item.href} class="nav-menu-feature" role="menuitem">
+          <div class="nav-menu" id={`desktop-submenu-${item.label.toLowerCase()}`}>
+            <a href={item.href} class="nav-menu-feature">
               <span class="nav-menu-kicker text-xs font-black uppercase tracking-[0.18em]">{item.label}</span>
               <span class="mt-1 block text-sm font-bold text-slate-950">{item.featured}</span>
             </a>
             <div class="my-2 h-px bg-slate-700"></div>
             <div class="grid gap-1">
               {item.children.map((child) => (
-                <a href={child.href} class="nav-menu-link" role="menuitem">{child.label}</a>
+                <a href={child.href} class="nav-menu-link">{child.label}</a>
               ))}
             </div>
           </div>
@@ -102,11 +101,11 @@ const navItems = [
       <div class="space-y-1">
         {navItems.map((item) => item.children.length > 0 ? (
           <div class="mobile-nav-group">
-            <button class="mobile-nav-trigger" type="button" aria-expanded="false">
+            <button class="mobile-nav-trigger" type="button" aria-expanded="false" aria-controls={`mobile-submenu-${item.label.toLowerCase()}`}>
               <span>{item.label}</span>
               <svg class="mobile-chevron h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </button>
-            <div class="mobile-submenu">
+            <div class="mobile-submenu" id={`mobile-submenu-${item.label.toLowerCase()}`} inert>
               <a href={item.href} class="mobile-submenu-link font-bold text-slate-900">{item.featured}</a>
               {item.children.map((child) => <a href={child.href} class="mobile-submenu-link">{child.label}</a>)}
             </div>
@@ -133,7 +132,40 @@ const navItems = [
 
 <script>
   (() => {
-    const button = document.querySelector('.mobile-menu-btn');
+    // Ordinary navigation links, not an application menu. Enter still follows
+    // the parent route; Tab and ArrowDown expose its category links.
+    document.querySelectorAll<HTMLElement>('.nav-dropdown').forEach((group) => {
+      const link = group.querySelector<HTMLAnchorElement>(':scope > .nav-link');
+      const menu = group.querySelector<HTMLElement>('.nav-menu');
+      if (!link || !menu) return;
+      const setOpen = (open: boolean) => {
+        group.dataset.open = String(open);
+        link.setAttribute('aria-expanded', String(open));
+        menu.inert = !open;
+      };
+      group.dataset.enhanced = 'true';
+      setOpen(false);
+      group.addEventListener('pointerenter', () => setOpen(true));
+      group.addEventListener('pointerleave', () => {
+        if (!group.contains(document.activeElement)) setOpen(false);
+      });
+      group.addEventListener('focusin', () => setOpen(true));
+      group.addEventListener('focusout', (event) => {
+        if (!(event.relatedTarget instanceof Node) || !group.contains(event.relatedTarget)) setOpen(false);
+      });
+      group.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          link.focus();
+          setOpen(false);
+        } else if (event.key === 'ArrowDown' && event.target === link) {
+          event.preventDefault();
+          setOpen(true);
+          menu.querySelector<HTMLAnchorElement>('a')?.focus();
+        }
+      });
+    });
+    const button = document.querySelector<HTMLButtonElement>('.mobile-menu-btn');
     const panel = document.getElementById('mobile-menu');
     const openIcon = '<svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
     const closeIcon = '<svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
@@ -143,7 +175,16 @@ const navItems = [
         const willOpen = panel.hidden;
         panel.hidden = !willOpen;
         button.setAttribute('aria-expanded', String(willOpen));
+        button.setAttribute('aria-label', willOpen ? 'Close menu' : 'Open menu');
         button.innerHTML = willOpen ? closeIcon : openIcon;
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || panel.hidden || !(panel.contains(document.activeElement) || document.activeElement === button)) return;
+        panel.hidden = true;
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Open menu');
+        button.innerHTML = openIcon;
+        button.focus();
       });
     }
 
@@ -152,6 +193,8 @@ const navItems = [
         const group = trigger.closest('.mobile-nav-group');
         const isOpen = group?.classList.toggle('is-open') || false;
         trigger.setAttribute('aria-expanded', String(isOpen));
+        const submenu = group?.querySelector<HTMLElement>('.mobile-submenu');
+        if (submenu) submenu.inert = !isOpen;
       });
     });
   })();
@@ -190,6 +233,9 @@ const navItems = [
     left: 0;
     top: calc(100% + 0.32rem);
     width: min(22rem, 90vw);
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     border: 1px solid #334155;
     border-radius: 1.25rem;
     background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
@@ -200,10 +246,11 @@ const navItems = [
     transform: translateY(-7px) scale(0.985);
     pointer-events: none;
     transform-origin: top left;
-    transition: opacity 190ms ease, transform 210ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 190ms;
+    transition: opacity 190ms ease, transform 210ms cubic-bezier(.2,.8,.2,1);
   }
-  .nav-dropdown:hover .nav-menu,
-  .nav-dropdown:focus-within .nav-menu {
+  .nav-dropdown:not([data-enhanced]):hover .nav-menu,
+  .nav-dropdown:not([data-enhanced]):focus-within .nav-menu,
+  .nav-dropdown[data-open="true"] .nav-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
@@ -229,11 +276,18 @@ const navItems = [
   }
   .nav-menu-link:hover { background: #1f2937; color: #ffffff; transform: translateX(2px); }
   @media (prefers-reduced-motion: reduce) {
-    .nav-menu { transition: opacity 120ms ease, visibility 0s linear 120ms; transform: none; }
+    .nav-menu { transition: opacity 120ms ease; transform: none; }
     .nav-dropdown:hover .nav-menu,
     .nav-dropdown:focus-within .nav-menu { transform: none; }
   }
-  .mobile-panel { background: #111827 !important; border-color: #1f2937 !important; animation: mobileMenuDown 220ms ease-out; }
+  .mobile-panel {
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    background: #111827 !important;
+    border-color: #1f2937 !important;
+    animation: mobileMenuDown 220ms ease-out;
+  }
   @keyframes mobileMenuDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
   .mobile-nav-link,
   .mobile-nav-trigger {

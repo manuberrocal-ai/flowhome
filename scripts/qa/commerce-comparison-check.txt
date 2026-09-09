@@ -1,0 +1,88 @@
+async page => {
+  const results = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  const origin = page.url().split('/').slice(0, 3).join('/');
+  for (const width of [390, 1440]) {
+    for (const [compatibility, commerce] of [['live', 'comparison'], ['live', 'short'], ['short', 'live'], ['live', 'partial'], ['denied', 'live']]) {
+      const mode = `${compatibility}/${commerce} at ${width}`;
+      await page.setViewportSize({ width, height: 900 }); await page.goto(origin + '/real-comparison/');
+      const root = page.locator('[data-comparison-presentation]');
+      const links = await root.locator('[data-fh-amazon-cta]').evaluateAll(nodes => nodes.map(node => node.href));
+      await page.evaluate(async ({ compatibility, commerce }) => {
+        const banner = document.createElement('p');
+        banner.textContent = 'LOCAL TEST ONLY — synthetic prices, not product offers';
+        document.querySelector('[data-comparison-presentation]').prepend(banner);
+        const { mountComparisonCompatibility } = await import('/comparison-presentation.js');
+        const root = document.querySelector('[data-comparison-presentation]');
+        const options = { enabled: true, endpoint: '/compatibility/' + compatibility, pageUrl: location.href,
+          commerce: { enabled: true, endpoint: '/commerce/' + commerce, pageUrl: location.href } };
+        window.mounted = mountComparisonCompatibility(root, options);
+        window.duplicateRejected = false;
+        try { mountComparisonCompatibility(root, options); } catch { window.duplicateRejected = true; }
+      }, { compatibility, commerce });
+      check(await page.evaluate(() => window.duplicateRejected && !performance.getEntriesByType('resource').some(entry => /\/(commerce|compatibility)\//.test(entry.name))), 'Single owner, no initial requests: ' + mode);
+      await root.getByRole('button', { name: 'Refresh prices and evidence' }).focus();
+      if (commerce === 'comparison') {
+        const pattern = width === 390 ? '**/commerce/comparison?*' : '**/compatibility/live?*';
+        let release; let started; let calls = 0;
+        const gate = new Promise(resolve => { release = resolve; });
+        const bothStarted = new Promise(resolve => { started = resolve; });
+        const hold = async route => { if (++calls === 2) started(); await gate; await route.continue(); };
+        await page.route(pattern, hold);
+        try {
+          await page.evaluate(() => { window.pendingRefresh = window.mounted.refresh(); });
+          await bothStarted;
+          if (width === 390) {
+            await page.waitForFunction(() => document.querySelectorAll('[data-comparison-leaders] li').length > 0);
+            check((await root.locator('[data-comparison-commerce="price"]').allTextContents()).every(text => !text.includes('$')), 'Compatibility arrives first without inventing pending prices');
+          } else {
+            await page.waitForFunction(() => [...document.querySelectorAll('[data-comparison-commerce="price"]')].every(node => node.textContent.includes('$')));
+            check(await root.locator('[data-comparison-leaders] li').count() === 0, 'Prices arrive first without inventing pending compatibility');
+          }
+        } finally { release(); }
+        await page.evaluate(() => window.pendingRefresh);
+        await page.unroute(pattern, hold);
+      } else await page.evaluate(() => window.mounted.refresh());
+      const priceText = await root.locator('[data-comparison-commerce="price"]').allTextContents();
+      check(priceText.filter(text => text.includes('$')).length === (commerce === 'partial' ? 2 : 4), 'All table/card prices match response completeness: ' + mode);
+      check(await root.evaluate((element, commerce) => {
+        const products = JSON.parse(element.querySelector('[data-comparison-base]').textContent);
+        return products.every(product => {
+          const link = element.querySelector(`[data-fh-amazon-cta][data-product-slug="${product.slug}"]`);
+          const cells = [...element.querySelectorAll(`[data-comparison-commerce="price"][data-comparison-slug="${product.slug}"]`)];
+          const expected = commerce === 'partial' && product.asin === 'B09B8V1LZ3' ? 'Check price on Amazon'
+            : commerce === 'comparison' && product.asin !== 'B09B8V1LZ3' ? '$234.56 snapshot' : '$123.45 snapshot';
+          return link.href.includes('/dp/' + product.asin) && cells.length === 2 && cells.every(cell => cell.textContent === expected);
+        });
+      }, commerce), 'Price identity matches both copies and listing ASIN: ' + mode);
+      const limits = await root.locator('[data-comparison-limits]').textContent();
+      check(limits.includes('Current authorized price differences are unavailable') === (commerce === 'partial'), 'Price evidence limits agree with observations: ' + mode);
+      check((await root.locator('[data-comparison-leaders] li').count() > 0) === (compatibility !== 'denied'), 'Compatibility independent of commercial response: ' + mode);
+      if (commerce === 'comparison') {
+        check((await root.locator('[data-comparison-tradeoffs]').textContent()).includes('Price snapshots span $123.45 to $234.56'), 'Current range shown without value winner: ' + mode);
+        check((await root.locator('[data-comparison-final]').textContent()).includes('not assigned'), 'No overall or value verdict: ' + mode);
+        await root.locator('[data-comparison-controls]').scrollIntoViewIfNeeded();
+        await page.screenshot({ path: '.playwright-cli/fh16p-comparison-' + width + '.png' });
+      }
+      if (commerce === 'short') {
+        await page.waitForFunction(() => [...document.querySelectorAll('[data-comparison-commerce="price"]')].every(node => !node.textContent.includes('$')));
+        check((await root.locator('[data-comparison-buyer]').allTextContents()).every(text => !text.includes('price snapshot')), 'Expired prices withdraw derived buyer reasons: ' + mode);
+        check(await root.locator('[data-comparison-leaders] li').count() > 0, 'Price expiry preserves current compatibility: ' + mode);
+      }
+      if (compatibility === 'short') {
+        await page.waitForFunction(() => document.querySelectorAll('[data-comparison-leaders] li').length === 0);
+        check((await root.locator('[data-comparison-commerce="price"]').allTextContents()).every(text => text.includes('$123.45')), 'Compatibility expiry preserves current prices: ' + mode);
+        check(!(await root.locator('[data-comparison-limits]').textContent()).includes('Current authorized price differences are unavailable'), 'Compatibility render cannot overwrite price limits: ' + mode);
+      }
+      await page.context().setOffline(true);
+      try {
+        await page.waitForFunction(() => [...document.querySelectorAll('[data-comparison-commerce="price"]')].every(node => !node.textContent.includes('$')) && document.querySelectorAll('[data-comparison-leaders] li').length === 0);
+        check((await root.locator('[data-comparison-buyer]').allTextContents()).every(text => !text.includes('price snapshot') && !text.includes('evidence-backed signal')), 'Offline withdraws both derived signals: ' + mode);
+      } finally { await page.context().setOffline(false); }
+      await page.evaluate(() => window.mounted.dispose());
+      check(JSON.stringify(links) === JSON.stringify(await root.locator('[data-fh-amazon-cta]').evaluateAll(nodes => nodes.map(node => node.href))), 'Purchase links untouched: ' + mode);
+    }
+  }
+  return { checks: results.length, results };
+}

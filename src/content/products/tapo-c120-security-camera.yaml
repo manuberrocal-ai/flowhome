@@ -7,7 +7,7 @@ originalPrice: 49.99
 discountPct: 20
 category: security-camera
 affiliateUrl: "https://www.amazon.com/dp/B0CH45HPZT?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B0CH45HPZT.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/security-camera.png"
 ownerRating: 4.4
 ownerRatingCount: 9800
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,40 @@ dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Tapo C120"
+identityEvidence:
+  model: "Tapo C120"
+  asin: B0CH45HPZT
+  claims:
+    model:
+      value: "Tapo C120"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "TP-Link US Tapo C120 specifications and storage options"
+          url: "https://www.tp-link.com/us/home-networking/cloud-camera/tapo-c120/"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Externally powered security camera"
+      conditions: "The C120 setup is not battery-powered; outdoor placement does not make the power adapter outdoor-rated."
+      sources:
+        - label: "TP-Link US Tapo C120 specifications and storage options"
+          url: "https://www.tp-link.com/us/home-networking/cloud-camera/tapo-c120/"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Tapo C120"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Set up with the Tapo app and 2.4 GHz Wi-Fi, using the manufacturer-supplied power adapter and cable. This camera is not battery-powered."
+    - "Plan the camera position and power-cable route. A table or shelf needs no wall mounting; magnetic, adhesive and screw mounting are other options. Follow the manual for your hardware version."
+    - "The linked US setup guide specifies indoor use for the power adapter, even when the camera is outdoors. Check the exact installation instructions before choosing its location."
+    - "For local recording, the guide calls for a separate microSD card initialized in the app; Tapo Care cloud storage is a subscription service."
+  sources:
+    - label: "TP-Link US Tapo C120 specifications and storage options"
+      url: "https://www.tp-link.com/us/home-networking/cloud-camera/tapo-c120/"
+      accessedAt: "2026-09-05"
+    - label: "Tapo C120 US quick installation guide, revision 1.3.1"
+      url: "https://static.tp-link.com/upload/manual/2024/202410/20241030/7106511094_Tapo%20C120(US)1.0_QIG_V1.pdf"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +67,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 62
-roiApproved: true

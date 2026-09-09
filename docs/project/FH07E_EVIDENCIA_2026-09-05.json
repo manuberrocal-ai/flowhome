@@ -1,0 +1,265 @@
+{
+  "recordedAt": "2026-09-05T17:53:48.152Z",
+  "task": "FH-07E",
+  "scope": "Three comfort installation profiles; no algorithm or commercial data changes",
+  "repository": "C:/AGENTES/Proyectos/flowhome",
+  "head": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "uncommitted": true,
+  "published": false,
+  "installation": {
+    "total": 28,
+    "documented": 14,
+    "unknown": 14
+  },
+  "verification": {
+    "red": {
+      "tests": 12,
+      "passed": 10,
+      "failed": 2
+    },
+    "directed": {
+      "passed": 28,
+      "failed": 0
+    },
+    "full": {
+      "passed": 663,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "pass",
+    "typecheck": "pass",
+    "build": {
+      "pages": 88,
+      "completedAt": "2026-09-05T17:53:01Z"
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "browser": {
+      "passed": 72,
+      "failed": 0,
+      "widths": [
+        1440,
+        390
+      ],
+      "screenshotsInspected": 8,
+      "remoteRequestsBlocked": true,
+      "repeatedForFullOutput": true
+    },
+    "text": {
+      "candidates": 8,
+      "interpretation": "Two hidden anonymous avatars with explicit empty alt in each of four pages; authenticated state not tested"
+    },
+    "nonInstallationPreservation": {
+      "matched": 28,
+      "total": 28,
+      "baseline": "FH07B_EVIDENCIA_2026-09-05.json"
+    },
+    "diffCheck": "pass; existing LF/CRLF warnings",
+    "commandCorrection": "npm run check absent; corrected to existing npm run typecheck and succeeded"
+  },
+  "sourceAndBuildHashes": [
+    {
+      "path": "src/content/products/wyze-bulb-color.yaml",
+      "sha256": "191f0aae9deb3e7458e1c6bf64e43c516a1f01489802f19577b711b3c32ee0db"
+    },
+    {
+      "path": "src/content/products/levoit-core-300s-air-purifier.yaml",
+      "sha256": "19368efea6d2d3536ae819c6c28fca7ddbcd0802c18a29410c654e55352ab062"
+    },
+    {
+      "path": "src/content/products/switchbot-blind-tilt.yaml",
+      "sha256": "f99d70a0e1f2b7c8a2076a97e6f3dfe3417f74491cbe8bfc48b3cb187fb1bec8"
+    },
+    {
+      "path": "test/product-installation.test.mjs",
+      "sha256": "0c77d5b3ff478b47017f8019cf046a9f3019ca4b323d98dc191f1895d3d8b43c"
+    },
+    {
+      "path": "src/lib/product-installation.ts",
+      "sha256": "c396a2ddad10b6b68857f503abd503c52f86cbefbf4ee76528131c38ee165c5a"
+    },
+    {
+      "path": "src/lib/quiz-recommend.ts",
+      "sha256": "47f45f7f3b98ac6b569257ad6e6574784af2c6b23c55847d8225d47deb1febb3"
+    },
+    {
+      "path": "src/pages/product/[slug].astro",
+      "sha256": "faadb1a40fdcf532685a5d941e7fe2105e7d8f919bfe707887b7866b03759809"
+    },
+    {
+      "path": "dist/product/wyze-bulb-color/index.html",
+      "sha256": "654189815aac54d8c760307064dd2216705157438faa4f144a21df7ae505763a"
+    },
+    {
+      "path": "dist/product/levoit-core-300s-air-purifier/index.html",
+      "sha256": "67f5e874191f432faccc15cabe62b8f955a7a9b0d3b34a72aae02eb49933c57a"
+    },
+    {
+      "path": "dist/product/switchbot-blind-tilt/index.html",
+      "sha256": "7d7251fd06df5956c64f1438b3cc0882eca9a5f43f0ffe7c5312f2121e20ae6f"
+    },
+    {
+      "path": "dist/quiz/index.html",
+      "sha256": "989910f90f26a6c23e948c042efd8f59d258f9960c3d9532f89a2421981f8c21"
+    }
+  ],
+  "catalogHashes": [
+    {
+      "file": "aeotec-smartthings-hub.yaml",
+      "sha256": "1f5ab86943db9d773b8cfd4d6dddd70594647753f14298d4e6259466c7563467",
+      "nonInstallationSha256": "5310d15ecaef910c7732569cbbfeb9ae4f1ababc594f609e8070599e7a4807fb"
+    },
+    {
+      "file": "amazon-smart-thermostat.yaml",
+      "sha256": "8df63a394a08e7c8937a1d9daf51c5c015bbcd412ba265332df48a1d07813a8f",
+      "nonInstallationSha256": "b5a5844644df29bca2889b3a72a3c25cb7b5634a68ad8f76df9a41fce678cbb3"
+    },
+    {
+      "file": "aqara-hub-m2.yaml",
+      "sha256": "52df0e2ca23c1789fbb69f28fa172763c2b60678e118ad373ce724438571e4d4",
+      "nonInstallationSha256": "e39a7836c0849ab95b2f457ef4e4d089301bc7902c1832604ec7b19e1c8c52ba"
+    },
+    {
+      "file": "aqara-motion-sensor-p1.yaml",
+      "sha256": "497b0cbb16c6062dcf80adda75cd712bba735eb681ad1be53a12eb00d3aa8ff6",
+      "nonInstallationSha256": "ee8406234f305fc2b2f426720d0d18520f79a5497285cd4f2d5964a0be88da72"
+    },
+    {
+      "file": "arlo-essential-outdoor-camera.yaml",
+      "sha256": "09e7d7cf43d953edde57d977121209d2a3729033353b46bc47090d159bacfe9f",
+      "nonInstallationSha256": "7f1af0e7ef74c25b65bca31b5d7c0046462d97e5388a861d027116656a81ce8c"
+    },
+    {
+      "file": "august-wifi-smart-lock.yaml",
+      "sha256": "4e2c4c413e68bba843aa282697d06716c261f1bd6891b2e8bcc15789da3d7c34",
+      "nonInstallationSha256": "d6b64e95fa64df2f4de227701efb51d23538c7855ae1e696396646f3e2592551"
+    },
+    {
+      "file": "blink-outdoor-4.yaml",
+      "sha256": "7be434da3105989c6ca0e94ae037b3497ad82953bbd17405446d7491b20bfa91",
+      "nonInstallationSha256": "e63a944ce98d7f0601f8d8a556c5a22e314bb385230d4b1d6edb67f6cd2af36d"
+    },
+    {
+      "file": "echo-dot-5th-gen.yaml",
+      "sha256": "c9398b02e661398d2c7e1cab73096f95a101ced274c4f2f1ea191e8d3c26a0af",
+      "nonInstallationSha256": "d5102f6727f72186aecf8c89833600a0b7abe2b011000e4ac1061d19a3d6c5a8"
+    },
+    {
+      "file": "echo-show-8-3rd-gen.yaml",
+      "sha256": "fe21c4b30161c947226442bd970f3cda0671299f0a2d64b08871137ce495ea4f",
+      "nonInstallationSha256": "86aee72f669725d6a2bb90fa5cee627cb71b931f48ffc64bc01af65d0596e8ed"
+    },
+    {
+      "file": "ecobee-smart-thermostat-premium.yaml",
+      "sha256": "f98026434a13ffb54e396d2388f593207f74fb1646cd5ea442bb07fd1534282c",
+      "nonInstallationSha256": "6bfa4fcb448c6794dd6a560440cb1995b74758dea4b84a76f4148f48b98cb065"
+    },
+    {
+      "file": "eufy-security-indoor-cam-c120.yaml",
+      "sha256": "b74d9b0282e0e2b58b32b441b4baea3ce9be7a355f3939492112dc7d0af4c4bf",
+      "nonInstallationSha256": "25689c679d0819dd3ee13e4e8738e78ebc66be380ff01cedad279872278eb487"
+    },
+    {
+      "file": "google-nest-hub-2nd-gen.yaml",
+      "sha256": "673176984ba38c4e361f23e71580172f1aa54c404fddeed9819a63c31e79f2af",
+      "nonInstallationSha256": "e0085e239ba1cc96cd5276510b516e77b0ef2a5a789dcfb13dd6c401c9212fa2"
+    },
+    {
+      "file": "govee-rgbic-led-strip-lights.yaml",
+      "sha256": "6a317ea117660b358fd6024986e90c03a0ff408a324f33a58c19ce321898994c",
+      "nonInstallationSha256": "e0cfc8c423e62548b0d13bb6cddc7261b1d6b0ef52c4508868ca57eabff30688"
+    },
+    {
+      "file": "irobot-roomba-j7-plus.yaml",
+      "sha256": "2b93114e5361cb7899dd97e995d1bc451e0eb28df05d4fc9ccd195dd1863f4c1",
+      "nonInstallationSha256": "a8bd2dc2974cc2f301e6b6d98548eaca72bb4df685e17b4f5561b29f7a433249"
+    },
+    {
+      "file": "levoit-core-300s-air-purifier.yaml",
+      "sha256": "19368efea6d2d3536ae819c6c28fca7ddbcd0802c18a29410c654e55352ab062",
+      "nonInstallationSha256": "11e46aa6a50bf07c40460543d7102c2827ad005c734a6193d3cd4a9d2db0b401"
+    },
+    {
+      "file": "meross-smart-garage-door-opener.yaml",
+      "sha256": "94df35cd7fee0b64c77e09bfe988a4ab2dcd881a1947f9e2d032439b40d910a8",
+      "nonInstallationSha256": "74cd3e86395e5399ff150ca666c1b66e6b5b98e42236d0ccf80c808175420b65"
+    },
+    {
+      "file": "philips-hue-white-color-starter-kit.yaml",
+      "sha256": "cff47621ebb4a00a9b4dbd8d848c176f4f17b824eaafae7764476b74e3b3ec7e",
+      "nonInstallationSha256": "4671e560794dab253e2b2fd4d5323a107c700d9db983d52db392db302cb3d5dd"
+    },
+    {
+      "file": "ring-video-doorbell-wired.yaml",
+      "sha256": "91136870d4396b5de3bba1084281d2f049a9878f72945da1293f67776c09211a",
+      "nonInstallationSha256": "c8593cce57c3b3c3ef9f3869a72bf43bf4ef01a86c9e74bd0598ea0134a016be"
+    },
+    {
+      "file": "roborock-q5-plus.yaml",
+      "sha256": "4290cb2c91f269b287bcd64832abb744c917cf3185959a990fe5873439b37b5e",
+      "nonInstallationSha256": "34c2e5ac4fba2ea80312ed2cb953524493bfbc8c16020deab625d8026862449c"
+    },
+    {
+      "file": "schlage-encode-smart-wifi-deadbolt.yaml",
+      "sha256": "5ad92660d1f13fda868b9d8056b4b356deab6182b3b1316fb0748b4fc60b23d0",
+      "nonInstallationSha256": "89c9fa42fabc7184eda5c6fb4687a48b64f1a9bc5eb2a2f12ff389c45a948575"
+    },
+    {
+      "file": "switchbot-blind-tilt.yaml",
+      "sha256": "f99d70a0e1f2b7c8a2076a97e6f3dfe3417f74491cbe8bfc48b3cb187fb1bec8",
+      "nonInstallationSha256": "38d6504844cb99df73985b834aadaeb9e6a6d1d495ab4968421324667657c420"
+    },
+    {
+      "file": "switchbot-hub-2.yaml",
+      "sha256": "a7a37ceec88a188f30338e50f9726e8509aebda33184753518ae8b4f0832c39e",
+      "nonInstallationSha256": "a9ebcf6363856a03f048384b1e9a49cdf7d5a05b34fa808814b5d371c4d6d8b0"
+    },
+    {
+      "file": "tapo-c120-security-camera.yaml",
+      "sha256": "3beb3321b5f557f986f37cf50aa7ab3a5dc2f006375ecd6b7982d1995400636e",
+      "nonInstallationSha256": "180bbe522f236c47f4b56c12c7869f9a0c32a8cf273ec070cea44788536fe2ae"
+    },
+    {
+      "file": "tp-link-kasa-smart-dimmer-hs220.yaml",
+      "sha256": "598dd84678cfc0c430355ac8071fe0ceebed3d7ed86642a8e4667cae924ffaae",
+      "nonInstallationSha256": "91c8700476e4b6309b80b547cad00a2d6925f1514a359a574687c577f16db26a"
+    },
+    {
+      "file": "tp-link-kasa-smart-light-switch-hs200.yaml",
+      "sha256": "8571aaab565dad0a6a925efc5815c6620927de8118b0bb7670aa68b0534f8833",
+      "nonInstallationSha256": "2fd316a87326069167bb5e81a083d402a02fb7b1c9a1a8c71ea8742b37a4fb80"
+    },
+    {
+      "file": "tp-link-kasa-smart-plug-mini.yaml",
+      "sha256": "9ae46f0eb956f150e0b38e9be337231433bdc10c22fa4b827dc6a81de55fda33",
+      "nonInstallationSha256": "fcab437797a0691248074d2877b59f2e8a16e404852bcb713f31a2736daa75ff"
+    },
+    {
+      "file": "wyze-bulb-color.yaml",
+      "sha256": "191f0aae9deb3e7458e1c6bf64e43c516a1f01489802f19577b711b3c32ee0db",
+      "nonInstallationSha256": "26b1a862aaef44defcacc1dc5a7e1dfa939cce3adc79ba3c27936683c5b6b9b8"
+    },
+    {
+      "file": "yale-assure-lock-2-wifi.yaml",
+      "sha256": "25b53e45e70991328b26021e57538062bf24ca59e67303a02bcd37dc98c8f83c",
+      "nonInstallationSha256": "8dc7bcd1b6c68ce38307fcdf1907cc08265c2bd1ae1aabfb7d7174262f61a8d5"
+    }
+  ],
+  "sourceNotes": [
+    "Levoit official PDF rendered locally with bundled pypdfium2 after text extraction returned no text; pages 1-3 and 6-10 inspected, assertions use pages 1-3 and 6-7.",
+    "SwitchBot fitting/calibration articles embed videos; no unobserved procedural details attributed to them.",
+    "Wyze QSG and app setup official; no assumption that app dimming permits a hardware dimmer."
+  ],
+  "continuation": {
+    "hourlyHeartbeat": "PAUSED at explicit user request; app and configuration verified",
+    "goal": "Existing blocked goal can only be resumed by user /goal resume; continuing useful current-turn work"
+  },
+  "limits": [
+    "FH-07 remains partial 2/5; 5 tasks done and 27 remaining",
+    "No ASIN/bundle certification, physical test, authenticated service or production change",
+    "Remaining source booleans are not evidence of functionality"
+  ]
+}

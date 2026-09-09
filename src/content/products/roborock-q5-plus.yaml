@@ -1,13 +1,13 @@
 slug: roborock-q5-plus
-asin: B09NM549V7
+asin: B09NM56KJM
 name: "Roborock Q5+ Robot Vacuum"
 brand: "Roborock"
 price: 399.99
 originalPrice: 599.99
 discountPct: 33
 category: robot-vacuum
-affiliateUrl: "https://www.amazon.com/dp/B09NM549V7?tag=flowhome-20"
-image: "https://cdn.pji.nu/product/standard/800/12935114.jpg"
+affiliateUrl: "https://www.amazon.com/dp/B09NM56KJM?tag=flowhome-20"
+image: "/images/product-art/illustrations-v1/robot-vacuum.png"
 ownerRating: 4.4
 ownerRatingCount: 7200
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,57 @@ dateUpdated: "2026-07-18"
 priceLastChecked: "2026-07-18"
 priceSource: "manual"
 model: "Roborock Q5+ Robot Vacuum"
+identityEvidence:
+  model: "Roborock Q5+ Robot Vacuum"
+  asin: B09NM56KJM
+  claims:
+    model:
+      value: "Roborock Q5+ Robot Vacuum"
+      conditions: "The observed listing names Q5+; do not transfer specifications from Q5 Pro or the former S7 destination."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09NM56KJM"
+          accessedAt: "2026-09-05"
+    asin:
+      value: "B09NM56KJM"
+      conditions: "The reviewed indexed destination identifies Q5+ with an auto-empty dock. This is not a current commercial observation."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09NM56KJM"
+          accessedAt: "2026-09-05"
+    bundle:
+      value: "Q5+ robot vacuum with self-empty dock"
+      conditions: "The listing title documents this configuration, not every accessory or the seller's current box contents."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09NM56KJM"
+          accessedAt: "2026-09-05"
+    market:
+      value: "US Amazon listing"
+      conditions: "Confirm regional power hardware and seller condition before buying; a US storefront alone does not inspect the unit."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B09NM56KJM"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Roborock Q5+ Robot Vacuum"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Original Q5+ dock: attach the base with the six supplied screws before connecting power. Use a hard, level floor with at least 1.6 ft / 0.5 m clear on each side, 4.9 ft / 1.5 m in front and 3.3 ft / 1 m above."
+    - "Clear loose cables and fragile or unstable items, supervise the entire first cleaning route, and use a secure physical barrier in raised areas. Mapping is not a substitute for that barrier."
+    - "Charge on the dock and follow the Roborock or Mi Home app setup with 2.4 GHz Wi-Fi. These instructions cover the original Q5+, not Q5 Pro or other later variants."
+  sources:
+    - label: "Roborock Q5+ US manual — installation and app setup, page 08"
+      url: "https://support.roborock.com/hc/en-us/article_attachments/5983654392089"
+      accessedAt: "2026-09-05"
+sources:
+  - label: "Amazon listing identity — Q5+ with self-empty dock, B09NM56KJM; not a live offer check"
+    url: "https://www.amazon.com/dp/B09NM56KJM"
+    accessedAt: "2026-09-05"
+  - label: "Roborock US — original Q5 and Q5+ configurations"
+    url: "https://us.roborock.com/pages/roborock-q5"
+    accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +84,3 @@ lidarMapping: true
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: hero
-priorityScore: 88
-roiApproved: true

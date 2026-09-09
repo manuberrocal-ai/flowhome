@@ -1,0 +1,480 @@
+{
+  "before": {
+    "generatedAt": "2026-09-08T20:01:04.115Z",
+    "baseUrl": "http://127.0.0.1:4339",
+    "outputDir": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908",
+    "formFactor": "mobile",
+    "sampleCount": 3,
+    "budgets": {
+      "performance": 90,
+      "accessibility": 95,
+      "best-practices": 95,
+      "seo": 95,
+      "lcp": 2500,
+      "cls": 0.1,
+      "tbt": 200
+    },
+    "routes": [
+      {
+        "route": "/",
+        "sampleCount": 3,
+        "samples": [
+          {
+            "sampleIndex": 1,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-1.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 96,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2632.286,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 2,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-2.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 96,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2705.5919999999996,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 3,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-3.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 96,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2708.76,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          }
+        ],
+        "median": {
+          "scores": {
+            "performance": 96,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lab": {
+            "lcp": 2705.5919999999996,
+            "cls": 0,
+            "tbt": 0,
+            "inp": null
+          }
+        },
+        "failures": [
+          "median lab lcp 2705.5919999999996 exceeds or misses 2500"
+        ],
+        "warnings": [],
+        "reportPaths": [
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-1.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-2.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\home-sample-3.json"
+        ]
+      },
+      {
+        "route": "/product/amazon-smart-thermostat/",
+        "sampleCount": 3,
+        "samples": [
+          {
+            "sampleIndex": 1,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-1.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 97,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2258.1549999999997,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 2,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-2.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 97,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2258.236,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 3,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-3.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 97,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2256.246,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          }
+        ],
+        "median": {
+          "scores": {
+            "performance": 98,
+            "accessibility": 97,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lab": {
+            "lcp": 2258.1549999999997,
+            "cls": 0,
+            "tbt": 0,
+            "inp": null
+          }
+        },
+        "failures": [],
+        "warnings": [],
+        "reportPaths": [
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-1.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-2.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\product-amazon-smart-thermostat-sample-3.json"
+        ]
+      },
+      {
+        "route": "/review/roborock-q5-plus-review/",
+        "sampleCount": 3,
+        "samples": [
+          {
+            "sampleIndex": 1,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-1.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2258.464,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 2,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-2.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2259.1499999999996,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 3,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-3.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 98,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2258.4759999999997,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          }
+        ],
+        "median": {
+          "scores": {
+            "performance": 98,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lab": {
+            "lcp": 2258.4759999999997,
+            "cls": 0,
+            "tbt": 0,
+            "inp": null
+          }
+        },
+        "failures": [],
+        "warnings": [],
+        "reportPaths": [
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-1.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-2.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\review-roborock-q5-plus-review-sample-3.json"
+        ]
+      },
+      {
+        "route": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+        "sampleCount": 3,
+        "samples": [
+          {
+            "sampleIndex": 1,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-1.json",
+            "executionExitCode": 1,
+            "executionWarnings": [
+              "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+            ],
+            "scores": {
+              "performance": 99,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2111.1620000000003,
+              "cls": 0,
+              "tbt": 37.500000000000114,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 2,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-2.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 97,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2114.816,
+              "cls": 0,
+              "tbt": 79.29600000000005,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 3,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-3.json",
+            "executionExitCode": 1,
+            "executionWarnings": [
+              "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+            ],
+            "scores": {
+              "performance": 99,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2112.312,
+              "cls": 0,
+              "tbt": 33.34400000000005,
+              "inp": null
+            }
+          }
+        ],
+        "median": {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lab": {
+            "lcp": 2112.312,
+            "cls": 0,
+            "tbt": 37.500000000000114,
+            "inp": null
+          }
+        },
+        "failures": [],
+        "warnings": [
+          "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning.",
+          "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+        ],
+        "reportPaths": [
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-1.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-2.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-lighthouse-20260908\\compare-amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium-sample-3.json"
+        ]
+      }
+    ],
+    "failures": [
+      "/: median lab lcp 2705.5919999999996 exceeds or misses 2500"
+    ],
+    "executionWarnings": [
+      "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ sample 1: Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning.",
+      "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ sample 3: Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+    ],
+    "notes": [
+      "Synthetic local lab evidence only. External network is blocked; scores and lab metrics are not field CWV. INP can be unavailable in a lab run."
+    ]
+  },
+  "after": {
+    "generatedAt": "2026-09-08T20:05:35.915Z",
+    "baseUrl": "http://127.0.0.1:4339",
+    "outputDir": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908",
+    "formFactor": "mobile",
+    "scope": "targeted",
+    "requestedRoutes": [
+      "/"
+    ],
+    "sampleCount": 3,
+    "budgets": {
+      "performance": 90,
+      "accessibility": 95,
+      "best-practices": 95,
+      "seo": 95,
+      "lcp": 2500,
+      "cls": 0.1,
+      "tbt": 200
+    },
+    "routes": [
+      {
+        "route": "/",
+        "sampleCount": 3,
+        "samples": [
+          {
+            "sampleIndex": 1,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-1.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 87,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2342.4449999999997,
+              "cls": 0,
+              "tbt": 301.27749999999935,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 2,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-2.json",
+            "executionExitCode": 0,
+            "executionWarnings": [],
+            "scores": {
+              "performance": 97,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2408.364999999999,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          },
+          {
+            "sampleIndex": 3,
+            "reportPath": "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-3.json",
+            "executionExitCode": 1,
+            "executionWarnings": [
+              "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+            ],
+            "scores": {
+              "performance": 97,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "lab": {
+              "lcp": 2407.1800000000003,
+              "cls": 0,
+              "tbt": 0,
+              "inp": null
+            }
+          }
+        ],
+        "median": {
+          "scores": {
+            "performance": 97,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lab": {
+            "lcp": 2407.1800000000003,
+            "cls": 0,
+            "tbt": 0,
+            "inp": null
+          }
+        },
+        "failures": [],
+        "warnings": [
+          "Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+        ],
+        "reportPaths": [
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-1.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-2.json",
+          "C:\\AGENTES\\Proyectos\\flowhome\\reports\\daily\\fh12p-home-after-20260908\\home-sample-3.json"
+        ]
+      }
+    ],
+    "failures": [],
+    "executionWarnings": [
+      "/ sample 3: Lighthouse exited 1 after a complete report; retained as a post-report cleanup warning."
+    ],
+    "notes": [
+      "Synthetic local lab evidence only. External network is blocked; scores and lab metrics are not field CWV. INP can be unavailable in a lab run."
+    ]
+  },
+  "afterDistSha256": "b48f6e1548f944820d761fc1404e19c8d72028a7614ab6046071e7e547684a6f",
+  "beforeDistSha256": "97d74885d342bc5ac20c2d9d01729a631211a210e099e0300c59ff2ae29f11b8",
+  "note": "Local lab reports; before four routes, after home only. No publication approval."
+}

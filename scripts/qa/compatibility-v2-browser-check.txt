@@ -1,0 +1,19 @@
+async page => {
+  const results = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.waitForFunction(() => typeof window.cleanup === 'function');
+  const version = await page.evaluate(async () => {
+    const response = await fetch('/compatibility/live?slug=tapo-c120-security-camera&surface=product&market=US');
+    const body = await response.json(); return { status: response.status, version: body.schemaVersion, relations: Array.isArray(body.relations) };
+  });
+  check(version.status === 200 && version.version === 2 && version.relations, 'Actual HTTP delivers v2 relationship field');
+  await page.locator('#mode').selectOption('short');
+  await page.getByRole('button', { name: 'Refresh evidence' }).click();
+  await page.waitForFunction(() => document.querySelector('#claim').textContent.startsWith('Evidence-backed signal:'));
+  check((await page.locator('#source').textContent()).length > 0, 'Browser client accepts v2 and renders qualified condition and source');
+  await page.waitForFunction(() => document.querySelector('#claim').textContent === 'Not verified');
+  check(await page.locator('#source').textContent() === '', 'V2 lease expiry withdraws visible source');
+  await page.evaluate(() => window.cleanup());
+  check(await page.getByRole('button', { name: 'Refresh evidence' }).isDisabled(), 'Disposal remains effective after wire migration');
+  return { checks: results.length, results };
+}

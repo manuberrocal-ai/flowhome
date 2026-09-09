@@ -1,5 +1,7 @@
 ﻿import { listFiles, readText, frontmatterMarkdown, writeText } from '../lib/content-utils.mjs';
 
+import { writeFileSync } from 'node:fs';
+
 function runQualityGate(content) {
   const checks = [];
   const words = content.split(/\s+/).filter(Boolean);
@@ -21,6 +23,8 @@ const results = files.map((file) => {
   const parsed = frontmatterMarkdown(readText(file));
   return { file, title: parsed.data.title, ...runQualityGate(parsed.body) };
 });
-writeText('data/quality-report.json', JSON.stringify({ generatedAt: new Date().toISOString(), results }, null, 2));
+const report = JSON.stringify({ generatedAt: new Date().toISOString(), results }, null, 2);
+if (process.env.QUALITY_REPORT_PATH) writeFileSync(process.env.QUALITY_REPORT_PATH, report, 'utf8');
+else writeText('data/quality-report.json', report);
 for (const result of results) console.log(`${result.passed ? 'PASS' : 'FAIL'} ${result.file} score=${result.score}`);
 if (results.some((r) => !r.passed)) process.exit(1);

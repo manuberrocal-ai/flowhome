@@ -7,20 +7,57 @@ originalPrice: 99.99
 discountPct: 0
 category: smart-display
 affiliateUrl: "https://www.amazon.com/dp/B08R8N3Q7C?tag=flowhome-20"
-image: "https://multimedia.bbycastatic.ca/multimedia/products/500x500/153/15303/15303231.jpg"
+image: "/images/product-art/illustrations-v1/smart-display.png"
 ownerRating: 4.6
 ownerRatingCount: 16000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-04"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Google Nest Hub 2nd Gen"
+identityEvidence:
+  model: "Google Nest Hub 2nd Gen"
+  asin: B08R8N3Q7C
+  claims:
+    model:
+      value: "Google Nest Hub 2nd Gen"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Google Nest Hub 2nd gen specifications and power requirements"
+          url: "https://support.google.com/googlehome/answer/7072284?hl=en"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Powered smart display"
+      conditions: "Google Home app setup is separate from verifying a particular Matter accessory, service or firmware."
+      sources:
+        - label: "Google Nest Hub 2nd gen specifications and power requirements"
+          url: "https://support.google.com/googlehome/answer/7072284?hl=en"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Google Nest Hub 2nd Gen"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "Needs wall-outlet power and setup in the Google Home app with a Google Account, a supported phone or tablet, and Wi-Fi internet."
+  sources:
+    - label: "Google Nest Hub 2nd gen specifications and power requirements"
+      url: "https://support.google.com/googlehome/answer/7072284?hl=en"
+      accessedAt: "2026-09-05"
+    - label: "Google smart speaker and display setup requirements"
+      url: "https://support.google.com/googlehome/answer/7029485?hl=en"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
-matter: false
+matter: true
+compatibilityNotes:
+  - "Google documents Nest Hub 2nd Gen as a Matter controller with a built-in Thread border router, supporting Matter over Wi-Fi and Thread. Check supported device types, current software and IPv6 on the home network. A controller role alone does not establish accessory compatibility with other ecosystems."
+sources:
+  - label: "Google Home Matter hubs, Thread support and network setup requirements"
+    url: "https://support.google.com/googlehome/answer/12391458?hl=en"
+    accessedAt: "2026-09-04"
 alexaCompatible: false
 googleHomeCompatible: true
 appleHomeKit: false
@@ -33,6 +70,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: hero
-priorityScore: 72
-roiApproved: true

@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { QUALITY_COMMANDS } from '../scripts/flowhome-daily.mjs';
+import { expandQualityWorkflow } from './helpers/quality-workflow.mjs';
 
 function read(p) { const c = readFileSync(p, 'utf8'); return c.charCodeAt(0) === 0xFEFF ? c.substring(1) : c; }
 function fileExists(p) { return existsSync(p); }
@@ -17,10 +19,13 @@ test('GA1 - Sitemap source, build configuration, and build-to-audit workflow con
   assert.match(config, /site:\s*'https:\/\/flowhome\.dev'/);
   assert.match(pkg, /"build":\s*"astro build"/);
   assert.match(pkg, /"seo:audit":\s*"node scripts\/qa\/seo-audit\.mjs"/);
-  assert.match(audit, /readFile\(join\(DIST, 'sitemap-index\.xml'\), 'utf8'\)/);
+  assert.match(audit, /readFile\(join\(dist, 'sitemap-index\.xml'\), 'utf8'\)/);
   for (const workflow of ['automation.yml', 'batched-deploy.yml', 'quality-check.yml', 'quality.yml']) {
-    const source = read(join('.github/workflows', workflow));
-    assert.match(source, /- run: npm run build\r?\n\s+- run: npm run seo:audit/, workflow);
+    const source = expandQualityWorkflow(read(join('.github/workflows', workflow)));
+    if (workflow === 'automation.yml') {
+      assert.match(source, /npm run flowhome:daily/);
+      assert.equal(QUALITY_COMMANDS[QUALITY_COMMANDS.indexOf('build') + 1], 'seo:audit');
+    } else assert.match(source, /- run: npm run build\r?\n\s+- run: npm run seo:audit/, workflow);
   }
 });
 
@@ -167,7 +172,8 @@ test('DATA4 - product-art fallback images cover every canonical category defined
   const tax = read('src/lib/product-taxonomy.ts');
   const categories = tax.match(/'([a-z-]+)'/g) ?? [];
   assert.ok(categories.length > 10);
-  assert.match(art, /product-art/);
+  assert.match(art, /getCategoryIllustration/);
+  assert.match(read('src/lib/product-image-policy.js'), /\/images\/product-art\/illustrations-v1\//);
 });
 
 test('DATA5 - Quiz serializes ONLY catalog-active products, queues one deduped completion, and preserves direct Amazon access', () => {

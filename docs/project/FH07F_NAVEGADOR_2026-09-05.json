@@ -1,0 +1,315 @@
+{
+  "observedAt": "2026-09-05T18:01:11.931Z",
+  "checks": [
+    {
+      "name": "arlo-essential-outdoor-camera service uncertainty visible 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera no blanket subscription claim 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera catalog is not verification 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 service uncertainty visible 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 no blanket subscription claim 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 catalog is not verification 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 scoped installation storage retained 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 service uncertainty visible 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 no blanket subscription claim 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 catalog is not verification 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired service uncertainty visible 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired no blanket subscription claim 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired catalog is not verification 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera service uncertainty visible 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera no blanket subscription claim 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera catalog is not verification 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera heading clears header 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera metadata preserved 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera anonymous alt candidates 1440",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera scoped installation storage retained 1440",
+      "passed": true
+    },
+    {
+      "name": "Unrelated category has no camera service warning 1440",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera service uncertainty visible 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera no blanket subscription claim 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera catalog is not verification 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "arlo-essential-outdoor-camera anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 service uncertainty visible 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 no blanket subscription claim 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 catalog is not verification 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "blink-outdoor-4 scoped installation storage retained 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 service uncertainty visible 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 no blanket subscription claim 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 catalog is not verification 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "eufy-security-indoor-cam-c120 anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired service uncertainty visible 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired no blanket subscription claim 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired catalog is not verification 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "ring-video-doorbell-wired anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera service uncertainty visible 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera no blanket subscription claim 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera catalog is not verification 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera heading clears header 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera metadata preserved 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera anonymous alt candidates 390",
+      "passed": true
+    },
+    {
+      "name": "tapo-c120-security-camera scoped installation storage retained 390",
+      "passed": true
+    },
+    {
+      "name": "Unrelated category has no camera service warning 390",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "profile": "Existing explicitly blocked external routing from FH07E; local preview; 1440/390 px; no physical/account/production verification."
+}

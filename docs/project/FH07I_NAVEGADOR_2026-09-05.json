@@ -1,0 +1,1002 @@
+{
+  "observedAt": "2026-09-05T19:02:09.094Z",
+  "checks": [
+    {
+      "name": "comfort open 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort open 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort google 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security open 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security alexa 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security google 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security apple 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 1440 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort open 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort alexa 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort google 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort apple 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "comfort smartthings 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security open 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security open 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security open 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security open 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security open 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security open 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security open 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security open 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security alexa 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security google 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security google 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security google 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security google 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security google 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security google 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security google 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security google 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security apple 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 two to four candidates",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 insufficient evidence notice",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 supported setup not unnecessarily relaxed",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 qualified card signals",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 reasons do not assert raw compatibility",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 evidence links",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 results keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "security smartthings 390 no page overflow",
+      "passed": true
+    },
+    {
+      "name": "keyboard answer 1",
+      "passed": true
+    },
+    {
+      "name": "keyboard answer 2",
+      "passed": true
+    },
+    {
+      "name": "keyboard answer 3",
+      "passed": true
+    },
+    {
+      "name": "keyboard answer 4",
+      "passed": true
+    },
+    {
+      "name": "keyboard answer 5",
+      "passed": true
+    },
+    {
+      "name": "keyboard completion retains answers",
+      "passed": true
+    },
+    {
+      "name": "anonymous save state",
+      "passed": true
+    },
+    {
+      "name": "anonymous save persists reload",
+      "passed": true
+    },
+    {
+      "name": "anonymous removal works",
+      "passed": true
+    },
+    {
+      "name": "edit returns to retained answer",
+      "passed": true
+    },
+    {
+      "name": "direct affiliate keyboard link",
+      "passed": true
+    },
+    {
+      "name": "restart clears URL and returns step one",
+      "passed": true
+    },
+    {
+      "name": "200 percent CSS zoom reflow",
+      "passed": true
+    },
+    {
+      "name": "metadata and anonymous image alt candidates",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "samples": [
+    {
+      "goal": "comfort",
+      "ecosystem": "open",
+      "installation": "plug-and-play",
+      "width": 1440,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "alexa",
+      "installation": "plug-and-play",
+      "width": 1440,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "google",
+      "installation": "plug-and-play",
+      "width": 1440,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "apple",
+      "installation": "plug-and-play",
+      "width": 1440,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "smartthings",
+      "installation": "plug-and-play",
+      "width": 1440,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "open",
+      "installation": "light-setup",
+      "width": 1440,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "alexa",
+      "installation": "light-setup",
+      "width": 1440,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "google",
+      "installation": "light-setup",
+      "width": 1440,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "apple",
+      "installation": "light-setup",
+      "width": 1440,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "smartthings",
+      "installation": "light-setup",
+      "width": 1440,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "open",
+      "installation": "plug-and-play",
+      "width": 390,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "alexa",
+      "installation": "plug-and-play",
+      "width": 390,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "google",
+      "installation": "plug-and-play",
+      "width": 390,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "apple",
+      "installation": "plug-and-play",
+      "width": 390,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "comfort",
+      "ecosystem": "smartthings",
+      "installation": "plug-and-play",
+      "width": 390,
+      "slugs": [
+        "levoit-core-300s-air-purifier",
+        "wyze-bulb-color"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "open",
+      "installation": "light-setup",
+      "width": 390,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "alexa",
+      "installation": "light-setup",
+      "width": 390,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "google",
+      "installation": "light-setup",
+      "width": 390,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "apple",
+      "installation": "light-setup",
+      "width": 390,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    },
+    {
+      "goal": "security",
+      "ecosystem": "smartthings",
+      "installation": "light-setup",
+      "width": 390,
+      "slugs": [
+        "august-wifi-smart-lock",
+        "blink-outdoor-4",
+        "tapo-c120-security-camera"
+      ]
+    }
+  ],
+  "errors": [],
+  "styles": [
+    {
+      "kind": "BUTTON",
+      "foreground": "oklch(0.279 0.041 260.031)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "kind": "A",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "oklch(0.553 0.195 38.402)"
+    }
+  ],
+  "restartStyle": {
+    "foreground": "oklch(0.282 0.091 267.935)",
+    "background": "oklch(0.97 0.014 254.604)"
+  },
+  "profile": "Local-only network; anonymous; 20 real-catalog result states at 1440/390, keyboard five-step path, save/reload/remove/edit/restart, one CSS zoom 200% case. No production or account verification.",
+  "contrastChecks": [
+    {
+      "selector": "#quiz-submit",
+      "foreground": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "background": [
+        202,
+        53,
+        0,
+        255
+      ],
+      "ratio": 5.223162711549741
+    },
+    {
+      "selector": ".quiz-result-card [data-fh-amazon-cta]",
+      "foreground": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "background": [
+        202,
+        53,
+        0,
+        255
+      ],
+      "ratio": 5.223162711549741
+    },
+    {
+      "selector": "[data-quiz-compatibility]",
+      "foreground": [
+        49,
+        65,
+        88,
+        255
+      ],
+      "background": [
+        248,
+        250,
+        252,
+        255
+      ],
+      "ratio": 9.898850149196257
+    },
+    {
+      "selector": "#quiz-ecosystem-notice",
+      "foreground": [
+        70,
+        25,
+        1,
+        255
+      ],
+      "background": [
+        255,
+        251,
+        235,
+        255
+      ],
+      "ratio": 14.465587811642001
+    }
+  ],
+  "contrastChecksPassed": true
+}

@@ -1,0 +1,5 @@
+Refresh evidence
+Checking compatibility evidence…
+Evidence loaded. Read each condition before choosing a setup.
+Current compatibility evidence is unavailable. Refresh to check again; missing evidence does not establish incompatibility.
+Not verified

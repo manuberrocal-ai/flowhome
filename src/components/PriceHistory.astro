@@ -3,13 +3,15 @@ interface Props { product: any; }
 const { product } = Astro.props;
 const data = product.data ?? product;
 import { getCommerceData } from '../lib/commerce-data';
+import CommerceObservation from './CommerceObservation.astro';
 const commerce = getCommerceData(data);
 ---
 <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
   <h2 class="text-xl font-extrabold">{commerce.priceLabel}</h2>
-  <p class="mt-2 text-sm text-slate-600">{commerce.priceLabel}. This is a single recorded observation, not a price history or live listing.</p>
-  <div class="mt-4 rounded-xl bg-slate-100 p-4 text-sm">
-    <div class="font-bold text-slate-500">Recorded price</div><div class="text-2xl font-black text-blue-700">${data.price}</div>
+  <p data-commerce-static-price-note class="mt-2 text-sm text-slate-600">{commerce.isPriceFresh ? 'This is a recent authorized observation, not a price history or a checkout quote.' : 'A current authorized price is not available here. Open Amazon to check the price, availability, and any conditions before buying.'}</p>
+  {commerce.displayPrice !== undefined && <div class="mt-4 rounded-xl bg-slate-100 p-4 text-sm">
+    <div class="font-bold text-slate-500">Recorded price</div><div class="text-2xl font-black text-blue-700">${commerce.displayPrice}</div>
     <p class="mt-2 text-slate-600">Source: {commerce.priceSourceLabel}{commerce.priceLastCheckedLabel ? ` · Price last checked ${commerce.priceLastCheckedLabel}` : ''}</p>
-  </div>
+  </div>}
+  <CommerceObservation asin={data.asin} controls />
 </div>

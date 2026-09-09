@@ -7,7 +7,7 @@ originalPrice: 39.98
 discountPct: 25
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B08WZN4JW2?tag=flowhome-20"
-image: "https://www.wyze.com/cdn/shop/files/wyze-bulb-color-wyze-labs-inc-733750.png?v=1762447654"
+image: "/images/product-art/illustrations-v1/smart-lighting.png"
 ownerRating: 4.4
 ownerRatingCount: 9800
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,39 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Wyze Bulb Color"
+identityEvidence:
+  model: "Wyze Bulb Color"
+  asin: B08WZN4JW2
+  claims:
+    model:
+      value: "Wyze Bulb Color"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Wyze Bulb Color quick-start guide — WLPA19C specifications and fixture restrictions"
+          url: "https://support.wyze.com/hc/en-us/article_attachments/22881540921627"
+          accessedAt: "2026-09-05"
+    role:
+      value: "E26 replacement smart bulb"
+      conditions: "The WLPA19C guide has fixture restrictions; app dimming does not imply external-dimmer compatibility."
+      sources:
+        - label: "Wyze Bulb Color quick-start guide — WLPA19C specifications and fixture restrictions"
+          url: "https://support.wyze.com/hc/en-us/article_attachments/22881540921627"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Wyze Bulb Color"
+  market: US
+  assessment: plug-and-play
+  requirements:
+    - "The documented WLPA19C uses an E26 base and 120 V, 60 Hz supply. Turn power off before fitting or removing the bulb and follow the instructions for your fixture."
+    - "Do not use an external dimmer, a fully enclosed or poorly ventilated fixture, emergency lighting, or a location exposed directly to water. App dimming does not establish compatibility with a wall or lamp dimmer."
+    - "Smart setup uses a Wyze account, the Wyze app and 2.4 GHz Wi-Fi. Follow the app's Bluetooth and location permission prompts during pairing."
+  sources:
+    - label: "Wyze Bulb Color quick-start guide — WLPA19C specifications and fixture restrictions"
+      url: "https://support.wyze.com/hc/en-us/article_attachments/22881540921627"
+      accessedAt: "2026-09-05"
+    - label: "Wyze Bulb Color setup guide — account, app and network"
+      url: "https://support.wyze.com/hc/en-us/articles/360056417672-Wyze-Bulb-Color-Setup-Guide"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: true
 zigbee: false
@@ -33,6 +66,3 @@ lidarMapping: false
 rgb: true
 dimmable: true
 subscriptionRequired: false
-priority: featured
-priorityScore: 57
-roiApproved: true

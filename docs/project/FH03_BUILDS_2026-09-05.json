@@ -1,0 +1,68 @@
+{
+  "checkedAt": "2026-09-05T12:41:00.983Z",
+  "scope": "Local builds only; staging uses a fabricated non-working public key and project reference. No service request or deployment.",
+  "originalEnvPreserved": true,
+  "rehearsal": "C:\\Users\\manub\\Documents\\Codex\\2026-09-04\\f\\work\\fh03-builds-IMiyze",
+  "results": [
+    {
+      "name": "local",
+      "passed": true,
+      "buildEnvironment": {
+        "schemaVersion": 1,
+        "environment": "local",
+        "authEnabled": false,
+        "analyticsEnabled": false,
+        "supabaseProjectRef": null
+      },
+      "evidenceSha256": "9b87fbf01a9df5499571e5b482e54f0aeafb62b5e569386dc1bbdbb1352c2fbb",
+      "textAssets": 118,
+      "dist": "C:\\Users\\manub\\Documents\\Codex\\2026-09-04\\f\\work\\fh03-builds-IMiyze\\local"
+    },
+    {
+      "name": "staging-fixture",
+      "passed": true,
+      "buildEnvironment": {
+        "schemaVersion": 1,
+        "environment": "staging",
+        "authEnabled": true,
+        "analyticsEnabled": false,
+        "supabaseProjectRef": "aaaaaaaaaaaaaaaaaaaa"
+      },
+      "evidenceSha256": "f362c4f745c18338a154c66cc606e639d4d74016fd43e120b64cf7b921dd6fe8",
+      "textAssets": 118,
+      "dist": "C:\\Users\\manub\\Documents\\Codex\\2026-09-04\\f\\work\\fh03-builds-IMiyze\\staging-fixture"
+    },
+    {
+      "name": "production-editorial",
+      "passed": true,
+      "buildEnvironment": {
+        "schemaVersion": 1,
+        "environment": "production",
+        "authEnabled": false,
+        "analyticsEnabled": false,
+        "supabaseProjectRef": null
+      },
+      "evidenceSha256": "e26fc30438a9aa0cb474169fbe482eba245d5cda9004bd1fe4ea230ed2854227",
+      "textAssets": 118,
+      "dist": "C:\\Users\\manub\\Documents\\Codex\\2026-09-04\\f\\work\\fh03-builds-IMiyze\\production-editorial"
+    },
+    {
+      "name": "missing-account-key",
+      "passed": true,
+      "invalidBuildRejected": true,
+      "credentialValueLogged": false
+    },
+    {
+      "name": "cross-project",
+      "passed": true,
+      "invalidBuildRejected": true,
+      "credentialValueLogged": false
+    },
+    {
+      "name": "privileged-public-key",
+      "passed": true,
+      "invalidBuildRejected": true,
+      "credentialValueLogged": false
+    }
+  ]
+}

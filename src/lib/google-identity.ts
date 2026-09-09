@@ -59,6 +59,7 @@ function loadGoogleIdentity(): Promise<void> {
 }
 
 export async function registerGoogleCredentialHandler(id: string, handler: CredentialHandler) {
+  if (!googleClientId) throw new Error('Google sign-in is unavailable. Continue with email if enabled.');
   const state = getState();
   state.handlers.set(id, handler);
   if (!state.activeHandlerId) state.activeHandlerId = id;

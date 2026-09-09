@@ -3,11 +3,12 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { expandQualityWorkflow } from './helpers/quality-workflow.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 async function readProjectFile(...segments) {
-  return readFile(path.join(projectRoot, ...segments), 'utf8');
+  return expandQualityWorkflow(await readFile(path.join(projectRoot, ...segments), 'utf8'));
 }
 
 function directive(csp, name) {
@@ -50,7 +51,7 @@ test('CSP permits the current integrations while keeping restrictive defaults', 
   assert.match(directive(csp, 'script-src'), /https:\/\/www\.googletagmanager\.com/);
   assert.match(directive(csp, 'style-src'), /https:\/\/fonts\.googleapis\.com/);
   assert.match(directive(csp, 'font-src'), /https:\/\/fonts\.gstatic\.com/);
-  assert.match(directive(csp, 'connect-src'), /https:\/\/lbiuwknkrbyzrujarslh\.supabase\.co/);
+  assert.doesNotMatch(directive(csp, 'connect-src'), /supabase\.co/, 'The build adds only the selected environment origin');
 });
 
 for (const workflow of ['quality-check.yml', 'batched-deploy.yml']) {

@@ -31,6 +31,7 @@ test('editorial pages distinguish publication, update, and explicit human review
   assert.match(review, /Human reviewed/);
   assert.match(product, /Product data updated/);
   assert.match(product, /not a human review/);
+  assert.equal((review.match(/toLocaleDateString\('en-US', \{[^}]*timeZone: 'UTC'/g) ?? []).length, 4, 'all four editorial date labels must preserve the calendar day');
 });
 
 test('editorial copy does not invent a person, credential, or hands-on test', () => {
@@ -41,6 +42,9 @@ test('editorial copy does not invent a person, credential, or hands-on test', ()
   assert.match(editorial, /return 'not-verified'/);
   assert.match(about, /hands-on tested.*only when documented physical testing exists/i);
   assert.doesNotMatch(about, /FlowHome (?:has|performs|conducts|completed).*hands-on tested/i);
+  assert.match(about, /EDITORIAL_TEAM\.methodology/);
+  assert.match(editorial, /Commercial data is separate/);
+  assert.doesNotMatch(editorial + about + baseLayout, /we (?:use|compare)[^\n]*owner feedback|prioritize[^\n]*owner feedback/i);
 });
 
 test('Block 5 preserves truthful crawl, localization, and authority contracts', () => {

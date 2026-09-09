@@ -61,7 +61,7 @@ export function normalizeUtm(input: UTM | Readonly<Record<string, string>>): UTM
 export function isApprovedFlowHomeUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    return url.protocol === 'https:' && (url.hostname === 'flowhome.com' || url.hostname === 'www.flowhome.com') && !url.search && !url.hash;
+    return url.protocol === 'https:' && (url.hostname === 'flowhome.dev' || url.hostname === 'www.flowhome.dev') && !url.username && !url.password && !url.port && !url.search && !url.hash;
   } catch { return false; }
 }
 

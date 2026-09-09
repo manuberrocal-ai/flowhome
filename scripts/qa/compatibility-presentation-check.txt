@@ -1,0 +1,34 @@
+async page => {
+  const results = [];
+  const check = (condition, message) => { if (!condition) throw Error(message); results.push(message); };
+  const ready = () => page.waitForFunction(() => !document.querySelector('#refresh').disabled && document.querySelector('#claim').textContent.startsWith('Evidence-backed signal:'));
+  const cleared = async () => {
+    await page.waitForFunction(() => document.querySelector('#claim').textContent === 'Not verified');
+    check(await page.locator('#duplicate').textContent() === 'Not verified', 'Repeated field also withdrawn');
+    check(await page.locator('#source').textContent() === '' && await page.locator('#duplicate-source').textContent() === '', 'Every bound source withdrawn');
+    check(await page.locator('#notices').locator('li').count() === 0, 'Notices cleared');
+  };
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.reload();
+    await page.waitForFunction(() => typeof window.cleanup === 'function');
+    await page.getByRole('button', { name: 'Refresh evidence' }).focus(); await page.keyboard.press('Enter'); await ready();
+    check(await page.locator('#claim').textContent() === await page.locator('#duplicate').textContent(), 'Repeated displays agree at ' + width);
+    check(await page.locator('#status').getAttribute('role') === 'status', 'Status announcement semantics at ' + width);
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No horizontal overflow at ' + width);
+    await page.screenshot({ path: '.playwright-cli/flowhome-presentation-' + width + '.png' });
+    await page.locator('#mode').selectOption('short'); await page.getByRole('button', { name: 'Refresh evidence' }).click(); await ready(); await cleared();
+    check((await page.locator('#status').textContent()).includes('Refresh to check again'), 'Expired state offers retry at ' + width);
+  }
+  await page.locator('#mode').selectOption('revoke'); await page.getByRole('button', { name: 'Refresh evidence' }).click(); await ready();
+  await page.getByRole('button', { name: 'Refresh evidence' }).click(); await cleared();
+  await page.locator('#mode').selectOption('notice'); await page.getByRole('button', { name: 'Refresh evidence' }).click(); await ready();
+  check(await page.locator('#notices li').count() === 1, 'Nonempty synthetic notice rendered');
+  check((await page.locator('#notices').textContent()).includes('<img src=x onerror=alert(1)>') && await page.locator('#notices img').count() === 0, 'Notice markup remains literal text');
+  await page.context().setOffline(true);
+  try { await cleared(); } finally { await page.context().setOffline(false); }
+  check(await page.locator('#claim').textContent() === 'Not verified', 'Online never restores previous state');
+  await page.getByRole('button', { name: 'Refresh evidence' }).click(); await ready();
+  await page.evaluate(() => window.cleanup()); await cleared();
+  check(await page.getByRole('button', { name: 'Refresh evidence' }).isDisabled(), 'Dispose disables refresh');
+  return { results, checks: results.length };
+}

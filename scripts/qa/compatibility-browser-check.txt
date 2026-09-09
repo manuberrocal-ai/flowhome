@@ -1,0 +1,51 @@
+async page => {
+  await page.reload();
+  await page.waitForFunction(() => typeof window.cleanup === 'function');
+  const results = [];
+  const check = (condition, name) => { if (!condition) throw new Error(name); results.push(name); };
+  const refresh = async () => { await page.getByRole('button', { name: 'Refresh evidence' }).click(); await page.waitForFunction(() => document.querySelector('#claim').textContent.startsWith('Evidence-backed signal:')); };
+  await page.locator('#mode').selectOption('live');
+  await refresh();
+  check((await page.locator('#claim').textContent()).includes('supported Alexa devices'), 'Qualified condition rendered through real HTTP');
+  check((await page.locator('#source').textContent()).trim().length > 0, 'Provenance rendered');
+  await page.screenshot({ path: '.playwright-cli/flowhome-compatibility-current.png' });
+  await page.locator('#mode').selectOption('short');
+  await refresh();
+  await page.waitForFunction(() => document.querySelector('#claim').textContent === 'Not verified', undefined, { timeout: 4000 });
+  check(await page.locator('#source').textContent() === '', 'Expiry removes condition and source from DOM');
+  await page.screenshot({ path: '.playwright-cli/flowhome-compatibility-expired.png' });
+  await page.locator('#mode').selectOption('live'); await refresh();
+  await page.context().setOffline(true);
+  try {
+    await page.waitForFunction(() => document.querySelector('#claim').textContent === 'Not verified');
+    check(await page.locator('#source').textContent() === '', 'Browser offline event withdraws evidence');
+  } finally { await page.context().setOffline(false); }
+  check(await page.locator('#claim').textContent() === 'Not verified', 'Online does not resurrect evidence');
+  await refresh();
+  const other = await page.context().newPage();
+  await other.goto('about:blank'); await other.bringToFront();
+  const visibility = await page.evaluate(() => document.visibilityState);
+  if (visibility === 'hidden') {
+    check(await page.locator('#claim').textContent() === 'Not verified', 'Real tab hiding withdraws evidence');
+  } else results.push('Tab hiding NOT VERIFIED: browser kept document visible');
+  await other.close(); await page.bringToFront();
+  await page.locator('#mode').selectOption('revoke'); await refresh();
+  const revoked = page.waitForResponse(r => r.url().includes('/compatibility/revoke?'));
+  await page.getByRole('button', { name: 'Refresh evidence' }).click();
+  check((await revoked).status() === 503, 'Same client receives revocation after successful response');
+  await page.waitForFunction(() => document.querySelector('#claim').textContent === 'Not verified');
+  check(await page.locator('#source').textContent() === '', 'Revocation removes prior claim without client replacement');
+  await page.locator('#mode').selectOption('denied');
+  const response = page.waitForResponse(r => r.url().includes('/compatibility/denied?'));
+  await page.getByRole('button', { name: 'Refresh evidence' }).click();
+  check((await response).status() === 503, 'Actual denied HTTP response observed');
+  check(await page.locator('#claim').textContent() === 'Not verified', 'Denial leaves no former claim visible');
+  const storage = await page.evaluate(async () => ({ local: localStorage.length, session: sessionStorage.length, databases: (await indexedDB.databases()).length, caches: (await caches.keys()).length, workers: (await navigator.serviceWorker.getRegistrations()).length }));
+  check(Object.values(storage).every(value => value === 0), 'No local/session/IndexedDB/cache/service-worker state');
+  await page.reload();
+  await page.waitForFunction(() => typeof window.cleanup === 'function');
+  check(await page.locator('#claim').textContent() === 'Not verified', 'Reload starts unknown, not restored');
+  await page.evaluate(() => window.cleanup());
+  check(await page.getByRole('button', { name: 'Refresh evidence' }).isDisabled() && await page.locator('#claim').textContent() === 'Not verified', 'Disposed client stays unavailable');
+  return { browser: await page.evaluate(() => navigator.userAgent), results, storage };
+}

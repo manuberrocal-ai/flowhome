@@ -1,6 +1,6 @@
 slug: best-smart-security-basics
-title: "Best Smart Security Basics"
-description: "Doorbell, camera, and lock picks for a simple security-first smart home."
+title: "Smart Security Buying Guide: Camera, Doorbell, and Lock Roles"
+description: "Compare monitoring and access-control roles with storage, power, privacy, and installation checks."
 category: security-camera
 maxPrice: 300
 productSlugs:
@@ -9,3 +9,22 @@ productSlugs:
   - august-wifi-smart-lock
   - blink-outdoor-4
 pubDate: 2026-06-28
+intro: "The devices serve different roles and have not been tested here as a combined security system. A camera or connected lock is not a guarantee against intrusion. Plan the event you need to observe or the access you need to manage."
+buyingConsiderations:
+  - label: "Location and recording"
+    detail: "eufy documents C120 as non-waterproof indoor equipment, while Blink Outdoor 4 has a battery and Sync Module workflow. Confirm the recording destination, subscription feature boundaries, and permissions of people who share the space."
+  - label: "Doorway and lock requirements"
+    detail: "Ring's original Wired does not drive an existing in-home chime. August's retrofit requires a compatible deadbolt. Confirm the exact regional hardware and installation instructions; this shortlist is not an installation or security certification."
+sources:
+  - label: "eufy Indoor Cam C120 specifications; European page"
+    url: "https://www.eufy.com/eu-en/products/t8400"
+    accessedAt: "2026-09-04"
+  - label: "Blink Outdoor 4 FAQ and storage requirements"
+    url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
+    accessedAt: "2026-09-04"
+  - label: "Ring original Wired and in-home chime support"
+    url: "https://ring.com/gb/en/support/articles/vk1ml/configuring-your-doorbell-for-an-in-home-chime"
+    accessedAt: "2026-09-04"
+  - label: "August Wi-Fi Smart Lock retrofit and integrations"
+    url: "https://august.com/products/august-wifi-smart-lock"
+    accessedAt: "2026-09-04"

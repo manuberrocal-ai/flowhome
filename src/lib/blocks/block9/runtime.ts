@@ -9,6 +9,8 @@
 import type { CompatibilityEnvironment } from './compatibility-adapter.ts';
 import type { CompatibilityGraph } from './resolver.ts';
 
+declare const __FLOWHOME_STATIC_COMPATIBILITY__: boolean;
+
 export type CompatibilitySurface = 'quiz' | 'comparison' | 'alternatives' | 'product';
 
 export interface CompatibilityGraphProvider {
@@ -49,9 +51,14 @@ export function getCompatibilityEnvironment(
   provider: CompatibilityGraphProvider = approvedGraphProvider,
 ): CompatibilityEnvironment {
   const enabled = isCompatibilityEnabled(environment.PUBLIC_COMPATIBILITY_V1);
+  const graph = enabled ? provider.getGraph() : null;
+  const staticDelivery = typeof __FLOWHOME_STATIC_COMPATIBILITY__ !== 'undefined' && __FLOWHOME_STATIC_COMPATIBILITY__;
+  if (staticDelivery && graph !== null) {
+    throw new Error('STATIC_COMPATIBILITY_DELIVERY_BLOCKED: a build-time graph cannot expire claims in already-served HTML. Use a separately reviewed request-time delivery path.');
+  }
   return {
     enabled,
-    graph: enabled ? provider.getGraph() : null,
+    graph,
     market: 'US',
   };
 }

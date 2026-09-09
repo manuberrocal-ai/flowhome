@@ -29,7 +29,7 @@ export interface ClaimFreshnessResult {
   expired: boolean;
   ageMs: number;
   reference: string;
-  reason: 'fresh' | 'stale' | 'expired' | 'unknown_verified_at';
+  reason: 'fresh' | 'stale' | 'expired' | 'unknown_verified_at' | 'invalid_expiry';
 }
 
 /** Evaluates claim freshness against the claim window and an optional expiry. */
@@ -48,6 +48,7 @@ export function evaluateClaimFreshness(
     return { fresh: false, expired: false, ageMs, reference, reason: 'unknown_verified_at' };
   }
   const expiresIso = toStrictUtc(claim.expiry ?? null);
+  if (claim.expiry != null && !expiresIso) return { fresh: false, expired: false, ageMs, reference, reason: 'invalid_expiry' };
   const expired = expiresIso != null && ref.getTime() >= new Date(expiresIso).getTime();
   if (expired) return { fresh: false, expired: true, ageMs, reference, reason: 'expired' };
   const fresh = ageMs >= 0 && ageMs <= CLAIM_FRESHNESS_WINDOWS_MS.claim;
@@ -68,8 +69,8 @@ export function effectiveClaimStatus(
     return { status: claim.status, surfaced: false, confidence: 'unknown', reason: `status:${claim.status}` };
   }
   const f = evaluateClaimFreshness(claim, now);
-  if (f.reason === 'unknown_verified_at') {
-    return { status: 'unknown', surfaced: false, confidence: 'unknown', reason: 'unknown_verified_at' };
+  if (f.reason === 'unknown_verified_at' || f.reason === 'invalid_expiry') {
+    return { status: 'unknown', surfaced: false, confidence: 'unknown', reason: f.reason };
   }
   if (f.reason === 'expired') {
     return { status: 'expired', surfaced: false, confidence: 'unknown', reason: 'expired' };
@@ -231,7 +232,7 @@ export function confidenceFromClaimFreshness(
   result: ClaimFreshnessResult,
   evidence: EvidenceLevel,
 ): ConfidenceLevel {
-  if (result.reason === 'unknown_verified_at') return 'unknown';
+  if (result.reason === 'unknown_verified_at' || result.reason === 'invalid_expiry') return 'unknown';
   if (result.reason === 'expired') return 'unknown';
   if (result.reason === 'stale') {
     return 'low';

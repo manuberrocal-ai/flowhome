@@ -1,0 +1,3 @@
+# Source and static text must have identical line endings in every checkout.
+# Auto detection leaves binary product illustrations unchanged.
+* text=auto eol=lf

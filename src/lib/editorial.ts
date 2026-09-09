@@ -26,7 +26,7 @@ export const EDITORIAL_TEAM = {
   role: 'Editorial organization',
   profileUrl: '/about/#editorial-team',
   bio: 'FlowHome Editorial Team is the organization responsible for FlowHome buying guidance. It is not an individual person and does not represent a personal professional credential.',
-  methodology: 'We compare documented compatibility, setup requirements, public product information, owner feedback, price snapshots, and practical tradeoffs. We do not run controlled lab tests or claim hands-on testing unless that is explicitly stated on the page.',
+  methodology: 'We compare model-specific documentation, setup requirements, intended uses, and stated limitations. The sources and scope are recorded on each page. Commercial data is separate: current prices or customer ratings are not implied by a product recommendation. We do not run controlled lab tests or claim hands-on testing unless that is explicitly documented on the page.',
   disclosure: 'FlowHome may earn from qualifying purchases through affiliate links. Automation can assist with discovery and maintenance, but it does not replace editorial responsibility.',
 } as const;
 

@@ -43,6 +43,7 @@ import {
   isVisitorVisibleNoticeRelation,
 } from './domain.ts';
 import {
+  detectEdgeContradictions,
   describeConstraint,
   effectiveClaimStatus,
 } from './freshness.ts';
@@ -118,6 +119,38 @@ export interface VerifiedNotice {
   sourceLabel: string;
 }
 
+/** Public relationship explanation, with no internal edge or reviewer identifiers. */
+export interface VerifiedRelation {
+  relation: 'substitutes' | 'complements';
+  targetSlug: string;
+  targetType: 'product' | 'hardware';
+  condition: string;
+  sourceLabel: string;
+  evidence: EvidenceLevel;
+  evidenceLabel: string;
+  confidence: ConfidenceLevel;
+}
+
+export function getVerifiedRelations(graph: CompatibilityGraph, slug: string, options: { enabled: boolean; market?: string; now?: Date | string; visibleLocation?: string } = { enabled: false }): VerifiedRelation[] {
+  if (!options.enabled) return [];
+  const market = options.market ?? 'US';
+  const node = nodeBySlug(graph, slug, market);
+  if (!node) return [];
+  const now = options.now instanceof Date ? options.now : new Date(options.now ?? Date.now());
+  const results: VerifiedRelation[] = [];
+  const seen = new Set<string>();
+  for (const { edge, confidence } of surfaceableResultsFrom(graph, node.id, now, market, options.visibleLocation)) {
+    if (edge.relation !== 'substitutes' && edge.relation !== 'complements') continue;
+    const target = graph.nodes.find(candidate => candidate.id === edge.to);
+    if (!target?.slug || target.slug === slug || !['product', 'hardware'].includes(target.type)
+      || !edge.claim.trim() || !edge.source.label.trim()) continue;
+    const relation: VerifiedRelation = { relation: edge.relation, targetSlug: target.slug, targetType: target.type as 'product' | 'hardware', condition: edge.claim, sourceLabel: edge.source.label, evidence: edge.evidence, evidenceLabel: EVIDENCE_LEVEL_LABELS[edge.evidence], confidence };
+    const key = JSON.stringify(relation);
+    if (!seen.has(key)) { seen.add(key); results.push(relation); }
+  }
+  return results;
+}
+
 /**
  * Fail-closed edge/ledger gate. Matching is exclusively by edgeId and exact
  * identity/provenance fields; labels and product names are never lookup keys.
@@ -172,10 +205,26 @@ export function activeEdgesFrom(graph: CompatibilityGraph, nodeId: string, now: 
  * confidence for visitor-visible claims.
  */
 function surfaceableResultsFrom(graph: CompatibilityGraph, nodeId: string, now: Date, market?: string, visibleLocation?: string): SurfaceableEdge[] {
-  return graph.edges
+  const results = graph.edges
     .filter((edge) => edge.from === nodeId && (market === undefined || edge.market === market))
     .map((edge) => surfaceableEdge(graph, edge, now, visibleLocation))
     .filter((result): result is SurfaceableEdge => result !== null);
+  // A product-level query cannot resolve opposing version/setup conditions.
+  // Keep the conflict notice, but never select a positive claim by ranking it
+  // above an equally applicable, current, exactly-ledger-backed conflict.
+  const contradicted = new Set(detectEdgeContradictions(results.map(({ edge }) => edge), now)
+    .flatMap((finding) => [finding.a, finding.b]));
+  const productOnly = graph.nodes.find(node => node.id === nodeId)?.type === 'product';
+  return results.filter(({ edge }) => {
+    // A product slug supplies no selected variant/version. Structural validity of
+    // referenced scope nodes is not proof that this visitor has that scope.
+    if (productOnly && ['variantId', 'generationId', 'hardwareId', 'firmwareId'].some(key => edge.scope[key as keyof typeof edge.scope] !== null)) return false;
+    // Use the unfiltered evidence set: an unresolved scoped conflict must not
+    // disappear first and accidentally turn an uncertain broad claim positive.
+    return !(isPositiveRelation(edge.relation) || edge.relation === 'substitutes')
+      || (!contradicted.has(edge.id) && !results.some(({ edge: other }) => other.relation === 'conflicts'
+        && other.to === edge.to && other.market === edge.market));
+  });
 }
 
 /** Highest-evidence active edge for a given ecosystem relation from a node. */
@@ -289,13 +338,9 @@ export function getVerifiedFlags(
   // Substitutes and complements from explicit edges (name-based inference forbidden).
   const substitutes = new Set<string>();
   const complements = new Set<string>();
-  for (const edge of activeEdgesFrom(graph, node.id, now, market, options.visibleLocation)) {
-    if (edge.relation !== 'substitutes' && edge.relation !== 'complements') continue;
-    const target = graph.nodes.find((target) => target.id === edge.to);
-    if (target?.slug) {
-      if (edge.relation === 'substitutes') substitutes.add(target.slug);
-      if (edge.relation === 'complements') complements.add(target.slug);
-    }
+  for (const relation of getVerifiedRelations(graph, slug, options)) {
+    if (relation.relation === 'substitutes') substitutes.add(relation.targetSlug);
+    if (relation.relation === 'complements') complements.add(relation.targetSlug);
   }
   flags.substitutes = [...substitutes];
   flags.complements = [...complements];

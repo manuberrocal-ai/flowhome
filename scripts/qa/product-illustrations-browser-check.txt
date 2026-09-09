@@ -1,0 +1,46 @@
+async page => {
+  const base='http://127.0.0.1:4339', products=[], requests=[], errors=[];
+  page.on('request', req=>requests.push(req.url()));
+  page.on('pageerror', error=>errors.push(error.message));
+  const check=(condition,label)=>{if(!condition)throw new Error(label);};
+  for(const item of [{"slug":"aeotec-smartthings-hub","category":"smart-hub"},{"slug":"amazon-smart-thermostat","category":"smart-thermostat"},{"slug":"aqara-hub-m2","category":"smart-hub"},{"slug":"aqara-motion-sensor-p1","category":"motion-sensor"},{"slug":"arlo-essential-outdoor-camera","category":"security-camera"},{"slug":"august-wifi-smart-lock","category":"smart-lock"},{"slug":"blink-outdoor-4","category":"security-camera"},{"slug":"echo-dot-5th-gen","category":"smart-speaker"},{"slug":"echo-show-8-3rd-gen","category":"smart-display"},{"slug":"ecobee-smart-thermostat-premium","category":"smart-thermostat"},{"slug":"eufy-security-indoor-cam-c120","category":"security-camera"},{"slug":"google-nest-hub-2nd-gen","category":"smart-display"},{"slug":"govee-rgbic-led-strip-lights","category":"smart-lighting"},{"slug":"irobot-roomba-j7-plus","category":"robot-vacuum"},{"slug":"levoit-core-300s-air-purifier","category":"air-purifier"},{"slug":"meross-smart-garage-door-opener","category":"garage-door-opener"},{"slug":"philips-hue-white-color-starter-kit","category":"smart-lighting"},{"slug":"ring-video-doorbell-wired","category":"video-doorbell"},{"slug":"roborock-q5-plus","category":"robot-vacuum"},{"slug":"schlage-encode-smart-wifi-deadbolt","category":"smart-lock"},{"slug":"switchbot-blind-tilt","category":"smart-blinds"},{"slug":"switchbot-hub-2","category":"smart-hub"},{"slug":"tapo-c120-security-camera","category":"security-camera"},{"slug":"tp-link-kasa-smart-dimmer-hs220","category":"smart-lighting"},{"slug":"tp-link-kasa-smart-light-switch-hs200","category":"smart-lighting"},{"slug":"tp-link-kasa-smart-plug-mini","category":"smart-plug"},{"slug":"wyze-bulb-color","category":"smart-lighting"},{"slug":"yale-assure-lock-2-wifi","category":"smart-lock"}]){
+    await page.goto(base+'/product/'+item.slug+'/');
+    const image=page.locator('img[src*="/illustrations-v1/"]').first();
+    await image.scrollIntoViewIfNeeded();
+    const data=await image.evaluate(async el=>{await el.decode();return {src:el.getAttribute('src'),width:el.naturalWidth,height:el.naturalHeight,alt:el.alt};});
+    check(data.src.endsWith('/'+item.category+'.png'),item.slug+' wrong illustration');
+    check(data.width>0&&data.height>0,item.slug+' decoding');
+    check(await page.locator('[data-image-source-caption]').first().innerText()==='Category illustration — not a product photo',item.slug+' caption');
+    products.push({slug:item.slug,...data});
+  }
+  const layout=[];
+  for(const width of [390,1440]){
+    await page.setViewportSize({width,height:960});
+    for(const route of ['/','/products/','/reviews/','/search/','/product/govee-rgbic-led-strip-lights/','/review/echo-dot-5th-gen-review/']){
+      await page.goto(base+route);
+      await page.locator('[data-image-source-caption]').first().waitFor();
+      const info=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,visibleCaptions:[...document.querySelectorAll('[data-image-source-caption]')].filter(el=>el.getBoundingClientRect().height>0).length}));
+      check(!info.overflow,route+' horizontal overflow '+width);
+      check(info.visibleCaptions>0,route+' missing visible label');
+      layout.push({route,width,...info});
+      if(route==='/products/'||route==='/product/govee-rgbic-led-strip-lights/'){
+        await page.locator('img[src*="/illustrations-v1/"]').first().scrollIntoViewIfNeeded();
+        await page.locator('img[src*="/illustrations-v1/"]').first().evaluate(async img => { await img.decode(); await document.fonts.ready; });
+        await page.screenshot({path:'C:/AGENTES/Proyectos/flowhome/docs/project/FH09B_'+(route==='/products/'?'cards':'product')+'-'+width+'.png'});
+      }
+    }
+  }
+  await page.goto(base+'/cart/');
+  await page.evaluate(()=>localStorage.setItem('flowhome-amazon-list',JSON.stringify([{asin:'B09B8V1LZ3',slug:'echo-dot-5th-gen',name:'Echo Dot legacy image',image:'https://m.media-amazon.com/old-image.jpg',url:'/product/echo-dot-5th-gen/'}])));
+  await page.reload();
+  await page.locator('[data-cart-page-items] img').waitFor();
+  const saved=await page.locator('[data-cart-page-items] img').evaluate(async img=>{await img.decode();return {src:img.getAttribute('src'),alt:img.alt};});
+  check(saved.src.endsWith('/smart-speaker.png'),'saved image was not replaced');
+  await page.locator('[data-cart-page-remove]').focus();
+  await page.keyboard.press('Enter');
+  check(await page.locator('[data-cart-page-items] img').count()===0,'keyboard removal broken');
+  const oldHosts=["m.media-amazon.com","www.aqara.com","us.aqara.com","images.thdstatic.com","multimedia.bbycastatic.ca","cdn.shopify.com","cdn.pji.nu","www.switch-bot.com","www.wyze.com"];
+  check(!requests.some(url=>oldHosts.some(host=>url.startsWith('https://'+host+'/'))),'old commercial image host requested');
+  check(errors.length===0,'browser exceptions: '+errors.join(','));
+  console.log(JSON.stringify({products,layout,saved,keyboardRemove:true,commercialImageRequests:0,errors},null,2));
+}

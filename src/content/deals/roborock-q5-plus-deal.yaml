@@ -1,12 +1,13 @@
 slug: roborock-q5-plus-deal
 title: "Roborock Q5+ self-empty robot vacuum deal"
 productSlug: roborock-q5-plus
-asin: B09NM549V7
+asin: B09NM56KJM
 originalPrice: 599.99
 dealPrice: 399.99
 discountPct: 33
 startDate: 2026-06-28
 endDate: 2026-07-15
-affiliateUrl: "https://www.amazon.com/dp/B09NM549V7?tag=flowhome-20"
-featured: true
+affiliateUrl: "https://www.amazon.com/dp/B09NM56KJM?tag=flowhome-20"
+# Retired manual snapshot; identity correction does not validate these historical values.
+featured: false
 image: "/images/product-art/robot-vacuum.svg"

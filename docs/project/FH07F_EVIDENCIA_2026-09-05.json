@@ -1,0 +1,94 @@
+{
+  "recordedAt": "2026-09-05T18:01:11.931Z",
+  "task": "FH-07F",
+  "scope": "Remove blanket subscription claims in camera/doorbell specs and highlights; show explicit per-feature uncertainty",
+  "published": false,
+  "verification": {
+    "red": {
+      "tests": 9,
+      "passed": 7,
+      "failed": 2
+    },
+    "directed": {
+      "passed": 36,
+      "failed": 0
+    },
+    "full": {
+      "passed": 664,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "pass",
+    "typecheck": {
+      "files": 242,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 18
+    },
+    "build": {
+      "pages": 88,
+      "completedAt": "2026-09-05T18:00:04Z"
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "browser": {
+      "passed": 77,
+      "failed": 0,
+      "widths": [
+        1440,
+        390
+      ],
+      "screenshotsInspected": 4,
+      "initialHarnessErrors": [
+        "Ambiguous article locator included nested related cards; narrowed to observed article.space-y-8",
+        "Retry on same anchor produced null navigation response; start each batch from quiz"
+      ],
+      "visualRounds": 1
+    },
+    "text": {
+      "candidates": 10,
+      "interpretation": "Five pages each have two hidden anonymous avatars with explicit empty alt; authenticated state untested"
+    },
+    "catalogBytePreservation": {
+      "matched": 28,
+      "total": 28,
+      "baseline": "FH07E_EVIDENCIA_2026-09-05.json"
+    },
+    "diffCheck": "pass; existing LF/CRLF warnings"
+  },
+  "sourceAndBuildHashes": [
+    {
+      "path": "src/lib/product-specs.ts",
+      "sha256": "ed79bc6dbb15ac332f22bb9a89e96d560ddef8458cdd30e0e6afe24bbd8f336b"
+    },
+    {
+      "path": "src/pages/product/[slug].astro",
+      "sha256": "4b6f8228f73bf5d44e60bdd916360e4ba50a88e38ee60b29f9d1cd5445d9e8ae"
+    },
+    {
+      "path": "test/product-specs.test.mjs",
+      "sha256": "56fe087a43983b176bb058bf439f122d0c0013c4f7cac3a6ee14c639453b52b5"
+    },
+    {
+      "path": "test/acceptance-20-criteria.test.mjs",
+      "sha256": "0e457a6bc3e7686dd1b2b9cb89c661c0bb137befcdf621b5f3510066fa0fb1f2"
+    },
+    {
+      "path": "dist/product/tapo-c120-security-camera/index.html",
+      "sha256": "5e5b0c49427f5340e4cb948aaf479dec18f99ac3ba4875b7a3dc44e59a1989be"
+    },
+    {
+      "path": "dist/product/ring-video-doorbell-wired/index.html",
+      "sha256": "3a85e1243da9f590e1400f3306a55ac0027b56db7e6f8d1b5d7d05d67454091f"
+    }
+  ],
+  "limits": [
+    "No feature-by-feature service entitlement research completed; requirements remain explicitly unknown",
+    "Remaining compatibility/spec booleans are still debt; not certified by this patch",
+    "FH-07 partial 2/5; 14 installations documented, 14 unknown; 5 tasks done, 27 remaining",
+    "No production/account/API write or publication"
+  ]
+}

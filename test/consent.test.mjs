@@ -48,7 +48,7 @@ test('consent banner only speaks accepted/rejected to the setter and keeps revok
   assert.match(bannerSource, /if \(focusChoice\) banner\.querySelector<HTMLElement>/);
   assert.doesNotMatch(bannerSource, /class="fixed/);
   assert.match(bannerSource, /if \(action === 'accepted' \|\| action === 'rejected'\) \{/);
-  assert.match(bannerSource, /if \(setConsentPreference\(action\) !== action\) return;\n\s+setBannerPreference\(action\);\n\s+hideBanner\(\);\n\s+window\.dispatchEvent\(new CustomEvent\('flowhome:consent-change'\)\);/);
+  assert.match(bannerSource, /if \(setConsentPreference\(action\) !== action\) \{ reportSaveFailure\(\); return; \}\r?\n\s+setBannerPreference\(action\);\r?\n\s+hideBanner\(\);\r?\n\s+window\.dispatchEvent\(new CustomEvent\('flowhome:consent-change'\)\);/);
   assert.match(bannerSource, /if \(action === 'revoke'\) \{/);
   assert.match(bannerSource, /if \(target\?\.closest\('\[data-consent-open\]'\)\) showBanner\(true\);/);
 });

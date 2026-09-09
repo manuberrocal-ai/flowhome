@@ -1,0 +1,2128 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-review-inventory-not-release-manifest",
+  "observedAt": "2026-09-08T20:15:15.595Z",
+  "baseSha": "116e04df648d97cae9d4aae03f190e81109937ab",
+  "sourceSha": null,
+  "cleanCheckout": false,
+  "publishable": false,
+  "rollbackDeploymentId": null,
+  "artifactPath": "artifacts/editorial-review-20260908-fh13h",
+  "distSha256": "ecf706a938274d2c0a59d03c0b3a8f59dca3e8670e91273e3aa1e02cbd5101d3",
+  "filesCount": 421,
+  "totalBytes": 136708801,
+  "environment": {
+    "schemaVersion": 1,
+    "environment": "production",
+    "authEnabled": false,
+    "analyticsEnabled": false,
+    "supabaseProjectRef": null
+  },
+  "files": [
+    {
+      "path": ".well-known/security.txt",
+      "size": 166,
+      "sha256": "453eb660a86e540b82ffdcf9a6434af6d5361cef34f6fe9f30c99e02c1ede621"
+    },
+    {
+      "path": "404.html",
+      "size": 138014,
+      "sha256": "193a25652a831d0c16593fd9b9d8d273672e1f51f214bb9ea96032fc9945d83b"
+    },
+    {
+      "path": "85b3b79bd6a26a3862465cc5611db3a2.txt",
+      "size": 32,
+      "sha256": "608e6d3b0e312a02ad2f12fb475b89220b756d58f4cf6559a0bf8c099fdb80fd"
+    },
+    {
+      "path": "BingSiteAuth.xml",
+      "size": 85,
+      "sha256": "c08ef4c23e03d9fea5f9c395c4413ecae02390d8265bda2cedf604131f9690cd"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_0_lang.Diiwc1rL.js",
+      "size": 751,
+      "sha256": "ac8e1bcf6f08ffbed868e0587b33f5d9ac033830b21cb4bd2c146072acc8481e"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_1_lang.CcPqNo_Q.js",
+      "size": 2353,
+      "sha256": "3f7dbffe6c0ba9d967589aa36e26972f355afe760216fa6a26ebcfda69aad094"
+    },
+    {
+      "path": "_astro/BaseLayout.astro_astro_type_script_index_2_lang.RByuaYNn.js",
+      "size": 812,
+      "sha256": "0bc02c656c69d001c79de10a8ca566bdc8bb33a857f2a5a1ee2e2c8bacb9c156"
+    },
+    {
+      "path": "_astro/ConsentBanner.astro_astro_type_script_index_0_lang.Do2_6K12.js",
+      "size": 1008,
+      "sha256": "569c9e167d42bfb74d2938c09efde606930263872c0ba4fd85842c553b697eb6"
+    },
+    {
+      "path": "_astro/DealCard.astro_astro_type_script_index_0_lang.D9QIWNY9.js",
+      "size": 2039,
+      "sha256": "dbb49d5a262228d60eed4f86a8fe15ecf5a3df536cc1397e951bdfda0b3de551"
+    },
+    {
+      "path": "_astro/Footer.astro_astro_type_script_index_0_lang.DUaV7jwV.js",
+      "size": 346,
+      "sha256": "595545dcf105ebc56d8ecfc30a2f2f86945ca89a13a00c58379f850120d03def"
+    },
+    {
+      "path": "_astro/Header.astro_astro_type_script_index_0_lang.DcAamT9W.js",
+      "size": 1964,
+      "sha256": "28b8a967189abc7685d99a4b272a008d14ce08da04b6167c80bc187caaf9dee3"
+    },
+    {
+      "path": "_astro/Header.astro_astro_type_script_index_1_lang.BDaTx3zr.js",
+      "size": 2224,
+      "sha256": "324dab79e84b30d1f711037b21d7df28a59b0b83f8912e45822853e44ba185a1"
+    },
+    {
+      "path": "_astro/account.astro_astro_type_script_index_0_lang.9xjssVjq.js",
+      "size": 4759,
+      "sha256": "20711992d1ea8b7027d537b10722210610a63d8bb543a8327651875c30353a33"
+    },
+    {
+      "path": "_astro/analytics.BgNWto8B.js",
+      "size": 7052,
+      "sha256": "88a2ff0e1812e902456a19932916ed8de062c909564cf4a459fc51bc65fe8e32"
+    },
+    {
+      "path": "_astro/auth-channel.B0ndQh5p.js",
+      "size": 1045,
+      "sha256": "be1fb9101db7ef58be56dd302db27b86c8e5eeda2ea7fa772eee6cafb233fe52"
+    },
+    {
+      "path": "_astro/auth-helpers.BlQnyFY1.js",
+      "size": 1018,
+      "sha256": "9d3f9c4a7ae229767bfa2962f412ca0d55b5f47cf31a8e6eb5fc4b9d9cd58eeb"
+    },
+    {
+      "path": "_astro/calculator.astro_astro_type_script_index_0_lang.B_p8nvjc.js",
+      "size": 1260,
+      "sha256": "271f59cb3681d64e1c9109eca4b667994836f01e22f0ace7e38bb013ec7f9a05"
+    },
+    {
+      "path": "_astro/cart-client.BCwgFn4K.js",
+      "size": 4834,
+      "sha256": "8e17d5011216fa24a47a9b19cf2d7f3e1df47c6f9056f54f8848b3ddfde421ed"
+    },
+    {
+      "path": "_astro/cart-store.BgmiB172.js",
+      "size": 7524,
+      "sha256": "64a72bdf1dd4bb74fb6c7e3e78ef0cdcd1a5554e0b6788cc42f88eb5cd27b222"
+    },
+    {
+      "path": "_astro/cart-sync.W-JznufO.js",
+      "size": 1211,
+      "sha256": "d5e5c5004cd90f50db5e0d222961ac2c8f15249d1f0bd320d766f82ab0a9b8a4"
+    },
+    {
+      "path": "_astro/cart.astro_astro_type_script_index_0_lang.BecyO5JZ.js",
+      "size": 50,
+      "sha256": "957517923dd6d77f7970ff881921ba595f81a2706bf82ab9671df03be2890e1e"
+    },
+    {
+      "path": "_astro/commerce-data.ZbxwU02i.js",
+      "size": 3037,
+      "sha256": "942c2c536f6c230da56e8ca63183aa0ec46cdddbc9f05bbc4e2c8a8dd1e988a6"
+    },
+    {
+      "path": "_astro/consent.CXUsHNVh.js",
+      "size": 638,
+      "sha256": "c43c47a30389d8464abb61e033a1fb502615e4b39d7ad905716e18d381307dae"
+    },
+    {
+      "path": "_astro/experiments.Blh6Bryf.js",
+      "size": 5652,
+      "sha256": "df7918b698b4432b6ac0402c4114b8a7aea5fa7616b4740888643a62beab3bf9"
+    },
+    {
+      "path": "_astro/index.astro_astro_type_script_index_0_lang.ChGbK6Db.js",
+      "size": 5597,
+      "sha256": "6ce1c8f5421f48bd8c129409af72a57354ae39bd43acf8f0cfa0b31f13204ee0"
+    },
+    {
+      "path": "_astro/index.astro_astro_type_script_index_0_lang.CluZmQ6t.js",
+      "size": 1006,
+      "sha256": "7f2deba8aee224e99f9d20ccfe7b6a695376781d76c930cd63e468a017042790"
+    },
+    {
+      "path": "_astro/inter-latin-wght-normal.Dx4kXJAl.woff2",
+      "size": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "_astro/plus-jakarta-sans-latin-wght-normal.eXO_dkmS.woff2",
+      "size": 27348,
+      "sha256": "153fc85b70298beeb1d61a5f723331649e7f23bb77302a66e61cb3e2fbdb5e79"
+    },
+    {
+      "path": "_astro/preferences.astro_astro_type_script_index_0_lang.CCmAXHfK.js",
+      "size": 5619,
+      "sha256": "f2774d1fb6a9d3ef8881595f82183092236af119f759b871321fde22954723ec"
+    },
+    {
+      "path": "_astro/preload-helper.L5lOfJxi.js",
+      "size": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "path": "_astro/product-thumbnails.Clw_BQ8L.js",
+      "size": 14712,
+      "sha256": "2d4a86019d819ef04bd3d28ac619bd63b851819cedcc7beb553cbeeb36e6a814"
+    },
+    {
+      "path": "_astro/quiz.astro_astro_type_script_index_0_lang.BOTa3OKu.js",
+      "size": 28746,
+      "sha256": "c385a72bb7e457f20385252a7c3315cb943610776c9f288cbf92a094e74ffb87"
+    },
+    {
+      "path": "_astro/rolldown-runtime.DK3Fl9T5.js",
+      "size": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "path": "_astro/search.astro_astro_type_script_index_0_lang.RYL7A2Nw.js",
+      "size": 2076,
+      "sha256": "b2dd64ab9d716af56d8880fe314518e092197f72e0c50c5c6b4b6ba9c6a649ae"
+    },
+    {
+      "path": "_astro/supabase-client.aAZxlKam.js",
+      "size": 203031,
+      "sha256": "b358759cfe34905ab670d301c64989744350d36fb1575a6d435a8b118974d5a2"
+    },
+    {
+      "path": "_headers",
+      "size": 1522,
+      "sha256": "92f3e1305c5fd83c9e17b09446df8ec7ef4ea3154f35ded55a4371738f447aa3"
+    },
+    {
+      "path": "_redirects",
+      "size": 260,
+      "sha256": "17713f3cf7d5ec1c3db6a128c8f456db704abfa671252a2572951c4ae50a607c"
+    },
+    {
+      "path": "about/index.html",
+      "size": 143634,
+      "sha256": "ba0975719d8bf090a40cf7dcc2f4012cccb499da62753c2356702c63d34d1f4f"
+    },
+    {
+      "path": "account/index.html",
+      "size": 145176,
+      "sha256": "80c477397186e9d16e0d7f47e61b3972d6a5a5dc9942a4cd195d202515e99198"
+    },
+    {
+      "path": "ads.txt",
+      "size": 61,
+      "sha256": "e3c44cb5fc0955bd8a64c4a8f3ae9adac0fb50e59419f94ac3a9b9b7f4562c6b"
+    },
+    {
+      "path": "best/best-alexa-smart-home-devices/index.html",
+      "size": 173375,
+      "sha256": "e5298a697c1e1ceb9766af6af7f897ae90882d203247c737c566a2974ab1a6b7"
+    },
+    {
+      "path": "best/best-google-home-starter-devices/index.html",
+      "size": 168663,
+      "sha256": "5cb868ca8b5473619f2752e573a9585478c424852677be536c550e95ef6ef140"
+    },
+    {
+      "path": "best/best-robot-vacuums-for-smart-homes/index.html",
+      "size": 155737,
+      "sha256": "c9fa5ef46a0782908dd2bb05ae56c5802e882ea29921d0e89a81e0802ca19396"
+    },
+    {
+      "path": "best/best-smart-home-devices-for-renters/index.html",
+      "size": 179160,
+      "sha256": "723a41b84bd4cf0a3cadc3616be3a16261e334da3a7105154d67f276bf6bedd2"
+    },
+    {
+      "path": "best/best-smart-home-starter-kit/index.html",
+      "size": 167773,
+      "sha256": "787e2b611be0fc3b5e4cb3782ad77eb63e8a0a6c2d373a95b700f96cf1ef79c1"
+    },
+    {
+      "path": "best/best-smart-hubs-for-matter-zigbee/index.html",
+      "size": 163840,
+      "sha256": "4667c9ebd6de1c20e04948555e5f3c640fe84d9a96babcf5df32ba6d39656c80"
+    },
+    {
+      "path": "best/best-smart-lighting-for-room-control/index.html",
+      "size": 163368,
+      "sha256": "161a4b48c0c35793b96b2826c9db0894dbda57f0cb38d6389f52d0a051c25f04"
+    },
+    {
+      "path": "best/best-smart-security-basics/index.html",
+      "size": 167744,
+      "sha256": "af5d5d6f30def7aa8acfdf50eddc1de6a63ed07e210027c45c678acea0a0c30e"
+    },
+    {
+      "path": "best/index.html",
+      "size": 143577,
+      "sha256": "f81e66cd611b4b3b56eca2fffa242ab3faa3a3de7c9b4d1415779288d3d003c8"
+    },
+    {
+      "path": "calculator/index.html",
+      "size": 140839,
+      "sha256": "69cab5d41e6a8e555dd49995bd35103f06254776ddb900efff1c6aa5f21ab099"
+    },
+    {
+      "path": "cart/index.html",
+      "size": 141636,
+      "sha256": "a258f0fc55cc28c4674055874dee2c4f23993ef99b113baf3610e8635e82fe16"
+    },
+    {
+      "path": "category/air-purifier/index.html",
+      "size": 145359,
+      "sha256": "8774d4de6dc8641e23ccaebc17efa70d56e67c8067a178d01be859007e6dbd3d"
+    },
+    {
+      "path": "category/garage-door-opener/index.html",
+      "size": 145432,
+      "sha256": "7a36f0c5dcd89e82a17ecaadd13e7ac43d534bca34a57c7924973b3ae3f32197"
+    },
+    {
+      "path": "category/motion-sensor/index.html",
+      "size": 145240,
+      "sha256": "7658226516a2641ce958257226c5e4d3f086840dd471d82eabbd8e4c7e678223"
+    },
+    {
+      "path": "category/robot-vacuum/index.html",
+      "size": 151350,
+      "sha256": "7fea7883f2d65f2ca5ee3bf1f25b50e917fa3e41087e86923168e9057ff7e509"
+    },
+    {
+      "path": "category/security-camera/index.html",
+      "size": 163186,
+      "sha256": "92da7d91f8cf8298a0a09a185eb8d477ff210a47c2112edb6d2e9383c7c2e87f"
+    },
+    {
+      "path": "category/smart-blinds/index.html",
+      "size": 145182,
+      "sha256": "fbbdef0f6c2c8fdfe7e490a49477285c821cb987ec02d3c00c130aa85a93d3bc"
+    },
+    {
+      "path": "category/smart-display/index.html",
+      "size": 151381,
+      "sha256": "262ee2e28088b5b36dfbe10bc22efdcc9c7a2c3c3bc4d8d4c25cb3b5dc3511b0"
+    },
+    {
+      "path": "category/smart-hub/index.html",
+      "size": 157160,
+      "sha256": "7d57b762a0893707acc9a44e67c8722e50f0f71260c8f666a847982b9a42e5e1"
+    },
+    {
+      "path": "category/smart-lighting/index.html",
+      "size": 168846,
+      "sha256": "be9d83e074f3c2c9271162d6975b1ca68dd1f964f31171483639ca7b611ae100"
+    },
+    {
+      "path": "category/smart-lock/index.html",
+      "size": 157236,
+      "sha256": "09656f3211f726de522d50fb2b99ec2a7cd99eaee547f2f37c39c96c1a66c3ef"
+    },
+    {
+      "path": "category/smart-plug/index.html",
+      "size": 145630,
+      "sha256": "a0ae0ee2f7dbb8ac95ae16cbded040651e4eea46dde1551ba0c4eb400a27aaa0"
+    },
+    {
+      "path": "category/smart-speaker/index.html",
+      "size": 145479,
+      "sha256": "2587c5d4b785cbf1970d9b1e9b0a66ca0810c691914a841e4a003532702ed555"
+    },
+    {
+      "path": "category/smart-thermostat/index.html",
+      "size": 151542,
+      "sha256": "4202b8177c34fc6f3ddced90cabf71f2a11c1cebc99bd43349e6aa7eebf14dfc"
+    },
+    {
+      "path": "category/video-doorbell/index.html",
+      "size": 145535,
+      "sha256": "3d197fb66e9f9d968db7b0b11b3f5cc7762b9b0b4fca94cdbba5f90993405243"
+    },
+    {
+      "path": "compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/index.html",
+      "size": 157517,
+      "sha256": "734c983939b073f5f91647089024fb60e50e2d961df8a60dfff27af53707bec1"
+    },
+    {
+      "path": "compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/index.html",
+      "size": 161594,
+      "sha256": "84f33228b2ad1a279f6e859387a4f8e3e6679d88153b07ad0d1562452887c325"
+    },
+    {
+      "path": "compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/index.html",
+      "size": 161778,
+      "sha256": "7600c656dd3ff68c8b76b4f24ae76b19ea6f289f434a7c583ce626ff01b399fd"
+    },
+    {
+      "path": "compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/index.html",
+      "size": 156881,
+      "sha256": "e0d9f5df2ec2e07a0e0f823f08748c74c73f8fb0f279a716797a7ae614a36ad9"
+    },
+    {
+      "path": "compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/index.html",
+      "size": 157065,
+      "sha256": "002ebe07c3344f4b39a369214d8441b741df26863e05a3d2dd11d76bec52f12b"
+    },
+    {
+      "path": "compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/index.html",
+      "size": 157392,
+      "sha256": "a4d6df1c41b4f5c075decd8c1005125d1f6330e8aa2e7b918c8f5fcf3e1da334"
+    },
+    {
+      "path": "compare/index.html",
+      "size": 148024,
+      "sha256": "e6a2bcdc6b31fb738e6b3476706da497393d4a9e981b34f01d726972edd9e4ae"
+    },
+    {
+      "path": "compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/index.html",
+      "size": 163106,
+      "sha256": "6af015041ce7bf7b92c1e46151ac39cf300f8dbc020bec1e9cc3075711beabe1"
+    },
+    {
+      "path": "compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/index.html",
+      "size": 156673,
+      "sha256": "9307d09dbdeb99a7bfd106dfb4a1c9f5184b1244f60de23f4c8a3eb360e7bd05"
+    },
+    {
+      "path": "consent-prepaint.js",
+      "size": 382,
+      "sha256": "9c657ed0f2aefda97d2239bf1bc22a40d6116375b16db9ecc3c6694d5fdc4f45"
+    },
+    {
+      "path": "deals/index.html",
+      "size": 138616,
+      "sha256": "a9640a300f99de242806be7f1ae0e6c9aba116ef18f0db9ade98fbf7652ad92f"
+    },
+    {
+      "path": "favicon.svg",
+      "size": 749,
+      "sha256": "7a0d3e6ffe811e88e6b7403b4ffa503938b0b89075f32f0839cb8631379439ad"
+    },
+    {
+      "path": "google100da42fd55ce083.html",
+      "size": 53,
+      "sha256": "cb3fc033d0e1c5245c384becf34b846bfb2b65f6aebd21784aeaac2e9ae0b861"
+    },
+    {
+      "path": "humans.txt",
+      "size": 319,
+      "sha256": "401c562c36ac7477c953d3be2d00395b7c24f4073ce26bcfa9e79ee13566ad4a"
+    },
+    {
+      "path": "images/flowhome-favicon.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-icon-192.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-icon-512.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-logo-430.png",
+      "size": 8998,
+      "sha256": "4508410bb4506a102276cd81110cce9860d2757cad8acb576d186faa2f3e0533"
+    },
+    {
+      "path": "images/flowhome-logo-mark.png",
+      "size": 85118,
+      "sha256": "722a506aece70f033d8c51839e2ae5af98f094c699f5387100610ddbda8f4186"
+    },
+    {
+      "path": "images/flowhome-logo-mark.svg",
+      "size": 1457,
+      "sha256": "123eb3fe88bc8a8802614d2cc1d7eeb1ed77719049b7ee99fa8839fe9060840d"
+    },
+    {
+      "path": "images/flowhome-logo.png",
+      "size": 41572,
+      "sha256": "b9b666fb77d6306af1fd3d2fa563d87142a551f94183d71d5fd164b7fa4de0a5"
+    },
+    {
+      "path": "images/flowhome-logo.svg",
+      "size": 2502,
+      "sha256": "16470a6362f5cb9f9a7a7430b7ef9892a1a9471f2b66d39ced44e13eaed16431"
+    },
+    {
+      "path": "images/flowhome-touch-180.png",
+      "size": 5548,
+      "sha256": "1c69e01d6c58ea1a66804336ea29c8a0a4db10c2ae8c6aded8699c1c041f1228"
+    },
+    {
+      "path": "images/og-default.svg",
+      "size": 709,
+      "sha256": "2dbab04599581d2369b57e8260997cabe47d4bbf4a497ffcaa021c19f80e530e"
+    },
+    {
+      "path": "images/pinterest/robot-vacuums-guide.png",
+      "size": 187765,
+      "sha256": "1799c80deff6337315907a14e5e4f2a6a4ce420c0aa3635abb0190bf90ebf0b8"
+    },
+    {
+      "path": "images/pinterest/smart-hubs-guide.png",
+      "size": 177924,
+      "sha256": "23ffdd314a153f70f901f2c99ae910960f65db1570f64022978f89ede0dd7201"
+    },
+    {
+      "path": "images/pinterest/smart-lighting-guide.png",
+      "size": 179311,
+      "sha256": "b4306f7372649ff10217cd41544becd0fce2944444cbe7698bd464fc1ae5a46f"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier-240.webp",
+      "size": 6236,
+      "sha256": "b7389aea301467eae4d8c5e6dfb1309e76ae39771a908882fdf34aed98345603"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier-480.webp",
+      "size": 17430,
+      "sha256": "9d20d6db2fafc78fac787b121669a6e1bc1f6493a38b96e23680628bde8d09b2"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier-720.webp",
+      "size": 28760,
+      "sha256": "38e4c4877e22ac5b082a0726beb301d88cd84a43d4f9c86bf0cdf0d53e99ec6a"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier-960.webp",
+      "size": 40270,
+      "sha256": "9cbb154cb6d1cd0154007f656691687069b31089545b23b166fabb075f7093b2"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier.png",
+      "size": 1351877,
+      "sha256": "7459e7ba1bb778fff3d52cccd477ba9356a108019ec07204e90f7085aec1bd24"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/air-purifier.webp",
+      "size": 968680,
+      "sha256": "263a7038ad448c8c8725cbca62458cf5c7493949bc2e253370f4f21cc1e670a3"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener-240.webp",
+      "size": 5834,
+      "sha256": "7c71d361579d6addbb0e8ee9d225463a74350f96867e8163a7d477058aa49234"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener-480.webp",
+      "size": 15636,
+      "sha256": "ee0049428db165f57cef57320a04b9cbb295d962e562c37fc3323697ebeed067"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener-720.webp",
+      "size": 28128,
+      "sha256": "4a3048d1bb1e940b97484c17d0dfe430a96715f25f5882d84250953a83a71379"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener-960.webp",
+      "size": 41648,
+      "sha256": "324eff76af63635e5fc56475ae5c2bfa7bef1e1d10d8835c43062faff7fefb8d"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener.png",
+      "size": 1565082,
+      "sha256": "14e8a08b963c5423589f3dbce490012d8daf5b110c6c389f542acefd1f73d231"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/garage-door-opener.webp",
+      "size": 1098244,
+      "sha256": "199ab682ff6a30c2b3ff2c95c79072ee9fbe98ab219a5a0fc60549411b88bc25"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor-240.webp",
+      "size": 2940,
+      "sha256": "dcdf577d89f50cf642455d2c8d7f708b55ccc2269a46ff57adfe8c304b21a318"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor-480.webp",
+      "size": 7910,
+      "sha256": "45b395ff1dbe1d556109566b921a52dc235db8815cd4b42e3614ea3d64e60982"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor-720.webp",
+      "size": 14180,
+      "sha256": "01fd8a82fcbb47a15f64f339417c807c66a6b35714e092ebcbad52c3eeec69f2"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor-960.webp",
+      "size": 23090,
+      "sha256": "66ec95bfa162be0c0f531e1975416fde75b46423fa38e8f8208506083d65366e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor.png",
+      "size": 1348902,
+      "sha256": "a58a1c7ab091e688334d666224c6bf3c72e5b3c6eae617fec58da920ed47031e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/motion-sensor.webp",
+      "size": 938566,
+      "sha256": "52ca95ccc8f85ec8a0c2735413e62e4d97b5b19a9981e13c8db7de6264fedf76"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum-240.webp",
+      "size": 4206,
+      "sha256": "fc06d33261131058325b3f0ecd2d5d08c28ac61ad6777f3f526aa4c0f1be75ba"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum-480.webp",
+      "size": 11184,
+      "sha256": "114735451e653d1e45f6ef9cb41a51743dd438cbaed3021402658e01d9ba0178"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum-720.webp",
+      "size": 20202,
+      "sha256": "b95b6d79f686957e39cbff4725370ceaaa317d42d9d4aeb2fee8594ff5c1bc69"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum-960.webp",
+      "size": 31506,
+      "sha256": "7ecb4c713c824480a16146e7c42553cdf1b753f5b9cba57480e00d7b18e8fc75"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum.png",
+      "size": 1870158,
+      "sha256": "47cbb90ca4f09595351b8fcbe90d8fe2d0d0b9a239f4ba9618b35aa26ac671a6"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/robot-vacuum.webp",
+      "size": 1341632,
+      "sha256": "3aeb1d98e0e199b48a09dfd8a5f6fe8eedf09ef743a6d683b841b77df3454bcc"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera-240.webp",
+      "size": 2978,
+      "sha256": "1c443e1311abded878c667235dd76dcbebe8958437d299a8abe6a54cf0e9a14c"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera-480.webp",
+      "size": 7222,
+      "sha256": "f54f0a18d84ee251959e44c518be3bf69dd16167644d83d51ba77dcf810843ac"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera-720.webp",
+      "size": 12788,
+      "sha256": "6df3a74f93a6b28c9eb36c091a392ff010bf70f2459388ae66ab7dbb1bbf20e8"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera-960.webp",
+      "size": 19310,
+      "sha256": "f0cb18356cefde1bf7b9466b8aba111d9c5315f9be74f85de011b7d1d337145d"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera.png",
+      "size": 1213878,
+      "sha256": "a0755ce5821c7abcb7e0a72c06b7004a302b3da245ebf9245e2956f64cbd0917"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/security-camera.webp",
+      "size": 829746,
+      "sha256": "dcb83ab7130c165bf7336c4e451eefcca20464cfd3a8463d44d7fe6c47da072d"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds-240.webp",
+      "size": 4284,
+      "sha256": "8e9cab6c7cb55f2469a6fafb7fc64ac48814372d73915144dbc092c73d95618b"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds-480.webp",
+      "size": 10038,
+      "sha256": "34170c215f81d8a96356d8850313d2fbd95431589bd8ef8c80240d4298d0e4ab"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds-720.webp",
+      "size": 17828,
+      "sha256": "45b4b1ca1eae9de44e5f1a0fb633d1e165859f733a66820f32b9d5adf4804a5c"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds-960.webp",
+      "size": 26506,
+      "sha256": "b492966e1fc0b7a86e6337bd9cdd4a5c9f2b211c320b1108176a1edb969da16f"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds.png",
+      "size": 1314538,
+      "sha256": "9b70f6732ef1cb047a025c53a365b0c6b8fa141805cd70c9af1389e4d0a3acf2"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-blinds.webp",
+      "size": 944004,
+      "sha256": "b5591673538513afbc76efed9d8f61cae37c7512d693b43f00fefd8b1aca674d"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display-240.webp",
+      "size": 4352,
+      "sha256": "d2662097d088aedf1b9a87647ad5d05d5c91d139bf145c66812bce7a24d3aa18"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display-480.webp",
+      "size": 10700,
+      "sha256": "5af7bcb59d1376e35373c08a3c557d71421561d45ea8a6d0e2cee6c8f4565b4e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display-720.webp",
+      "size": 20490,
+      "sha256": "d5d22f5c9c18915a66ae3db9078ba948005cbffb0213cd0fface8614978fbf30"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display-960.webp",
+      "size": 30518,
+      "sha256": "b0de04e51903aa0cdec0f804b2f2ca6144192d53f486f3c3b461faf223e58b86"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display.png",
+      "size": 1387559,
+      "sha256": "4301b0922e4133e307405694493de7c48a33cc190b404a469207744c2761bd81"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-display.webp",
+      "size": 951598,
+      "sha256": "d9dbe9ec4cae81ebb405ed609fc0d432ac73f51805c8270f6887789d239ed91f"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device-240.webp",
+      "size": 5166,
+      "sha256": "34d66dff2b0d37ab98728a60260a835eb528ed91ee50021ce53010e514357131"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device-480.webp",
+      "size": 11666,
+      "sha256": "bd4dba777b7e0f6854c01ec95535c3e9fbfeb87672e91c4ea90701b99dd534cb"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device-720.webp",
+      "size": 18672,
+      "sha256": "6eb84e992996e30caabb9abf5019a1401cc17f6ec49517dba5c2125b4bcf2f15"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device-960.webp",
+      "size": 26466,
+      "sha256": "cfe9a405c24dcfabd83a914209752828f27d4036fe7d1f91632026a11b7c8507"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device.png",
+      "size": 1253282,
+      "sha256": "7c5ed0755e6f6b163f2fb341317816f77071133f26f2f3097a9b5bffec7b955a"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-home-device.webp",
+      "size": 888580,
+      "sha256": "7d03bb6a6afbec3feaa6c4a8c9b5f747242363f0a081f34d5c52f2ae3fd3e0c1"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub-240.webp",
+      "size": 2376,
+      "sha256": "13db34c37e25d704ac608ba22cd0e1cdca0dd5d9a7e7b79babdb024398f09e81"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub-480.webp",
+      "size": 6808,
+      "sha256": "4c2997c769e84b26f3656fd50440f5ee97c698600215bd4909875367f678973a"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub-720.webp",
+      "size": 12618,
+      "sha256": "3a9e39c21fcc59ca242be3577d811f83b68ebaa876a04d0f6da1b334d3bee2bf"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub-960.webp",
+      "size": 19818,
+      "sha256": "dc7502f437b593221b6a9f7a5ba3248d5fdd613e132a8c2d5ba5d3766486fe04"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub.png",
+      "size": 1297439,
+      "sha256": "038efeda64c16d018525b607ec2ecc51ef71dd3ffd41f7a8ed1a165378011a7b"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-hub.webp",
+      "size": 912852,
+      "sha256": "d90a235a746f896384bb2cc88660cdc7f4c7aae10f21bcf4e1d86af4b6945906"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting-240.webp",
+      "size": 3862,
+      "sha256": "5599eac4d957ed1a8e3e854f5b34ae90619f0fe9e84732fd5a3bdaaef3de4522"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting-480.webp",
+      "size": 9920,
+      "sha256": "cd073a12de73d5e8087ccd36c9efd636f62b27fc64abf20b9f48f0fe76c58c38"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting-720.webp",
+      "size": 18212,
+      "sha256": "23b49d9086d469829b08e5ed46b9c4cde84e3cdb7eaeefe3fcde3dc2968a9971"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting-960.webp",
+      "size": 27882,
+      "sha256": "4f9d67e6ae5e8ec375090a514b14a7036a00788f7fec298341810a52ee8ada69"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting.png",
+      "size": 1297981,
+      "sha256": "c4be9886836b2a33f79df4fc4891470870e323123ab20a67827d16cf37f9857f"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lighting.webp",
+      "size": 886104,
+      "sha256": "26dec9e5661a51471a0f35a1154b6d892c5c4edb4370f0a923e828fcc80fe7f8"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock-240.webp",
+      "size": 2388,
+      "sha256": "9d1dd1661e321ae3439b26a0ff1223b0a8895908f87071f5285b8e27f6eb9c4c"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock-480.webp",
+      "size": 5830,
+      "sha256": "055f4d1f88a3c0a51f7f916e1d6d6572300492282db962913c6e4d43cb547514"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock-720.webp",
+      "size": 10236,
+      "sha256": "7019f4779394ca42bb78bc892b4f0621c3fe33a882a2f8eb437c8587720c0448"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock-960.webp",
+      "size": 15510,
+      "sha256": "8adacf23fd4c053abe675022f3984caaec495f879d0e1ce1e25f6cf25a1ec295"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock.png",
+      "size": 1123503,
+      "sha256": "b8bf72c12325b6796aa23ffc5b7a5b52466f692ae663619cd1a3e6e7f8356383"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-lock.webp",
+      "size": 738074,
+      "sha256": "56e0c5fa2c3a3d627846870d571b75f5ec8f3bbae50d7f57c05bca399559e4fd"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug-240.webp",
+      "size": 2920,
+      "sha256": "a07780aae08f85d3dc477def4270eb273b8ace884ff0d33ae8a4655abe5596bd"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug-480.webp",
+      "size": 7614,
+      "sha256": "a241cf81d64fc623338692589de3b8d3d8a62aaaef3d471664fcd121f633a61b"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug-720.webp",
+      "size": 13880,
+      "sha256": "ef46b79622896d4a90f6248bdeb114121a914981bf7a4f4f232d92561600130b"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug-960.webp",
+      "size": 21006,
+      "sha256": "3e06a22cea7b3e4bb9a370565d24c6f96305bbe26a96ca277dd5b0346da2220d"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug.png",
+      "size": 1293525,
+      "sha256": "5791a69ec8aaf462a7279c0facf7bbeaa61d378545c407f2667411feade340a3"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-plug.webp",
+      "size": 882858,
+      "sha256": "00232be172e7cff5fb63f6aafd853707ce50f600839e39cbcc83520214ffee1b"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker-240.webp",
+      "size": 4256,
+      "sha256": "46a6944720d6bbcd0fb80d50934300e624864a97712ebd670878054f22e3af36"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker-480.webp",
+      "size": 12596,
+      "sha256": "d5af22016c6b44296d91a81cbe79e28fa46278b51b02313a3e6ab3cf58efc16a"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker-720.webp",
+      "size": 21792,
+      "sha256": "d3eb6147c04bdb21cdb46a680d400c133a33fad980ec0c0145eca8b5ca2dd24e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker-960.webp",
+      "size": 33006,
+      "sha256": "9aaf5065349a979561c83d2d1ea2e9e31256c423a1cab3f75e04448e5d0c1b99"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker.png",
+      "size": 1545429,
+      "sha256": "68faef7ddcf80a07bcdbf1447ce9f4e0c78b47b22dfea4a771f13db46deff9af"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-speaker.webp",
+      "size": 1083744,
+      "sha256": "d02bf4e55e2b18a27aabe056badb4558bf17fa99ffece9e385a70c1cd88db837"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat-240.webp",
+      "size": 3130,
+      "sha256": "c54be5e48f1c8a91fb12d30e8101879e13dcb3fee2ca89ae70f138a48f6ff6ff"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat-480.webp",
+      "size": 7590,
+      "sha256": "053baba2c1d7e14dcb1fcb6355d74eb2041fb60c6a92ab0f302b871e5e1fdafa"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat-720.webp",
+      "size": 13752,
+      "sha256": "f9dedddb3f1d9039b49eb6381f5d82c7fce6ae20ae7f9536b6770a8fca96ad7e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat-960.webp",
+      "size": 21770,
+      "sha256": "c44f2bff5d99ab105667860373b4e90477529998e0c76e8840c2b5a750ef5626"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat.png",
+      "size": 1680847,
+      "sha256": "a25966a5ea7f18f42550d30bc084dd295dcd5df856235b92cbf231493bf7e04e"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/smart-thermostat.webp",
+      "size": 1225648,
+      "sha256": "491cbe8237501a9063873b20633ed4025cbbb1e5894b863afc195f9d2a399f10"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell-240.webp",
+      "size": 2200,
+      "sha256": "8c375031dedf7b2a01f6858c81e75617840a3a28ed5a2f6828974a794ce27f43"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell-480.webp",
+      "size": 5784,
+      "sha256": "487da73814a317a278f38ae80963d796720fdfdf6787f49e072fcd1d6d6688f6"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell-720.webp",
+      "size": 10314,
+      "sha256": "ac1b694876e709b2abaa018159370088232eb3636023f1a2e70453c7bee00ea5"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell-960.webp",
+      "size": 16044,
+      "sha256": "6fedc3600a8532b5b1ef9cc5857180f54133b89f74e54533f74883c01dc68bd0"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell.png",
+      "size": 1264485,
+      "sha256": "2ed81433f799aa1664b007ef9bc69cc1efbe28c142f425b0d915abcc713c2157"
+    },
+    {
+      "path": "images/product-art/illustrations-v1/video-doorbell.webp",
+      "size": 851646,
+      "sha256": "c3c0b86931dd332c73695479bc23c8123d1e33bbbb068c1230c8702847346ff7"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3-240.webp",
+      "size": 1718,
+      "sha256": "6f249703f73549ec3194d22bd7cb69b31f3c6e629af6ce704809935b9835ec59"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3-480.webp",
+      "size": 6096,
+      "sha256": "59a6d60e5a73571a701c8d73bb21dd4f4203df06623324e71889d030358b7e87"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3-720.webp",
+      "size": 13960,
+      "sha256": "e8dc67781cbca4723633910c2292834e92bcc7c0af21f7cc5d2fb10d63fdf72d"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3-960.webp",
+      "size": 26170,
+      "sha256": "fd23399aa6c6c209a1409e8ff449747b6a86bc65dda4955d7e39c58852a7f0ee"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3.png",
+      "size": 1874702,
+      "sha256": "6b1461aac6c2928d8aabb7bd7e8b72bf18bfae295c4bf2eb171321d9f084258b"
+    },
+    {
+      "path": "images/product-art/models-v1/aeotec-v3.webp",
+      "size": 1399718,
+      "sha256": "ade4026d3ab37e24ab23b04107bb19a10066c87c7c5c26c0c705bdf0e236f394"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat-240.webp",
+      "size": 1614,
+      "sha256": "ad6124d878d05279acf51032d072ece967d0e15a92deef76c801d5efe9e4a25c"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat-480.webp",
+      "size": 4788,
+      "sha256": "7d1a639c6c36ced5d4b986461ab12108397e42f5b9cd4fe7c06eb95316b4716c"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat-720.webp",
+      "size": 9584,
+      "sha256": "ea555c98d1f15592a7a70050621138c1ff6bc52b6917db3c31f95cf8af299c80"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat-960.webp",
+      "size": 17136,
+      "sha256": "e2acf9414c6147fc06837ef9dc963df48c7e678c292683df292c3b930b5ea286"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat.png",
+      "size": 1521022,
+      "sha256": "4d1ff4bf5e678dd2c29c6807d01a5d838184fc98d047b6f1799af5c8a5d84950"
+    },
+    {
+      "path": "images/product-art/models-v1/amazon-smart-thermostat.webp",
+      "size": 1025966,
+      "sha256": "522b143a4a37ae832e97cfb00f87939a787877feac08722e39c086ecc9c8bef7"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2-240.webp",
+      "size": 2822,
+      "sha256": "f1acefd148b7539c6a775b07f457dac9f49f523846ba2d6312a0a772dfb20b41"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2-480.webp",
+      "size": 9808,
+      "sha256": "a0e3411f34360dffc06a8c39ce4cd846b63d3f5a52fad7b12088f2879ac87f6f"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2-720.webp",
+      "size": 24316,
+      "sha256": "235de2ca41a77a336566fe08c83357c324580f92579faa8a76ec5f34296073d6"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2-960.webp",
+      "size": 42608,
+      "sha256": "9ede938249a06c5808ca4cc07cccf9e83425b7873c031024df49b88f1392b4fa"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2.png",
+      "size": 1633502,
+      "sha256": "4af73aa1a7efde055cc8b06ec34b56ebfda6c6ef2789118d328d0aacc7c7de7d"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-m2.webp",
+      "size": 1127042,
+      "sha256": "9ca9580cb906b5a5efdf8936ee44e331364782ed0fa85f885f4bb42e5bd0b2ae"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1-240.webp",
+      "size": 1774,
+      "sha256": "15a2c240dc8661a1444128a1ecb87cdb738b612e9148c4a336338caa3a414a89"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1-480.webp",
+      "size": 6324,
+      "sha256": "8d34a74268ba8d5ab7a747797a8c15b560179adde6ff0979ba09a25df3807d6e"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1-720.webp",
+      "size": 14754,
+      "sha256": "23e5d4c428b74557c072fe124481ee1ced9e8b22856bfaa4d625a976df85d1b4"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1-960.webp",
+      "size": 27552,
+      "sha256": "ec748072f8e9052b45711f2b83ad49ea8b0a615bf1cd70c03e03cbd2bafdf805"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1.png",
+      "size": 1918906,
+      "sha256": "67b9c079fbdc9ad39c25a9c097d275699c9889548aa39e478b15d1806d3c4b11"
+    },
+    {
+      "path": "images/product-art/models-v1/aqara-motion-p1.webp",
+      "size": 1410378,
+      "sha256": "5c8159db5bbe3f5ac9e96376910afaebb2aa5d2e039d8b7f8b58d656c5db53bb"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen-240.webp",
+      "size": 2334,
+      "sha256": "94ac4b2a18bff8cc8f5914fc320bd9d23ff209e29313c23c345fcec8c75e0f59"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen-480.webp",
+      "size": 8002,
+      "sha256": "f70f0f1064d32953f78f080a744c75114ce896c0b60aa0add39af9f2bc31ebc3"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen-720.webp",
+      "size": 17442,
+      "sha256": "e86fa68096931a73c1064d57b0e20b0789944d46cfdbf2f740c4bfb710f9f296"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen-960.webp",
+      "size": 31756,
+      "sha256": "d83f4e55b33f1412d8e6e6d7d068868d70aa679b1264fd2c38d594b33b13c01e"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen.png",
+      "size": 2064492,
+      "sha256": "62b7deb3f7c4176062413a1582f9103ab57e60beb34f24bb6eed7d65ea7a4412"
+    },
+    {
+      "path": "images/product-art/models-v1/arlo-essential-2nd-gen.webp",
+      "size": 1451844,
+      "sha256": "3b2061cbeeb63a93c493d926d61bcebaf379b8a45bae398751984923fcba801f"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock-240.webp",
+      "size": 4070,
+      "sha256": "654ec9bd9bff69128f41787cef775ab16c7980a03b969df33046cc0df10c7223"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock-480.webp",
+      "size": 14310,
+      "sha256": "2bec2a45f88d89b0b7f71b232620c73fe4748963dc75a9addce6ec11271f4628"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock-720.webp",
+      "size": 34682,
+      "sha256": "32f615559cd653eafa483daf852787f961edfe7584bb8d624b1c0c9d3efc3545"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock-960.webp",
+      "size": 63742,
+      "sha256": "ffde6ddbb4e79dc88cd4045cbee249d69373a0ebc631941a352a1bb7da6fca9b"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock.png",
+      "size": 2405621,
+      "sha256": "047acd2754b02a72da4ed7c16b4f794c05386281bb71144d329f5847a698d06d"
+    },
+    {
+      "path": "images/product-art/models-v1/august-wifi-smart-lock.webp",
+      "size": 1659208,
+      "sha256": "e4cfbfc3aa6507e50820a7385aeda2046eec0af63cd441ed316297f694af32d7"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4-240.webp",
+      "size": 2184,
+      "sha256": "5704ad59346bc45a0efd81da9a33848d56e1c17fb57e1b210b1837cad104585b"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4-480.webp",
+      "size": 7972,
+      "sha256": "82a4ad13868c7052f52aaff0d0d9dbfaaef109f6fb5547731342a15eb9b71b90"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4-720.webp",
+      "size": 17374,
+      "sha256": "9f20f5d110a1029f4a4069b89f0d0950d5c26ca97f4d5963837b4f11b176b60b"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4-960.webp",
+      "size": 34508,
+      "sha256": "6ac878799b97b150c31af4ee5ec6058c1482a586f1cc23434c70204272e516e6"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4.png",
+      "size": 2041096,
+      "sha256": "b03ec3c0488f48100eebb5db02c27dc006fa002203e8a695ed75fb97f224d804"
+    },
+    {
+      "path": "images/product-art/models-v1/blink-outdoor-4.webp",
+      "size": 1433358,
+      "sha256": "bbbfca9f6b84a10ec4f94b318d33c4c19e4f2960332b8bb733d26bc805dbe345"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen-240.webp",
+      "size": 7410,
+      "sha256": "631e6bcdd8714d4e30e4c63d64eceeb4d9cf4451118d7ba7a1b95a97e648de18"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen-480.webp",
+      "size": 31240,
+      "sha256": "c26e577616f30d5f9a833fd9baa03203de39a9478897698a7992d5c74f3c923d"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen-720.webp",
+      "size": 64826,
+      "sha256": "7ace5c348f4453ecfca92682b200e0c9209face62875296f67bd0814f013b4fe"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen-960.webp",
+      "size": 100350,
+      "sha256": "e2743cf8460402f0e8d37c128e864740073d3049122bce27ba8e23ecd5e025a2"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen.png",
+      "size": 1884904,
+      "sha256": "7b36785817e252f0563efeac31debe522fc4678325a5236b6147a25ba53fa0e8"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-dot-5th-gen.webp",
+      "size": 1255620,
+      "sha256": "fc6f87e5c30def3a375894ed9135164aa8e8daa5fef884144c73721bdfc33f93"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen-240.webp",
+      "size": 3414,
+      "sha256": "a9388e34483bc07411e3dd01520e59adfbb5df7ef513d0147bca5dace2028daa"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen-480.webp",
+      "size": 12178,
+      "sha256": "344e0aacbea593a7ea2d9640d167cedd27f306891cbde587b335648ff27fa4c2"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen-720.webp",
+      "size": 25442,
+      "sha256": "97655c1df5889b0053304cd69d82f9b889533f03e7450f9d063f5e190161bc3b"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen-960.webp",
+      "size": 42032,
+      "sha256": "faddcbce11b862d561bc5fa41ed9d37a87e441555ddd0337c685b047e38e24b9"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen.png",
+      "size": 1537541,
+      "sha256": "e0ecd17411cf716ca91bf9de8c27a86e680f72a89ecc2171470e9295537e14ca"
+    },
+    {
+      "path": "images/product-art/models-v1/echo-show-8-3rd-gen.webp",
+      "size": 1045636,
+      "sha256": "aa81482e059807dc4ab0d698c3960fff18a6ee4719332df4263db46fe59f5b9b"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium-240.webp",
+      "size": 3132,
+      "sha256": "ec898fad11f06fec1efad96bf258fbbce0361facae89dbacface3090d98a0225"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium-480.webp",
+      "size": 9180,
+      "sha256": "090fe002db841d4b42039f23463ad8d08a60309a73a9693295e279f7c08005c2"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium-720.webp",
+      "size": 18148,
+      "sha256": "2bdcf5ba43e39564a7aff4aad8782c4dc9492ebcdf2f31ba3514d8203969ae3d"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium-960.webp",
+      "size": 29980,
+      "sha256": "84562ae1ecddd95a847c2bbd754b4a632a2870c22005e4ed176f22e97cd38884"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium.png",
+      "size": 1911658,
+      "sha256": "26cd081ba70ad290881465107643207a4a85763ab6dcc39ad3ed4d36b2fc0ecc"
+    },
+    {
+      "path": "images/product-art/models-v1/ecobee-premium.webp",
+      "size": 1368856,
+      "sha256": "7b2c636fa0118d33d056400e170f1b1c3d66964373a3b78fd8457a3000a8a15b"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120-240.webp",
+      "size": 2780,
+      "sha256": "926617f6b860c0f67d852c8abba5d6d79ee1ebb88295fb4b23d01de5e7529150"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120-480.webp",
+      "size": 8432,
+      "sha256": "45a4dacfba048cb4cf9bb4ad1b20b36bbf7e5a600557274b5fb8b722459f97f8"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120-720.webp",
+      "size": 16322,
+      "sha256": "86a1c1cf82ddc861f3a1198beda5dccae8c02bfbd1e705199b067a7ac033c668"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120-960.webp",
+      "size": 26290,
+      "sha256": "cf3e8e17529ebbfeeb09ccf77027b589a0f10f5c19c7ab631224e7cc2f472176"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120.png",
+      "size": 1369921,
+      "sha256": "d1b95d02459d68ed5b9509d33f31b30f060da782bbe8999e30f0befeb506cadf"
+    },
+    {
+      "path": "images/product-art/models-v1/eufy-c120.webp",
+      "size": 916192,
+      "sha256": "38bb403c9d9722908c3a7b39ff9e7064b7889b766afa0127e8dafe468d3771ad"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c-240.webp",
+      "size": 4158,
+      "sha256": "374f710ee087e7b460d3671eb6077b7002343bac1a6b59a11606a858ca7b8615"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c-480.webp",
+      "size": 12934,
+      "sha256": "e238199c65ead52ec7841c369bc871981104fb5167e11e2dbfdfbfad465303bb"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c-720.webp",
+      "size": 24920,
+      "sha256": "7681f7e981872154322f0d96c1e2643bcd474bf7e095d30c971c9de259f1c8f4"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c-960.webp",
+      "size": 39630,
+      "sha256": "75db2ac0166b0a4900eb66497b0d4039b3864d1bb6f58349fbca0a6686ee67e6"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c.png",
+      "size": 1576379,
+      "sha256": "088ab9842b1dec916d69064730a6a2fe3957c125fb4ded4bff035b50c462d2d6"
+    },
+    {
+      "path": "images/product-art/models-v1/govee-h617c.webp",
+      "size": 1082398,
+      "sha256": "59b007ac82c1d925ce3f396b93987b5950626564ecc419838f0ba66b80cbea61"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918-240.webp",
+      "size": 3124,
+      "sha256": "bb80e606c4953f9d1d330e84370f3acc9c7f8b369be0c4ff3a8e3e46d3091d2c"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918-480.webp",
+      "size": 8822,
+      "sha256": "cce1655f681906560d89a8b65f4511b71d02522aa49a040ba46ed76e1731abb2"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918-720.webp",
+      "size": 16694,
+      "sha256": "37f17e618719a8bc12208175c86eae6dd43e8ca2657af2c57f3c251037856372"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918-960.webp",
+      "size": 25966,
+      "sha256": "43b2178429991309f159a92b7819b284aea9500512fd39e4e1384771c9770829"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918.png",
+      "size": 1339706,
+      "sha256": "59d9670a36a89014a5390f91ec0c3107aaf2031108c748637ad2ae69bde49550"
+    },
+    {
+      "path": "images/product-art/models-v1/hue-562918.webp",
+      "size": 949186,
+      "sha256": "4bdbc837eed21f05bb7df90b2cc065ec614c15600e895956c7bc361da56f3ac5"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10-240.webp",
+      "size": 1528,
+      "sha256": "2aac2164afbe5bf0aa796120f231c2a39cd4efb197cadeae04dedc91c79c1751"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10-480.webp",
+      "size": 4316,
+      "sha256": "15069402506014b5506bdf6445dd23ffcfc7f1829ba0d57dcae895264ef86b04"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10-720.webp",
+      "size": 8316,
+      "sha256": "ba62a7331a394d7400057f7771c0b0662bb1018d4b7da9c0885041458d811952"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10-960.webp",
+      "size": 13250,
+      "sha256": "762e30505eda5e5f4462b6b313cb4f9b5bf6fb28832f8c92ad68988d4e13ac9b"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10.png",
+      "size": 1166515,
+      "sha256": "abc5955159e9829ad96b4f92e2305498202a0db00c666221197eef8586528b4a"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-ep10.webp",
+      "size": 828806,
+      "sha256": "1619790cebfdaec767d4a3beba94d5d011ef1c3d601ef36ee4dfda2cf24ad8c6"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200-240.webp",
+      "size": 962,
+      "sha256": "c025402b323352d696b7d327c1b025e96d5f5edddb05158ca7702a1928790d76"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200-480.webp",
+      "size": 2714,
+      "sha256": "643215eeeda44cbd1d3f94c03b49b68875697f6153485e6c46de66ed366fa684"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200-720.webp",
+      "size": 5758,
+      "sha256": "0e0d7fdd3184e2da0182fe5cf85f40a2dba088a7583841fcd3ae76cb8c554478"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200-960.webp",
+      "size": 9382,
+      "sha256": "ca32c372020bd179fd1593f341bef10402d2a438bb28faebd0c3a6f370ac4cc0"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200.png",
+      "size": 1192308,
+      "sha256": "5280aca573452fac1327ecaae6a6b75821487f15acf33508de01f0a2c8314d27"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs200.webp",
+      "size": 824232,
+      "sha256": "a53eb5f96e166430332ee9197a69e5e1f4a06bf684fd9796af146f1e4b2348fa"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220-240.webp",
+      "size": 1000,
+      "sha256": "9fddfc9347ead2e1a1bcdd7b52552949b45548c532062f23436b69e5599be430"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220-480.webp",
+      "size": 3266,
+      "sha256": "20a9d7805c4e8c6ba0e505a1ce8d1456d222b5bae83dae3b9cdc2dc167bc4757"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220-720.webp",
+      "size": 6706,
+      "sha256": "7ba4a15f464956195d6c03fb6c798baa7ad9691c2c203a1b085ff39d1d00a44e"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220-960.webp",
+      "size": 10914,
+      "sha256": "96b2650a1a3cd440daee01c63f1bc7da6e29f48521410b3eced5561275b0ae1b"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220.png",
+      "size": 1380555,
+      "sha256": "ab86bc0e966e1b1894b11e1d62fec881cbdfbdbc1007014d499f7b4328a16192"
+    },
+    {
+      "path": "images/product-art/models-v1/kasa-hs220.webp",
+      "size": 909834,
+      "sha256": "72d5303ab5509f594ed3fea024d80ab36a457690ac5afead51017db22532951e"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s-240.webp",
+      "size": 7118,
+      "sha256": "8bfe67430164423ad7fad308b5f5896c78140576574482a7510e140c2516ed12"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s-480.webp",
+      "size": 23174,
+      "sha256": "617b4b355f55e2fca77dbbf56ff52f66bcd04346e20b0dbbc9968007cac962b1"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s-720.webp",
+      "size": 40616,
+      "sha256": "23c6dbde248139e5223b8f446b968af142076f8e20a32a0ef77e4b3530931fde"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s-960.webp",
+      "size": 62568,
+      "sha256": "051d2451a3abc4380260943e683e960a23962fa0cdbe5023b23748f95ee6c292"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s.png",
+      "size": 2235892,
+      "sha256": "f291b3bd72f049af0427ed4f827d16152bb05f9895635b96c70f9e97e9cae10f"
+    },
+    {
+      "path": "images/product-art/models-v1/levoit-core-300s.webp",
+      "size": 1535136,
+      "sha256": "e6bcb3bda94a897fa37a3a4df39d947aa6b0a061adc4f8bd263c17500d45f629"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100-240.webp",
+      "size": 1894,
+      "sha256": "119c954d431a14838ad227dfd7d9f9ffe242e643ce3e840b47a3b6c114085501"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100-480.webp",
+      "size": 6496,
+      "sha256": "ee4670cedbea0718c44c3c604e1a45eae587fa389ec4491d2b55f75621cf2acf"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100-720.webp",
+      "size": 14760,
+      "sha256": "13f22055cb134d6f5dd645aa0c1eb6a4a339ff207feee7422ca763e2915b9070"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100-960.webp",
+      "size": 27424,
+      "sha256": "6dd8bb85104d3df5ccebe4b518ac5fa99cdda72a02a9cb85599df089e751f984"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100.png",
+      "size": 1910586,
+      "sha256": "6e06fca66dc9303e5d038cf11954b04656d9f10521236b8c326b0d941000b9c4"
+    },
+    {
+      "path": "images/product-art/models-v1/meross-msg100.webp",
+      "size": 1416630,
+      "sha256": "87aff6411d349fa8a74dbc02db0d96dcec17af00eeea84ffb82d327470d37b07"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen-240.webp",
+      "size": 2202,
+      "sha256": "b21b226d189e07d7e7c4844b61d8c79754c7d442807470807ec538f2ccb49101"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen-480.webp",
+      "size": 8840,
+      "sha256": "2143e31cbbfde9d747a000fa0526b30810f87705ca47c99211f4ec4d567fd57b"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen-720.webp",
+      "size": 18806,
+      "sha256": "1959ed162779208949e0b88dc210cac8d2ebf66d2e9ee2c4f1dc548087450a73"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen-960.webp",
+      "size": 30862,
+      "sha256": "14d3d23ca4f4131a9a4d859e09e153b426d74b297c68e438553ae4c225ba567d"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen.png",
+      "size": 1367888,
+      "sha256": "1220d48583a7181516a90b69a6773b14f1ae5328f45ca5b4b66fb636524ab059"
+    },
+    {
+      "path": "images/product-art/models-v1/nest-hub-2nd-gen.webp",
+      "size": 962022,
+      "sha256": "dba39dc2db9a3d8c8fd9d270e0d479073737bb1e5c9eb4d4a1f25ed1250dbb5c"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired-240.webp",
+      "size": 2200,
+      "sha256": "981ab22df68456db951eefbcec48fc080101502508a18c06101cb1de88d98963"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired-480.webp",
+      "size": 7184,
+      "sha256": "0eaf46a884f4435748fa99e1351897a0bf79f94b9aa34ca4ccd54ebddeb9cce5"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired-720.webp",
+      "size": 14800,
+      "sha256": "fb17cb777b4c5b56880b602aab462b256cc68c2641c8748992066641bca17976"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired-960.webp",
+      "size": 25000,
+      "sha256": "fca226fc007a895d8d297563cd9641a9ec072fb857d2e73d24f2132e4782b233"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired.png",
+      "size": 1371106,
+      "sha256": "a377cf585ed39acecc43116f49ead923ed4614cbe6db34d494a0e72f4c36d272"
+    },
+    {
+      "path": "images/product-art/models-v1/ring-video-doorbell-wired.webp",
+      "size": 912016,
+      "sha256": "f52f7bc07f5d60793c6547efd21ada031fc01d3bf965ae581b25362325c4c6f3"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus-240.webp",
+      "size": 3656,
+      "sha256": "7009e37e8855f1c2dde346a414182bf68c79d5df45f6f16de3b6fd9d5a3e102e"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus-480.webp",
+      "size": 14426,
+      "sha256": "eee027fb4ea9a38c986b9e130e76b097a139945b935b78868a289fe8303a945d"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus-720.webp",
+      "size": 33514,
+      "sha256": "e319212a504db8c77a22c1ecec4bc36648da1ba8a89742b487583f8345c7142c"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus-960.webp",
+      "size": 55560,
+      "sha256": "75ad9c6287c6b5cd6247a8e350b43601dc9ec1600f6b22b355716397fc75e84e"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus.png",
+      "size": 1932042,
+      "sha256": "90636cd4304b39ae4009577977591bbe6968e1713ce5dba249e401f8472fd2a5"
+    },
+    {
+      "path": "images/product-art/models-v1/roborock-q5-plus.webp",
+      "size": 1248566,
+      "sha256": "782ef31cbadd5df360adc76a8164921cb166163be4543fd7d7cf9c627a95b623"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus-240.webp",
+      "size": 3972,
+      "sha256": "bc7d9f3be7db909386f8b3924762b34e722de0a1af6360e5063b16eadf62b2a5"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus-480.webp",
+      "size": 12958,
+      "sha256": "3813f47ccd740e3ba9dbf058850813e82ecf2738cdba4a82134dbe0a39f3ee06"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus-720.webp",
+      "size": 29442,
+      "sha256": "be03d4abb383b2e52250d8b0c81995a7982bb4c0e8852313d270e314b37c7736"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus-960.webp",
+      "size": 51764,
+      "sha256": "180b6ee674fb95fbde61980fcf1c76bb70a68b2a91d6e625eef9fb9052f5e7ea"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus.png",
+      "size": 2173389,
+      "sha256": "444747bccc36dae6b29b225fd43b455b7f73fc2b6e0983d003e07cfbaec3978f"
+    },
+    {
+      "path": "images/product-art/models-v1/roomba-j7-plus.webp",
+      "size": 1510510,
+      "sha256": "7acaacfce3a747208ce9ef69e0c79c45baf67e06a91108ebfd4e51ddbd3d53cf"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century-240.webp",
+      "size": 3062,
+      "sha256": "bca4a9914b4a6d964be52631220d76ea5b29d475f9c84fd61acab5ec0cf3cf00"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century-480.webp",
+      "size": 10020,
+      "sha256": "85015f2e2e1fd9f7c83e2e4dd963c79e338f3ea81e33b91ddf0d6b1954188d19"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century-720.webp",
+      "size": 22366,
+      "sha256": "ad6ba55494fb377700fbf81d1e1e231d51c0970f927b3a0e2eb59efb1f9184a1"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century-960.webp",
+      "size": 39844,
+      "sha256": "dd635bb30e4a79882bcd79f6c2e950f380530301e60313bc7c045d939d776339"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century.png",
+      "size": 2051809,
+      "sha256": "c97d5067c0f64736793b4c4bc126b32401c373cb4569e0dd07f0fc63f596530f"
+    },
+    {
+      "path": "images/product-art/models-v1/schlage-encode-century.webp",
+      "size": 1416020,
+      "sha256": "c85adc2fdce52b25d3138ef4d837485f5046a57f427d3348796f9835ffd166e8"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt-240.webp",
+      "size": 890,
+      "sha256": "e4a8b0deeac97dad1da78af4229fd8c9522dd59c22bce88775831c3cb02fcca7"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt-480.webp",
+      "size": 3022,
+      "sha256": "9373388a042b794c4b66685e9874f292be42db63868ca061ba5485ef95bf989d"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt-720.webp",
+      "size": 6770,
+      "sha256": "2feb7ad7b63d73c08c6608452957c54e48522b6c60e48b0164218a26a993951e"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt-960.webp",
+      "size": 12484,
+      "sha256": "266863558fee21cde45a0d44f9f017c5e849779bf296c31bf9cdcd6c7935c575"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt.png",
+      "size": 1783330,
+      "sha256": "f3627db5a1e5d81780c98e7e7aa192faa35628640e1dab9de6d386ac79a073df"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-blind-tilt.webp",
+      "size": 1268150,
+      "sha256": "0bcaa7fa185a456b4ce74b70c8842670dbda020ba0760ac721025c505a3d7ea1"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2-240.webp",
+      "size": 2592,
+      "sha256": "455efe7585f098b06dab8286e4a3b2ad8a6b376fa26aa89b1cfec26b7ff34d3d"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2-480.webp",
+      "size": 8542,
+      "sha256": "38ab79b2beff51e2aae06f42a0cafc92bddf7cdca78a443bb3115ddd290c346f"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2-720.webp",
+      "size": 17552,
+      "sha256": "20d6f77847914f0187bd03e946d0ca288573d37dc88380685d219dafee65288b"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2-960.webp",
+      "size": 31136,
+      "sha256": "1efe2931c32f2d0070de7041ebb1e02ffa7b0172590031b7dc92b711f03d5561"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2.png",
+      "size": 1924090,
+      "sha256": "2d52144b4aaf14a621e96f76dda689e460203bf3b75f168a0e242bf00d91c6e1"
+    },
+    {
+      "path": "images/product-art/models-v1/switchbot-hub-2.webp",
+      "size": 1416552,
+      "sha256": "6dcf07ebdbc2b1ff641948686edb1c41244ea24aea72fbb3590c060eec4ba46f"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120-240.webp",
+      "size": 2936,
+      "sha256": "843b6a1579dba9b220747bdb8173c5359dd736fc1df065432af822b05a419f75"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120-480.webp",
+      "size": 8770,
+      "sha256": "7ac7af1eb89852f0bee27b5a0f088697b56045b4603a0b0434a2ad5c2078141c"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120-720.webp",
+      "size": 18036,
+      "sha256": "b00ac0f453757b94002c65c452b02eaf21e1c47d7411fde7f1d3fe42378e6aa2"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120-960.webp",
+      "size": 30036,
+      "sha256": "1cd65d7cafc32684677148a4851b4b3272bf6e513494e282b5a939d39e2ad952"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120.png",
+      "size": 1899637,
+      "sha256": "a3301b1bba5b5a258ea364246953919a29e3e3b21002793f59be552589380eac"
+    },
+    {
+      "path": "images/product-art/models-v1/tapo-c120.webp",
+      "size": 1329696,
+      "sha256": "52d98ed3a2cbfbf3cd8953aa5fb9070f320c44bc5462bde8b71bfaa127593b20"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color-240.webp",
+      "size": 1896,
+      "sha256": "185ba659ec44a77ff700d62ee4fb5b34b04821d25fa2ac83506b58ffe579e1c5"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color-480.webp",
+      "size": 5802,
+      "sha256": "e19103ffef2b7caa4e9385d2c7adc10443e135e146adef9681a8fff202d7aacc"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color-720.webp",
+      "size": 10962,
+      "sha256": "bdff4f2144a13c1e5ba389f337acd96214f1141e5503d11aaf884f701adac850"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color-960.webp",
+      "size": 17926,
+      "sha256": "8b2dcb1011c03c9ac14affba7effd4b2269316a4cc11e0c3449f83e4e45e3c7d"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color.png",
+      "size": 1193523,
+      "sha256": "c20ebb1dc3ef61c20cae77664197625a0498765db3b5653ee4ff6a5d564f5dbd"
+    },
+    {
+      "path": "images/product-art/models-v1/wyze-bulb-color.webp",
+      "size": 782562,
+      "sha256": "3b950ad8b922fd3273be19c36ca59a6a2354606d974720d0ddc59b20b50fb434"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed-240.webp",
+      "size": 4526,
+      "sha256": "f2d92b06dc3d8262d19ac6168dc67449af77742eca8dac332521454c90dedf53"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed-480.webp",
+      "size": 13392,
+      "sha256": "746dce369d0d7a164925dd5fdbaa294ca7f504a7a41f20b5792274c87940faf0"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed-720.webp",
+      "size": 26884,
+      "sha256": "aad35d2bf0bda4e80d8cf0bc5f60d7588add892724fd8d42faa0d0ec260eb49a"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed-960.webp",
+      "size": 44124,
+      "sha256": "1d7b2f840802aa12dc4e44cceb0e61e302f8d882e71ab21ba64351ff82ea8e1d"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed.png",
+      "size": 2123498,
+      "sha256": "d240598a73948bb5219a82cd1dda6b7a622459551d279b5782145783c5b9c6a5"
+    },
+    {
+      "path": "images/product-art/models-v1/yale-assure-lock-2-keyed.webp",
+      "size": 1474096,
+      "sha256": "ec9034e1b078d705c8da71d304340d05499a71cef4c9e76a4a2458c3654158bf"
+    },
+    {
+      "path": "images/product-art/robot-vacuum.svg",
+      "size": 1394,
+      "sha256": "830a539109ecf390c63ba101abd7125589fb0054908b19df77ee8b6f46bf9cbd"
+    },
+    {
+      "path": "images/product-art/security-camera.svg",
+      "size": 1336,
+      "sha256": "ed4965b8c3383ab8f2d79a6ab7e72ec86dad9e913ae8d98a908eb278b0c9945a"
+    },
+    {
+      "path": "images/product-art/smart-display.svg",
+      "size": 1329,
+      "sha256": "8b0c0eab84410b9a3ec2d346355db2c0444a3c25cab5eab260291153c1a7fe93"
+    },
+    {
+      "path": "images/product-art/smart-home-device.svg",
+      "size": 1316,
+      "sha256": "04938d81fb6475e50f737cf9d74de36342c93febdea62eb030493f5ab1cbce2d"
+    },
+    {
+      "path": "images/product-art/smart-hub.svg",
+      "size": 1390,
+      "sha256": "f51ca3796b741ee946f576e0d1d0707bf527f0046f384b12cf0166c5274bd729"
+    },
+    {
+      "path": "images/product-art/smart-lighting.svg",
+      "size": 1384,
+      "sha256": "fb321448396606082bf560aef3dc551f9444808767ab0429c25cedf47b8f7e1d"
+    },
+    {
+      "path": "images/product-art/smart-lock.svg",
+      "size": 1313,
+      "sha256": "4ecda4285ae715a80158b78b6f89e2ae99242f8a763add65a889ceeea3830d85"
+    },
+    {
+      "path": "images/product-art/smart-plug.svg",
+      "size": 1338,
+      "sha256": "8976c40f874d6af861edf465b13eb794bd3c3ac1b61204ebd40d7e9059cc6f9e"
+    },
+    {
+      "path": "images/product-art/smart-speaker.svg",
+      "size": 1342,
+      "sha256": "c90026898a2897a7a1000ab81b7336ee8da1ba23521b002e1252dfbbe6a0de95"
+    },
+    {
+      "path": "images/product-art/smart-thermostat.svg",
+      "size": 1362,
+      "sha256": "c37be2b1de3c1596d9d5f0aa3e6e4f0cf674e17342b3f84fe52439efba2a982a"
+    },
+    {
+      "path": "images/product-art/video-doorbell.svg",
+      "size": 1313,
+      "sha256": "e7b317f81dfb004286ac12d1cd3edf056867283e1bcc96870f66931c922ed206"
+    },
+    {
+      "path": "images/product-placeholder.svg",
+      "size": 447,
+      "sha256": "f55618419b1fbe66d1f7f0f0b5b0a204dbb7321ab5692f2d5cec573a9b9c0b6a"
+    },
+    {
+      "path": "images/quiz-qr.svg",
+      "size": 6550,
+      "sha256": "11d3c7fda30a512913e21d52bd142a39cd5a6e92558e4f165dfc643259bba558"
+    },
+    {
+      "path": "index.html",
+      "size": 218117,
+      "sha256": "8e050d990e26348c8e349c18d8d8e9dad264940159a9a8c25b8c288fdaa8a88e"
+    },
+    {
+      "path": "llms.txt",
+      "size": 567,
+      "sha256": "8fe85f5c76e2efc654dce14aee8a1b1673ecd7a0f4f923afad6e4b2781e05b7d"
+    },
+    {
+      "path": "opensearch.xml",
+      "size": 496,
+      "sha256": "76b3f507029f41cd2c396adfab9a16844d125865a931065ad759cc30ae5c93f6"
+    },
+    {
+      "path": "preferences/index.html",
+      "size": 140862,
+      "sha256": "1cb1213f0700014a7e71cd598357c71af7c21fc8fb1d3100c57feec3d77016e3"
+    },
+    {
+      "path": "privacy/index.html",
+      "size": 140043,
+      "sha256": "8233e633ccc5b1a74567c6dc43a8fcfaa23bfa1142df48cc2cfa01d26ca18b32"
+    },
+    {
+      "path": "product/aeotec-smartthings-hub/index.html",
+      "size": 173492,
+      "sha256": "493ad28b0c2d32b9883b10c8f1946a1f1090a5585bd68c6ad752346a80d62ea9"
+    },
+    {
+      "path": "product/amazon-smart-thermostat/index.html",
+      "size": 167613,
+      "sha256": "932b130f2f08458e7d663bce6f60dfb307800080474d91ce6e486c14f56a1fd2"
+    },
+    {
+      "path": "product/aqara-hub-m2/index.html",
+      "size": 172579,
+      "sha256": "4dc79d5233c07c6783a1c5a85428a383055c5d581962c2b2f0a590718206349f"
+    },
+    {
+      "path": "product/aqara-motion-sensor-p1/index.html",
+      "size": 164857,
+      "sha256": "11f66234d5637822c70a29901d359b315ca61a5959b146c57a2c33eec8ab0c18"
+    },
+    {
+      "path": "product/arlo-essential-outdoor-camera/index.html",
+      "size": 178226,
+      "sha256": "05e2677d95a6109490cff1314c39e5168c2b0aa7870825b0f13fbab84fd241f2"
+    },
+    {
+      "path": "product/august-wifi-smart-lock/index.html",
+      "size": 172447,
+      "sha256": "2ee184321dda5bbf159c0398c57c077774012236b0f8d5a72b20a922d1bfd7f6"
+    },
+    {
+      "path": "product/blink-outdoor-4/index.html",
+      "size": 176662,
+      "sha256": "f6e0d587037b591cab23f38a584172fc60cd75afdc103311e39f8457f6e23fde"
+    },
+    {
+      "path": "product/echo-dot-5th-gen/index.html",
+      "size": 162615,
+      "sha256": "79e45cabd44cafda15af443579774a17d67ae2b0a4f441c44cc8e693f489a90e"
+    },
+    {
+      "path": "product/echo-show-8-3rd-gen/index.html",
+      "size": 169019,
+      "sha256": "9cbe581fc10b30f06ce33ec7bc10caa5051daf4d8e1c1ebe3c03a71a1c4acb3c"
+    },
+    {
+      "path": "product/ecobee-smart-thermostat-premium/index.html",
+      "size": 167623,
+      "sha256": "c7c3bbee428d19ca95c350d5496d946ddde847d9cfeeaa209211ec51754c6419"
+    },
+    {
+      "path": "product/eufy-security-indoor-cam-c120/index.html",
+      "size": 177660,
+      "sha256": "17e18118209d6dcd098c4d391a4790db79ffb05642629e1fca10a2a457cec17a"
+    },
+    {
+      "path": "product/google-nest-hub-2nd-gen/index.html",
+      "size": 168016,
+      "sha256": "10bd768fb578014dd0b433f0492dfaae98da3736ed5b2910105d61c151cba284"
+    },
+    {
+      "path": "product/govee-rgbic-led-strip-lights/index.html",
+      "size": 183769,
+      "sha256": "538e7cbd208b57f457e84c91aa3654383f036aedfdc3dd4f1260b04ad8bf5ffb"
+    },
+    {
+      "path": "product/irobot-roomba-j7-plus/index.html",
+      "size": 167531,
+      "sha256": "97d59f3397ada12ad4ffc68ff0e1d9c9e2a0bc30fd1997c90fcd71cb45312f50"
+    },
+    {
+      "path": "product/levoit-core-300s-air-purifier/index.html",
+      "size": 163077,
+      "sha256": "0c73c846e33081441cd3e1f6793a92cb2989c0d353b5d833df410f82bdd9665b"
+    },
+    {
+      "path": "product/meross-smart-garage-door-opener/index.html",
+      "size": 164860,
+      "sha256": "f46986b3af636b499a98fd56f1d1d9802f89c661269ef818056faefaabcd3a02"
+    },
+    {
+      "path": "product/philips-hue-white-color-starter-kit/index.html",
+      "size": 184505,
+      "sha256": "a1e0d18aee5afbeee4c47aa6010eb2f8f53aad541d24018982f4cf1b1e4f3f24"
+    },
+    {
+      "path": "product/ring-video-doorbell-wired/index.html",
+      "size": 164239,
+      "sha256": "b7e98895bed97bea612e189001d5456212c5aabdf87f3c7a5970b7644b980f6f"
+    },
+    {
+      "path": "product/roborock-q5-plus/index.html",
+      "size": 168013,
+      "sha256": "d3ddd788cf2888bb4114c39d24e2a1ed220ed8cd0a15a293a9da1c32aa4c4555"
+    },
+    {
+      "path": "product/schlage-encode-smart-wifi-deadbolt/index.html",
+      "size": 174215,
+      "sha256": "7444213830a0f28646b70bc166cd8e36bcf253282ae6b94e52ed73d0cb753352"
+    },
+    {
+      "path": "product/switchbot-blind-tilt/index.html",
+      "size": 166667,
+      "sha256": "286234c321bf615a0e38ba399a368235ba8c2e9c7213b68140aff82dd36d2fc5"
+    },
+    {
+      "path": "product/switchbot-hub-2/index.html",
+      "size": 172858,
+      "sha256": "5ebf39aa913c5dc15c4ff3156c4c25838085d4c8c46c400318af107f5857bc5d"
+    },
+    {
+      "path": "product/tapo-c120-security-camera/index.html",
+      "size": 177338,
+      "sha256": "c8bfe375851f0fac89124b83291e0c2aab673c7eda4639eb2e144afdc93b002d"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-dimmer-hs220/index.html",
+      "size": 181285,
+      "sha256": "409b840ad4d2ec53963d002973e63824deb090da2064ca1bc4b8b193fd4b5b83"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-light-switch-hs200/index.html",
+      "size": 181176,
+      "sha256": "f1ba78a44a5c54ad5fe01ab912358b4066dfc7f828f7f6c7e66c31dc7c2ac10a"
+    },
+    {
+      "path": "product/tp-link-kasa-smart-plug-mini/index.html",
+      "size": 164970,
+      "sha256": "ddb4b186c725e39761962e0cfabb4140d972bb6bdf3c34ce1af4d7f9fbd6ad27"
+    },
+    {
+      "path": "product/wyze-bulb-color/index.html",
+      "size": 181821,
+      "sha256": "78f2c0088078b5a80dba38e283b147742d129da28e8c35c60be1dbd86e2bd7ea"
+    },
+    {
+      "path": "product/yale-assure-lock-2-wifi/index.html",
+      "size": 174270,
+      "sha256": "fc4f80a892c1221169b37b2a92641aececc62586904417f0def1c3ecd3207ea8"
+    },
+    {
+      "path": "products/index.html",
+      "size": 307668,
+      "sha256": "e7cc80b7afd6619fac6be17ab192cab95bfff3a913d4f631c6f99b4a6c5aae01"
+    },
+    {
+      "path": "quiz/index.html",
+      "size": 198475,
+      "sha256": "a8e0ff908411dc75fe6c4edb57721ee7eb9f793b71feca593542b0f20dd073af"
+    },
+    {
+      "path": "release-environment.json",
+      "size": 139,
+      "sha256": "e26fc30438a9aa0cb474169fbe482eba245d5cda9004bd1fe4ea230ed2854227"
+    },
+    {
+      "path": "review/aeotec-smartthings-hub-review/index.html",
+      "size": 165627,
+      "sha256": "f0a82bfd1f54e7aa59b6781eba74ca481c1d4497b2c4c7edd20b07c5b62310ac"
+    },
+    {
+      "path": "review/amazon-smart-thermostat-review/index.html",
+      "size": 160126,
+      "sha256": "87d1c4552db691fff96f319885b809d3ce8b22ea00507d99ad6e7cbc50f3e9d5"
+    },
+    {
+      "path": "review/aqara-hub-m2-review/index.html",
+      "size": 164904,
+      "sha256": "59574c80e7f0ab80999e220bff36b99cb98ab794141ef3f17b25550e5bf9caba"
+    },
+    {
+      "path": "review/august-wifi-smart-lock-review/index.html",
+      "size": 164951,
+      "sha256": "08efccc47a146c5e611d764f088cce62455a728d1217cbe3994d0154c2c826f6"
+    },
+    {
+      "path": "review/blink-outdoor-4-review/index.html",
+      "size": 169155,
+      "sha256": "f378b9851da21714a4318ad991789081eb4b1fa13ba03fa68f157fd1cd33fd7c"
+    },
+    {
+      "path": "review/echo-dot-5th-gen-review/index.html",
+      "size": 155355,
+      "sha256": "24e24be7ec3209c2627bf0b4eb211d105720e2b315967e30c1f8b27eccc3ae89"
+    },
+    {
+      "path": "review/ecobee-smart-thermostat-premium-review/index.html",
+      "size": 160065,
+      "sha256": "7fe091d406e59347f30b133e5cc921bf8b2cd1135a0f5de6ae18d1dee2f18f61"
+    },
+    {
+      "path": "review/eufy-security-indoor-cam-c120-review/index.html",
+      "size": 169326,
+      "sha256": "23eb58f5fc86e82cb2c6425f3fc75ad48885d857cd89ee6155d7e8c37a84f1c9"
+    },
+    {
+      "path": "review/google-nest-hub-2nd-gen-review/index.html",
+      "size": 160834,
+      "sha256": "3e9ad2a61aa8225574651c67ecb4c67453918a6180bbd58d95a0ef2943231194"
+    },
+    {
+      "path": "review/irobot-roomba-j7-plus-review/index.html",
+      "size": 161800,
+      "sha256": "85182f483cc0dc1535509c85ab641549111e1fbe2b448f4bdd2b62372eb02f5b"
+    },
+    {
+      "path": "review/philips-hue-white-color-starter-kit-review/index.html",
+      "size": 174510,
+      "sha256": "93adfcf455524eef66819a57ec1eac7b09b00584ef1765bf06b762150c16b9ca"
+    },
+    {
+      "path": "review/ring-video-doorbell-wired-review/index.html",
+      "size": 156461,
+      "sha256": "e660caf7e66d887d93dc02f30de725a434bcd3fe8bfc96a537c4cf991822873b"
+    },
+    {
+      "path": "review/roborock-q5-plus-review/index.html",
+      "size": 162348,
+      "sha256": "9ad5523a3a66974f288a7265df37c472267709232e4f721a14be95e0c1af59c8"
+    },
+    {
+      "path": "review/switchbot-hub-2-review/index.html",
+      "size": 165432,
+      "sha256": "eb1feb606ccfd0fc5b9837de6d616a76cf00d7e10845d30f624cb74b61392a52"
+    },
+    {
+      "path": "review/tp-link-kasa-smart-plug-mini-review/index.html",
+      "size": 156453,
+      "sha256": "3f04011f0a5cc97ffafccf3f2ade73f961d36e8e7778086578a77065cb890822"
+    },
+    {
+      "path": "reviews/index.html",
+      "size": 176939,
+      "sha256": "41c7f2a2cf57dc5ffc50f8593ed262a4f60411a8bac20c4a343ba2af881433b3"
+    },
+    {
+      "path": "robots.txt",
+      "size": 397,
+      "sha256": "45c90c4040ea1314bf74b9f21d8859dd28ba6979365eadedff67259b399b65eb"
+    },
+    {
+      "path": "rss.xml",
+      "size": 12870,
+      "sha256": "2b6ece6f6486558ca1b93f200ec0970f10b72030a58f5df442137376b7b68978"
+    },
+    {
+      "path": "search/index.html",
+      "size": 152007,
+      "sha256": "c40831c6c5838f3ec70bc3805d5463500eafdc9abd9dc9ffedead3d66425a8e4"
+    },
+    {
+      "path": "site.webmanifest",
+      "size": 408,
+      "sha256": "a6eb84659205ca082398f7291cb802ff0bca59ab2f5a81afbd21dafc491c9a94"
+    },
+    {
+      "path": "sitemap-0.xml",
+      "size": 6622,
+      "sha256": "4ad70dd11f539a22d59ffddde2da15acdc9f0ada804150c00cd4693d051898b6"
+    },
+    {
+      "path": "sitemap-index.xml",
+      "size": 183,
+      "sha256": "e7e7714278d602e86ac1738f0c363a4bdf430684eee083704f646f8a3c141e47"
+    }
+  ]
+}

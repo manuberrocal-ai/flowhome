@@ -1,0 +1,212 @@
+{
+  "checkpoint": "FH07H",
+  "initial": {
+    "observedAt": "2026-09-05T18:42:30.607Z",
+    "exitCode": 0,
+    "checksPassed": 507,
+    "checksFailed": 0,
+    "productCount": 28,
+    "widths": [
+      1440,
+      390
+    ],
+    "script": "C:/Users/manub/Documents/Codex/2026-09-04/f/work/fh07h-browser-check.js",
+    "checksPerProductAndWidth": [
+      "seven qualified compatibility rows",
+      "neutral labels without approval SVG",
+      "no duplicate spec rows",
+      "uncertainty explanation",
+      "existing model conditions retained",
+      "scoped service notice retained",
+      "metadata",
+      "no page or feature overflow",
+      "direct affiliate keyboard action"
+    ],
+    "additionalChecks": [
+      "200 percent CSS zoom reflow without page overflow",
+      "200 percent CSS zoom readable feature labels",
+      "No client exceptions"
+    ],
+    "detailRetention": "Initial command completed with exit 0; its returned JSON was truncated in the conversation display and was not saved in full. This summary records the executed fail-fast script and its fixed matrix, not reconstructed individual observations."
+  },
+  "supplement": {
+    "observedAt": "2026-09-05T18:43:58.305Z",
+    "checks": [
+      {
+        "name": "aeotec-smartthings-hub empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "amazon-smart-thermostat empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "aqara-hub-m2 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "aqara-motion-sensor-p1 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "arlo-essential-outdoor-camera empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "august-wifi-smart-lock empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "blink-outdoor-4 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "echo-dot-5th-gen empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "echo-show-8-3rd-gen empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "ecobee-smart-thermostat-premium empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "eufy-security-indoor-cam-c120 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "google-nest-hub-2nd-gen empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "govee-rgbic-led-strip-lights empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "irobot-roomba-j7-plus empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "levoit-core-300s-air-purifier empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "meross-smart-garage-door-opener empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "philips-hue-white-color-starter-kit empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "ring-video-doorbell-wired empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "roborock-q5-plus empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "schlage-encode-smart-wifi-deadbolt empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "switchbot-blind-tilt empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "switchbot-hub-2 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "tapo-c120-security-camera empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "tp-link-kasa-smart-dimmer-hs220 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "tp-link-kasa-smart-light-switch-hs200 empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "tp-link-kasa-smart-plug-mini empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "wyze-bulb-color empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "yale-assure-lock-2-wifi empty-alt candidates are hidden anonymous avatars",
+        "passed": true
+      },
+      {
+        "name": "Eight comparisons found",
+        "passed": true
+      },
+      {
+        "name": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/ shared formatter keeps qualified comparisons",
+        "passed": true
+      },
+      {
+        "name": "/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/ shared formatter keeps qualified comparisons",
+        "passed": true
+      }
+    ],
+    "observations": [
+      {
+        "slug": "switchbot-blind-tilt",
+        "style": {
+          "foreground": "rgb(51, 65, 85)",
+          "background": "rgb(241, 245, 249)",
+          "font": "13.6px",
+          "lineHeight": "20px"
+        }
+      },
+      {
+        "slug": "tapo-c120-security-camera",
+        "style": {
+          "foreground": "rgb(51, 65, 85)",
+          "background": "rgb(241, 245, 249)",
+          "font": "13.6px",
+          "lineHeight": "20px"
+        }
+      }
+    ],
+    "profile": "Supplement to initial 507 checks: triage 56 text candidates, inspect actual mobile chips, confirm eight comparison consumers. Same local-only browser context."
+  },
+  "totalChecksPassed": 544,
+  "scopeLimits": [
+    "Local-only network and anonymous state; no account, real image rights or production certification.",
+    "Positive graph paths are isolated fixtures in unit/integration tests, never installed in public runtime.",
+    "CSS zoom case is not a full assistive technology or seven-viewport release audit."
+  ]
+}

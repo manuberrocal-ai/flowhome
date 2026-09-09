@@ -11,6 +11,19 @@ const docs = [
   'BLOCK12_FINAL_REPORT.md',
 ].map(read);
 
+test('active runbooks share exclusive 24h freshness and no default historical permission', () => {
+  for (const name of ['BLOCK12_SLO_CATALOG.md', 'BLOCK12_RUNBOOKS.md', 'BLOCK12_90_DAY_GATE.md', 'BLOCK8_OFFER_TREND_RUNBOOK.md']) {
+    const doc = read(name);
+    assert.match(doc, /commercial-freshness-policy\.md/, name);
+    assert.doesNotMatch(doc, /price(?: freshness)?\s+7d|history\s+90d/i, name);
+  }
+  const policy = read('data/commercial-freshness-policy.md');
+  assert.match(policy, /strictly less than 24h/);
+  assert.match(policy, /Default historical retention permission is \*\*0\*\*/);
+  assert.match(policy, /never restore expired commercial values/);
+  assert.match(policy, /FH-16\/FH-18/);
+});
+
 test('documentation preserves separated evidence, connection, and pending gates', () => {
   const all = docs.join('\n');
   for (const phrase of [

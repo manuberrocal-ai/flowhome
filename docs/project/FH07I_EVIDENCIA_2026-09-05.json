@@ -1,0 +1,236 @@
+{
+  "checkpoint": "FH07I",
+  "date": "2026-09-05",
+  "status": "APROBADO LOCAL",
+  "observedAt": "2026-09-05T19:04:27.814Z",
+  "catalogPreserved": 28,
+  "totalCatalog": 28,
+  "hashes": [
+    {
+      "file": "src/lib/product-feature-evidence.ts",
+      "sha256": "02e4c706473d3bec0ad632d82cf690188b3c67110cda34a04684b15a68fc21e2"
+    },
+    {
+      "file": "src/lib/quiz-recommend.ts",
+      "sha256": "609dc13ce3524eb29503d1423ab91c813319e3fe2a6d82df7aa16d28c94d3333"
+    },
+    {
+      "file": "src/pages/quiz.astro",
+      "sha256": "530e9a70e088b28a9b4c98a6862f04c8bcde706eb068c7181e877e7bd581413a"
+    },
+    {
+      "file": "test/quiz-recommend.test.mjs",
+      "sha256": "651f78f6af4544b0446c3127ecef9c0b3af5eee7ee519c66b015ec72fb902356"
+    },
+    {
+      "file": "test/quiz-compatibility-evidence.test.mjs",
+      "sha256": "4abc1020fab57239b7d9f99506a82f9338d26300d9bb882c7bfc965b8e992a4a"
+    },
+    {
+      "file": "dist/quiz/index.html",
+      "sha256": "87744a9afa3467029b836327f185f67f9a74ebf4d21bee6541d4028c003eacb4"
+    }
+  ],
+  "validation": {
+    "initialRegression": {
+      "tests": 6,
+      "passed": 0,
+      "failed": 6
+    },
+    "directedInitial": {
+      "tests": 47,
+      "passed": 44,
+      "failed": 3,
+      "reason": "Old tests assumed raw flags were usable ecosystem evidence; synthetic fixtures and expectations updated explicitly."
+    },
+    "fullFinal": {
+      "tests": 688,
+      "passed": 688,
+      "failed": 0,
+      "skipped": 0
+    },
+    "typecheck": {
+      "files": 245,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 18
+    },
+    "lint": true,
+    "diffCheck": true,
+    "build": {
+      "passed": true,
+      "completedAt": "2026-09-05T19:01:37Z"
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "catalogMatrix": {
+      "ecosystemCombinations": 180,
+      "allPassed": true,
+      "existingPriorityCombinations": 675,
+      "allPriorityComparisonsPassed": true
+    },
+    "browser": {
+      "checks": 175,
+      "failed": 0,
+      "report": "FH07I_NAVEGADOR_2026-09-05.json",
+      "rounds": 2,
+      "harnessCorrections": [
+        "URLSearchParams unavailable in the CLI function environment; replaced with controlled query construction.",
+        "Security has no two plug-and-play documented candidates; tested its documented light-setup path instead.",
+        "Desktop tall-card crop initially included sticky header; final crop uses 1440x1800 viewport."
+      ],
+      "sourceCorrection": "Two existing orange quiz buttons failed text contrast and were darkened within the same palette; final functional and visual checks repeated."
+    },
+    "contrastBefore": [
+      {
+        "selector": "#quiz-submit",
+        "foreground": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "background": [
+          245,
+          73,
+          0,
+          255
+        ],
+        "ratio": 3.598655402228915
+      },
+      {
+        "selector": ".quiz-result-card [data-fh-amazon-cta]",
+        "foreground": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "background": [
+          245,
+          74,
+          0,
+          255
+        ],
+        "ratio": 3.5823906815038824
+      },
+      {
+        "selector": "[data-quiz-compatibility]",
+        "foreground": [
+          49,
+          65,
+          88,
+          255
+        ],
+        "background": [
+          248,
+          250,
+          252,
+          255
+        ],
+        "ratio": 9.898850149196257
+      },
+      {
+        "selector": "#quiz-ecosystem-notice",
+        "foreground": [
+          70,
+          25,
+          1,
+          255
+        ],
+        "background": [
+          255,
+          251,
+          235,
+          255
+        ],
+        "ratio": 14.465587811642001
+      }
+    ],
+    "contrastAfter": [
+      {
+        "selector": "#quiz-submit",
+        "foreground": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "background": [
+          202,
+          53,
+          0,
+          255
+        ],
+        "ratio": 5.223162711549741
+      },
+      {
+        "selector": ".quiz-result-card [data-fh-amazon-cta]",
+        "foreground": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "background": [
+          202,
+          53,
+          0,
+          255
+        ],
+        "ratio": 5.223162711549741
+      },
+      {
+        "selector": "[data-quiz-compatibility]",
+        "foreground": [
+          49,
+          65,
+          88,
+          255
+        ],
+        "background": [
+          248,
+          250,
+          252,
+          255
+        ],
+        "ratio": 9.898850149196257
+      },
+      {
+        "selector": "#quiz-ecosystem-notice",
+        "foreground": [
+          70,
+          25,
+          1,
+          255
+        ],
+        "background": [
+          255,
+          251,
+          235,
+          255
+        ],
+        "ratio": 14.465587811642001
+      }
+    ],
+    "textAudit": {
+      "files": 2,
+      "candidates": 3,
+      "triage": "Two hidden anonymous avatar images have intentional empty alt. Repeated Why it is listed headings label distinct product cards, not duplicate editorial sections."
+    },
+    "designDetector": {
+      "candidates": 3,
+      "triage": "Cross-element/hover utility candidates: gray Save/Details are not on the orange Amazon control; restart hover uses blue text on blue. Browser computed styles checked. Separate measured white/orange contrast issue was corrected."
+    }
+  },
+  "limitations": [
+    "No real compatibility provider installed; graph-positive tests use isolated synthetic fixtures.",
+    "Prepared metadata is evaluated at the adapter checkpoint; no new client-side graph expiry mechanism was added. Required before an active real provider (FH-20).",
+    "SmartThings filtering remains explicitly unavailable without direct evidence.",
+    "FH-07 remains partial 2/5 overall; 14 installation profiles documented, 14 unknown; identity, bundle, firmware and claims remain.",
+    "No account, deployment, external write or credential search."
+  ]
+}

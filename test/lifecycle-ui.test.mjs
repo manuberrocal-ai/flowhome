@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
+import { viewportCases } from '../scripts/qa/viewport-cases.mjs';
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('lifecycle UI is post-result, consent-explicit, fragment-only, and does not capture PII', async () => {
@@ -12,6 +13,8 @@ test('lifecycle UI is post-result, consent-explicit, fragment-only, and does not
   assert.match(client, /location\.hash/); assert.match(client, /history\.replaceState/); assert.doesNotMatch(client, /captureLifecyclePreference|isValidLifecycleEmail|email/i);
   assert.match(worker, /constantTimeEqual/); assert.doesNotMatch(worker, /request\.json|request\.text/);
   assert.match(worker, /expire_stale_lifecycle_claims/); assert.match(worker, /if \(finished\.error\) return json\(\{ error: 'unavailable' \}, 503\)/); assert.match(privacy, /data-consent-action="accepted"/); assert.match(privacy, /data-consent-action="rejected"/); assert.doesNotMatch(privacy, /data-consent-action="accept"|data-consent-action="reject"/);
-  assert.doesNotMatch(`${capture}\n${client}\n${worker}`, /console\.|dataLayer|trackEvent/); assert.match(qa, /preferences-\$\{width\}/);
+  assert.doesNotMatch(`${capture}\n${client}\n${worker}`, /console\.|dataLayer|trackEvent/);
+  assert.match(qa, /viewportCases\(/);
+  assert.equal(viewportCases().filter((item) => item.path === '/preferences/').length, 7);
   assert.match(marketMigration, /check \(market = 'US'\)/); assert.doesNotMatch(marketMigration, /\('US','CA'\)|\('US', 'CA'\)/);
 });

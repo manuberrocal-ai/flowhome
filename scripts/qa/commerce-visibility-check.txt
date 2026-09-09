@@ -1,0 +1,42 @@
+async page => {
+  const context = page.context();
+  const other = await context.newPage();
+  const protocol = await context.newCDPSession(page);
+  try {
+    await page.bringToFront();
+    await page.reload();
+    await page.evaluate(async () => {
+      const { mountProductCommerce } = await import('/commerce-product-presentation.js');
+      const asin = document.querySelector('[data-commerce-observation]').dataset.commerceObservation;
+      window.mounted = mountProductCommerce(document.body, asin, { enabled: true, endpoint: '/commerce/live', pageUrl: location.href });
+      window.visibilityEvidence = [];
+      document.addEventListener('visibilitychange', event => {
+        window.visibilityEvidence.push({ state: document.visibilityState, trusted: event.isTrusted,
+          empty: [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(node => node.textContent === '') });
+      });
+    });
+    await page.evaluate(() => window.mounted.refresh());
+    const before = await page.evaluate(() => ({ price: document.querySelector('[data-commerce-price]').textContent,
+      requests: performance.getEntriesByType('resource').filter(entry => entry.name.includes('/commerce/')).length }));
+    if (before.price !== '$123.45') throw Error('Missing initial synthetic observation');
+    // Remove the protocol's focused/active emulation for this isolated target only.
+    await protocol.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+    await other.bringToFront();
+    await page.waitForFunction(() => document.visibilityState === 'hidden', null, { polling: 100, timeout: 5000 });
+    await page.bringToFront();
+    await page.waitForFunction(() => document.visibilityState === 'visible', null, { polling: 100, timeout: 5000 });
+    const result = await page.evaluate(() => ({ events: window.visibilityEvidence,
+      empty: [...document.querySelectorAll('[data-commerce-price], [data-commerce-source], [data-commerce-availability]')].every(node => node.textContent === ''),
+      requests: performance.getEntriesByType('resource').filter(entry => entry.name.includes('/commerce/')).length }));
+    if (!result.events.some(event => event.state === 'hidden' && event.trusted && event.empty)
+      || !result.events.some(event => event.state === 'visible' && event.trusted && event.empty)
+      || !result.empty || result.requests !== before.requests) throw Error(JSON.stringify(result));
+    if (!await page.evaluate(() => window.mounted.refresh())) throw Error('Explicit recovery failed');
+    return { ...result, explicitRefreshRecovered: true, browser: await context.browser().version() };
+  } finally {
+    await page.bringToFront();
+    await page.evaluate(() => window.mounted?.dispose());
+    await protocol.detach();
+    await other.close();
+  }
+}

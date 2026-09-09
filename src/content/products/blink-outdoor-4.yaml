@@ -7,7 +7,7 @@ originalPrice: 159.99
 discountPct: 25
 category: security-camera
 affiliateUrl: "https://www.amazon.com/dp/B0B1N5HW22?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B0B1N5HW22.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/security-camera.png"
 ownerRating: 4.3
 ownerRatingCount: 39000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,37 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Blink Outdoor 4"
+identityEvidence:
+  model: "Blink Outdoor 4"
+  asin: B0B1N5HW22
+  claims:
+    model:
+      value: "Blink Outdoor 4"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Blink Outdoor 4 US requirements, power and storage FAQ"
+          url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Camera requiring a compatible Blink Sync Module"
+      conditions: "Module inclusion depends on the package and is not verified by this camera-family document."
+      sources:
+        - label: "Blink Outdoor 4 US requirements, power and storage FAQ"
+          url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Blink Outdoor 4"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Requires a Blink Sync Module, home Wi-Fi and setup in the Blink app. Check whether the exact camera bundle includes the module or whether you need one separately."
+    - "The standard battery option uses two AA 1.5 V non-rechargeable lithium batteries. Choose a mounting position and follow Blink's installation instructions."
+    - "Keep the port cover closed for weather resistance unless using Blink's weather-resistant USB-C power adapter; an ordinary uncovered connection is not equivalent."
+    - "Local recording needs compatible storage hardware: Sync Module 2 with a USB drive or Sync Module XR with a microSD card. Cloud storage and Person Detection have subscription or trial conditions."
+  sources:
+    - label: "Blink Outdoor 4 US requirements, power and storage FAQ"
+      url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +64,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 61
-roiApproved: true

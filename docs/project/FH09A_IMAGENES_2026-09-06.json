@@ -1,0 +1,285 @@
+{
+  "scope": "Browser decoding and source labels for 28 local profiles using real remote image requests. Does not establish model identity, rights, permission, or production performance.",
+  "records": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "src": "https://m.media-amazon.com/images/I/61tMoVGYglL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
+      "width": 300,
+      "height": 194,
+      "alt": "Catalog image for Aeotec SmartThings Hub; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:39.453Z"
+    },
+    {
+      "slug": "amazon-smart-thermostat",
+      "src": "https://m.media-amazon.com/images/P/B08J4C8871.01._SCLZZZZZZZ_.jpg",
+      "width": 313,
+      "height": 500,
+      "alt": "Catalog image for Amazon Smart Thermostat; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:39.698Z"
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "src": "https://www.aqara.com/wp-content/uploads/2023/04/Hub-M2-Zigbee-supported.jpg",
+      "width": 1423,
+      "height": 1292,
+      "alt": "Catalog image for Aqara Hub M2; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:39.995Z"
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "src": "https://us.aqara.com/cdn/shop/files/Aqara_Motion_Sensor_P1.webp?v=1728699321",
+      "width": 1200,
+      "height": 1200,
+      "alt": "Catalog image for Aqara Motion Sensor P1; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:40.295Z"
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "src": "https://m.media-amazon.com/images/P/B0DVNSQSD7.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for Arlo Essential Outdoor Camera; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:40.543Z"
+    },
+    {
+      "slug": "august-wifi-smart-lock",
+      "src": "https://m.media-amazon.com/images/P/B082VXK9CK.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for August Wi-Fi Smart Lock; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:40.811Z"
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "src": "https://m.media-amazon.com/images/P/B0B1N5HW22.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for Blink Outdoor 4; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:41.068Z"
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "src": "https://m.media-amazon.com/images/P/B09B8V1LZ3.01._SCLZZZZZZZ_.jpg",
+      "width": 313,
+      "height": 500,
+      "alt": "Catalog image for Echo Dot 5th Gen; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:43.108Z"
+    },
+    {
+      "slug": "echo-show-8-3rd-gen",
+      "src": "https://m.media-amazon.com/images/P/B0BLS3Y632.01._SCLZZZZZZZ_.jpg",
+      "width": 979,
+      "height": 741,
+      "alt": "Catalog image for Echo Show 8 3rd Gen; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:43.370Z"
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "src": "https://images.thdstatic.com/productImages/1b78d244-05c7-4fc9-9f91-063dedcbe16f/svn/black-ecobee-programmable-thermostats-eb-state6-01-64_600.jpg",
+      "width": 600,
+      "height": 600,
+      "alt": "Catalog image for ecobee Smart Thermostat Premium; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:43.607Z"
+    },
+    {
+      "slug": "eufy-security-indoor-cam-c120",
+      "src": "https://m.media-amazon.com/images/I/51M7meD33sL.__AC_SX300_SY300_QL70_ML2_.jpg",
+      "width": 238,
+      "height": 300,
+      "alt": "Catalog image for Eufy Security Indoor Cam C120; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:43.853Z"
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "src": "https://multimedia.bbycastatic.ca/multimedia/products/500x500/153/15303/15303231.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for Google Nest Hub 2nd Gen; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:44.094Z"
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "src": "https://cdn.shopify.com/s/files/1/0512/3489/8105/files/617F.png?v=1770881059",
+      "width": 3000,
+      "height": 3000,
+      "alt": "Catalog image for Govee RGBIC LED Strip Lights; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:44.774Z"
+    },
+    {
+      "slug": "irobot-roomba-j7-plus",
+      "src": "https://m.media-amazon.com/images/P/B094NYHTMF.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for iRobot Roomba j7+; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:45.037Z"
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "src": "https://m.media-amazon.com/images/P/B09BJMY8HL.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for Levoit Core 300S Smart Air Purifier; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:47.100Z"
+    },
+    {
+      "slug": "meross-smart-garage-door-opener",
+      "src": "https://m.media-amazon.com/images/P/B084Z5QZR2.01._SCLZZZZZZZ_.jpg",
+      "width": 383,
+      "height": 500,
+      "alt": "Catalog image for Meross Smart Garage Door Opener; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:47.334Z"
+    },
+    {
+      "slug": "philips-hue-white-color-starter-kit",
+      "src": "http://127.0.0.1:4328/images/product-art/smart-lighting.svg",
+      "width": 640,
+      "height": 480,
+      "alt": "Representative category illustration; not a product photo",
+      "decoded": true,
+      "caption": "Representative category image",
+      "observedAt": "2026-09-06T20:55:47.592Z"
+    },
+    {
+      "slug": "ring-video-doorbell-wired",
+      "src": "https://m.media-amazon.com/images/P/B08CKHPP52.01._SCLZZZZZZZ_.jpg",
+      "width": 313,
+      "height": 500,
+      "alt": "Catalog image for Ring Video Doorbell Wired; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:47.823Z"
+    },
+    {
+      "slug": "roborock-q5-plus",
+      "src": "https://cdn.pji.nu/product/standard/800/12935114.jpg",
+      "width": 517,
+      "height": 600,
+      "alt": "Catalog image for Roborock Q5+ Robot Vacuum; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:48.095Z"
+    },
+    {
+      "slug": "schlage-encode-smart-wifi-deadbolt",
+      "src": "https://m.media-amazon.com/images/P/B07HXMLCBT.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for Schlage Encode Smart WiFi Deadbolt; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:48.349Z"
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "src": "https://www.switch-bot.com/cdn/shop/products/switchbot-blind-tilt-564574_1200x1200.jpg?v=1720766063",
+      "width": 1200,
+      "height": 1200,
+      "alt": "Catalog image for SwitchBot Blind Tilt; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:48.626Z"
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "src": "https://m.media-amazon.com/images/P/B0BM8VS13P.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for SwitchBot Hub 2; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:50.753Z"
+    },
+    {
+      "slug": "tapo-c120-security-camera",
+      "src": "https://m.media-amazon.com/images/P/B0CH45HPZT.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for TP-Link Tapo C120 Security Camera; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:51.002Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-dimmer-hs220",
+      "src": "https://m.media-amazon.com/images/P/B079775ZZQ.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for TP-Link Kasa Smart Dimmer Switch HS220; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:51.239Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-light-switch-hs200",
+      "src": "https://m.media-amazon.com/images/P/B01EZV35QU.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for TP-Link Kasa Smart Light Switch HS200; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:51.484Z"
+    },
+    {
+      "slug": "tp-link-kasa-smart-plug-mini",
+      "src": "https://m.media-amazon.com/images/P/B091FXQQMQ.01._SCLZZZZZZZ_.jpg",
+      "width": 500,
+      "height": 500,
+      "alt": "Catalog image for TP-Link Kasa Smart Plug Mini; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:51.746Z"
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "src": "https://www.wyze.com/cdn/shop/files/wyze-bulb-color-wyze-labs-inc-733750.png?v=1762447654",
+      "width": 1000,
+      "height": 1000,
+      "alt": "Catalog image for Wyze Bulb Color; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:52.038Z"
+    },
+    {
+      "slug": "yale-assure-lock-2-wifi",
+      "src": "https://images.thdstatic.com/productImages/a1a306c9-bf7e-426c-820b-195ed60ce0f8/svn/yale-electronic-deadbolts-yrd420-wf1-619-64_600.jpg",
+      "width": 600,
+      "height": 600,
+      "alt": "Catalog image for Yale Assure Lock 2 Wi-Fi; exact model and package not verified",
+      "decoded": true,
+      "caption": "Catalog image — exact model and package not verified",
+      "observedAt": "2026-09-06T20:55:52.297Z"
+    }
+  ]
+}

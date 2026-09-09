@@ -9,17 +9,18 @@ import {
   resolveVariant,
   summariseIngestion,
 } from '../src/lib/blocks/block8/ingestion.ts';
+import { offerFixture, evidenceFixture } from './helpers/block8-fixtures.mjs';
 
 const NOW = new Date('2026-07-30T12:00:00Z');
-const freshIso = '2026-07-29T12:00:00Z';
+const freshIso = '2026-07-30T11:00:00Z';
 
 const baseCtx = () => ({
+  ...evidenceFixture(offerFixture({ price: 88, listPrice: null })),
   knownMerchants: [{ id: 'm1', authorised: true, market: 'US', currency: 'USD' }, { id: 'm_unauth', authorised: false, market: 'US', currency: 'USD' }],
   knownVariants: [{ id: 'v1', marketplaceId: 'B0FIXTURE01', marketplaceIdType: 'asin', market: 'US', currency: 'USD' }],
   existingSnapshotKeys: new Set(),
   existingOfferKeys: new Set(),
   existingTrendKeys: new Set(),
-  snapshotsById: new Map([['s1', { id: 's1', variantId: 'v1', merchantId: 'm1', price: 88, anomaly: false }]]),
   historyByVariant: new Map([['v1', [120, 115, 110]]]),
 });
 
@@ -31,7 +32,7 @@ test('buildIdempotencyKey is deterministic for identical inputs', () => {
   const k1 = buildIdempotencyKey('ps', ['v1', 'm1', 88, 'manual', freshIso]);
   const k2 = buildIdempotencyKey('ps', ['v1', 'm1', 88, 'manual', freshIso]);
   assert.equal(k1, k2);
-  assert.match(k1, /^ps:[0-9a-f]{8}$/);
+  assert.match(k1, /^ps:v2:[0-9a-f]{64}$/);
   const different = buildIdempotencyKey('ps', ['v1', 'm1', 99, 'manual', freshIso]);
   assert.notEqual(k1, different);
 });
@@ -63,7 +64,7 @@ test('ingestion derives canonical keys and dedupes repeated snapshots, offers, a
   assert.deepEqual(snapshots.map((result) => result.status), ['inserted', 'duplicate']);
   assert.notEqual(snapshots[0].idempotencyKey, 'caller-key-a');
 
-  const offer = { variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: freshIso, availabilityCapturedAt: freshIso, snapshotId: 's1' };
+  const offer = { variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'affiliate-feed', capturedAt: freshIso, availabilityCapturedAt: freshIso, snapshotId: 's1' };
   assert.deepEqual(ingestOffers([offer, { ...offer }], baseCtx(), NOW).map((result) => result.status), ['inserted', 'duplicate']);
 
   const trend = { topicId: 't1', source: 'manual', delta: 0.2, weight: 0.9, capturedAt: freshIso, idempotencyKey: 'caller-key-a' };
@@ -147,28 +148,28 @@ test('good, rejected, duplicate, and anomalous rows in one batch return independ
 // Offer ingestion
 // ---------------------------------------------------------------------------
 
-test('a fresh offer enters pending_review and a stale offer enters suppressed', () => {
+test('an evidenced fresh offer enters pending_review and a stale offer is rejected without retaining price', () => {
   const ctx = baseCtx();
-  const fresh = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: freshIso, availability: 'in-stock', availabilityCapturedAt: freshIso, shipping: { freeShipping: true }, expiresAt: '2026-08-06T12:00:00Z', snapshotId: 's1' }], ctx, NOW);
+  const fresh = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'affiliate-feed', capturedAt: freshIso, availability: 'in-stock', availabilityCapturedAt: freshIso, shipping: { freeShipping: true }, expiresAt: '2026-07-30T13:00:00Z', snapshotId: 's1' }], ctx, NOW);
   assert.equal(fresh[0].status, 'inserted');
   assert.equal(fresh[0].entity.lifecycle, 'pending_review');
   assert.equal(fresh[0].entity.review, 'unknown');
   const stale = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: '2026-04-01T12:00:00Z', availability: 'in-stock', availabilityCapturedAt: freshIso, shipping: { freeShipping: true }, snapshotId: 's1' }], ctx, NOW);
-  assert.equal(stale[0].status, 'inserted');
-  assert.equal(stale[0].entity.lifecycle, 'suppressed');
+  assert.equal(stale[0].status, 'rejected');
+  assert.equal(stale[0].entity, null);
   assert.match(stale[0].reason, /freshness/);
 });
 
 test('offer dedupe by idempotency key works across batches', () => {
   const ctx = baseCtx();
-  const first = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: freshIso, availabilityCapturedAt: freshIso, expiresAt: '2026-08-06T12:00:00Z', snapshotId: 's1' }], ctx, NOW);
+  const first = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'affiliate-feed', capturedAt: freshIso, availabilityCapturedAt: freshIso, expiresAt: '2026-07-30T13:00:00Z', snapshotId: 's1' }], ctx, NOW);
   const ctx2 = { ...ctx, existingOfferKeys: new Set([first[0].idempotencyKey]) };
-  const second = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: freshIso, availabilityCapturedAt: freshIso, expiresAt: '2026-08-06T12:00:00Z', snapshotId: 's1' }], ctx2, NOW);
+  const second = ingestOffers([{ variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'affiliate-feed', capturedAt: freshIso, availabilityCapturedAt: freshIso, expiresAt: '2026-07-30T13:00:00Z', snapshotId: 's1' }], ctx2, NOW);
   assert.equal(second[0].status, 'duplicate');
 });
 
 test('offer ingestion requires an existing authorised, non-anomalous coherent snapshot', () => {
-  const offer = { variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'manual', capturedAt: freshIso, availabilityCapturedAt: freshIso };
+  const offer = { variantId: 'v1', merchantId: 'm1', market: 'US', currency: 'USD', price: 88, source: 'affiliate-feed', capturedAt: freshIso, availabilityCapturedAt: freshIso };
   const ctx = baseCtx();
   const results = ingestOffers([
     offer,

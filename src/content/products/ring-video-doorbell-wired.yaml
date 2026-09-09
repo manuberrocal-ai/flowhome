@@ -7,7 +7,7 @@ originalPrice: 64.99
 discountPct: 0
 category: video-doorbell
 affiliateUrl: "https://www.amazon.com/dp/B08CKHPP52?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B08CKHPP52.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/video-doorbell.png"
 ownerRating: 4.5
 ownerRatingCount: 78000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,42 @@ dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Ring Video Doorbell Wired"
+identityEvidence:
+  model: "Ring Video Doorbell Wired"
+  asin: B08CKHPP52
+  claims:
+    model:
+      value: "Ring Video Doorbell Wired"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Ring US — Video Doorbell Wired installation and original-model manuals"
+          url: "https://ring.com/support/articles/ctz2i/Installing-your-Video-Doorbell-Wired"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Original wired video doorbell"
+      conditions: "This is not a newer 2K or Pro model. The existing chime and power arrangement require separate checks."
+      sources:
+        - label: "Ring US — Video Doorbell Wired installation and original-model manuals"
+          url: "https://ring.com/support/articles/ctz2i/Installing-your-Video-Doorbell-Wired"
+          accessedAt: "2026-09-05"
+installation:
+  model: "Ring Video Doorbell Wired"
+  market: US
+  assessment: advanced
+  requirements:
+    - "Original Video Doorbell Wired: check the transformer and exact regional manual before buying. Ring's US hardwiring guidance specifies 10-24 VAC, 50/60 Hz, 8-40 VA. A compatible Ring Plug-In Adapter is an alternative sold separately; do not assume an arbitrary DC supply is suitable."
+    - "For hardwiring, disconnect power at the breaker before touching wires. Use a licensed electrician if inexperienced or unsure; local requirements may also require professional installation. With an existing in-home chime, the required jumper bypasses and disables that chime."
+    - "Plan the mounting surface and cable route, use the supplied mounting and security screws in their designated positions, and follow the Ring app setup. These checks apply to the original Wired model, not newer 2K or Pro models; this is not a step-by-step electrical installation guide."
+  sources:
+    - label: "Ring US — Video Doorbell Wired installation and original-model manuals"
+      url: "https://ring.com/support/articles/ctz2i/Installing-your-Video-Doorbell-Wired"
+      accessedAt: "2026-09-05"
+    - label: "Ring US — model-specific transformer limits and compatible power accessories"
+      url: "https://ring.com/support/articles/utvz2/Guidelines-for-Hardwiring-Your-Ring-Video-Doorbell"
+      accessedAt: "2026-09-05"
+    - label: "Ring US — original Wired jumper cable and chime bypass"
+      url: "https://ring.com/support/articles/5ochy/installing-pro-power-kit-or-jumper-cable"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +69,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: true
-priority: featured
-priorityScore: 68
-roiApproved: true

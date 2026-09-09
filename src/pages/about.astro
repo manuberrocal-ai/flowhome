@@ -1,6 +1,6 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { EDITORIAL_POLICY } from '../lib/editorial';
+import { EDITORIAL_POLICY, EDITORIAL_TEAM } from '../lib/editorial';
 ---
 <BaseLayout title="About FlowHome" description="How FlowHome reviews smart home products, handles affiliate links, and keeps automation quality controlled." canonicalURL="https://flowhome.dev/about/">
   <section class="premium-page-hero">
@@ -17,7 +17,7 @@ import { EDITORIAL_POLICY } from '../lib/editorial';
   <article class="premium-card prose prose-lg mt-8 max-w-4xl p-6 prose-headings:font-heading prose-headings:text-slate-950 prose-a:text-blue-600 md:p-8">
     <h2 id="editorial-team">FlowHome Editorial Team</h2>
     <p><strong>FlowHome Editorial Team</strong> is an editorial organization, not an individual person. It has no personal degree, certification, or other credential to claim. No hands-on testing is implied unless a page explicitly says so.</p>
-    <p><strong>Role:</strong> editorial research and buying guidance. <strong>Methodology:</strong> we use documented product information, compatibility and setup details, public owner feedback, price snapshots, and explicit tradeoffs. We do not run controlled lab tests.</p>
+    <p><strong>Role:</strong> editorial research and buying guidance. <strong>Methodology:</strong> {EDITORIAL_TEAM.methodology}</p>
     <p><strong>Sources policy:</strong> source links are shown when they are recorded for a page; source URLs must use HTTPS. Missing sources are not replaced with invented citations.</p>
     <p><strong>Corrections:</strong> if a fact, date, price, or compatibility detail is wrong, contact FlowHome with the page and evidence so the record can be reviewed and corrected.</p>
 
@@ -36,7 +36,7 @@ import { EDITORIAL_POLICY } from '../lib/editorial';
     <p>Smart-home shopping is easy to get wrong because the best product on paper is not always the best product for a real household. FlowHome prioritizes the questions that prevent bad buys: does it fit your ecosystem, does it solve a daily problem, is setup realistic, and does the final price make sense?</p>
 
     <h2 id="affiliate-policy">Affiliate policy</h2>
-    <p>As an Amazon Associate, FlowHome earns from qualifying purchases. Affiliate revenue keeps the site free, but public recommendations are filtered through usefulness, compatibility, pricing, owner feedback, and quality checks before publication. Affiliate links do not increase your purchase price.</p>
+    <p>As an Amazon Associate, FlowHome earns from qualifying purchases. Recommendations focus on intended use, documented requirements, and explicit limitations. An affiliate link does not establish a current price, rating, or verified seller package. Affiliate links do not increase your purchase price.</p>
 
     <h2>Automation policy</h2>
     <p>Automation assists with discovery, draft generation, quality checks, syndication, and maintenance. Automation does not replace editorial responsibility. Content should still be specific, useful, and honest about tradeoffs before it is treated as publishable.</p>

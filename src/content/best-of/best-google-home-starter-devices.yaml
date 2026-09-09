@@ -1,12 +1,35 @@
 slug: best-google-home-starter-devices
-title: "Best Google Home Starter Devices for Everyday Routines"
-description: "A compact Google Home shortlist for displays, thermostats, plugs, lighting, and routines that make daily smart-home control easier."
+title: "Google Home Starter Buying Guide: Display, Controls, and Fit"
+description: "Compare a Google-oriented device shortlist with exact-model, permissions, installation, and integration checks."
 category: smart-display
 maxPrice: 300
 productSlugs:
   - google-nest-hub-2nd-gen
   - ecobee-smart-thermostat-premium
   - tp-link-kasa-smart-plug-mini
-  - govee-rgbic-led-strip-lights
   - august-wifi-smart-lock
 pubDate: 2026-06-28
+intro: "The selection below is a starting point for research, not proof that every device and function works together. Documentation was reviewed for selected capabilities; actual pairings and current seller terms remain unverified."
+buyingConsiderations:
+  - label: "Start with the intended task"
+    detail: "Google documents the second-generation Nest Hub's touchscreen and microphone switch. Decide whether a display is useful before choosing additional devices; confirm each current service or control action separately."
+  - label: "Resolve model and installation details"
+    detail: "ecobee documents a room-sensor approach and August a retrofit lock. Check model numbers, wiring or door fit, and account permissions. Kasa's exact model and intended Google Home action must be confirmed separately from the generic Mini label."
+  - label: "Why the Govee strip is not shortlisted"
+    detail: "The catalog now identifies Govee H617C, a Bluetooth-controlled strip. No Google Home integration is established for that model in the reviewed documentation, so it is excluded from this Google-oriented selection. Its presence in a general lighting comparison is not evidence of Google Home support."
+sources:
+  - label: "Google Nest Hub second-generation specifications"
+    url: "https://support.google.com/googlehome/answer/7072284?hl=en"
+    accessedAt: "2026-09-04"
+  - label: "ecobee Smart Thermostat Premium specifications"
+    url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+    accessedAt: "2026-09-04"
+  - label: "August Wi-Fi Smart Lock retrofit and integrations"
+    url: "https://august.com/products/august-wifi-smart-lock"
+    accessedAt: "2026-09-04"
+  - label: "Govee official model-specific strip specifications"
+    url: "https://community.govee.com/support/faqs/specs"
+    accessedAt: "2026-09-04"
+  - label: "TP-Link Kasa setup and model selection"
+    url: "https://www.tp-link.com/us/support/faq/946/"
+    accessedAt: "2026-09-04"

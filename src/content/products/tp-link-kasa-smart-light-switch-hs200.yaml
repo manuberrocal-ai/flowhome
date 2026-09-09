@@ -7,7 +7,7 @@ originalPrice: 24.99
 discountPct: 20
 category: smart-lighting
 affiliateUrl: "https://www.amazon.com/dp/B01EZV35QU?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B01EZV35QU.01._SCLZZZZZZZ_.jpg"
+image: "/images/product-art/illustrations-v1/smart-lighting.png"
 ownerRating: 4.6
 ownerRatingCount: 47000
 ratingSource: "Amazon customer ratings"
@@ -17,6 +17,35 @@ dateUpdated: "2026-06-29"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "HS200"
+identityEvidence:
+  model: "HS200"
+  asin: B01EZV35QU
+  claims:
+    model:
+      value: "HS200"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "Kasa HS200 US specifications and installation"
+          url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200"
+          accessedAt: "2026-09-05"
+    role:
+      value: "In-wall light switch"
+      conditions: "Electrical wiring and a neutral are required; not a plug-in device."
+      sources:
+        - label: "Kasa HS200 US specifications and installation"
+          url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200"
+          accessedAt: "2026-09-05"
+installation:
+  model: "HS200"
+  market: US
+  assessment: advanced
+  requirements:
+    - "This in-wall switch requires electrical wiring and a neutral wire; it is not a plug-in device."
+    - "Check the manufacturer's wiring and load requirements with a qualified installer if needed."
+  sources:
+    - label: "Kasa HS200 US specifications and installation"
+      url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200"
+      accessedAt: "2026-09-05"
 wifi: true
 bluetooth: false
 zigbee: false
@@ -33,6 +62,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: featured
-priorityScore: 64
-roiApproved: true

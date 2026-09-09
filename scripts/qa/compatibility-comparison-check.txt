@@ -1,0 +1,59 @@
+async page => {
+  const results = [];
+  const check = (ok, message) => { if (!ok) throw Error(message); results.push(message); };
+  await page.route('**/*', route => route.request().url().startsWith('http://127.0.0.1:') ? route.continue() : route.abort());
+  const origin = page.url().split('/').slice(0, 3).join('/');
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.goto(origin + '/real-comparison/');
+    const root = page.locator('[data-comparison-presentation]');
+    check(await root.locator('[data-comparison-field]').count() === 20, 'Six table and four card fields per product at ' + width);
+    check(await root.locator('[data-comparison-controls]').isHidden(), 'Controls hidden before explicit mounting at ' + width);
+    await page.evaluate(async () => {
+      const { mountComparisonCompatibility } = await import('/comparison-presentation.js');
+      window.comparisonMounted = mountComparisonCompatibility(document.querySelector('[data-comparison-presentation]'), { enabled: true, endpoint: '/compatibility/live', pageUrl: location.href });
+    });
+    let release;
+    let started;
+    let calls = 0;
+    const gate = new Promise(resolve => { release = resolve; });
+    const bothStarted = new Promise(resolve => { started = resolve; });
+    const hold = async route => { calls++; if (calls === 2) started(); await gate; await route.continue(); };
+    await page.route('**/compatibility/live?*', hold);
+    try {
+      await root.getByRole('button', { name: 'Refresh evidence' }).focus(); await page.keyboard.press('Enter');
+      await bothStarted;
+      check(await page.evaluate(() => {
+        const button = document.querySelector('[data-comparison-refresh]');
+        return document.activeElement === button && !button.disabled && button.getAttribute('aria-disabled') === 'true' && button.getAttribute('aria-busy') === 'true';
+      }), 'Pending refresh retains keyboard focus and announces busy at ' + width);
+      await page.keyboard.press('Enter');
+      check(await page.evaluate(() => window.comparisonMounted.refresh()) === false, 'Duplicate refresh rejected while pending at ' + width);
+    } finally { release(); }
+    await page.waitForFunction(() => document.querySelector('[data-comparison-refresh]').getAttribute('aria-busy') === 'false' && document.querySelectorAll('[data-comparison-leaders] li').length > 0);
+    check(calls === 2, 'Only one request per compared product at ' + width);
+    await page.unroute('**/compatibility/live?*', hold);
+    check(await page.evaluate(() => {
+      const button = document.querySelector('[data-comparison-refresh]');
+      return document.activeElement === button && button.getAttribute('aria-disabled') === 'false';
+    }), 'Successful refresh retains focus and enables retry at ' + width);
+    check((await root.locator('[data-comparison-buyer]').allTextContents()).some(text => text.includes('evidence-backed signal')), 'Buyer reasons reflect live evidence at ' + width);
+    const alexa = await root.locator('[data-comparison-field="alexaCompatible"][data-comparison-slug="echo-dot-5th-gen"]').allTextContents();
+    check(alexa.length === 2 && alexa[0] === alexa[1], 'Table and card agree at ' + width);
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Page fits viewport despite scrolling table at ' + width);
+    await root.locator('[data-comparison-table-section]').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: '.playwright-cli/flowhome-comparison-live-' + width + '.png' });
+    await page.context().setOffline(true);
+    try {
+      await page.waitForFunction(() => [...document.querySelectorAll('[data-comparison-field]')].every(el => el.textContent === 'Not verified'));
+      check(await root.locator('[data-comparison-leaders] li').count() === 0, 'Evidence leaders removed at ' + width);
+      check((await root.locator('[data-comparison-buyer]').allTextContents()).every(text => !text.includes('evidence-backed signal')), 'Derived buyer reasons removed at ' + width);
+      check((await root.locator('[data-comparison-source]').allTextContents()).every(text => text === ''), 'Sources removed at ' + width);
+      await root.locator('[aria-label="Comparison insights"]').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: '.playwright-cli/flowhome-comparison-withdrawn-' + width + '.png' });
+    } finally { await page.context().setOffline(false); }
+    check(await root.locator('[data-comparison-leaders] li').count() === 0, 'Reconnect does not restore leaders at ' + width);
+    await page.evaluate(() => window.comparisonMounted.dispose());
+    check(await root.locator('[data-comparison-refresh]').isDisabled(), 'Disposed comparison cannot refresh at ' + width);
+  }
+  return { checks: results.length, results };
+}

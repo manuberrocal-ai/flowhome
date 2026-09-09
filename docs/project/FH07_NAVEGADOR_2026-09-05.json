@@ -1,0 +1,911 @@
+{
+  "observedAt": "2026-09-05T14:36:03.415Z",
+  "checks": [
+    {
+      "name": "28 actual serialized products",
+      "passed": true
+    },
+    {
+      "name": "Seven serialized model-specific setup records",
+      "passed": true
+    },
+    {
+      "name": "28 rendered profiles: requirements or explicit unknown, sources and identity limit",
+      "passed": true
+    },
+    {
+      "name": "28 titles, single H1, descriptions and canonical URLs retained",
+      "passed": true
+    },
+    {
+      "name": "All 56 product alt candidates are hidden avatars with explicit empty alt",
+      "passed": true
+    },
+    {
+      "name": "Setup heading clears sticky header tp-link-kasa-smart-dimmer-hs220 1440",
+      "passed": true
+    },
+    {
+      "name": "Setup state tp-link-kasa-smart-dimmer-hs220 1440",
+      "passed": true
+    },
+    {
+      "name": "Product no overflow tp-link-kasa-smart-dimmer-hs220 1440",
+      "passed": true
+    },
+    {
+      "name": "Setup heading clears sticky header govee-rgbic-led-strip-lights 1440",
+      "passed": true
+    },
+    {
+      "name": "Setup state govee-rgbic-led-strip-lights 1440",
+      "passed": true
+    },
+    {
+      "name": "Product no overflow govee-rgbic-led-strip-lights 1440",
+      "passed": true
+    },
+    {
+      "name": "Empty state prevents continuing 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-goal 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-ecosystem 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-budget 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-installation 1440",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-extra 1440",
+      "passed": true
+    },
+    {
+      "name": "Widened setup warning visible 1440",
+      "passed": true
+    },
+    {
+      "name": "Real wiring warning 1440",
+      "passed": true
+    },
+    {
+      "name": "Unknown requirements visible 1440",
+      "passed": true
+    },
+    {
+      "name": "No full-preference-match claim 1440",
+      "passed": true
+    },
+    {
+      "name": "Model-source destination 1440",
+      "passed": true
+    },
+    {
+      "name": "Retailer links remain direct 1440",
+      "passed": true
+    },
+    {
+      "name": "Anonymous save works 1440",
+      "passed": true
+    },
+    {
+      "name": "Notice contrast 1440",
+      "passed": true
+    },
+    {
+      "name": "Setup link touch target 1440",
+      "passed": true
+    },
+    {
+      "name": "Quiz no overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "Quiz heading clears sticky header 1440",
+      "passed": true
+    },
+    {
+      "name": "Editing still works 1440",
+      "passed": true
+    },
+    {
+      "name": "Exact supported setup, no widening 1440",
+      "passed": true
+    },
+    {
+      "name": "Two documented models chosen 1440",
+      "passed": true
+    },
+    {
+      "name": "URL state survives reload 1440",
+      "passed": true
+    },
+    {
+      "name": "Setup heading clears sticky header tp-link-kasa-smart-dimmer-hs220 390",
+      "passed": true
+    },
+    {
+      "name": "Setup state tp-link-kasa-smart-dimmer-hs220 390",
+      "passed": true
+    },
+    {
+      "name": "Product no overflow tp-link-kasa-smart-dimmer-hs220 390",
+      "passed": true
+    },
+    {
+      "name": "Setup heading clears sticky header govee-rgbic-led-strip-lights 390",
+      "passed": true
+    },
+    {
+      "name": "Setup state govee-rgbic-led-strip-lights 390",
+      "passed": true
+    },
+    {
+      "name": "Product no overflow govee-rgbic-led-strip-lights 390",
+      "passed": true
+    },
+    {
+      "name": "Empty state prevents continuing 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-goal 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-ecosystem 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-budget 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-installation 390",
+      "passed": true
+    },
+    {
+      "name": "Keyboard choice quiz-extra 390",
+      "passed": true
+    },
+    {
+      "name": "Widened setup warning visible 390",
+      "passed": true
+    },
+    {
+      "name": "Real wiring warning 390",
+      "passed": true
+    },
+    {
+      "name": "Unknown requirements visible 390",
+      "passed": true
+    },
+    {
+      "name": "No full-preference-match claim 390",
+      "passed": true
+    },
+    {
+      "name": "Model-source destination 390",
+      "passed": true
+    },
+    {
+      "name": "Retailer links remain direct 390",
+      "passed": true
+    },
+    {
+      "name": "Anonymous save works 390",
+      "passed": true
+    },
+    {
+      "name": "Notice contrast 390",
+      "passed": true
+    },
+    {
+      "name": "Setup link touch target 390",
+      "passed": true
+    },
+    {
+      "name": "Quiz no overflow 390",
+      "passed": true
+    },
+    {
+      "name": "Quiz heading clears sticky header 390",
+      "passed": true
+    },
+    {
+      "name": "Editing still works 390",
+      "passed": true
+    },
+    {
+      "name": "Exact supported setup, no widening 390",
+      "passed": true
+    },
+    {
+      "name": "Two documented models chosen 390",
+      "passed": true
+    },
+    {
+      "name": "URL state survives reload 390",
+      "passed": true
+    },
+    {
+      "name": "Reflow at equivalent 200% desktop zoom",
+      "passed": true
+    },
+    {
+      "name": "No client exceptions",
+      "passed": true
+    }
+  ],
+  "metrics": [
+    {
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "noticeContrast": 14.465587811642001,
+      "setupLinkHeight": 44
+    },
+    {
+      "viewport": 390,
+      "pageWidth": 390,
+      "noticeContrast": 14.465587811642001,
+      "setupLinkHeight": 44
+    }
+  ],
+  "inventory": [
+    {
+      "slug": "aeotec-smartthings-hub",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Aeotec SmartThings Hub - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/aeotec-smartthings-hub/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "amazon-smart-thermostat",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Amazon Smart Thermostat - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/amazon-smart-thermostat/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "aqara-hub-m2",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Aqara Hub M2 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/aqara-hub-m2/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "aqara-motion-sensor-p1",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Aqara Motion Sensor P1 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/aqara-motion-sensor-p1/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "arlo-essential-outdoor-camera",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Arlo Essential Outdoor Camera - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/arlo-essential-outdoor-camera/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "august-wifi-smart-lock",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "August Wi-Fi Smart Lock - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/august-wifi-smart-lock/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "blink-outdoor-4",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Blink Outdoor 4 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/blink-outdoor-4/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "echo-dot-5th-gen",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Echo Dot 5th Gen - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/echo-dot-5th-gen/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "echo-show-8-3rd-gen",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Echo Show 8 3rd Gen - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/echo-show-8-3rd-gen/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "ecobee-smart-thermostat-premium",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "ecobee Smart Thermostat Premium - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/ecobee-smart-thermostat-premium/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "eufy-security-indoor-cam-c120",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Eufy Security Indoor Cam C120 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/eufy-security-indoor-cam-c120/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "google-nest-hub-2nd-gen",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Google Nest Hub 2nd Gen - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/google-nest-hub-2nd-gen/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "govee-rgbic-led-strip-lights",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Govee RGBIC LED Strip Lights - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/govee-rgbic-led-strip-lights/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "irobot-roomba-j7-plus",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "iRobot Roomba j7+ - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/irobot-roomba-j7-plus/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "levoit-core-300s-air-purifier",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Levoit Core 300S Smart Air Purifier - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/levoit-core-300s-air-purifier/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "meross-smart-garage-door-opener",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Meross Smart Garage Door Opener - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/meross-smart-garage-door-opener/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "philips-hue-white-color-starter-kit",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Philips Hue White and Color Starter Kit - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/philips-hue-white-color-starter-kit/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "ring-video-doorbell-wired",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Ring Video Doorbell Wired - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/ring-video-doorbell-wired/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "roborock-q5-plus",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Roborock Q5+ Robot Vacuum - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/roborock-q5-plus/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "schlage-encode-smart-wifi-deadbolt",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Schlage Encode Smart WiFi Deadbolt - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/schlage-encode-smart-wifi-deadbolt/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "switchbot-blind-tilt",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "SwitchBot Blind Tilt - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/switchbot-blind-tilt/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "switchbot-hub-2",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "SwitchBot Hub 2 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/switchbot-hub-2/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "tapo-c120-security-camera",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "TP-Link Tapo C120 Security Camera - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/tapo-c120-security-camera/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "tp-link-kasa-smart-dimmer-hs220",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "TP-Link Kasa Smart Dimmer Switch HS220 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/tp-link-kasa-smart-dimmer-hs220/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "tp-link-kasa-smart-light-switch-hs200",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "TP-Link Kasa Smart Light Switch HS200 - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/tp-link-kasa-smart-light-switch-hs200/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "tp-link-kasa-smart-plug-mini",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "TP-Link Kasa Smart Plug Mini - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/tp-link-kasa-smart-plug-mini/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "wyze-bulb-color",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Wyze Bulb Color - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/wyze-bulb-color/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    },
+    {
+      "slug": "yale-assure-lock-2-wifi",
+      "status": 200,
+      "requirementsPresent": true,
+      "sourceLinks": true,
+      "identityLimit": true,
+      "title": "Yale Assure Lock 2 Wi-Fi - Review, Price & Specs | FlowHome",
+      "h1Count": 1,
+      "canonical": "https://flowhome.dev/product/yale-assure-lock-2-wifi/",
+      "description": true,
+      "emptyAlt": [
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        },
+        {
+          "present": true,
+          "hidden": true,
+          "avatar": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "profile": "Local preview, external requests blocked, reduced motion, desktop/mobile plus 720 CSS px reflow; not real device or full WCAG certification."
+}

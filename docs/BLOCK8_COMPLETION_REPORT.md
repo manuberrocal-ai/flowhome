@@ -2,6 +2,10 @@
 
 Date: 2026-07-30
 
+## V3 superseding correction — 2026-09-04
+
+The sections below preserve the historical report, not current proof. The V3 audit reproduced six gaps in snapshot provenance, expiry, historical claims, market resolution, key composition and time policy despite the earlier passing tests. The local correction and current checks are recorded in [flowhome-block8-gaps-v3.md](audit/flowhome-block8-gaps-v3.md); operational contracts are updated in [the runbook](BLOCK8_OFFER_TREND_RUNBOOK.md). Earlier 7d/90d/FNV assumptions and claims of complete gates are superseded. No production activation, durable migration, source connection or publication was performed by this correction.
+
 ## Scope and boundary
 
 Block 8 implements the authorized offer/price/trend data model and the explainable DealScore/TrendScore baseline contracts as **local/mock technical preparation only**. It models `ProductVariant`, `Merchant`, `Offer`, `PriceSnapshot`, `TrendSignal`, `TrendTopic`, and `DealCandidate` with market/currency, shipping, coupons/conditions, availability, affiliate URL, source, capturedAt, history windows, confidence, and lifecycle/review states. It implements idempotent ingestion with dedupe, variant resolution, freshness/expiry, anomaly detection, retry/backoff, partial-failure isolation, and an admin review/override contract with an audit trail. It never labels "lowest price", "best ever", or "super deal" without sufficient authorised history and fresh verification. No Block 9 work is included.

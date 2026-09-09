@@ -1,0 +1,267 @@
+{
+  "checkpoint": "FH07H",
+  "date": "2026-09-05",
+  "status": "APROBADO LOCAL",
+  "goalStatusObserved": "active",
+  "hourlyHeartbeat": "PAUSED; unchanged",
+  "validation": {
+    "redTestRun": {
+      "tests": 7,
+      "pass": 0,
+      "fail": 7
+    },
+    "directed": {
+      "tests": 72,
+      "pass": 72
+    },
+    "fullInitial": {
+      "tests": 677,
+      "pass": 676,
+      "fail": 1,
+      "cause": "commerce-static assertion required removed raw flags; updated to prepared data and uncertainty notice"
+    },
+    "fullFinal": {
+      "tests": 677,
+      "pass": 677,
+      "fail": 0,
+      "skipped": 0
+    },
+    "typecheck": {
+      "files": 244,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 18
+    },
+    "lint": {
+      "passed": true,
+      "lastTestFileCheckedAfterAssertionChange": true
+    },
+    "diffCheck": {
+      "passed": true,
+      "normalizationWarnings": "LF/CRLF notices on existing dirty files; no whitespace error"
+    },
+    "build": {
+      "passed": true,
+      "completedAt": "2026-09-05T18:40:45Z",
+      "pages": 88
+    },
+    "seo": {
+      "pages": 88,
+      "errors": 0,
+      "warnings": 0
+    },
+    "browser": {
+      "passed": 544,
+      "failed": 0,
+      "report": "FH07H_NAVEGADOR_2026-09-05.json"
+    },
+    "textAudit": {
+      "files": 28,
+      "candidates": 56,
+      "rules": [
+        "missing-alt"
+      ],
+      "triage": "All 56 candidates are two hidden anonymous avatar images with intentional empty alt per page, checked in browser. Authenticated state not tested."
+    },
+    "visual": {
+      "rounds": 1,
+      "supplementalMobileChipCrops": 2,
+      "sourceCorrectionsAfterVisual": 0,
+      "reviewedScreenshots": 10,
+      "chipContrastRatio": 9.45,
+      "detectorFindings": 0
+    },
+    "catalog": {
+      "baseline": "FH07E_EVIDENCIA_2026-09-05.json",
+      "byteHashesPreserved": 28,
+      "total": 28
+    }
+  },
+  "observedAt": "2026-09-05T18:45:14.615Z",
+  "sourceHashes": [
+    {
+      "file": "src/lib/product-feature-evidence.ts",
+      "sha256": "7bcf49b35e926c6f1cfc7cbdb3df1e1c2b591abb87257173bf2bfd9a45800ec2"
+    },
+    {
+      "file": "src/lib/product-specs.ts",
+      "sha256": "fcc50443e7cc5d87a3776a42cffa6df697720a80d71740bb941f86656231bd2d"
+    },
+    {
+      "file": "src/lib/comparison-insights.ts",
+      "sha256": "fc6d7f9e79d2cf544839e32fbc814d10936e6319878bf2948984afb7b4afcf36"
+    },
+    {
+      "file": "src/pages/product/[slug].astro",
+      "sha256": "be304bd77555424f54d738cb869f032d4a6766af910df3282f664bf540dbc602"
+    },
+    {
+      "file": "test/product-feature-evidence.test.mjs",
+      "sha256": "c781abf97cdab521b1ea5a3cf808a43f277df898d66b74556ffb577a01243c45"
+    },
+    {
+      "file": "test/product-specs.test.mjs",
+      "sha256": "e16d03ff4dc8a668016832ab06cfc958455760104ea95ebff3ba6a5395de9f17"
+    },
+    {
+      "file": "test/catalog-connectivity-evidence.test.mjs",
+      "sha256": "82906b00eb74294d97936f3f991b6fa6e878a6b6b068506f984b9afc6f0c14ef"
+    },
+    {
+      "file": "test/commerce-static.test.mjs",
+      "sha256": "97df795dc5ac99e92bdf598355b7a9006930021e9b1d9a24c6c4b8a82381f047"
+    }
+  ],
+  "htmlHashes": [
+    {
+      "file": "dist/product/aeotec-smartthings-hub/index.html",
+      "sha256": "d80ebe0e6fd6e867e6546ff43312f84a6444bc52b296ef3c8e3f4e83087b6b1b"
+    },
+    {
+      "file": "dist/product/amazon-smart-thermostat/index.html",
+      "sha256": "bd920e63e89bc37623702b2ea22d4853247a24e5227b61bdfd0c954fcf04f1ef"
+    },
+    {
+      "file": "dist/product/aqara-hub-m2/index.html",
+      "sha256": "b8acfa7ffb25665a2e2df61c65449676c2d5dad58734824315767bfd4f05d2ad"
+    },
+    {
+      "file": "dist/product/aqara-motion-sensor-p1/index.html",
+      "sha256": "99b9fe74293a5f94f0383735a29fcf5213defc443d451bb10862efcfc8241e7f"
+    },
+    {
+      "file": "dist/product/arlo-essential-outdoor-camera/index.html",
+      "sha256": "05cf450167a1ec5b4950ff8bd3c6d538de30fd0145e2837b200993510f870256"
+    },
+    {
+      "file": "dist/product/august-wifi-smart-lock/index.html",
+      "sha256": "0ad6f08a0f4e0db71e9a545ec13ce0e50353cb305b886db6b76b8e949cae3ac1"
+    },
+    {
+      "file": "dist/product/blink-outdoor-4/index.html",
+      "sha256": "2abd420ff02124cf2cdd362a9f8f9ce9c6faea96e3cd3741e4e4a73a4df024ab"
+    },
+    {
+      "file": "dist/product/echo-dot-5th-gen/index.html",
+      "sha256": "5714654d17e9d5020836dd6f15f8ce7a8b827b132208dc2cab07cee0ea38a0a7"
+    },
+    {
+      "file": "dist/product/echo-show-8-3rd-gen/index.html",
+      "sha256": "fd93e6cc3e509b53263b92d04dda69aff2a4ecd93cbfbb1d7688b57244b5fa77"
+    },
+    {
+      "file": "dist/product/ecobee-smart-thermostat-premium/index.html",
+      "sha256": "06750f113b79b008610a9a71625a1063d41807447969b14ba6fcafe76e916d74"
+    },
+    {
+      "file": "dist/product/eufy-security-indoor-cam-c120/index.html",
+      "sha256": "d05415cbe5d51b185af4e0e5f73b8361a086dded4975e26292994e2c7681246a"
+    },
+    {
+      "file": "dist/product/google-nest-hub-2nd-gen/index.html",
+      "sha256": "0831ad64e35577e2f135e43d6c14af81dcc0dc0cbeccac8c530820425af9fd36"
+    },
+    {
+      "file": "dist/product/govee-rgbic-led-strip-lights/index.html",
+      "sha256": "90054fbbc89d42fd1a38b0deca536838c1a1ec1a08bb3d2b1776d4fb626a8ec1"
+    },
+    {
+      "file": "dist/product/irobot-roomba-j7-plus/index.html",
+      "sha256": "acd7292269ef0d2c7eda93bc3edfe5dd5bf8318da8daf5cea41758f56d07d614"
+    },
+    {
+      "file": "dist/product/levoit-core-300s-air-purifier/index.html",
+      "sha256": "852bf9cd6523b3be99a2e7cdd4f90af42588df2c9583c562e08db9e2e63952f8"
+    },
+    {
+      "file": "dist/product/meross-smart-garage-door-opener/index.html",
+      "sha256": "2f45bbcbfcb0b0df98c5c738aaaa46fbba2bed9487c9245a00ad12c94b2fcabc"
+    },
+    {
+      "file": "dist/product/philips-hue-white-color-starter-kit/index.html",
+      "sha256": "0244331b6ebfad571eba474457c0c3de479c28f5fdde871c61c2b11e79ed1fdd"
+    },
+    {
+      "file": "dist/product/ring-video-doorbell-wired/index.html",
+      "sha256": "7d69828f2f91ec2ff23a8dc243dfa8c369a3d99940c1a88aae71e87a2153fb3b"
+    },
+    {
+      "file": "dist/product/roborock-q5-plus/index.html",
+      "sha256": "851250f15d4df19c9f1b6d9838267945195bf05f682077f095c3be146671133e"
+    },
+    {
+      "file": "dist/product/schlage-encode-smart-wifi-deadbolt/index.html",
+      "sha256": "a6f9ed5bc6d10c60c77598c135f34900e29208497db2da5d73de0c0346fcba4a"
+    },
+    {
+      "file": "dist/product/switchbot-blind-tilt/index.html",
+      "sha256": "086754249e598a7702d934c705be659b39a96b8c1107887863b6c3e8957e3def"
+    },
+    {
+      "file": "dist/product/switchbot-hub-2/index.html",
+      "sha256": "a80115e4e78cc9383c1cdcc73b4eff500bdeec9a6a2347461f37ec8717adfd1d"
+    },
+    {
+      "file": "dist/product/tapo-c120-security-camera/index.html",
+      "sha256": "da570edb5140f7241b2e1497ad9a764f5b2c7d3b40b212490641ca380fa2da16"
+    },
+    {
+      "file": "dist/product/tp-link-kasa-smart-dimmer-hs220/index.html",
+      "sha256": "b693454c60e6ddd96ab30159166703b10ea1aceec88fa416dc25eff8fcf6eb38"
+    },
+    {
+      "file": "dist/product/tp-link-kasa-smart-light-switch-hs200/index.html",
+      "sha256": "43e7c58630ba0f5bd4e5153c885c9fb5cab8c8eaa8c63bb6e6555854cfca3578"
+    },
+    {
+      "file": "dist/product/tp-link-kasa-smart-plug-mini/index.html",
+      "sha256": "80672a80058e8db7f9f5841e8fecbb40cd99038325004769623036c71cbb0a1a"
+    },
+    {
+      "file": "dist/product/wyze-bulb-color/index.html",
+      "sha256": "e85869b7ecd52655edc11d658a361ed8942ada0532434ded48ff4afd482317c2"
+    },
+    {
+      "file": "dist/product/yale-assure-lock-2-wifi/index.html",
+      "sha256": "3be2f278497b1c03d2344ea78bfcf7746ce6ce20f93f847c0a403f098d986f50"
+    },
+    {
+      "file": "dist/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/index.html",
+      "sha256": "00160bcb7c6f41153cbbfdc4c74b973b96a670864d6c99403eee98dc69f894ea"
+    },
+    {
+      "file": "dist/compare/aqara-hub-m2-vs-switchbot-hub-2-vs-aeotec-smartthings-hub/index.html",
+      "sha256": "ad60a470f7b284f330616afb9e650a641800218735700f160e65a84fbdf3d2d3"
+    },
+    {
+      "file": "dist/compare/august-wifi-smart-lock-vs-schlage-encode-smart-wifi-deadbolt-vs-yale-assure-lock-2-wifi/index.html",
+      "sha256": "7786eeb4ad536bd46fcb694516ae6fec54e782748ee1b1e9536b6ebf43f8a3d2"
+    },
+    {
+      "file": "dist/compare/blink-outdoor-4-vs-arlo-essential-outdoor-camera/index.html",
+      "sha256": "55f3912e1d9044dd23f86353e44b5033032cb65b8041d1c529ce3e1a10afb1b7"
+    },
+    {
+      "file": "dist/compare/echo-dot-5th-gen-vs-echo-show-8-3rd-gen/index.html",
+      "sha256": "bbd71e87aa7f8f03f4ae0f1d17a127e0f81e3a7202f5886d246d024e21cf370d"
+    },
+    {
+      "file": "dist/compare/eufy-security-indoor-cam-c120-vs-tapo-c120-security-camera/index.html",
+      "sha256": "5545ca873a7841c06becfac39c466033fd6c664ad2023307c1b28e7c41230d44"
+    },
+    {
+      "file": "dist/compare/philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color/index.html",
+      "sha256": "29543e5bef5e73071bf3e483b9adf19667297da9306d49c0dd684ee51f7ee014"
+    },
+    {
+      "file": "dist/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/index.html",
+      "sha256": "639d90850f875e315b98dc0444861e647128bb70ba444f03bb5075d568a0f8bf"
+    }
+  ],
+  "limitations": [
+    "FH-07 remains partial, maturity 2/5 overall; installation 14 documented/14 unknown.",
+    "No newly verified real-world feature; scalar catalog facts, model/ASIN/bundle identity and remaining editorial claims still require evidence.",
+    "Quiz and other compatibility consumers remain pending.",
+    "No deployment, remote mutation, account access or credential search performed."
+  ]
+}

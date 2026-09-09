@@ -1,0 +1,1088 @@
+{
+  "startedAt": "2026-09-08T20:11:38.017Z",
+  "finishedAt": "2026-09-08T20:13:26.742Z",
+  "summary": {
+    "total": 134,
+    "passed": 134,
+    "failed": 0,
+    "setupErrors": 0,
+    "cleanupErrors": 0
+  },
+  "httpChecks": 91,
+  "httpFailures": 0,
+  "report": "reports/daily/fh13h-browser-20260908/report.json",
+  "cases": [
+    {
+      "name": "home-320",
+      "path": "/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-375",
+      "path": "/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-390",
+      "path": "/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-768",
+      "path": "/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-1024",
+      "path": "/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-1280",
+      "path": "/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-1440",
+      "path": "/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-320",
+      "path": "/products/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-375",
+      "path": "/products/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-390",
+      "path": "/products/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-768",
+      "path": "/products/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-1024",
+      "path": "/products/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-1280",
+      "path": "/products/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "products-1440",
+      "path": "/products/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-320",
+      "path": "/category/smart-plug/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-375",
+      "path": "/category/smart-plug/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-390",
+      "path": "/category/smart-plug/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-768",
+      "path": "/category/smart-plug/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-1024",
+      "path": "/category/smart-plug/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-1280",
+      "path": "/category/smart-plug/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "category-1440",
+      "path": "/category/smart-plug/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-320",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-375",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-390",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-768",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-1024",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-1280",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "guide-1440",
+      "path": "/best/best-smart-home-starter-kit/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-320",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-375",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-390",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-768",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-1024",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-1280",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "product-1440",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-320",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-375",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-390",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-768",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-1024",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-1280",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "review-1440",
+      "path": "/review/roborock-q5-plus-review/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-320",
+      "path": "/deals/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-375",
+      "path": "/deals/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-390",
+      "path": "/deals/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-768",
+      "path": "/deals/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-1024",
+      "path": "/deals/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-1280",
+      "path": "/deals/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "deals-1440",
+      "path": "/deals/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-320",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-375",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-390",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-768",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-1024",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-1280",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "compare-1440",
+      "path": "/compare/amazon-smart-thermostat-vs-ecobee-smart-thermostat-premium/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-320",
+      "path": "/quiz/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-375",
+      "path": "/quiz/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-390",
+      "path": "/quiz/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-768",
+      "path": "/quiz/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-1024",
+      "path": "/quiz/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-1280",
+      "path": "/quiz/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "quiz-1440",
+      "path": "/quiz/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-320",
+      "path": "/calculator/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-375",
+      "path": "/calculator/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-390",
+      "path": "/calculator/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-768",
+      "path": "/calculator/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-1024",
+      "path": "/calculator/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-1280",
+      "path": "/calculator/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "calculator-1440",
+      "path": "/calculator/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-320",
+      "path": "/cart/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-375",
+      "path": "/cart/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-390",
+      "path": "/cart/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-768",
+      "path": "/cart/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-1024",
+      "path": "/cart/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-1280",
+      "path": "/cart/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "cart-1440",
+      "path": "/cart/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-320",
+      "path": "/account/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-375",
+      "path": "/account/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-390",
+      "path": "/account/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-768",
+      "path": "/account/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-1024",
+      "path": "/account/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-1280",
+      "path": "/account/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "account-1440",
+      "path": "/account/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-320",
+      "path": "/about/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-375",
+      "path": "/about/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-390",
+      "path": "/about/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-768",
+      "path": "/about/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-1024",
+      "path": "/about/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-1280",
+      "path": "/about/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "about-1440",
+      "path": "/about/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-320",
+      "path": "/privacy/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-375",
+      "path": "/privacy/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-390",
+      "path": "/privacy/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-768",
+      "path": "/privacy/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-1024",
+      "path": "/privacy/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-1280",
+      "path": "/privacy/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "privacy-1440",
+      "path": "/privacy/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-320",
+      "path": "/preferences/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-375",
+      "path": "/preferences/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-390",
+      "path": "/preferences/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-768",
+      "path": "/preferences/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-1024",
+      "path": "/preferences/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-1280",
+      "path": "/preferences/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "preferences-1440",
+      "path": "/preferences/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-320",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 320,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-375",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 375,
+      "height": 812,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-390",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-768",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-1024",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-1280",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 1280,
+      "height": 800,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "404-1440",
+      "path": "/__flowhome-v3-missing__/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-echo-dot-390",
+      "path": "/product/echo-dot-5th-gen/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-echo-dot-1440",
+      "path": "/product/echo-dot-5th-gen/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-nest-hub-390",
+      "path": "/product/google-nest-hub-2nd-gen/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-nest-hub-1440",
+      "path": "/product/google-nest-hub-2nd-gen/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-blind-tilt-390",
+      "path": "/product/switchbot-blind-tilt/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "catalog-blind-tilt-1440",
+      "path": "/product/switchbot-blind-tilt/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "editorial-echo-dot-390",
+      "path": "/review/echo-dot-5th-gen-review/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "editorial-echo-dot-1440",
+      "path": "/review/echo-dot-5th-gen-review/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "editorial-nest-hub-390",
+      "path": "/review/google-nest-hub-2nd-gen-review/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "editorial-nest-hub-1440",
+      "path": "/review/google-nest-hub-2nd-gen-review/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "menu-open-390",
+      "path": "/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-reduced-motion-390",
+      "path": "/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "hero-actions-320",
+      "path": "/",
+      "width": 320,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "hero-actions-390",
+      "path": "/",
+      "width": 390,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "hero-actions-1440",
+      "path": "/",
+      "width": 1440,
+      "height": 900,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "home-saved-375",
+      "path": "/",
+      "width": 375,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-anonymous-save",
+      "path": "/",
+      "width": 375,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-amazon-cta",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 375,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-calculator-390",
+      "path": "/calculator/",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-consent-events",
+      "path": "/product/amazon-smart-thermostat/",
+      "width": 375,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-home-experiment-inactive",
+      "path": "/",
+      "width": 375,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    },
+    {
+      "name": "contract-local-experiment-active-path",
+      "path": null,
+      "width": null,
+      "height": null,
+      "status": "PASS",
+      "failures": []
+    }
+  ]
+}

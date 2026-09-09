@@ -36,6 +36,7 @@ import type {
 import { FRESHNESS_WINDOWS_MS } from './domain.ts';
 import { toStrictUtc } from './domain.ts';
 import { isOfferPromotable } from './freshness.ts';
+import { authorisedHistory, type CommercialEvidenceContext, type EvidencedOffer } from './evidence.ts';
 
 // ---------------------------------------------------------------------------
 // Configuration: weights, rewards, penalties (documented)
@@ -61,9 +62,10 @@ export const MIN_HISTORY_FOR_FLOOR_CLAIM = 3;
 export const MIN_FRESH_MS_FOR_CLAIM = 1;
 
 export interface DealScoreInput {
-  offer: Pick<Offer, 'price' | 'listPrice' | 'capturedAt' | 'expiresAt' | 'availability' | 'availabilityCapturedAt' | 'lastSnapshotId' | 'lifecycle' | 'review' | 'shipping' | 'coupons'>;
+  offer: EvidencedOffer & Pick<Offer, 'shipping' | 'coupons'>;
   /** Authorised good price history for this variant, oldest first. */
-  history: Pick<PriceSnapshot, 'price' | 'anomaly' | 'capturedAt'>[];
+  history: PriceSnapshot[];
+  evidence?: CommercialEvidenceContext;
   now: Date | string;
 }
 
@@ -84,17 +86,10 @@ function discountPct(price: number, reference: number | null | undefined): numbe
 
 function lowestHistoricalPrice(
   history: DealScoreInput['history'],
-  now: Date,
 ): { price: number | null; count: number } {
   let lowest: number | null = null;
   let count = 0;
   for (const h of history) {
-    if (h.anomaly) continue;
-    const capturedIso = toStrictUtc(h.capturedAt);
-    const captured = capturedIso ? new Date(capturedIso).getTime() : NaN;
-    if (!Number.isFinite(captured)) continue;
-    const age = now.getTime() - captured;
-    if (age < 0 || age > FRESHNESS_WINDOWS_MS.history) continue;
     count += 1;
     if (lowest == null || h.price < lowest) lowest = h.price;
   }
@@ -111,10 +106,12 @@ function lowestHistoricalPrice(
  * fall short of a proof — never a price-floor claim without proof.
  */
 export function computeDealScore(input: DealScoreInput): DealScoreBreakdown {
-  const now = input.now instanceof Date ? input.now : new Date(input.now);
-  const promotable = isOfferPromotable(input.offer, now);
-  const history = input.history;
-  const floor = lowestHistoricalPrice(history, now);
+  const reference = toStrictUtc(input.now);
+  const promotable = isOfferPromotable(input.offer, input.now, input.evidence);
+  if (!reference || !promotable.promotable) return { total: 0, label: 'unknown', confidence: 'unknown', factors: [], verified: false, floorClaim: `No claim: ${promotable.reason}.` };
+  const now = new Date(reference);
+  const history = authorisedHistory(input.offer, input.history, input.evidence, input.now);
+  const floor = lowestHistoricalPrice(history);
   const factors: DealScoreFactor[] = [];
 
   // 1. Discount vs list price (input value, weight, penalty)
@@ -213,7 +210,7 @@ export function computeDealScore(input: DealScoreInput): DealScoreBreakdown {
   return {
     total: Number(total.toFixed(4)),
     label,
-    confidence,
+    confidence: label === 'unknown' ? 'unknown' : confidence,
     factors,
     verified: label !== 'unknown' && promotable.promotable,
     floorClaim,
@@ -265,7 +262,9 @@ export const TREND_SCORE_THRESHOLDS = {
  * exist or when the weighted centroid delta is within the noise band.
  */
 export function computeTrendScore(input: TrendScoreInput): TrendScoreBreakdown {
-  const now = input.now instanceof Date ? input.now : new Date(input.now);
+  const reference = toStrictUtc(input.now);
+  if (!reference) return { total: 0, label: 'unknown', confidence: 'unknown', factors: [], verified: false };
+  const now = new Date(reference);
   const factors: TrendScoreFactor[] = [];
 
   let weightSum = 0;
@@ -278,7 +277,7 @@ export function computeTrendScore(input: TrendScoreInput): TrendScoreBreakdown {
     const captured = capturedIso ? new Date(capturedIso).getTime() : NaN;
     if (!Number.isFinite(captured)) continue;
     const age = now.getTime() - captured;
-    if (age < 0 || age > FRESHNESS_WINDOWS_MS.trend) continue;
+    if (age < 0 || age >= FRESHNESS_WINDOWS_MS.trend) continue;
     if (s.anomaly) {
       // Anomalies are kept on the audit trail but force-zeroed in scoring.
       factors.push({

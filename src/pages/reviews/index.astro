@@ -1,8 +1,9 @@
 ﻿---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../../lib/product-art';
+import { getProductImageSourceLabel, getProductImage, getProductImageAlt, getProductFallbackImage, getCategoryLabel } from '../../lib/product-art';
 import { getCommerceData } from '../../lib/commerce-data';
+import { getProductThumbnailSet } from '../../lib/product-thumbnails.js';
 
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const products = await getCollection('products');
@@ -23,15 +24,17 @@ const guides = await getCollection('best-of');
     {reviews.map((review) => {
       const product = products.find((item) => item.data.slug === review.data.productSlug);
       const productData = product?.data;
+      const commerce = getCommerceData(productData ?? {});
       const imageSource = productData ? getProductImage(productData) : undefined;
       const imageAlt = productData ? getProductImageAlt(productData) : review.data.title;
       const fallbackImage = productData ? getProductFallbackImage(productData) : '/images/product-placeholder.svg';
       return <article class="premium-card group flex h-full flex-col overflow-hidden p-5 transition duration-200 hover:-translate-y-1 hover:shadow-xl">
-        {productData && <div class="flex gap-4">
+        {productData && <div class="flex gap-4" data-image-fallback-scope>
           <div class="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-slate-50 p-2">
-            <img src={imageSource} alt={imageAlt} class="h-full w-full object-contain" loading="lazy" decoding="async" fetchpriority="low" width="320" height="320" data-fallback-src={fallbackImage} />
+            <img src={imageSource} srcset={getProductThumbnailSet(productData)} sizes="80px" alt={imageAlt} class="h-full w-full object-contain" loading="lazy" decoding="async" fetchpriority="low" width="320" height="320" data-fallback-src={fallbackImage} />
           </div>
           <div class="min-w-0">
+            <p class="mb-2 text-xs text-slate-600" data-image-source-caption>{getProductImageSourceLabel(productData)}</p>
             <p class="text-xs font-black uppercase tracking-wide text-blue-700">{getCategoryLabel(review.data.category)}</p>
             <h2 class="mt-1 font-heading text-xl font-black leading-tight text-slate-950"><a href={'/review/' + review.id + '/'} class="hover:text-blue-700">{review.data.title}</a></h2>
           </div>
@@ -42,8 +45,8 @@ const guides = await getCollection('best-of');
         </>}
         <p class="mt-4 flex-1 leading-7 text-slate-600">{review.data.description}</p>
         {productData && <div class="mt-5 grid grid-cols-3 gap-2 text-center text-xs font-bold text-slate-600">
-           <span class="rounded-2xl bg-orange-50 px-3 py-2 text-orange-700">{getCommerceData(productData).priceLabel}: ${productData.price}</span>
-           <span class="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700">Amazon customer rating {productData.ownerRating}/5</span>
+           <span class="rounded-2xl bg-orange-50 px-3 py-2 text-orange-700">{commerce.displayPrice === undefined ? 'Check price on Amazon' : `${commerce.priceLabel}: $${commerce.displayPrice}`}</span>
+           <span class="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700">{commerce.displayRating === undefined ? 'Check ratings on Amazon' : `Amazon customer rating ${commerce.displayRating}/5`}</span>
           <span class="rounded-2xl bg-slate-50 px-3 py-2">{productData.brand}</span>
         </div>}
            <a href={'/review/' + review.id + '/'} class="premium-secondary-action mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2 text-sm font-black transition hover:-translate-y-0.5">Read review →</a>

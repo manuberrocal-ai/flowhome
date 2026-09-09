@@ -1,0 +1,76 @@
+{
+  "summary": {
+    "files_scanned": 4,
+    "findings": 8,
+    "blocker": 0,
+    "major": 8,
+    "minor": 0
+  },
+  "findings": [
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\product\\govee-rgbic-led-strip-lights\\index.html",
+      "location": "<img> #2",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\product\\govee-rgbic-led-strip-lights\\index.html",
+      "location": "<img> #3",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\products\\index.html",
+      "location": "<img> #2",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\products\\index.html",
+      "location": "<img> #3",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\reviews\\index.html",
+      "location": "<img> #2",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\reviews\\index.html",
+      "location": "<img> #3",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\search\\index.html",
+      "location": "<img> #2",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    },
+    {
+      "file": "C:\\AGENTES\\Proyectos\\flowhome\\dist\\search\\index.html",
+      "location": "<img> #3",
+      "severity": "major",
+      "rule": "missing-alt",
+      "excerpt": "<img>",
+      "reason": "La imagen no tiene texto alternativo; decidir si es informativa o decorativa."
+    }
+  ],
+  "notice": "Los hallazgos son candidatos para revisión humana; no prueban intención, autoría ni incumplimiento."
+}

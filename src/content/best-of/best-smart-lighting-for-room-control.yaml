@@ -1,6 +1,6 @@
 slug: best-smart-lighting-for-room-control
-title: "Best Smart Lighting for Room Control: Hue vs Govee vs Wyze"
-description: "Compare smart bulbs and LED strips for room control using format, color and dimming, ecosystem support, and time-sensitive catalog price context."
+title: "Smart Lighting Buying Guide: Hue, Govee, and Wyze Room Control"
+description: "Compare bulb and strip formats, documented control paths, exact models, and installation requirements."
 category: smart-lighting
 maxPrice: 130
 productSlugs:
@@ -9,19 +9,35 @@ productSlugs:
   - wyze-bulb-color
 pubDate: 2026-07-16
 pinterestImage: /images/pinterest/smart-lighting-guide.png
-intro: "Room control starts with the lighting format your space can use, then moves to the ecosystem you already operate. This guide connects three structured smart-lighting profiles with the existing Philips Hue review and comparison so you can check bulb-versus-strip fit, RGB and dimming needs, platform support, and the catalog snapshot without turning changing listing data into a promise."
+intro: "Choose the fixture or mounting location before the ecosystem. This documentary guide compares formats and selected manufacturer guidance; it does not verify every seller model, current price, or comparative lighting performance."
 buyingConsiderations:
   - label: "Bulb or strip installation"
-    detail: "The Philips Hue and Wyze profiles are bulbs, while Govee is an RGBIC LED strip. Match the format to the fixture or surface you want to control, and verify socket, placement, power, and mounting requirements for the exact product before buying."
+    detail: "The catalog identifies Hue kit 562918 with two E26 color bulbs and a Bridge, Wyze Bulb Color, and Govee H617C. H617C is a 10 m strip that Govee marks as not cuttable. Confirm sockets, seller package, mounting surface, and included power hardware; exact firmware and pairings are not verified."
   - label: "Wall-switch and always-powered behavior"
-    detail: "The Hue review says wall switches should usually stay on so automations can keep working. For any room where people may cut power at a wall switch, verify the product's always-powered requirements and the household control routine before buying."
+    detail: "For app-operated Hue lighting, wall switches should usually stay on so the bulbs remain reachable. Hue documents controls that maintain bulb power. Use regional installation instructions and verify the behavior of any other brand separately."
   - label: "Ecosystem and app control"
-    detail: "All three profiles list Alexa, Google Home, and app control. Philips Hue also lists Apple HomeKit, while Govee and Wyze do not; match these profile fields to the platforms your household uses."
-  - label: "RGB and dimming needs"
-    detail: "All three profiles list RGB color and dimming. Use the comparison to review those shared fields alongside the different bulb and strip formats rather than assuming they install or control the same way."
-  - label: "Catalog price context"
-    detail: "The profiles list $129.99 for Philips Hue, $39.99 for Govee, and $29.98 for Wyze. These are time-sensitive catalog snapshots, so check the current listing before buying."
+    detail: "Wyze documents Alexa and Google Assistant control for Bulb Color. Govee lists H617C as Bluetooth-controlled, without Alexa or Matter support. Do not transfer Wi-Fi or assistant support from other RGBIC models to this strip."
+  - label: "Color and dimming needs"
+    detail: "Check whether the required control is color selection, brightness, tunable white, or an entire circuit. Bulbs and strips need different physical installations; their presence in one comparison does not establish equivalent output or quality."
+  - label: "Current buying cost"
+    detail: "Prices and ratings have not been verified for this guide. Compare current listing terms, required bridges, controllers, and replacement quantities before buying; historical catalog snapshots are not offers."
 comparisonSlug: "philips-hue-white-color-starter-kit-vs-govee-rgbic-led-strip-lights-vs-wyze-bulb-color"
 comparisonLabel: "Read the Philips Hue vs Govee RGBIC vs Wyze lighting comparison"
 reviewSlugs:
   - philips-hue-white-color-starter-kit-review
+sources:
+  - label: "Philips Hue US kit 562918, UPC 046677562915"
+    url: "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+    accessedAt: "2026-09-06"
+  - label: "Philips Hue Bridge and bulb connection guide"
+    url: "https://www.philips-hue.com/en-us/explore-hue/faq/bulbs/how-to-connect-smart-bulb-to-wifi"
+    accessedAt: "2026-09-04"
+  - label: "Philips Hue wall-switch guidance; regional wiring applies"
+    url: "https://www.philips-hue.com/en-gb/support/article/wall-switch-modules/000016"
+    accessedAt: "2026-09-04"
+  - label: "Govee official model-specific strip specifications"
+    url: "https://community.govee.com/support/faqs/specs"
+    accessedAt: "2026-09-04"
+  - label: "Wyze Bulb Color switch and voice-control behavior"
+    url: "https://support.wyze.com/hc/en-us/articles/360056914291-Can-Wyze-Bulb-Color-be-controlled-without-the-Wyze-app"
+    accessedAt: "2026-09-04"

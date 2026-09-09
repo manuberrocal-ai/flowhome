@@ -7,23 +7,78 @@ originalPrice: 69.99
 discountPct: 0
 category: smart-blinds
 affiliateUrl: "https://www.amazon.com/dp/B0B4D95FZW?tag=flowhome-20"
-image: "https://www.switch-bot.com/cdn/shop/products/switchbot-blind-tilt-564574_1200x1200.jpg?v=1720766063"
+image: "/images/product-art/illustrations-v1/smart-blinds.png"
 ownerRating: 4.1
 ownerRatingCount: 2100
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-04"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "SwitchBot Blind Tilt"
-wifi: true
+identityEvidence:
+  model: "SwitchBot Blind Tilt"
+  asin: B0B4D95FZW
+  claims:
+    model:
+      value: "SwitchBot Blind Tilt"
+      conditions: "The cited manufacturer document covers this catalog model or family. It does not independently match the Amazon ASIN, seller package or hardware revision."
+      sources:
+        - label: "SwitchBot Blind Tilt — supported horizontal blinds and wand sizes"
+          url: "https://support.switch-bot.com/hc/en-us/articles/11696634725783-What-types-of-blinds-does-Blind-Tilt-support"
+          accessedAt: "2026-09-05"
+    role:
+      value: "Retrofit actuator for supported horizontal blind wands"
+      conditions: "The documented fitting limits do not cover vertical blinds or roller shades; verify the existing blind before buying."
+      sources:
+        - label: "SwitchBot Blind Tilt — supported horizontal blinds and wand sizes"
+          url: "https://support.switch-bot.com/hc/en-us/articles/11696634725783-What-types-of-blinds-does-Blind-Tilt-support"
+          accessedAt: "2026-09-05"
+installation:
+  model: "SwitchBot Blind Tilt"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Check the existing blind before fitting the device: support specifies horizontal blinds with a wand diameter of 6.2-10.2 mm or 12 mm, not vertical blinds or roller shades. Follow the manufacturer's fitting and calibration guides for your hardware."
+    - "The unit has a rechargeable battery and USB-C power rated at 5 V, 1 A. Solar charging depends on the installation conditions; verify the exact seller package and accessories rather than assuming a bundle."
+    - "Use the SwitchBot app for nearby control. Remote control and linked assistants require a separate compatible hub; this is not a direct Wi-Fi device. See the compatibility notes for Matter bridge and controller conditions."
+  sources:
+    - label: "SwitchBot Blind Tilt — supported horizontal blinds and wand sizes"
+      url: "https://support.switch-bot.com/hc/en-us/articles/11696634725783-What-types-of-blinds-does-Blind-Tilt-support"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Blind Tilt — unsupported vertical blinds and roller shades"
+      url: "https://support.switch-bot.com/hc/en-us/articles/11642036286359-Does-Blind-Tilt-support-vertical-blinds"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Blind Tilt US product information — power, app and hub"
+      url: "https://us.switch-bot.com/pages/switchbot-blind-tilt"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Blind Tilt official fitting guide (video)"
+      url: "https://support.switch-bot.com/hc/en-us/articles/12824007809303-How-to-install-SwitchBot-Blind-Tilt"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Blind Tilt official calibration guide (video)"
+      url: "https://support.switch-bot.com/hc/en-us/articles/14701864571927-How-to-Calibrate-Your-Blind-Tilt"
+      accessedAt: "2026-09-05"
+wifi: false
 bluetooth: true
 zigbee: false
-matter: false
+matter: true
+compatibilityNotes:
+  - "Blind Tilt is a Bluetooth-only device, not a direct Wi-Fi device. Remote control and linked assistants require a separate compatible SwitchBot hub within Bluetooth range; confirm the app setup and what the seller bundle includes."
+  - "The unit is not a native Matter accessory. Matter and Apple Home integration are available through a supported SwitchBot Matter bridge and a controller for the receiving platform. Check firmware, supported actions and the exact hub model."
+sources:
+  - label: "SwitchBot identifies Blind Tilt as Bluetooth-only hardware"
+    url: "https://us.switch-bot.com/products/switchbot-hub-2"
+    accessedAt: "2026-09-04"
+  - label: "SwitchBot Blind Tilt assistant setup and hub dependency"
+    url: "https://support.switch-bot.com/hc/en-us/articles/13918769034519-SwitchBot-Blind-Tilt-Alexa-Setup-Guide"
+    accessedAt: "2026-09-04"
+  - label: "SwitchBot Matter bridge compatibility and receiving controller requirements"
+    url: "https://support.switch-bot.com/hc/en-us/articles/38979658026519-SwitchBot-Device-Matter-Compatibility"
+    accessedAt: "2026-09-04"
 alexaCompatible: true
 googleHomeCompatible: true
-appleHomeKit: false
+appleHomeKit: true
 appControl: true
 energyMonitoring: false
 nightVision: false
@@ -33,6 +88,3 @@ lidarMapping: false
 rgb: false
 dimmable: false
 subscriptionRequired: false
-priority: standard
-priorityScore: 42
-roiApproved: true

@@ -1,13 +1,13 @@
 slug: philips-hue-white-color-starter-kit
-asin: B016H0QZ7I
+asin: B096YFWVVS
 name: "Philips Hue White and Color Starter Kit"
 brand: "Philips Hue"
 price: 129.99
 originalPrice: 199.99
 discountPct: 35
 category: smart-lighting
-affiliateUrl: "https://www.amazon.com/dp/B016H0QZ7I?tag=flowhome-20"
-image: "https://m.media-amazon.com/images/P/B016H0QZ7I.01._SCLZZZZZZZ_.jpg"
+affiliateUrl: "https://www.amazon.com/dp/B096YFWVVS?tag=flowhome-20"
+image: "/images/product-art/illustrations-v1/smart-lighting.png"
 ownerRating: 4.7
 ownerRatingCount: 23000
 ratingSource: "Amazon customer ratings"
@@ -16,8 +16,65 @@ catalogActive: true
 dateUpdated: "2026-06-28"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
-model: "Philips Hue White and Color Starter Kit"
-wifi: true
+model: "562918 (2 E26 color bulbs + Hue Bridge)"
+identityEvidence:
+  model: "562918 (2 E26 color bulbs + Hue Bridge)"
+  asin: B096YFWVVS
+  claims:
+    model:
+      value: "562918 (2 E26 color bulbs + Hue Bridge)"
+      conditions: "The indexed Amazon listing identifies model 562918 and UPC 046677562915. This is a documentary match, not inspection of a seller's unit."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B096YFWVVS"
+          accessedAt: "2026-09-06"
+    asin:
+      value: "B096YFWVVS"
+      conditions: "The consulted indexed listing describes the two-bulb kit, not the former Bridge-only destination. It does not establish current stock or price."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B096YFWVVS"
+          accessedAt: "2026-09-06"
+    market:
+      value: "US Amazon listing"
+      conditions: "The amazon.com destination is the observed market context; confirm the unit's regional label and electrical requirements separately."
+      sources:
+        - label: "Amazon indexed listing — identity observation, not a live offer"
+          url: "https://www.amazon.com/dp/B096YFWVVS"
+          accessedAt: "2026-09-06"
+    bundle:
+      value: "Two E26 white-and-color bulbs and a Hue Bridge, UPC 046677562915"
+      conditions: "The manufacturer page documents this kit. Its generic Bridge Pro FAQ is not evidence for this package; confirm the current seller contents separately."
+      sources:
+        - label: "Philips Hue US — exact UPC starter kit"
+          url: "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+          accessedAt: "2026-09-06"
+sources:
+  - label: "Amazon — 562918, UPC 046677562915, two color bulbs and Bridge"
+    url: "https://www.amazon.com/dp/B096YFWVVS"
+    accessedAt: "2026-09-06"
+  - label: "Philips Hue US — matching UPC 046677562915 starter kit"
+    url: "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+    accessedAt: "2026-09-06"
+compatibilityNotes:
+  - "This catalog entry now identifies kit 562918, UPC 046677562915: two E26 white-and-color bulbs and a Hue Bridge. The previous Amazon destination was a Bridge-only listing, not this kit. Confirm the exact seller package before buying; the unit and firmware have not been inspected."
+  - "The historical commercial observations have not been verified for this corrected destination. Bulb and Bridge connectivity describe different components; do not transfer Bridge Pro specifications or assume that each bulb has Wi-Fi or native Matter."
+installation:
+  model: "562918 (2 E26 color bulbs + Hue Bridge)"
+  market: US
+  assessment: light-setup
+  requirements:
+    - "Confirm kit 562918 / UPC 046677562915 contains two E26 A19 color bulbs and a Hue Bridge. Check the existing fixtures against the bulb's 110-130 V and IP20 specifications before buying. This assessment covers replacement bulbs in suitable existing fixtures, not rewiring or outdoor installation."
+    - "Provide power for the Bridge and an available router Ethernet port. Connect the included Ethernet cable, install the Hue app and keep the phone on the same home network during setup. Follow the app to pair the Bridge and discover the powered bulbs."
+    - "The bulbs use Zigbee with the Bridge; the phone's Wi-Fi connection does not make these bulbs Wi-Fi devices. This profile does not cover Bridge Pro, migration of an existing system or native-Matter bulbs. Confirm the actual hardware, firmware and any assistant setup separately; no physical pairing test has been performed."
+  sources:
+    - label: "Philips Hue US — UPC 046677562915 kit and electrical specifications"
+      url: "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+      accessedAt: "2026-09-06"
+    - label: "Philips Hue US — starter kit, Ethernet and app setup"
+      url: "https://www.philips-hue.com/en-us/support/connect-hue-product/starter-kit"
+      accessedAt: "2026-09-06"
+wifi: false
 bluetooth: true
 zigbee: true
 matter: true
@@ -33,6 +90,3 @@ lidarMapping: false
 rgb: true
 dimmable: true
 subscriptionRequired: false
-priority: hero
-priorityScore: 80
-roiApproved: true

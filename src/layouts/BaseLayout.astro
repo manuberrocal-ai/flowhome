@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../lib/seo';
 import { serializeJsonLd } from '../lib/json-ld.js';
+import { publicConfig } from '../lib/public-config';
+import { getArtworkCaption } from '../lib/product-image-policy.js';
 import interLatinUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import plusJakartaLatinUrl from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 
@@ -15,7 +17,10 @@ interface Props {
   type?: 'website' | 'article' | 'product';
   canonicalURL?: string;
   noindex?: boolean;
+  hasPageAffiliateDisclosure?: boolean;
   preloadImage?: string;
+  preloadImageSrcset?: string;
+  preloadImageSizes?: string;
   market?: string;
   currency?: string;
 }
@@ -27,7 +32,10 @@ const {
   type = 'website',
   canonicalURL = Astro.url.href,
   noindex = false,
+  hasPageAffiliateDisclosure = false,
   preloadImage,
+  preloadImageSrcset,
+  preloadImageSizes,
   market = 'US',
   currency = 'USD',
 } = Astro.props;
@@ -35,8 +43,8 @@ const {
 const absoluteImage = image.startsWith('http') ? image : new URL(image, Astro.site || Astro.url.origin).href;
 const orgSchema = generateOrganizationSchema();
 const websiteSchema = generateWebSiteSchema();
-const GTM_ID = import.meta.env.PUBLIC_GTM_ID || '';
-const CLARITY_ID = import.meta.env.PUBLIC_CLARITY_ID || '';
+const GTM_ID = publicConfig.gtmId;
+const CLARITY_ID = publicConfig.clarityId;
 const FUNNEL_EXPERIMENT_V1 = import.meta.env.PUBLIC_FUNNEL_EXPERIMENT_V1 === 'true';
 const HOME_PRIMARY_CTA_V1 = import.meta.env.PUBLIC_HOME_PRIMARY_CTA_V1 === 'true';
 const CONSENT_PREPAINT_SCRIPT = `(()=>{let choice='unset';try{const saved=window.localStorage.getItem('flowhome-consent');const preference=saved?JSON.parse(saved):null;if(preference?.version===1&&(preference.choice==='accepted'||preference.choice==='rejected'))choice=preference.choice}catch{}document.documentElement.dataset.flowhomeConsent=choice})();`;
@@ -68,41 +76,44 @@ const safePreloadImage = (() => {
     <meta name="p:domain_verify" content="6cf2c9a42f2aef69bebc982c82825143" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/images/flowhome-icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/flowhome-touch-180.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0f172a" />
     <link rel="preload" as="font" href={interLatinUrl} type="font/woff2" crossorigin />
     <link rel="preload" as="font" href={plusJakartaLatinUrl} type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="search" type="application/opensearchdescription+xml" title="FlowHome" href="/opensearch.xml" />
-    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow" />}
+    {noindex || publicConfig.environment === 'staging' ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow" />}
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={absoluteImage} />
+    {image.includes('/images/product-art/') && <meta property="og:image:alt" content={getArtworkCaption(image)} />}
     <meta property="og:site_name" content="FlowHome" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
+    {image.includes('/images/product-art/') && <meta name="twitter:image:alt" content={getArtworkCaption(image)} />}
     <script is:inline set:html={CONSENT_PREPAINT_SCRIPT}></script>
     <style is:inline>
 html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-banner-open="true"]), html[data-flowhome-consent="rejected"] [data-consent-banner]:not([data-consent-banner-open="true"]) { display: none; }
 </style>
     <script type="application/ld+json" set:html={serializeJsonLd(orgSchema)} />
     <script type="application/ld+json" set:html={serializeJsonLd(websiteSchema)} />
-    {safePreloadImage && <link rel="preload" as="image" href={safePreloadImage} fetchpriority="high" />}
+    {safePreloadImage && <link rel="preload" as="image" href={safePreloadImage} imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} fetchpriority="high" />}
   </head>
   <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800" data-page-type={pageType} data-gtm-id={GTM_ID} data-clarity-id={CLARITY_ID} data-funnel-experiment-v1={FUNNEL_EXPERIMENT_V1 ? 'on' : 'off'} data-home-primary-cta-v1={HOME_PRIMARY_CTA_V1 ? 'on' : 'off'}>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <Header />
-    <div class="border-b border-amber-100 bg-amber-50/75">
+      {!hasPageAffiliateDisclosure && <div class="border-b border-amber-100 bg-amber-50/75" data-global-affiliate-disclosure>
       <div class="mx-auto max-w-7xl px-4 py-2 text-center text-[11px] font-semibold leading-5 text-amber-900 sm:px-6 lg:px-8">
-        FlowHome may earn from qualifying Amazon purchases. Recommendations prioritize usefulness, compatibility, owner feedback, and buying context.
+        FlowHome may earn from qualifying Amazon purchases. Recommendations focus on intended use, documented requirements, and explicit limitations.
       </div>
     </div>
-    <ConsentBanner />
+      }
+      <ConsentBanner />
     <main id="main-content" tabindex="-1" class="flex-1 w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <slot />
     </main>
@@ -148,14 +159,9 @@ html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-b
       <script>
       import { setupAnalytics } from '../lib/analytics';
       import { setupExperiments } from '../lib/experiments';
+      import { setupImageFallbacks } from '../lib/image-fallback.js';
 
-      document.addEventListener('error', (event) => {
-        const image = event.target;
-        if (!(image instanceof HTMLImageElement)) return;
-        const fallbackSrc = image.dataset.fallbackSrc;
-        if (!fallbackSrc || image.src === new URL(fallbackSrc, window.location.href).href) return;
-        image.src = fallbackSrc;
-      }, true);
+      setupImageFallbacks();
 
       setupAnalytics({
         gtmId: document.body.dataset.gtmId || '',

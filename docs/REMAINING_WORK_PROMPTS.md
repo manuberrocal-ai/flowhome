@@ -1,5 +1,7 @@
 # FlowHome Remaining Work — Token-Efficient Prompts
 
+> Historical block prompts; do not replay all blocks as unfinished work. Use the [current master prompt](project/PROMPT_MAESTRO.md) and [evidence-backed backlog](project/BACKLOG.json). Implemented local contracts, active services and unvalidated outcomes have different states; the [integral assessment](project/JUZGADO_INTEGRAL.md) reconciles them as of 2026-09-05.
+
 Use one block per fresh session. Do not concatenate blocks. Close and summarize each block before starting the next. Every block assumes P0–P2 are complete and verified as documented in docs/P2_COMPLETION_REPORT.md.
 
 ## Shared baseline

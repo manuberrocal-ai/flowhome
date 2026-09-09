@@ -1,6 +1,6 @@
 slug: best-smart-home-devices-for-renters
-title: "Best Smart Home Devices for Renters"
-description: "Renter-friendly smart home picks that avoid major rewiring: plugs, speakers, displays, cameras, lighting, and retrofit access control."
+title: "Smart Home Devices for Renters: Installation and Permission Checks"
+description: "Research removable controls, cameras, lighting, and retrofit access without assuming every installation is permitted or damage-free."
 category: smart-plug
 maxPrice: 250
 productSlugs:
@@ -11,3 +11,22 @@ productSlugs:
   - blink-outdoor-4
   - august-wifi-smart-lock
 pubDate: 2026-06-28
+intro: "This shortlist is organized around installation decisions, not a guarantee of lease compliance or damage-free removal. Get any required property permission, inspect the actual mounting method, and plan how the original setup will be restored."
+buyingConsiderations:
+  - label: "Check the physical change"
+    detail: "August documents a retrofit that retains existing exterior deadbolt hardware and keys, but that does not waive property rules or establish door compatibility. For adhesive lighting and camera mounts, check the surface and removal instructions."
+  - label: "Confirm the exact device"
+    detail: "This catalog identifies the Kasa EP10P2 two-pack and Govee H617C, not every Mini or RGBIC variant. H617C is a 10 m Bluetooth strip marked not cuttable; do not plan to shorten it to fit a rental. Confirm plug load limits, mounting surface, control method, and included power hardware using the exact model documentation and seller package."
+sources:
+  - label: "Kasa EP10P2 indexed listing identity, not current commercial terms"
+    url: "https://www.amazon.com/dp/B091FXQQMQ"
+    accessedAt: "2026-09-05"
+  - label: "August Wi-Fi Smart Lock retrofit and integrations"
+    url: "https://august.com/products/august-wifi-smart-lock"
+    accessedAt: "2026-09-04"
+  - label: "TP-Link Kasa setup and model selection"
+    url: "https://www.tp-link.com/us/support/faq/946/"
+    accessedAt: "2026-09-04"
+  - label: "Govee official model-specific strip specifications"
+    url: "https://community.govee.com/support/faqs/specs"
+    accessedAt: "2026-09-04"

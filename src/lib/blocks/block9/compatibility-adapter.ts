@@ -45,6 +45,8 @@ export interface CatalogCompatibilityFields {
   zigbee?: boolean;
   wifi?: boolean;
   bluetooth?: boolean;
+  thread?: boolean;
+  smartthingsIntegration?: boolean;
   [key: string]: unknown;
 }
 
@@ -56,6 +58,8 @@ export type VerifiedProduct<T extends CatalogCompatibilityFields = CatalogCompat
   compatibilityVerified: boolean;
   /** Per-field provenance labels (source citations); null when Unknown. */
   compatibilityProvenance: Record<string, string | null>;
+  /** Exact qualified claim per field; not a general compatibility guarantee. */
+  compatibilityConditions: Record<string, string | null>;
 };
 
 const FIELD_TO_FLAG = {
@@ -66,6 +70,8 @@ const FIELD_TO_FLAG = {
   zigbee: 'zigbee',
   wifi: 'wifi',
   bluetooth: 'bluetooth',
+  thread: 'thread',
+  smartthingsIntegration: 'smartthings',
 } as const;
 
 type CatalogField = keyof typeof FIELD_TO_FLAG;
@@ -93,7 +99,7 @@ export function applyVerifiedCompatibility<T extends CatalogCompatibilityFields>
   env: CompatibilityEnvironment,
 ): VerifiedProduct<T> {
   if (!env.enabled || !env.graph) {
-    return { ...product, compatibilityVerificationEnabled: false, compatibilityVerified: false, compatibilityProvenance: {} };
+    return { ...product, compatibilityVerificationEnabled: false, compatibilityVerified: false, compatibilityProvenance: {}, compatibilityConditions: {} };
   }
   const flags = getVerifiedFlags(env.graph, slug, {
     enabled: true,
@@ -103,12 +109,14 @@ export function applyVerifiedCompatibility<T extends CatalogCompatibilityFields>
   });
   const overridden: Partial<Record<CatalogField, boolean | undefined>> = {};
   const provenance: Record<string, string | null> = {};
+  const conditions: Record<string, string | null> = {};
   let anyVerified = false;
   for (const [field, flagKey] of Object.entries(FIELD_TO_FLAG) as Array<[CatalogField, FlagKey]>) {
     const flag = flags[flagKey] as VerifiedFlag;
     const value = toBoolean(flag);
     overridden[field] = value;
     provenance[field] = flag.verified ? flag.sourceLabel : null;
+    conditions[field] = flag.verified ? flag.reason : null;
     if (flag.verified) anyVerified = true;
   }
   return {
@@ -117,6 +125,7 @@ export function applyVerifiedCompatibility<T extends CatalogCompatibilityFields>
     compatibilityVerificationEnabled: true,
     compatibilityVerified: anyVerified,
     compatibilityProvenance: provenance,
+    compatibilityConditions: conditions,
   };
 }
 
