@@ -360,7 +360,7 @@
       "execution": "local",
       "owner_role": "Ingeniería",
       "acceptance": "Auditoría posterior utilizable o cada excepción evaluada; conciliar fast-uri local 3.1.7 con PR #11; revisar siete PRs observadas por compatibilidad, sin duplicar parches ni fusionar automáticamente.",
-      "evidence": "Cierre histórico: docs/project/CIERRE_FH23_2026-09-06.md. Reabierto por CI; FH23B corrige dependencias/workflow, FH23D optimiza portada y FH23E evalúa alerta43. Fuente local e79ac6f con instalación limpia, auditoría producción0,1059 pruebas y142 casos/91HTTP. Nuevo parche no incorporado a PR12; no atribuirlo al SHA remoto ni dar por resueltas sus alertas.",
+      "evidence": "Cierre histórico: docs/project/CIERRE_FH23_2026-09-06.md. Reabierto por CI; FH23B corrige dependencias/workflow, FH23D optimiza portada y FH23E evalúa alerta43. Fuente local e79ac6f con instalación limpia, auditoría producción0,1059 pruebas y142 casos/91HTTP. Nuevo parche no incorporado a PR12; no atribuirlo al SHA remoto ni dar por resueltas sus alertas. FH23F_CONTRATO_NODE_2026-09-09.md alinea engines con requisitos bloqueados:1061 pruebas, controles completos y build production byte-idéntico a FH13U. No enviado.",
       "reviewed_at": "2026-09-09"
     },
     {

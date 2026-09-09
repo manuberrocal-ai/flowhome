@@ -12,6 +12,8 @@ Madurez 0–5: 0 ausente; 1 definido; 2 parcial; 3 probado localmente; 4 comprob
 
 Corte técnico: [FH12P](FH12P_RENDIMIENTO_2026-09-08.md), 968 pruebas generales, tipos/lint/build88/SEO correctos. Matriz Lighthouse cuatro rutas×tres muestras, portada corregida y repetida×tres (LCP mediano2407 ms), doce escenarios responsive. Una muestra posterior TBT301 ms/rendimiento87 se conserva. Cada informe delimita su cobertura; no implica producción, cuentas o CWV de campo.
 
+Última corrección local: [FH23F](FH23F_CONTRATO_NODE_2026-09-09.md), contrato Node consistente para las plataformas documentadas,1061 pruebas y controles completos. Build production byte-idéntico a FH13U. Técnica3/5; no acredita otra versión de Node, Linux real ni CI remoto.
+
 ## Valoración por etapa
 
 | Etapa | Madurez | Hecho demostrado | Falta y mejora prioritaria |

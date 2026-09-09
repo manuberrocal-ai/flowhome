@@ -11,10 +11,17 @@ Automated smart-home affiliate site for `flowhome.dev`.
 
 ## Quick start
 
+Use Node 24.16.0 (the locally verified runtime) with the committed lockfile.
+For Windows x64 and Linux x64, the dependency engine intersection is
+`^22.22.3 || ^24.16.0 || >=26.3.0`;
+this declares package compatibility, not a tested runtime matrix. Other allowed
+versions have not been verified by the local release checks. CI selects Node 24.
+Windows 32-bit is not covered: its optional Sharp binary has a different Node requirement.
+
 Configuration defaults to a local build with account services and analytics disabled. See the [environment runbook](docs/operations/environment-runbook.md) before enabling services or preparing staging/production. Existing `.env` values no longer select an account automatically; never copy credentials between environments.
 
 ```bash
-npm install
+npm ci
 npm run build
 npm run preview
 ```
