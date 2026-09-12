@@ -77,11 +77,16 @@ test('comparison data and table semantics stay consistent', () => {
   const roomba = read('src/content/products/irobot-roomba-j7-plus.yaml');
   assert.match(q5, /^lidarMapping: true$/m);
   assert.match(q5, /^hasMop: false$/m);
-  assert.match(q5, /^dateUpdated: "2026-07-18"$/m);
+  // Editorial setup summary changed; this must not refresh the commercial snapshot.
+  assert.match(q5, /^dateUpdated: "2026-09-12"$/m);
+  assert.match(q5, /^priceLastChecked: "2026-07-18"$/m);
+  assert.match(q5, /^ratingLastChecked: "2026-07-18"$/m);
   assert.match(roomba, /^lidarMapping: false$/m);
   assert.match(roomba, /^obstacleDetection: true$/m);
   assert.match(roomba, /^hasMop: false$/m);
-  assert.match(roomba, /^dateUpdated: "2026-07-18"$/m);
+  assert.match(roomba, /^dateUpdated: "2026-09-12"$/m);
+  assert.match(roomba, /^priceLastChecked: "2026-07-18"$/m);
+  assert.match(roomba, /^ratingLastChecked: "2026-07-18"$/m);
   assert.match(page, /Q5\+.*PreciSense.*LiDAR/i);
   assert.match(page, /j7\+.*PrecisionVision.*Imprint Smart Mapping/i);
   assert.match(page, /both.*vacuum-only/i);
@@ -116,7 +121,7 @@ test('robot vacuum editorial cluster has optional guide fields and exact links',
   assert.ok(roomba.split(/\s+/).length >= 500, 'Roomba review should remain substantive');
   assert.ok(q5.split(/\s+/).length >= 500, 'Q5+ review should remain substantive');
   assert.match(q5, /^updatedDate: 2026-09-06$/m);
-  assert.match(roomba, /^updatedDate: 2026-07-18$/m);
+  assert.match(roomba, /^updatedDate: 2026-09-12$/m);
   assert.match(`${guide}\n${q5}`, /PreciSense(?: Precision)? LiDAR/i);
   assert.match(`${guide}\n${roomba}`, /PrecisionVision(?: Navigation)?/i);
   assert.match(`${guide}\n${roomba}`, /Imprint Smart Mapping/i);

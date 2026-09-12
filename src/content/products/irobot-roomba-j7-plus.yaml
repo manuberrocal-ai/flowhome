@@ -13,7 +13,7 @@ ownerRatingCount: 9000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-07-18"
 catalogActive: true
-dateUpdated: "2026-07-18"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-07-18"
 priceSource: "manual"
 model: "iRobot Roomba j7+"
@@ -42,6 +42,15 @@ identityEvidence:
         - label: "Amazon indexed listing — identity observation only"
           url: "https://www.amazon.com/dp/B094NYHTMF"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "iRobot Roomba j7+"
+  market: US
+  useCase: "Consider the original j7+ for mapped vacuuming and Clean Base emptying when the dock and app workflow fit your home. Its documented PrecisionVision and Imprint Smart Mapping features are comparison criteria, not measured performance results."
+  reconsiderIf: "Compare a different configuration if wet floor care is required: the original j7+ is vacuum-only, not a Combo model. Do not rely on obstacle-avoidance branding as a guarantee; inspect the floor plan and confirm dock space and replacement consumables."
+  sources:
+    - label: "iRobot Roomba j7+ manufacturer features and FAQ"
+      url: "https://www.irobot.com/en_US/roomba-j7plus-self-emptying-robot-vacuum/J755020.html"
+      accessedAt: "2026-09-04"
 installation:
   model: "iRobot Roomba j7+"
   market: US

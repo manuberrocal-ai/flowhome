@@ -13,10 +13,22 @@ ownerRatingCount: 11500
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Essential Outdoor HD Camera (2nd Generation)"
+decisionSummary:
+  model: "Essential Outdoor HD Camera (2nd Generation)"
+  market: US
+  useCase: "Adding a rechargeable outdoor camera where you can check Wi-Fi coverage and reach the unit for charging. The second-generation manual documents app viewing and an integrated battery; this profile concerns the HD version, not a 2K, XL or newer model."
+  reconsiderIf: "Reconsider a hard-to-reach mount: the battery cannot be removed, and the supplied USB-C charging cable is for indoor use only. Check the exact recording plan and seller package before buying; a rechargeable camera does not establish free cloud storage, and the recorded listing has conflicting package quantities."
+  sources:
+    - label: "Arlo — Essential Outdoor second-generation manual: battery, charging and plan caveats"
+      url: "https://downloads.arlo.com/files/QSG/UM_VMC2050_VMC3050_VMC2052_VMC3052_EN.pdf"
+      accessedAt: "2026-09-12"
+    - label: "Amazon — earlier HD identity observation; package quantity unresolved"
+      url: "https://www.amazon.com/dp/B0DVNSQSD7"
+      accessedAt: "2026-09-05"
 identityEvidence:
   model: "Essential Outdoor HD Camera (2nd Generation)"
   asin: B0DVNSQSD7

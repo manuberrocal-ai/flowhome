@@ -13,7 +13,7 @@ ownerRatingCount: 10000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "August Wi-Fi Smart Lock"
@@ -35,6 +35,15 @@ identityEvidence:
         - label: "August Wi-Fi Smart Lock installation and deadbolt requirements"
           url: "https://august.com/products/august-wifi-smart-lock"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "August Wi-Fi Smart Lock"
+  market: US
+  useCase: "Consider this interior retrofit when retaining the exterior deadbolt hardware and original keys matters. Confirm the existing deadbolt, mounting clearance and any required property permission before choosing a package."
+  reconsiderIf: "Address a sticking or misaligned door before adding automation. Compare the complete access setup if guests need keypad codes: do not assume a separate keypad is included, or that retrofit hardware removes the need for permission."
+  sources:
+    - label: "August Wi-Fi Smart Lock product and installation overview"
+      url: "https://august.com/products/august-wifi-smart-lock"
+      accessedAt: "2026-09-04"
 installation:
   model: "August Wi-Fi Smart Lock"
   market: US

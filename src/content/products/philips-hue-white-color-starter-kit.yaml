@@ -13,7 +13,7 @@ ownerRatingCount: 23000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "562918 (2 E26 color bulbs + Hue Bridge)"
@@ -59,10 +59,23 @@ sources:
 compatibilityNotes:
   - "This catalog entry now identifies kit 562918, UPC 046677562915: two E26 white-and-color bulbs and a Hue Bridge. The previous Amazon destination was a Bridge-only listing, not this kit. Confirm the exact seller package before buying; the unit and firmware have not been inspected."
   - "The historical commercial observations have not been verified for this corrected destination. Bulb and Bridge connectivity describe different components; do not transfer Bridge Pro specifications or assume that each bulb has Wi-Fi or native Matter."
+decisionSummary:
+  model: "562918 (2 E26 color bulbs + Hue Bridge)"
+  market: US
+  useCase: "Consider kit 562918 for two suitable E26 fixtures and a plan for Bridge-connected color lighting. Confirm that the seller package includes both bulbs and the Bridge; the kit name alone does not resolve contents or generation."
+  reconsiderIf: "Compare a switch or another lighting format if the job is controlling a whole circuit rather than these bulbs. Plan power to the bulbs and household controls; do not transfer Bridge Pro specifications or assume this kit proves support for every accessory."
+  sources:
+    - label: "Philips Hue US — kit UPC 046677562915"
+      url: "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-starter-kit-2-e26-smart-bulbs-60-w/046677562915"
+      accessedAt: "2026-09-06"
+    - label: "Philips Hue bulb and Bridge connection guide"
+      url: "https://www.philips-hue.com/en-us/explore-hue/faq/bulbs/how-to-connect-smart-bulb-to-wifi"
+      accessedAt: "2026-09-04"
 installation:
   model: "562918 (2 E26 color bulbs + Hue Bridge)"
   market: US
   assessment: light-setup
+  summary: "Check suitable indoor E26 fixtures rated for these 110–130 V bulbs. The included Bridge needs power and a router Ethernet port."
   requirements:
     - "Confirm kit 562918 / UPC 046677562915 contains two E26 A19 color bulbs and a Hue Bridge. Check the existing fixtures against the bulb's 110-130 V and IP20 specifications before buying. This assessment covers replacement bulbs in suitable existing fixtures, not rewiring or outdoor installation."
     - "Provide power for the Bridge and an available router Ethernet port. Connect the included Ethernet cable, install the Hue app and keep the phone on the same home network during setup. Follow the app to pair the Bridge and discover the powered bulbs."

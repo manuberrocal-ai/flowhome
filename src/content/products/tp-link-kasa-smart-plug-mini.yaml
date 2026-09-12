@@ -13,7 +13,7 @@ ownerRatingCount: 78000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "EP10 (EP10P2 two-pack)"
@@ -49,10 +49,29 @@ identityEvidence:
         - label: "Amazon indexed listing — identity observation, not a live offer"
           url: "https://www.amazon.com/dp/B091FXQQMQ"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "EP10 (EP10P2 two-pack)"
+  market: US
+  useCase: "Consider the documented EP10P2 two-pack for on/off control of a manufacturer-approved load that behaves appropriately when power is restored. Confirm the actual two-pack, outlet fit and appliance-specific restrictions before planning a routine."
+  reconsiderIf: "Compare another approach if the appliance needs button presses or mode changes after power returns. Do not choose this listing for energy measurement: the recorded manufacturer documents conflict, and runtime is not measured consumption. A smart-plug label does not approve unattended operation."
+  sources:
+    - label: "EP10 US manual — setup and conflicting usage wording, REV1.1.0 (2024)"
+      url: "https://static.tp-link.com/upload/manual/2024/202407/20240718/1910013747_EP10%28US%29_UG_V1.pdf"
+      accessedAt: "2026-09-05"
+    - label: "Amazon listing identity — EP10P2 two-pack, ASIN B091FXQQMQ"
+      url: "https://www.amazon.com/dp/B091FXQQMQ"
+      accessedAt: "2026-09-05"
+    - label: "Kasa EP10 — US manufacturer product page"
+      url: "https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-plug-mini-ep10"
+      accessedAt: "2026-09-05"
+    - label: "TP-Link support — EP10 has no energy monitoring (2022 response)"
+      url: "https://community.tp-link.com/en/smart-home/threads/topic/588562"
+      accessedAt: "2026-09-05"
 installation:
   model: "EP10 (EP10P2 two-pack)"
   market: US
   assessment: plug-and-play
+  summary: "Use a dry indoor outlet and 2.4 GHz Wi-Fi. Check appliance-specific load limits; do not stack plug adapters."
   requirements:
     - "For the documented EP10 US, use an accessible indoor outlet, away from water, humidity and heat. Do not stack plug adapters. Check the hardware label against the regional manual; the retail bundle's revision and firmware are not verified."
     - "Use 2.4 GHz Wi-Fi and the Kasa Smart app with a TP-Link ID for the documented setup path. A separate hub is not required for that path; follow the app's model-selection instructions."

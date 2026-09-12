@@ -13,10 +13,22 @@ ownerRatingCount: 16000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "BE489WB CEN 622"
+decisionSummary:
+  model: "BE489WB CEN 622"
+  market: US
+  useCase: "Replacing a compatible door's deadbolt with keypad entry and app-managed access through the Encode BE489 family. Plan for four AA alkaline batteries, 2.4 GHz Wi-Fi and a door prepared to the manufacturer's dimensions; check fit before choosing the finish or seller package."
+  reconsiderIf: "Compare a retrofit option if you must retain the existing exterior lock. This is Encode BE489, not Encode Plus. Misaligned doors, altered holes or thick-door hardware need their own assessment; a wireless connection does not fix mechanical fit. Ask a locksmith if door preparation is uncertain."
+  sources:
+    - label: "Schlage US — Encode BE489 Century access, power and fit specifications"
+      url: "https://www.schlage.com/en/home/products/BE489WBCENFFF.html"
+      accessedAt: "2026-09-12"
+    - label: "Schlage — BE489 door preparation and locksmith guidance"
+      url: "https://www.schlage.com/content/dam/sch-us/documents/pdf/installation-manuals/schlage-encode-door-prep-with-holes.pdf"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "BE489WB CEN 622"
   asin: B07HXMLCBT

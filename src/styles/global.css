@@ -111,6 +111,11 @@ body[data-flow-cart-dock-visible="true"] { padding-bottom: calc(6.5rem + env(saf
 
 .product-card { transition: transform var(--fh-motion-base) var(--fh-ease), box-shadow var(--fh-motion-base) var(--fh-ease); }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.1); }
+/* Reading one checklist must not push neighboring cards' actions to its full height. */
+.grid:has(> .product-card [data-product-setup-details][open], > [data-catalog-item] [data-product-setup-details][open]) .product-card {
+  height: auto;
+  align-self: start;
+}
 .product-card-media-link { transition: padding var(--fh-motion-slow) var(--fh-ease), background-color var(--fh-motion-slow) var(--fh-ease); }
 .product-card-media { transition: box-shadow var(--fh-motion-slow) var(--fh-ease); }
 .product-card-image { transform-origin: var(--product-zoom-x, 50%) var(--product-zoom-y, 50%); transition: transform var(--fh-motion-slow) var(--fh-ease); }

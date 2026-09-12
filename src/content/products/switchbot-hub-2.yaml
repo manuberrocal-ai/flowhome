@@ -13,7 +13,7 @@ ownerRatingCount: 8200
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Hub 2"
@@ -35,6 +35,21 @@ identityEvidence:
         - label: "SwitchBot Hub 2 setup — app and 2.4 GHz Wi-Fi"
           url: "https://support.switch-bot.com/hc/en-us/articles/17784047699479-How-to-Set-up-SwitchBot-Hub-2"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Hub 2"
+  market: US
+  useCase: "Consider Hub 2 as a bridge for supported SwitchBot Bluetooth devices or supported infrared appliance actions. Check the exact device, action and receiving platform against the manufacturer's matrix, including any separate controller requirement."
+  reconsiderIf: "Compare a different hub if you need a Zigbee coordinator or expect every device and command to work from a Matter label. Keep the sensor-equipped cable in the package plan: an ordinary USB-C cable is not equivalent for temperature and humidity sensing."
+  sources:
+    - label: "SwitchBot Hub 2 power requirements and sensor-equipped cable"
+      url: "https://support.switch-bot.com/hc/en-us/articles/13506998775575-What-Should-I-Do-if-Hub-Mini-Hub-2-Does-Not-Start-Up-After-Power-On"
+      accessedAt: "2026-09-05"
+    - label: "SwitchBot Matter device and feature matrix"
+      url: "https://www.switch-bot.com/pages/matter"
+      accessedAt: "2026-09-04"
+    - label: "SwitchBot Matter bridge and controller requirements"
+      url: "https://support.switch-bot.com/hc/en-us/articles/38979658026519-SwitchBot-Device-Matter-Compatibility"
+      accessedAt: "2026-09-04"
 installation:
   model: "Hub 2"
   market: US

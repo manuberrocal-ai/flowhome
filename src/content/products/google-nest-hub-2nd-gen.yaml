@@ -13,10 +13,22 @@ ownerRatingCount: 16000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-09-04"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Google Nest Hub 2nd Gen"
+decisionSummary:
+  model: "Google Nest Hub 2nd Gen"
+  market: US
+  useCase: "Consider it when a visible screen would help with a specific Google Home task. Write down the control or linked service you need, then verify that it is currently supported for your account."
+  reconsiderIf: "If nobody will look at the screen, compare a voice-only device. The documented Matter controller and Thread border router roles do not guarantee every accessory, action or linked service."
+  sources:
+    - label: "Google Nest and Home specifications; Nest Hub second-generation section"
+      url: "https://support.google.com/googlehome/answer/7072284?hl=en"
+      accessedAt: "2026-09-04"
+    - label: "Google Home Matter controller, Thread and network requirements"
+      url: "https://support.google.com/googlehome/answer/12391458?hl=en"
+      accessedAt: "2026-09-04"
 identityEvidence:
   model: "Google Nest Hub 2nd Gen"
   asin: B08R8N3Q7C

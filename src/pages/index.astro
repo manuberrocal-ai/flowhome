@@ -9,6 +9,7 @@ import { getProductImage, getProductImageAlt, getProductImageSourceLabel, getCat
 import { getCommerceData } from '../lib/commerce-data';
 import { selectHomeShortlist } from '../lib/home-shortlist.js';
 import { getProductThumbnailSet } from '../lib/product-thumbnails.js';
+import { getInstallationEvidence, getInstallationSummary } from '../lib/product-installation';
 
 // Stable catalog order: unverified customer ratings never determine placement.
 const products = await getCollection('products');
@@ -25,20 +26,11 @@ const showcaseProducts = featuredProducts.slice(0, 4);
 const additionalProducts = featuredProducts.slice(4);
 const dealProducts = products.filter((p) => getCommerceData(p.data, now).showPromotion).slice(0, 4);
 const reviewCards = reviews.slice(0, 3);
-const editorialChecks: Record<string, string> = {
-  'smart-plug': 'Check the outlet type, appliance load and voice-platform compatibility.',
-  'smart-speaker': 'Compare voice-platform support, microphone controls and placement.',
-  'smart-lighting': 'Check bulb fittings, power requirements and whether a separate hub is needed.',
-  'smart-thermostat': 'Confirm your HVAC wiring and installation requirements before ordering.',
-  'security-camera': 'Check power, Wi-Fi coverage and recording subscription requirements.',
-  'video-doorbell': 'Check doorbell wiring, mounting clearance and recording requirements.',
-  'smart-lock': 'Measure the door and verify the lock, hub and backup-access requirements.',
-  'robot-vacuum': 'Compare floor types, obstacle handling and replacement-part availability.',
-};
 const heroProducts = showcaseProducts.map((product) => {
   const data = product.data;
   const commerce = getCommerceData(data, now);
-  return { id: product.id, slug: data.slug, title: data.name, image: getProductImage(data), imageCaption: getProductImageSourceLabel(data), fallbackImage: getProductFallbackImage(data), alt: getProductImageAlt(data), price: commerce.displayPrice, priceLabel: commerce.displayPrice == null ? 'Check current price' : `$${commerce.displayPrice}`, priceContext: commerce.displayPrice == null ? 'On Amazon' : commerce.priceLabel, originalPrice: commerce.displayOriginalPrice ?? null, ownerRating: commerce.displayRating, ownerRatingCount: commerce.displayRatingCount, hasRating: commerce.isRatingFresh, ratingSource: commerce.isRatingFresh ? `Amazon customer rating · ${commerce.ratingLastCheckedLabel}` : 'Current rating not verified', badges: commerce.showPromotion ? [`Save ${commerce.displayDiscountPct}%`] : [], detailsUrl: `/product/${data.slug}/`, amazonUrl: data.affiliateUrl, affiliateDisclosure: 'Affiliate link', category: getCategoryLabel(data.category), discountPct: commerce.displayDiscountPct ?? 0, quote: product.editorialReason + ' ' + (editorialChecks[data.category] || 'Check dimensions, power and household compatibility before ordering.'), starStates: Array.from({ length: 5 }, (_, starIndex) => starIndex < Math.round(commerce.displayRating ?? 0)) };
+  const setupSummary = getInstallationSummary(getInstallationEvidence(data, now));
+  return { id: product.id, slug: data.slug, title: data.name, image: getProductImage(data), imageCaption: getProductImageSourceLabel(data), fallbackImage: getProductFallbackImage(data), alt: getProductImageAlt(data), price: commerce.displayPrice, priceLabel: commerce.displayPrice == null ? 'Check current price' : `$${commerce.displayPrice}`, priceContext: commerce.displayPrice == null ? 'On Amazon' : commerce.priceLabel, originalPrice: commerce.displayOriginalPrice ?? null, ownerRating: commerce.displayRating, ownerRatingCount: commerce.displayRatingCount, hasRating: commerce.isRatingFresh, ratingSource: commerce.isRatingFresh ? `Amazon customer rating · ${commerce.ratingLastCheckedLabel}` : 'Current rating not verified', badges: commerce.showPromotion ? [`Save ${commerce.displayDiscountPct}%`] : [], detailsUrl: `/product/${data.slug}/`, amazonUrl: data.affiliateUrl, affiliateDisclosure: 'Affiliate link', category: getCategoryLabel(data.category), discountPct: commerce.displayDiscountPct ?? 0, quote: setupSummary ?? 'Model-specific setup evidence is not available. Review the exact manufacturer requirements before ordering.', starStates: Array.from({ length: 5 }, (_, starIndex) => starIndex < Math.round(commerce.displayRating ?? 0)) };
 }).map((product, index) => ({ ...product,
   imageSrcset: `${getProductThumbnailSet(showcaseProducts[index].data)}, ${product.image} 1254w`,
   // At narrow widths the photo is 12rem high; square artwork occupies 192px
@@ -51,7 +43,7 @@ const heroProducts = showcaseProducts.map((product) => {
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(249,115,22,0.38),transparent_24%),radial-gradient(circle_at_12%_0%,rgba(37,99,235,0.82),transparent_36%),linear-gradient(135deg,#020617_0%,#172554_43%,#0369a1_100%)]"></div>
     <div class="absolute right-0 top-0 -z-10 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08))]"></div>
 
-    <div class="relative z-10 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:p-10">
+    <div class="relative z-10 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:p-10">
       <div class="min-w-0">
         <p class="inline-flex max-w-full whitespace-normal break-words rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
         <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Find smart home gear for the way you live.</h1>
@@ -61,6 +53,20 @@ const heroProducts = showcaseProducts.map((product) => {
           <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Explore products</a>
         </div>
         <p class="mt-5 max-w-xl text-sm leading-6 text-blue-100">Research-based guidance, not hands-on testing. <a href="/about/#editorial-team" class="inline-flex min-h-11 items-center rounded-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">How we evaluate products</a></p>
+
+        <section class="mt-8" aria-labelledby="home-start-heading" data-home-guide-paths>
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div><p class="text-sm font-bold uppercase tracking-wide text-cyan-100">Plan before you buy</p><h2 id="home-start-heading" class="mt-1 text-2xl font-black text-white md:text-3xl">What are you trying to set up?</h2></div>
+            <a href="/best/" class="inline-flex min-h-11 items-center rounded-sm text-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">All buying guides</a>
+          </div>
+          <nav aria-label="Buying guides by setup need" class="mt-4">
+            <ul class="grid divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+              <li class="min-w-0"><a href="/best/best-smart-home-starter-kit/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">My first room routine</h3><p class="mt-1 text-sm leading-6 text-slate-600">Choose a useful task, then check controls, accessories, and total setup cost.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Plan a starter setup <span aria-hidden="true">&rarr;</span></span></a></li>
+              <li class="min-w-0"><a href="/best/best-smart-home-devices-for-renters/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">A setup for my rental</h3><p class="mt-1 text-sm leading-6 text-slate-600">Check mounting, removal, and property permissions before choosing devices.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Review rental checks <span aria-hidden="true">&rarr;</span></span></a></li>
+              <li class="min-w-0"><a href="/best/best-smart-hubs-for-matter-zigbee/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">Devices that need a hub</h3><p class="mt-1 text-sm leading-6 text-slate-600">Compare hub roles and exact-device requirements beyond ecosystem logos.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Understand hub choices <span aria-hidden="true">&rarr;</span></span></a></li>
+            </ul>
+          </nav>
+        </section>
       </div>
 
       <div class="relative min-w-0" aria-label="Featured smart home product showcase">
@@ -116,6 +122,7 @@ const heroProducts = showcaseProducts.map((product) => {
                 <div class="grid gap-1.5">
                   <p class="rounded-2xl border border-sky-100 bg-sky-50/80 px-3.5 py-2 text-sm leading-5 text-sky-900">
                      <strong class="block font-bold text-slate-950">Before you choose</strong><span data-hero-field="quote">{heroProducts[0].quote}</span>
+                     <a data-hero-checks href={`${heroProducts[0].detailsUrl}#installation-checks`} class="mt-1 flex min-h-11 w-fit items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" aria-label={`Setup checks and sources for ${heroProducts[0].title}`}>Setup checks &amp; sources</a>
                   </p>
                 </div>
              </article>}
@@ -138,19 +145,6 @@ const heroProducts = showcaseProducts.map((product) => {
     </div>
   </section>
 
-  <section class="mt-10" aria-labelledby="home-start-heading" data-home-guide-paths>
-    <div class="flex flex-wrap items-end justify-between gap-3">
-      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Plan before you buy</p><h2 id="home-start-heading" class="mt-1 text-2xl font-black text-slate-950 md:text-3xl">What are you trying to set up?</h2></div>
-      <a href="/best/" class="inline-flex min-h-11 items-center rounded-sm text-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900">All buying guides</a>
-    </div>
-    <nav aria-label="Buying guides by setup need" class="mt-4">
-      <ul class="grid divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white md:grid-cols-3 md:divide-x md:divide-y-0">
-        <li class="min-w-0"><a href="/best/best-smart-home-starter-kit/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">My first room routine</h3><p class="mt-2 text-sm leading-6 text-slate-600">Choose a useful task, then check controls, accessories, and total setup cost.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Plan a starter setup <span aria-hidden="true">&rarr;</span></span></a></li>
-        <li class="min-w-0"><a href="/best/best-smart-home-devices-for-renters/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">A setup for my rental</h3><p class="mt-2 text-sm leading-6 text-slate-600">Check mounting, removal, and property permissions before choosing devices.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Review rental checks <span aria-hidden="true">&rarr;</span></span></a></li>
-        <li class="min-w-0"><a href="/best/best-smart-hubs-for-matter-zigbee/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">Devices that need a hub</h3><p class="mt-2 text-sm leading-6 text-slate-600">Compare hub roles and exact-device requirements beyond ecosystem logos.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Understand hub choices <span aria-hidden="true">&rarr;</span></span></a></li>
-      </ul>
-    </nav>
-  </section>
 
   {dealProducts.length > 0 && <section class="home-surface brand-aurora-surface mt-8 rounded-[1.75rem] text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
        <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">

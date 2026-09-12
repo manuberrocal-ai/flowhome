@@ -159,6 +159,7 @@ function fixture() {
   root.map['[data-hero-image]'] = new Node();
   root.map['[data-hero-photo-link]'] = new Node();
   root.map['[data-hero-details]'] = new Node();
+  root.map['[data-hero-checks]'] = new Node();
   root.map['[data-hero-amazon]'] = new Node();
   root.map['[data-hero-indicator]'] = new Node();
   root.map['[data-hero-live]'] = new Node();
@@ -169,6 +170,20 @@ function fixture() {
   root.ownerDocument = { createElement: () => new Node() };
   return root;
 }
+
+test('setup checks stay attached to the selected model without changing photo or commerce destinations', () => {
+  const root = fixture();
+  for (const slug of ['one', 'two', 'one']) {
+    const item = product(slug, `Model ${slug}`);
+    applyProduct(root, item);
+    assert.equal(root.map['[data-hero-field="quote"]'].textContent, item.quote);
+    assert.equal(root.map['[data-hero-checks]'].href, `/product/${slug}/#installation-checks`);
+    assert.equal(root.map['[data-hero-checks]'].attrs['aria-label'], `Setup checks and sources for Model ${slug}`);
+    assert.equal(root.map['[data-hero-photo-link]'].href, item.detailsUrl);
+    assert.equal(root.map['[data-hero-details]'].href, item.detailsUrl);
+    assert.equal(root.map['[data-hero-amazon]'].href, item.amazonUrl);
+  }
+});
 
 test('responsive image candidates follow the product and clear on a legacy slide', () => {
   const root = fixture();

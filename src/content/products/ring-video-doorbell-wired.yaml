@@ -13,7 +13,7 @@ ownerRatingCount: 78000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Ring Video Doorbell Wired"
@@ -35,10 +35,26 @@ identityEvidence:
         - label: "Ring US — Video Doorbell Wired installation and original-model manuals"
           url: "https://ring.com/support/articles/ctz2i/Installing-your-Video-Doorbell-Wired"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Ring Video Doorbell Wired"
+  market: US
+  useCase: "Consider the original Wired for a doorbell installation after confirming compatible power and mounting. Plan audible alerts separately: the original model does not sound the existing in-home chime."
+  reconsiderIf: "Compare another model if retaining the existing chime is essential or the required electrical installation is unsuitable. Saved recordings need a compatible subscription; confirm current terms and the exact generation rather than using newer Wired 2K specifications."
+  sources:
+    - label: "Ring US original Video Doorbell Wired installation"
+      url: "https://ring.com/support/articles/ctz2i/Installing-your-Video-Doorbell-Wired"
+      accessedAt: "2026-09-05"
+    - label: "Ring US model-specific power requirements"
+      url: "https://ring.com/support/articles/utvz2/Guidelines-for-Hardwiring-Your-Ring-Video-Doorbell"
+      accessedAt: "2026-09-05"
+    - label: "Ring core features and optional recording subscription"
+      url: "https://blog.ring.com/home-security/ring-cameras-without-subscription/"
+      accessedAt: "2026-09-04"
 installation:
   model: "Ring Video Doorbell Wired"
   market: US
   assessment: advanced
+  summary: "Original Wired model: verify compatible power before buying. Hardwiring bypasses the existing chime; use a licensed electrician if inexperienced or unsure."
   requirements:
     - "Original Video Doorbell Wired: check the transformer and exact regional manual before buying. Ring's US hardwiring guidance specifies 10-24 VAC, 50/60 Hz, 8-40 VA. A compatible Ring Plug-In Adapter is an alternative sold separately; do not assume an arbitrary DC supply is suitable."
     - "For hardwiring, disconnect power at the breaker before touching wires. Use a licensed electrician if inexperienced or unsure; local requirements may also require professional installation. With an existing in-home chime, the required jumper bypasses and disables that chime."

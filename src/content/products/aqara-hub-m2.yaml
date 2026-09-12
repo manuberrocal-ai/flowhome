@@ -13,10 +13,22 @@ ownerRatingCount: 4300
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Aqara Hub M2"
+decisionSummary:
+  model: "Aqara Hub M2"
+  market: US
+  useCase: "Consider it for an existing or planned set of supported Aqara Zigbee accessories. Confirm each accessory and required action before relying on the documented Matter bridge path to another ecosystem."
+  reconsiderIf: "Do not choose M2 on the assumption that any brand's Zigbee device will pair or that it is a general-purpose Matter controller. Check firmware, region and receiving-platform support; the cited Matter rollout announcement is historical, not a test of a seller's unit."
+  sources:
+    - label: "Aqara Hub M2 Matter firmware announcement"
+      url: "https://www.aqara.com/en/aqara-hub-m2-matter-update-has-started-to-roll-out/"
+      accessedAt: "2026-09-04"
+    - label: "Aqara Hub M2 support and device requirements"
+      url: "https://www.aqara.com/en/support/hub-m2"
+      accessedAt: "2026-09-04"
 identityEvidence:
   model: "Aqara Hub M2"
   asin: B08Y1PJZZH
@@ -39,6 +51,7 @@ installation:
   model: "Aqara Hub M2"
   market: US
   assessment: plug-and-play
+  summary: "Plan for a separate 5 V USB power adapter; check the exact package. Ethernet does not replace USB power."
   requirements:
     - "For the documented HM2-G01 model, connect Micro-USB power using a 5 V, 1 A or 2 A adapter. The manual says the adapter is purchased separately; check the exact package before buying."
     - "Use the Aqara Home app with your phone on 2.4 GHz Wi-Fi for setup. An RJ45 Ethernet cable can connect the hub to the router's LAN port; USB power is still required."

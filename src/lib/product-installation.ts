@@ -5,6 +5,7 @@ export interface InstallationEvidence {
   model: string;
   market: 'US';
   assessment: InstallationLevel;
+  summary?: string;
   requirements: string[];
   sources: Array<{ label: string; url: string; accessedAt: string }>;
 }
@@ -36,6 +37,12 @@ export function getInstallationEvidence(product: { model?: unknown; installation
     } catch { return null; }
   }
   return data as InstallationEvidence;
+}
+
+/** An editorial summary never bypasses the model/source gate; legacy records keep the complete first check. */
+export function getInstallationSummary(evidence: InstallationEvidence | null): string | null {
+  if (!evidence) return null;
+  return text(evidence.summary) ? evidence.summary : evidence.requirements[0];
 }
 
 /** A preference is the maximum accepted effort; unknown is not evidence of a fit. */

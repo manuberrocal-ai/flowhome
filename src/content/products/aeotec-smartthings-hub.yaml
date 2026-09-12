@@ -13,7 +13,7 @@ ownerRatingCount: 2600
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "GP-AEOHUBV3US"
@@ -53,6 +53,24 @@ sources:
   - label: "Amazon listing — GP-AEOHUBV3US; unit not inspected"
     url: "https://www.amazon.com/dp/B08TWDNQ5Q"
     accessedAt: "2026-09-05"
+decisionSummary:
+  model: "GP-AEOHUBV3US"
+  market: US
+  useCase: "Consider the US V3 hub when you want SmartThings to coordinate a checked list of devices. Its documented controller role differs from importing one accessory family through a bridge; confirm regional hardware and the exact integrations before migrating."
+  reconsiderIf: "Compare another approach if you only need to bridge a particular accessory family, or if essential routines must work without internet. Protocol names do not prove device or offline support, and Smart Home Hub 2 specifications do not establish this V3 model's capabilities."
+  sources:
+    - label: "Aeotec Smart Home Hub initial setup and registration"
+      url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240326-how-to-setup-smart-home-hub"
+      accessedAt: "2026-09-05"
+    - label: "Aeotec V3 regional models and technical specifications"
+      url: "https://aeotec.freshdesk.com/support/solutions/articles/6000240466-smart-home-hub-technical-specifications"
+      accessedAt: "2026-09-05"
+    - label: "Aeotec Smart Home Hub manufacturer protocols and FAQ"
+      url: "https://aeotec.com/products/aeotec-smartthings-hub/"
+      accessedAt: "2026-09-04"
+    - label: "Aeotec Matter controller and Thread explanation"
+      url: "https://aeotec.com/matter/"
+      accessedAt: "2026-09-04"
 installation:
   model: "GP-AEOHUBV3US"
   market: US

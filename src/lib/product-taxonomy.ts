@@ -43,7 +43,8 @@ const productData = (product: any) => product?.data ?? product;
 
 export function getRelationshipLabel(type: RelationshipType): string {
   return {
-    'direct-alternative': 'Direct alternative',
+    // This legacy relation also includes category candidates, not proven replacements.
+    'direct-alternative': 'Comparison candidate',
     'compatible-accessory': 'Compatible accessory',
     'same-ecosystem': 'Same ecosystem',
     'frequently-paired': 'Frequently paired',
