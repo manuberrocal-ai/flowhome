@@ -38,12 +38,17 @@ test('real CLI returns valid JSON and a failing exit for a local HTTP incident, 
   const requests = [];
   const server = createServer((request, response) => {
     requests.push(request.url);
-    if (incident && request.url === '/product/amazon-smart-thermostat/') {
+    const route = ['/', '/product/amazon-smart-thermostat/', '/cart/'].find((fixture) => fixture === request.url);
+    if (!route) {
+      response.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+      response.end('Not found');
+      return;
+    }
+    if (incident && route === '/product/amazon-smart-thermostat/') {
       response.writeHead(503, { 'content-type': 'text/html' });
       response.end('private incident details must not appear in the report');
       return;
     }
-    const route = request.url;
     const cta = route.startsWith('/product/') ? '<a href="https://www.amazon.com/dp/B08J4C8871?tag=flowhome-20" target="_blank" rel="nofollow sponsored noopener noreferrer" data-fh-amazon-cta data-cta-position="hero">Amazon</a>' : '';
     response.writeHead(200, { 'content-type': 'text/html' });
     response.end(`<html><head><title>FlowHome test</title><link rel="canonical" href="https://flowhome.dev${route}">${route === '/cart/' ? '<meta name="robots" content="noindex,follow">' : ''}</head><body><h1>Test</h1>${cta}</body></html>`);
@@ -70,6 +75,12 @@ test('real CLI returns valid JSON and a failing exit for a local HTTP incident, 
       assert.ok(!result.stdout.includes('private incident details'));
     }
     assert.deepEqual(requests, Array.from({ length: 3 }, () => ['/', '/product/amazon-smart-thermostat/', '/cart/']).flat());
+    for (const route of ['/not-a-fixture', '/cart/?probe=%22fixture-marker%22', '/%3Cfixture-marker%3E']) {
+      const rejected = await fetch(`http://127.0.0.1:${server.address().port}${route}`);
+      assert.equal(rejected.status, 404);
+      assert.match(rejected.headers.get('content-type'), /^text\/plain/);
+      assert.equal(await rejected.text(), 'Not found');
+    }
   } finally {
     server.closeAllConnections();
     await new Promise((resolve) => server.close(resolve));
