@@ -172,3 +172,8 @@ test('home caps initial featured-card DOM as an LCP performance budget while pre
   assert.match(home, /featuredProducts\.map\(\(product\) => <ProductCard product=\{product\} editorialReason=\{product.editorialReason\} \/>\)/);
   assert.match(home, /<style is:inline>/);
 });
+
+test('Lighthouse retains trace and network assets with every sample for failure diagnosis', async () => {
+  const runner = await read('scripts/qa/lighthouse-mobile.mjs');
+  assert.match(runner, /`--output-path=\$\{reportPath\}`, '--save-assets'/);
+});

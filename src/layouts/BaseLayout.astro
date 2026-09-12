@@ -81,6 +81,7 @@ const safePreloadImage = (() => {
     <meta name="theme-color" content="#0f172a" />
     <link rel="preload" as="font" href={interLatinUrl} type="font/woff2" crossorigin />
     <link rel="preload" as="font" href={plusJakartaLatinUrl} type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href="/images/flowhome-favicon.png" type="image/png" fetchpriority="low" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="search" type="application/opensearchdescription+xml" title="FlowHome" href="/opensearch.xml" />
     {noindex || publicConfig.environment === 'staging' ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow" />}
