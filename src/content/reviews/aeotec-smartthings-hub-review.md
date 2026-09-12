@@ -1,6 +1,6 @@
 ---
 title: "Aeotec SmartThings Hub Review: Controller Role and Compatibility Checks"
-description: "A structured FlowHome review of Aeotec SmartThings Hub covering Matter, Zigbee, ecosystem support, tradeoffs, and buyer fit."
+description: "Document-based Aeotec GP-AEOHUBV3US review: SmartThings controller role, US regional hardware, and setup checks—not Smart Home Hub 2."
 pubDate: 2026-07-15
 updatedDate: 2026-09-06
 productSlug: aeotec-smartthings-hub

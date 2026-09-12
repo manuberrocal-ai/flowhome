@@ -3,6 +3,7 @@ import { getCategoryLabel, getProductImageSourceLabel, getProductImage, getProdu
 import { getCommerceData } from '../lib/commerce-data';
 import CommerceObservation from './CommerceObservation.astro';
 import { getProductThumbnailSet } from '../lib/product-thumbnails';
+import { getInstallationEvidence } from '../lib/product-installation';
 
 interface Props { product: any; compact?: boolean; editorialReason?: string; commerceSlots?: boolean; }
 const { product, compact = false, editorialReason, commerceSlots = false } = Astro.props;
@@ -13,6 +14,7 @@ const fallbackImage = getProductFallbackImage(data);
 const productImageAlt = getProductImageAlt(data);
 const categoryLabel = getCategoryLabel(data.category);
 const commerce = getCommerceData(data);
+const installation = getInstallationEvidence(data);
 const hasDeal = commerce.showPromotion;
 const isHotDeal = hasDeal && Number(commerce.displayDiscountPct) >= 35;
 const rating = commerce.displayRating ?? 0;
@@ -53,6 +55,12 @@ const stars = Array.from({ length: 5 }, (_, index) => {
       <h2 class="product-card-title mt-1 line-clamp-2 min-h-[2.75rem] text-base font-black leading-snug text-slate-950 transition-all duration-200"><a href={`/product/${slug}/`} class="hover:text-blue-700">{data.name}</a></h2>
       {!compact && <p class="product-card-rating mt-1 text-xs font-semibold text-slate-500 transition-all duration-200">{commerce.isRatingFresh ? `Amazon customer rating: ${commerce.displayRating} / 5 from ${commerce.displayRatingCount?.toLocaleString()} ratings · checked ${commerce.ratingLastCheckedLabel}` : 'Check current customer ratings on Amazon.'}</p>}
     </div>
+
+    {!compact && installation && <div class="product-card-setup border-t border-slate-200 pt-3 text-sm leading-6 text-slate-700" data-product-setup-preview>
+      <p class="font-bold text-slate-950">First setup check</p>
+      <p class="mt-1">{installation.requirements[0]}</p>
+      <a href={`/product/${slug}/#installation-checks`} class="mt-1 inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900" aria-label={`All setup checks and sources for ${data.name}`}>All setup checks &amp; sources</a>
+    </div>}
 
     <div class="product-card-price-panel mt-auto rounded-[1.2rem] bg-white/80 p-3 ring-1 ring-slate-200/80 transition-all duration-200">
       {commerceSlots && <CommerceObservation asin={data.asin} />}

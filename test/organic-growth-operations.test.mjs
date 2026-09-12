@@ -4,7 +4,7 @@ import { readFile, writeFile, rm } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseCsv, validateRows, renderReport } from '../scripts/maintenance/organic-growth-report.mjs';
+import { parseCsv, validateRows, renderReport, summarize } from '../scripts/maintenance/organic-growth-report.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (file) => readFile(path.join(root, file), 'utf8');
@@ -70,6 +70,38 @@ test('renderReport keeps explicit zero numeric metrics and omits unavailable one
   const amazonRows = validateRows(parseCsv(reportRow('Amazon', 'amazon-zero', { affiliate_clicks: 0 })));
   const amazonReport = renderReport(amazonRows);
   assert.match(amazonReport, /Amazon \| amazon-zero \| .*affiliate_clicks=0/);
+});
+
+test('rolling windows and repeated imports never inflate traffic', () => {
+  const [first] = validateRows(parseCsv(reportRow('GSC', 'same', { impressions: 100, clicks: 5, avg_position: 2 })));
+  const next = { ...first, recorded_at: '2026-07-16', impressions: '120', clicks: '6', avg_position: '8' };
+  const summaries = summarize([first, next, { ...first }]);
+  assert.equal(summaries.length, 3);
+  assert.deepEqual(summaries.map((row) => row.impressions), [100, 120, 100]);
+  assert.deepEqual(summaries.map((row) => row.avgPosition), [2, 8, 2]);
+  assert.match(renderReport([first, next]), /windows.*not combined/);
+});
+
+test('page totals and query slices remain distinct with context', () => {
+  const [total] = validateRows(parseCsv(reportRow('GSC', 'same', { impressions: 100, clicks: 5 })));
+  total.query = '';
+  total.notes = 'US, mobile';
+  const slice = { ...total, query: 'smart hub', impressions: '20', clicks: '2' };
+  const groups = summarize([total, slice]);
+  assert.equal(groups.length, 2);
+  assert.deepEqual(groups.map((row) => row.ctr), [5, 10]);
+  const report = renderReport([total, slice]);
+  assert.match(report, /query="smart hub"/);
+  assert.match(report, /notes="US, mobile"/);
+  assert.match(report, /window_days="7"/);
+  assert.doesNotMatch(report, /impressions=120/);
+});
+
+test('missing and zero observations are not merged into a measured total', () => {
+  const [missing] = validateRows(parseCsv(reportRow('Amazon', 'same', {})));
+  const groups = summarize([missing, { ...missing, affiliate_clicks: '0' }]);
+  assert.deepEqual(groups.map((row) => row.affiliateClicks), [null, 0]);
+  assert.equal(groups[0].ctr, null);
 });
 
 test('runbook and package expose the required operating contracts', async () => {

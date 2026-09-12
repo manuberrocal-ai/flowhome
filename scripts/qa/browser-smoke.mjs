@@ -564,8 +564,15 @@ async function runCase(testCase) {
       if (contract.appPrevented) result.failures.push('Application prevented the Amazon CTA default action');
     }
     if (testCase.setup === 'consent-events') {
+      const environment = JSON.parse(await readFile(join(PROJECT_ROOT, 'dist', 'release-environment.json'), 'utf8'));
+      if (typeof environment.analyticsEnabled !== 'boolean') throw new Error('Missing built analytics configuration');
       const contract = await evaluate(`(async () => { const anchor = document.querySelector('[data-fh-amazon-cta]'); if (!anchor) return { missing: true }; let appPrevented = false; const guard = (event) => { const clicked = event.target instanceof Element ? event.target.closest('[data-fh-amazon-cta]') : null; if (!clicked) return; appPrevented ||= event.defaultPrevented; event.preventDefault(); }; const click = () => anchor.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); const set = async (choice, waitForMacrotask = false) => { if (choice) localStorage.setItem('flowhome-consent', JSON.stringify({ version: 1, choice })); else localStorage.removeItem('flowhome-consent'); window.dataLayer = []; click(); if (waitForMacrotask) await new Promise((resolve) => setTimeout(resolve, 0)); return window.dataLayer.filter((entry) => entry.event === 'affiliate_click'); }; document.addEventListener('click', guard); try { const accepted = await set('accepted', true); const safe = accepted.length === 1 && accepted[0].consent_state === 'accepted' && Boolean(accepted[0].event_id) && accepted[0].pathname === location.pathname && !JSON.stringify(accepted[0]).includes('?'); return { accepted: accepted.length, rejected: (await set('rejected')).length, unset: (await set(null)).length, safe, appPrevented }; } finally { document.removeEventListener('click', guard); } })()`);
-      if (contract.missing || contract.accepted !== 1 || contract.rejected !== 0 || contract.unset !== 0 || !contract.safe || contract.appPrevented) result.failures.push(`Consent event contract failed: ${JSON.stringify(contract)}`);
+      const expectedAccepted = environment.analyticsEnabled ? 1 : 0;
+      if (contract.missing || contract.accepted !== expectedAccepted || contract.rejected !== 0 || contract.unset !== 0 || (expectedAccepted === 1 && !contract.safe) || contract.appPrevented) result.failures.push(`Consent event contract failed: ${JSON.stringify(contract)}`);
+      if (!environment.analyticsEnabled) {
+        const optionalDownloads = await evaluate(`performance.getEntriesByType('resource').filter(entry => /\\/(?:analytics|experiments)\\.[^/]+\\.js(?:$|\\?)/.test(new URL(entry.name).pathname)).map(entry => entry.name)`);
+        if (optionalDownloads.length) result.failures.push(`Disabled optional runtime downloaded: ${optionalDownloads.join(', ')}`);
+      }
     }
     if (testCase.setup === 'consent-storage-error') {
       const contract = await evaluate(`(() => {

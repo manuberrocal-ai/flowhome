@@ -93,6 +93,13 @@ and protected release preparation retain their separate runners for now.
 
 ## Deploy target
 
+Before Lighthouse collects samples, it compares each selected route's HTTP200
+response byte-for-byte with its local `dist` HTML and records a SHA256 hash.
+Run a compiled preview, not `astro dev`, when selecting `LIGHTHOUSE_BASE_URL`.
+A mismatch, redirect, missing build or failed request aborts measurement.
+This is an HTML identity check, not a complete asset manifest or proof that
+files cannot change during the run. Build/release identity controls still apply.
+
 - Cloudflare Pages
 - Build command: `npm run build`
 - Output directory: `dist`

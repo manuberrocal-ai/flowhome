@@ -17,15 +17,16 @@ function collectFiles(dir) {
 }
 
 class Node {
-  constructor() { this.attrs = {}; this.dataset = {}; this.children = []; this.listeners = {}; this.classList = { values: new Set(), toggle: (name, on) => on ? this.classList.values.add(name) : this.classList.values.delete(name) }; }
+  constructor() { this.attrs = {}; this.dataset = {}; this.style = {}; this.complete = true; this.naturalWidth = 100; this.children = []; this.listeners = {}; this.classList = { values: new Set(), toggle: (name, on) => on ? this.classList.values.add(name) : this.classList.values.delete(name) }; }
   setAttribute(name, value) { this.attrs[name] = String(value); }
   getAttribute(name) { return this.attrs[name]; }
+  removeAttribute(name) { delete this.attrs[name]; }
   toggleAttribute(name, value) { this.attrs[name] = value ? '' : undefined; }
   append(node) { this.children.push(node); }
   get firstChild() { return this.children[0]; }
   removeChild() { this.children.shift(); }
   addEventListener(name, fn) { (this.listeners[name] ||= []).push(fn); }
-  removeEventListener() {}
+  removeEventListener(name, fn) { this.listeners[name] = (this.listeners[name] || []).filter((listener) => listener !== fn); }
   dispatch(name, event = {}) { this.listeners[name]?.forEach((fn) => fn(event)); }
   querySelector(selector) { return this.map?.[selector] || null; }
   querySelectorAll(selector) { return this.map?.[selector] || []; }
@@ -106,8 +107,10 @@ test('hero carousel script honors prefers-reduced-motion via matchMedia', () => 
   assert.match(heroCarousel, /matchMedia/);
 });
 
-test('hero carousel pauses on viewport exit and resumes on re-entry without marking interaction', () => {
+test('opt-in hero rotation pauses on viewport exit, resumes on re-entry and honors reduced motion', () => {
   const root = fixture();
+  const playback = new Node();
+  root.map['[data-hero-playback]'] = playback;
   const dot = new Node();
   const secondDot = new Node();
   const doc = new Node();
@@ -134,15 +137,34 @@ test('hero carousel pauses on viewport exit and resumes on re-entry without mark
     { id: 'one', slug: 'one', title: 'First', image: '/one.jpg', alt: 'First alt', priceLabel: '$10', priceContext: 'Price snapshot', originalPrice: 20, ownerRating: 4.5, ownerRatingCount: 12, ratingSource: 'Amazon customer rating', badges: ['Save 50%'], detailsUrl: '/product/one/', amazonUrl: 'https://amazon.test/one', affiliateDisclosure: 'Disclosure one', category: 'Smart home', discountPct: 50, quote: 'First quote' },
     { id: 'two', slug: 'two', title: 'Second', image: '/two.jpg', alt: 'Second alt', priceLabel: '$20', priceContext: 'Historical price snapshot', originalPrice: 40, ownerRating: 2, ownerRatingCount: 34, ratingSource: 'Amazon customer rating', badges: ['New'], detailsUrl: '/product/two/', amazonUrl: 'https://amazon.test/two', affiliateDisclosure: 'Disclosure two', category: 'Lighting', discountPct: 0, quote: 'Second quote' },
   ], windowRef: win, documentRef: doc });
-  assert.equal(starts, 1);
+  assert.equal(starts, 0, 'rotation starts manually, never by viewport entry alone');
   assert.equal(observer.target, root);
+  observer.emit(false);
+  observer.emit(true);
+  assert.equal(starts, 0);
+  playback.dispatch('click');
+  assert.equal(starts, 1);
   observer.emit(false);
   assert.equal(clears, 1);
   assert.equal(starts, 1);
   observer.emit(true);
   assert.equal(starts, 2);
+  media.matches = true;
+  media.dispatch('change');
+  assert.equal(clears, 2);
+  assert.equal(playback.disabled, true);
+  observer.emit(false);
+  observer.emit(true);
+  assert.equal(starts, 2, 're-entry cannot override reduced motion');
+  media.matches = false;
+  media.dispatch('change');
+  assert.equal(starts, 3, 'the existing opt-in survives a temporary motion preference');
+  playback.dispatch('click');
+  observer.emit(false);
+  observer.emit(true);
+  assert.equal(starts, 3, 'manual pause survives viewport changes');
   cleanup();
   assert.equal(observer.disconnected, true);
   observer.emit(true);
-  assert.equal(starts, 2);
+  assert.equal(starts, 3);
 });

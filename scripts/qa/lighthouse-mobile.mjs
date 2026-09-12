@@ -1,6 +1,7 @@
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,6 +34,25 @@ export function parseLighthouseRuns(value = '3') {
   const runs = Number(value);
   if (!Number.isInteger(runs) || runs < 1 || runs > 5 || String(value).trim() !== String(runs)) throw new Error('LIGHTHOUSE_RUNS must be an integer from 1 through 5.');
   return runs;
+}
+
+export async function verifyLighthouseTarget(baseUrl, routes, {
+  fetchPage = fetch,
+  readBuiltPage = route => readFile(join(ROOT, 'dist', route.slice(1), 'index.html')),
+} = {}) {
+  const base = new URL(baseUrl);
+  if (base.protocol !== 'http:' || !['127.0.0.1', 'localhost', '[::1]'].includes(base.hostname) || base.username || base.password || base.pathname !== '/' || base.search || base.hash) throw new Error('Lighthouse target must be a plain loopback HTTP origin.');
+  const selected = parseLighthouseRoutes(routes.join(','));
+  const verified = [];
+  for (const route of selected) {
+    const expected = await readBuiltPage(route);
+    const response = await fetchPage(new URL(route, base).href, { redirect: 'error', signal: AbortSignal.timeout(5000) });
+    if (response.status !== 200) throw new Error(`Lighthouse target ${route} returned HTTP ${response.status}.`);
+    const actual = Buffer.from(await response.arrayBuffer());
+    if (!actual.equals(Buffer.from(expected))) throw new Error(`Lighthouse target ${route} does not match dist HTML. Use the compiled preview, not Astro dev or another build.`);
+    verified.push({ route, htmlSha256: createHash('sha256').update(actual).digest('hex') });
+  }
+  return verified;
 }
 
 export function median(values) {
@@ -99,11 +119,12 @@ async function main() {
     if (!await exists(LIGHTHOUSE_BIN)) throw new Error(`Repository-local Lighthouse binary is unavailable: ${LIGHTHOUSE_BIN}`);
     const chrome = await findBrave(); if (!await exists(chrome)) throw new Error(`Chrome executable does not exist: ${chrome}`);
     await mkdir(OUTPUT_DIR, { recursive: true }); await mkdir(PROFILE_DIR, { recursive: true }); await startPreview();
+    summary.targetVerification = await verifyLighthouseTarget(BASE_URL, requestedRoutes);
     for (const route of requestedRoutes) {
       const requestedUrl = `${BASE_URL}${route}`; const name = reportName(route); const samples = []; const routeFailures = [];
       for (let sampleIndex = 1; sampleIndex <= sampleCount; sampleIndex += 1) {
         const reportPath = join(OUTPUT_DIR, `${name}-sample-${sampleIndex}.json`);
-        const exitCode = await run(LIGHTHOUSE_BIN, [requestedUrl, '--quiet', '--only-categories=performance,accessibility,best-practices,seo', '--form-factor=mobile', '--output=json', `--output-path=${reportPath}`, '--no-enable-error-reporting', '--blocked-url-patterns=https://*', `--chrome-flags=--headless=new --user-data-dir=${join(PROFILE_DIR, `${name}-sample-${sampleIndex}`)} --disable-background-networking --disable-component-update --disable-sync --host-resolver-rules=MAP * 0.0.0.0,EXCLUDE 127.0.0.1`], { CHROME_PATH: chrome, TEMP: PROFILE_DIR, TMP: PROFILE_DIR });
+        const exitCode = await run(LIGHTHOUSE_BIN, [requestedUrl, '--quiet', '--only-categories=performance,accessibility,best-practices,seo', '--form-factor=mobile', '--output=json', `--output-path=${reportPath}`, '--save-assets', '--no-enable-error-reporting', '--blocked-url-patterns=https://*', `--chrome-flags=--headless=new --user-data-dir=${join(PROFILE_DIR, `${name}-sample-${sampleIndex}`)} --disable-background-networking --disable-component-update --disable-sync --host-resolver-rules=MAP * 0.0.0.0,EXCLUDE 127.0.0.1`], { CHROME_PATH: chrome, TEMP: PROFILE_DIR, TMP: PROFILE_DIR });
         const result = await readReport(reportPath); const outcome = classifyLighthouseOutcome(exitCode, result, requestedUrl);
         if (!outcome.usable) { routeFailures.push(`sample ${sampleIndex}: ${outcome.failure}`); continue; }
         const executionWarnings = outcome.warning ? [outcome.warning] : []; summary.executionWarnings.push(...executionWarnings.map((warning) => `${route} sample ${sampleIndex}: ${warning}`));
