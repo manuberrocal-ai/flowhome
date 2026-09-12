@@ -4,7 +4,7 @@
 
 FlowHome uses **Basic Consent Mode**. Until a visitor explicitly chooses `accepted`, it loads no optional GTM/Clarity script, creates no analytics session or attribution identifier, and dispatches no measurement event. `rejected` and `unset` are equally non-measuring states. Revocation removes session attribution/ID and optional script state, then reloads once when an optional runtime had loaded. Cookieless pings are not implemented.
 
-The runtime only loads an adapter when `PUBLIC_GTM_ID` is non-empty and consent is accepted. The adapter is a synchronous, best-effort `dataLayer.push`; provider failure returns false and never delays a click or navigation. A local `dataLayer` array is the supported memory/mock boundary for tests. GTM/GA4 mapping, provider configuration, dashboards, revenue, conversion, and current provider data are **Unknown/external**.
+The build projects analytics only when `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, and a valid reviewed `PUBLIC_GTM_ID` are configured; local/staging builds reject enabled analytics. The runtime additionally requires accepted consent. In-page events use best-effort `dataLayer.push`; outbound CTA events defer the push so navigation does not wait for the provider. Queue success proves only local enqueue, not provider receipt. A local `dataLayer` array is the supported memory/mock boundary for tests. GTM/GA4 mapping, provider configuration and actual receipt require external verification; revenue and conversion cannot be inferred from events.
 
 ## Taxonomy
 
@@ -23,7 +23,7 @@ Every accepted dispatched event also contains a generated `event_id`, `consent_s
 
 ## Deduplication and attribution
 
-`setupAnalytics()` and delegated CTA binding are idempotent. An explicit `event_id` or `dedupe_key` is accepted once per event name; distinct clicks without either remain distinct. Dispatch is synchronous and never calls `preventDefault`, awaits a provider, or changes an Amazon URL.
+`setupAnalytics()` and delegated CTA binding are idempotent. An explicit `event_id` or `dedupe_key` is accepted once per event name; distinct clicks without either remain distinct. In-page dispatch is synchronous; outbound CTA dispatch is deferred and rechecks consent before enqueue. Neither calls `preventDefault`, awaits a provider, or changes an Amazon URL.
 
 `experiment_exposure` is the only experiment event. Its assignment bucket is an integer from 0 through 9999; the listed fields plus the existing `event_id` and optional `dedupe_key` are the complete event payload. Exposure is consent-gated, session-scoped, emitted after variant application, and rolled back when a first provider push fails. The experiment uses the allowlisted identifier form `exposure-<experiment>-<version>-<variant>` for `dedupe_key`; colon-delimited URI-like values are rejected by the privacy boundary. No assignment or storage occurs before consent.
 
@@ -31,11 +31,11 @@ After accepted consent only, FlowHome reads and normalizes first-touch `utm_sour
 
 ## Manual activation, verification, and rollback
 
-1. Obtain privacy approval and GTM/GA4 access outside this repository.
-2. Set `PUBLIC_GTM_ID` in the deployment environment; never commit credentials.
-3. Map only this taxonomy in GTM/GA4 and verify one accepted event in DebugView.
-4. Verify rejected/unset emit zero events and revocation clears optional runtime state.
-5. Roll back by removing `PUBLIC_GTM_ID`; consent revocation independently stops the runtime.
+1. Use the owner's current authorization and verified GTM/GA4 access; do not repeatedly request an already granted approval. Provider conditions and consent requirements still apply.
+2. Review all tags and destinations in the existing container, not only public build variables. A GTM-managed Clarity tag can load even with an empty `PUBLIC_CLARITY_ID`. Review automatic page/referrer/query collection separately from the sanitized custom-event payload.
+3. Configure `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, and the reviewed `PUBLIC_GTM_ID` for the isolated verification artifact; never commit credentials or publish an unverified configuration. Map only this taxonomy in GTM/GA4 and verify one accepted event in DebugView using device-only preview, not a global debug flag.
+4. Verify rejected/unset emit zero measurement events and revocation clears optional runtime state and stops subsequent requests. Preserve the evidence; missing DebugView events alone do not prove zero network requests. Provider cookies require separate inspection.
+5. Site-wide rollback restores the verified disabled artifact or rebuilds/publishes with `PUBLIC_ANALYTICS_ENABLED=false`. Removing `PUBLIC_GTM_ID` while leaving analytics enabled fails the build; changing environment variables alone does not alter an existing artifact. Consent revocation independently stops the current visitor's runtime.
 
 ## Lifecycle boundary (Block 7)
 
