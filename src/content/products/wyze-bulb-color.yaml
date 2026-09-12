@@ -13,10 +13,22 @@ ownerRatingCount: 9800
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Wyze Bulb Color"
+decisionSummary:
+  model: "Wyze Bulb Color"
+  market: US
+  useCase: "Adding app-controlled color lighting to a suitable E26 fixture using the documented WLPA19C bulb, a Wyze account and 2.4 GHz Wi-Fi. Check that the unit and fixture match the US guide before choosing it."
+  reconsiderIf: "Do not pair this bulb with an external dimmer, including a smart wall dimmer. The guide also excludes fully enclosed or poorly ventilated fixtures, direct water exposure and emergency lighting. App dimming does not remove those restrictions; the seller's exact pack has not been inspected."
+  sources:
+    - label: "Wyze — WLPA19C quick-start guide and fixture restrictions"
+      url: "https://support.wyze.com/hc/en-us/article_attachments/22881540921627"
+      accessedAt: "2026-09-12"
+    - label: "Wyze — Bulb Color app and network setup"
+      url: "https://support.wyze.com/hc/en-us/articles/360056417672-Wyze-Bulb-Color-Setup-Guide"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "Wyze Bulb Color"
   asin: B08WZN4JW2

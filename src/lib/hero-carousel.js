@@ -122,6 +122,11 @@ export function applyProduct(root, product, index = 0) {
 
   const details = root.querySelector('[data-hero-details]');
   if (details) details.href = item.detailsUrl;
+  const checks = root.querySelector('[data-hero-checks]');
+  if (checks) {
+    checks.href = `${item.detailsUrl}#installation-checks`;
+    checks.setAttribute('aria-label', `Setup checks and sources for ${item.title}`);
+  }
   const amazon = root.querySelector('[data-hero-amazon]');
   if (amazon) {
     amazon.href = item.amazonUrl;

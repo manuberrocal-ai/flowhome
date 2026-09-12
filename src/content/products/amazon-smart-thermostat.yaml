@@ -13,7 +13,7 @@ ownerRatingCount: 22000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Amazon Smart Thermostat"
@@ -35,10 +35,20 @@ identityEvidence:
         - label: "Amazon Smart Thermostat US installation and safety guide"
           url: "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Amazon Smart Thermostat"
+  market: US
+  useCase: "Consider it for Alexa-based temperature control after confirming the actual HVAC system, wiring, and C-wire or compatible adapter requirements. Include any installation work in the purchase plan."
+  reconsiderIf: "Compare another model if your system does not pass the manufacturer's compatibility checks or you require an integration beyond the documented Alexa setup. An app connection does not establish safe wiring, and this research does not demonstrate energy savings."
+  sources:
+    - label: "Amazon Smart Thermostat installation and compatibility guide"
+      url: "https://m.media-amazon.com/images/G/01/kindle/journeys/MmE1OWJhOGQt/Smart_Thermostat_Online_Hello_Guide.pdf"
+      accessedAt: "2026-09-04"
 installation:
   model: "Amazon Smart Thermostat"
   market: US
   assessment: advanced
+  summary: "Needs compatible 24 V HVAC and a C-wire or compatible adapter; not 120–240 V or millivolt systems. Follow the manual's power-isolation precautions and use a professional if unsure."
   requirements:
     - "Requires compatible 24 V HVAC wiring and a C-wire or compatible C-wire power adapter; not for 120–240 V or millivolt systems."
     - "Follow the manual's power-isolation precautions and use a professional if you are not comfortable with electrical wiring. Alexa app and 2.4 GHz Wi-Fi setup are also required."

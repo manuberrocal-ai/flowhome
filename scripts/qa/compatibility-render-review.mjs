@@ -102,7 +102,7 @@ if (process.argv[3] !== '--isolated-child') {
   let alternativeSections = 0;
   const knownSlugs = new Set(graph.nodes.filter(node => node.type === 'product').map(node => node.slug));
   for (const slug of knownSlugs) {
-    const section = html(slug).match(/<section\b[^>]*>\s*<h2[^>]*>Direct alternatives<\/h2>([\s\S]*?)<\/section>/)?.[1];
+    const section = html(slug).match(/<section\b[^>]*\bdata-related-products\b[^>]*>([\s\S]*?)<\/section>/)?.[1];
     if (!section) continue;
     const links = [...section.matchAll(/href="\/product\/([^/]+)\/"/g)].map(match => match[1]);
     assert.ok(links.length > 0, `Empty alternative section: ${slug}`);

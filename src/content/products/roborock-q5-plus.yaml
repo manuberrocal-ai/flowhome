@@ -13,7 +13,7 @@ ownerRatingCount: 7200
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-07-18"
 catalogActive: true
-dateUpdated: "2026-07-18"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-07-18"
 priceSource: "manual"
 model: "Roborock Q5+ Robot Vacuum"
@@ -49,10 +49,23 @@ identityEvidence:
         - label: "Amazon indexed listing — identity observation, not a live offer"
           url: "https://www.amazon.com/dp/B09NM56KJM"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Roborock Q5+ Robot Vacuum"
+  market: US
+  useCase: "Consider the original Q5+ for mapped vacuuming and Auto-Empty Dock Pure emptying when you can reserve the documented dock space. Check the exact package and app actions; LiDAR mapping is a planning feature, not a cleaning-performance result."
+  reconsiderIf: "Compare a mop-and-vacuum configuration if wet floor care is required: this original Q5+ is vacuum-only. Mapping does not establish obstacle detection or replace the manual's physical-barrier precautions in raised areas. Plan floor preparation and replacement consumables."
+  sources:
+    - label: "Roborock original Q5 series manufacturer specifications"
+      url: "https://us.roborock.com/pages/roborock-q5"
+      accessedAt: "2026-09-04"
+    - label: "Roborock Q5+ user manual, installation and first cleaning route"
+      url: "https://support.roborock.com/hc/en-us/article_attachments/5983654392089"
+      accessedAt: "2026-09-05"
 installation:
   model: "Roborock Q5+ Robot Vacuum"
   market: US
   assessment: light-setup
+  summary: "Allow 0.5 m on each side of the dock, 1.5 m in front and 1 m above. Raised areas need a secure physical barrier, not just mapping."
   requirements:
     - "Original Q5+ dock: attach the base with the six supplied screws before connecting power. Use a hard, level floor with at least 1.6 ft / 0.5 m clear on each side, 4.9 ft / 1.5 m in front and 3.3 ft / 1 m above."
     - "Clear loose cables and fragile or unstable items, supervise the entire first cleaning route, and use a secure physical barrier in raised areas. Mapping is not a substitute for that barrier."

@@ -13,10 +13,19 @@ ownerRatingCount: 28000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "HS220"
+decisionSummary:
+  model: "HS220"
+  market: US
+  useCase: "Adjusting a room's light level from an in-wall control and the Kasa app, when the bulbs support HS220's documented leading-edge (TRIAC phase-cut) dimming. Plan for a neutral wire and 2.4 GHz Wi-Fi, and check the load before buying."
+  reconsiderIf: "Choose another approach if the circuit lacks a neutral or the bulb maker has not confirmed the dimming type. A bulb being labeled dimmable is not enough. This requires electrical installation, not a plug-in setup; have a qualified installer assess uncertain wiring and load limits."
+  sources:
+    - label: "Kasa US — HS220 neutral, load limits and dimming type"
+      url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-dimmer-hs220"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "HS220"
   asin: B079775ZZQ

@@ -13,7 +13,7 @@ ownerRatingCount: 39000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Blink Outdoor 4"
@@ -35,6 +35,18 @@ identityEvidence:
         - label: "Blink Outdoor 4 US requirements, power and storage FAQ"
           url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Blink Outdoor 4"
+  market: US
+  useCase: "Consider it for outdoor motion monitoring where battery power at the camera is useful and you can accommodate the required Sync Module. Check Wi-Fi at the final mounting position and choose the recording method before buying."
+  reconsiderIf: "Compare another camera if continuous recording or a specific third-party integration is essential but not documented for your setup. Local storage depends on the module and separate media; Person Detection requires an eligible subscription or trial. Check current plans and the actual bundle."
+  sources:
+    - label: "Blink Outdoor 4 manufacturer FAQ"
+      url: "https://support.blinkforhome.com/en_US/faq-outdoor4/outdoor4-camera-faq"
+      accessedAt: "2026-09-04"
+    - label: "Blink storage options"
+      url: "https://support.blinkforhome.com/564710"
+      accessedAt: "2026-09-04"
 installation:
   model: "Blink Outdoor 4"
   market: US

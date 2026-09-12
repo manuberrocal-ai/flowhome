@@ -13,7 +13,7 @@ ownerRatingCount: 3500
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "ecobee Smart Thermostat Premium"
@@ -35,6 +35,15 @@ identityEvidence:
         - label: "ecobee Smart Thermostat Premium US wiring and powering methods"
           url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
           accessedAt: "2026-09-05"
+decisionSummary:
+  model: "ecobee Smart Thermostat Premium"
+  market: US
+  useCase: "Consider Premium when a separate room SmartSensor serves a defined temperature-control need and your HVAC system passes the manufacturer's compatibility checks. Plan sensor placement and confirm the included sensor and installation accessories."
+  reconsiderIf: "Compare a different configuration if you only need remote thermostat control. A room sensor does not establish independent HVAC zoning or guarantee equal room temperatures; this research has not demonstrated comfort improvements or energy savings."
+  sources:
+    - label: "ecobee Smart Thermostat Premium manufacturer specifications"
+      url: "https://www.ecobee.com/en-us/smart-thermostats/smart-thermostat-premium/"
+      accessedAt: "2026-09-04"
 installation:
   model: "ecobee Smart Thermostat Premium"
   market: US

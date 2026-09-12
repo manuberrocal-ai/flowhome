@@ -13,10 +13,22 @@ ownerRatingCount: 735000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-09-04"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Echo Dot 5th Gen"
+decisionSummary:
+  model: "Echo Dot 5th Gen"
+  market: US
+  useCase: "Consider it for a room where you want Alexa voice access without a screen. Choose the exact commands and check support for your account, region and linked devices before buying."
+  reconsiderIf: "If you need visual feedback, compare a display. For Matter-over-Thread accessories, plan for a separate Thread border router; the documented Alexa controller role does not make Echo Dot a universal bridge."
+  sources:
+    - label: "Amazon Echo Dot fifth-generation setup and microphone controls"
+      url: "https://digprjsurvey.amazon.com/csad/help/node/TdLI5SX5VhnxC6x6Ct"
+      accessedAt: "2026-09-04"
+    - label: "Amazon Matter controller support and Thread border router requirements"
+      url: "https://developer.amazon.com/docs/alexaplus/smarthome/matter-support.html"
+      accessedAt: "2026-09-04"
 identityEvidence:
   model: "Echo Dot 5th Gen"
   asin: B09B8V1LZ3
@@ -39,6 +51,7 @@ installation:
   model: "Echo Dot 5th Gen"
   market: US
   assessment: plug-and-play
+  summary: "Connect the power adapter, then complete setup in the Alexa app with an Amazon account and Wi-Fi internet."
   requirements:
     - "Connect the power adapter, then complete setup in the Alexa app with an Amazon account and Wi-Fi internet."
   sources:

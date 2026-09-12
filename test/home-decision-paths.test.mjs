@@ -28,6 +28,12 @@ test('home offers three crawlable, existing buying-guide paths by setup need', a
   assert.match(section, /aria-labelledby="home-start-heading"/);
   assert.match(section, /id="home-start-heading"/);
   assert.match(section, /<nav aria-label="Buying guides by setup need"/);
+  assert.equal((home.match(/data-home-guide-paths/g) ?? []).length, 1);
+  assert.equal((home.match(/id="home-start-heading"/g) ?? []).length, 1);
+  assert.ok(home.indexOf('data-fh-home-primary-cta') < home.indexOf('data-home-guide-paths'));
+  assert.ok(home.indexOf('data-home-guide-paths') < home.indexOf('data-hero-showcase'));
+  assert.doesNotMatch(section, /md:grid-cols-3|\border-|line-clamp|truncate/);
+  assert.match(home, /lg:items-start/);
   const slugs = [...section.matchAll(/href="\/best\/([^/]+)\/"/g)].map((match) => match[1]);
   assert.equal(slugs.length, 3);
   assert.equal(new Set(slugs).size, 3);

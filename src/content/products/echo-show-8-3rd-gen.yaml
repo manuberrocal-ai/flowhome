@@ -13,10 +13,19 @@ ownerRatingCount: 42000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Echo Show 8 3rd Gen"
+decisionSummary:
+  model: "Echo Show 8 3rd Gen"
+  market: US
+  useCase: "Adding a stationary Alexa screen in a household willing to use an Amazon account and internet-connected Wi-Fi. The third-generation setup guide covers the supplied power adapter, on-screen setup and camera controls; make space for the display before choosing it."
+  reconsiderIf: "Compare another approach if you want a camera-free device or cloud-free voice processing. The camera shutter and microphone controls are useful choices, not proof of offline operation. Check the exact smart-home functions and optional services you need separately; initial display setup does not verify every device pairing."
+  sources:
+    - label: "Amazon US — Echo Show 8 third-generation setup and privacy controls"
+      url: "https://digprjsurvey.amazon.com/csad/help/node/Tg5QWRNDN7gW3Q968N"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "Echo Show 8 3rd Gen"
   asin: B0BLS3Y632

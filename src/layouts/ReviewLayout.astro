@@ -115,5 +115,5 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
     <a class="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 hover:underline" href={`/category/${product.category}/`}>Browse {categoryLabel}</a>
     {relevantGuides.map((guide) => <a class="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 hover:underline" href={`/best/${guide.data.slug}/`}>{guide.data.title}</a>)}
   </nav>}
-  <RelatedProducts products={alternatives} title="Direct alternatives" />
+  <RelatedProducts products={alternatives} title="Models to compare" description="These are research candidates, not confirmed drop-in replacements. Compare device roles, installation requirements and the exact functions you need before choosing." />
 </BaseLayout>

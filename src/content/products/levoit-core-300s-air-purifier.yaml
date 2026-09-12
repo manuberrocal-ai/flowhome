@@ -13,10 +13,19 @@ ownerRatingCount: 11200
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Levoit Core 300S Smart Air Purifier"
+decisionSummary:
+  model: "Levoit Core 300S Smart Air Purifier"
+  market: US
+  useCase: "Filtering room air indoors with on-device controls, with optional VeSync app features if you want an account-based setup. The Core 300S manual requires a stable surface and at least 15 inches of clearance on all sides; plan the location and filter upkeep before buying."
+  reconsiderIf: "Choose another location or approach if airflow would be blocked, or the unit would face water, excessive humidity or outdoor exposure. Check room sizing and replacement-filter costs separately. This documentary summary does not establish whole-home performance, health outcomes or independently measured noise and filtration results."
+  sources:
+    - label: "Levoit — Core 300S US manual: controls, placement, filter preparation and app setup"
+      url: "https://files.vesync.com/desc/LEVOIT_Core300S_USER_MANUAL.pdf"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "Levoit Core 300S Smart Air Purifier"
   asin: B09BJMY8HL

@@ -13,7 +13,7 @@ ownerRatingCount: 14500
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "Eufy Security Indoor Cam C120"
@@ -39,10 +39,20 @@ sources:
   - label: "Amazon listing — T8400X / T84001W1; hardware not inspected"
     url: "https://www.amazon.com/dp/B08571VZ3Q"
     accessedAt: "2026-09-05"
+decisionSummary:
+  model: "Eufy Security Indoor Cam C120"
+  market: US
+  useCase: "Consider the C120 family for an indoor room where the household agrees on camera placement, access and a recording destination. Confirm the US hardware and service terms: the feature source reviewed here is European."
+  reconsiderIf: "Choose an outdoor-rated model for exposed outdoor coverage. Local recording does not establish free cloud services or privacy by itself; check storage, account access and the exact assistant functions. This camera is not a replacement for a monitored alarm system."
+  sources:
+    - label: "eufy Indoor Cam C120 manufacturer specifications (European page)"
+      url: "https://www.eufy.com/eu-en/products/t8400"
+      accessedAt: "2026-09-04"
 installation:
   model: "Eufy Security Indoor Cam C120"
   market: US
   assessment: light-setup
+  summary: "Indoor-only, plug-in camera with 2.4 GHz Wi-Fi. Local on-camera recording needs a separately purchased microSD card; this does not establish cloud-free operation."
   requirements:
     - "For the fixed T8400 Indoor Cam family, plan indoor-only placement and plug-in power: eufy specifies 5 V / 1 A and 2.4 GHz Wi-Fi. This is not a battery-powered outdoor camera or the T8410 pan-and-tilt model. Confirm the supplied US power adapter and exact hardware before buying."
     - "Create or sign in to the eufy app account and complete network setup before mounting. Plan cable routing and any mounting-bracket work using the unit's guide, and agree on camera placement with the people sharing the room."

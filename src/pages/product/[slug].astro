@@ -10,6 +10,7 @@ import { getCategoryLabel, getProductImage, getProductImageAlt, getProductImageK
 import { getCommerceData } from '../../lib/commerce-data';
 import { getProductFeatures, getEcosystemFeatures } from '../../lib/product-specs';
 import { getInstallationEvidence, INSTALLATION_LABELS } from '../../lib/product-installation';
+import { getProductDecision } from '../../lib/product-decision';
 import { getIdentityRows } from '../../lib/product-identity';
 import { getEditorialMetadata, EDITORIAL_TEAM } from '../../lib/editorial';
 import { prepareVerifiedProductCompatibility } from '../../lib/blocks/block9/compatibility-adapter.ts';
@@ -36,6 +37,7 @@ const productImageKind = getProductImageKind(data);
 const sourceLabel = getProductImageSourceLabel(data);
 const categoryLabel = getCategoryLabel(data.category);
 const installation = getInstallationEvidence(data);
+const decision = getProductDecision(data);
 const identityRows = getIdentityRows(data);
 const commerce = getCommerceData(data);
 const hasDeal = commerce.showPromotion;
@@ -117,8 +119,19 @@ const verifiedNotices = verifiedCompatibility.notices;
     </section>
 
     <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2>Who should buy it?</h2>
-       <p>{data.name} may fit buyers comparing a {categoryLabel.toLowerCase()} who need to check the documented connectivity and voice-platform context below. Confirm the current price, customer ratings, and household compatibility on the product listing before buying.</p>
+      <section id="buying-context" class="scroll-mt-24" aria-labelledby="buying-context-title" data-product-buying-context>
+        <h2 id="buying-context-title">{decision ? 'Is it right for your home?' : 'Before you shortlist this model'}</h2>
+        {decision ? <>
+          <h3>When to consider it</h3>
+          <p data-product-use-case>{decision.useCase}</p>
+          <h3>When to compare another option</h3>
+          <p data-product-reconsider>{decision.reconsiderIf}</p>
+          <p class="text-sm text-slate-600">FlowHome interpretation of the documentation below, not hands-on testing or a guarantee for your setup. Source dates are documentation checks, not confirmation of today's firmware or seller package.</p>
+          <ul class="text-sm">{decision.sources.map(source => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a> — consulted {source.accessedAt}</li>)}</ul>
+        </> : <p>A model-specific buyer-fit summary is not yet available for {data.name}. Use the installation requirements and evidence below to check your intended setup; a category label alone does not establish a fit.</p>}
+        <a href="#installation-checks" class="inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Check installation requirements &amp; sources</a>
+        {(productReviews.length > 0 || productGuides.length > 0) && <p><a href="#product-reading-title" class="inline-flex min-h-11 items-center rounded-sm text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Read the model research</a></p>}
+      </section>
       <h2 id="product-specifications" class="scroll-mt-24">Key specifications</h2>
       <p class="text-sm text-slate-600">These are category-relevant catalog entries, not independent verification of each feature. Check the model-specific sources and limitations below; missing information remains unverified.</p>
       <ul class="mt-2">
@@ -169,12 +182,7 @@ const verifiedNotices = verifiedCompatibility.notices;
         <p class="text-sm text-slate-600">The Amazon ASIN, package contents and hardware revision have not been independently matched to these setup requirements. Confirm the exact listing before buying.</p>
       </section>
 
-      <h2>Pros and cons</h2>
       {data.compatibilityNotes.length > 0 && <aside class="not-prose mt-4 rounded-2xl bg-amber-50 p-5 text-sm leading-6 text-amber-950"><h2 class="font-bold">Compatibility conditions</h2><ul class="mt-2 list-disc pl-5">{data.compatibilityNotes.map((note) => <li>{note}</li>)}</ul></aside>}
-      <div class="not-prose grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl bg-emerald-50 p-5"><h3 class="font-bold text-emerald-900">Useful checks</h3><ul class="mt-2 list-disc pl-5 text-emerald-800"><li>Compatibility records and evidence limits are shown above</li><li>Current prices and customer ratings can be checked on Amazon</li><li>Connectivity and platform checks are surfaced before purchase</li></ul></div>
-         <div class="rounded-2xl bg-rose-50 p-5"><h3 class="font-bold text-rose-900">Limits to verify</h3><ul class="mt-2 list-disc pl-5 text-rose-800"><li>Amazon listing pricing and availability can change</li><li>Additional app or subscription requirements are not inferred here</li><li>Specs not listed remain unverified for this profile</li></ul></div>
-      </div>
       {verifiedNotices.length > 0 && (
         <section data-compatibility-static-notices class="not-prose mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-5">
           <h2 class="font-bold text-slate-900">Verified compatibility notes</h2>
@@ -206,7 +214,7 @@ const verifiedNotices = verifiedCompatibility.notices;
       </ul>
     </nav>}
     <PriceHistory product={data} />
-    <RelatedProducts products={related} title="Direct alternatives" />
+    <RelatedProducts products={related} title="Models to compare" description="These are research candidates, not confirmed drop-in replacements. Compare device roles, installation requirements and the exact functions you need before choosing." />
     <section data-relationship-product={data.slug} class="rounded-2xl border border-slate-200 bg-white p-6" hidden aria-labelledby="relationship-title">
       <h2 id="relationship-title" class="text-2xl font-bold text-slate-950">Documented product relationships</h2>
       <p class="mt-2 text-sm text-slate-600">These source-attributed records are separate from editorial recommendations. A substitute applies only to its stated use case; a complement is not a compatibility guarantee.</p>

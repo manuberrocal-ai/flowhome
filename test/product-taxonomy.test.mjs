@@ -13,7 +13,7 @@ const source = (path) => readFile(new URL(path, root), 'utf8');
 
 const slugs = (relations) => relations.map(({ product }) => (product.data ?? product).slug);
 
-test('selects only catalog-active products with the same canonical intent and excludes current', () => {
+test('selects active category candidates without asserting identical device roles and excludes current', () => {
   const current = { slug: 'hub', category: 'smart-hub' };
   const products = [
     current,
@@ -32,11 +32,29 @@ test('keeps explicit accessories out of direct alternatives and exposes exact la
   };
   const accessory = { slug: 'accessory', category: 'smart-hub', catalogActive: true };
   assert.deepEqual(selectDirectAlternatives(current, [current, accessory]), []);
-  assert.equal(getRelationshipLabel('direct-alternative'), 'Direct alternative');
+  assert.equal(getRelationshipLabel('direct-alternative'), 'Comparison candidate');
   assert.equal(getRelationshipLabel('compatible-accessory'), 'Compatible accessory');
   assert.equal(getRelationshipLabel('same-ecosystem'), 'Same ecosystem');
   assert.equal(getRelationshipLabel('frequently-paired'), 'Frequently paired');
   assert.equal(getRelationshipLabel('editorial-content'), 'Editorial content');
+});
+
+test('profiles and reviews distinguish comparison candidates from confirmed replacements', async () => {
+  for (const path of ['src/pages/product/[slug].astro', 'src/layouts/ReviewLayout.astro']) {
+    const markup = await source(path);
+    assert.match(markup, /title="Models to compare"/);
+    assert.match(markup, /description="These are research candidates, not confirmed drop-in replacements/);
+    assert.match(markup, /Compare device roles, installation requirements and the exact functions/);
+    assert.doesNotMatch(markup, /title="Direct alternatives"/);
+  }
+  const component = await source('src/components/RelatedProducts.astro');
+  assert.match(component, /description && <p[^>]*>\{description\}<\/p>/);
+  assert.match(component, /uniqueProducts.length > 0 && <section/);
+  assert.match(component, /<section[^>]*data-related-products/);
+  assert.match(component, /relationship.label \?\? getRelationshipLabel\(relationship.type\)/);
+  const renderReview = await source('scripts/qa/compatibility-render-review.mjs');
+  assert.match(renderReview, /data-related-products/);
+  assert.doesNotMatch(renderReview, />Direct alternatives/);
 });
 
 test('prioritizes explicit direct alternatives without crossing category boundaries', () => {

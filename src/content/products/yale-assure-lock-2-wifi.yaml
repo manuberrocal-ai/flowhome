@@ -13,10 +13,22 @@ ownerRatingCount: 7600
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "YRD420-WF1-619"
+decisionSummary:
+  model: "YRD420-WF1-619"
+  market: US
+  useCase: "Replacing a suitable deadbolt with the keyed Assure Lock 2 touchscreen and Wi-Fi configuration, with app-managed entry codes. DoorSense can report open/closed state after installation and calibration. Confirm the exact Wi-Fi module, four-AA battery setup and seller kit for YRD420-WF1-619."
+  reconsiderIf: "Compare a retrofit lock if you must keep the exterior hardware. This is the standard keyed model, not Touch, Plus or key-free. DoorSense flush mounting requires drilling, and door alignment still matters. The manufacturer family page does not verify the seller's satin-nickel unit or included accessories."
+  sources:
+    - label: "Yale US — keyed Assure Lock 2 Wi-Fi family; default finish is not seller verification"
+      url: "https://shopyalehome.com/products/yale-assure-lock-2-touchscreen-with-wi-fi"
+      accessedAt: "2026-09-12"
+    - label: "Yale — keyed YRD410/YRD420 guide: module, entry codes and DoorSense"
+      url: "https://images.salsify.com/image/upload/s--gKFHxEcu--/yw8tyifbsuqunupyfe6p.pdf"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "YRD420-WF1-619"
   asin: B0CPLS7F28

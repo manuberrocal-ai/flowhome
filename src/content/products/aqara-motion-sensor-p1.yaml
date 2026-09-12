@@ -13,10 +13,19 @@ ownerRatingCount: 4200
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "MS-S02"
+decisionSummary:
+  model: "MS-S02"
+  market: US
+  useCase: "Adding motion-triggered household routines through an Aqara Zigbee 3.0 hub and the Aqara Home app. The MS-S02 manual documents motion and ambient-light detection; check hub communication and the intended mounting position before relying on a routine."
+  reconsiderIf: "Choose another approach for outdoor or damp locations, or if you do not want the hub dependency. This is the P1, not the P2. Do not treat motion notifications as proof of continuous occupancy or a tested security system; account for placement limits and button-battery precautions."
+  sources:
+    - label: "Aqara — MS-S02 P1 manual: hub, detection, placement and precautions"
+      url: "https://www.aqara.com/wp-content/uploads/2023/06/Motion-Sensor-P1_User-Manual.pdf"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "MS-S02"
   asin: B09QKVMMTB

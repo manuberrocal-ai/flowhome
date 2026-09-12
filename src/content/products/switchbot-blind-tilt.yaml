@@ -13,10 +13,25 @@ ownerRatingCount: 2100
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-09-04"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "SwitchBot Blind Tilt"
+decisionSummary:
+  model: "SwitchBot Blind Tilt"
+  market: US
+  useCase: "Adding powered tilt and nearby app control to existing horizontal blinds with a supported wand, instead of replacing the blinds. Check the fitting guide: support lists wand diameters of 6.2-10.2 mm or 12 mm."
+  reconsiderIf: "This is not for vertical blinds or roller shades. Remote control and linked assistants need a separate compatible hub; do not assume it is in the seller's package. Check the exact accessories and charging conditions rather than relying on a promise of unlimited solar power."
+  sources:
+    - label: "SwitchBot — supported horizontal blinds and wand sizes"
+      url: "https://support.switch-bot.com/hc/en-us/articles/11696634725783-What-types-of-blinds-does-Blind-Tilt-support"
+      accessedAt: "2026-09-12"
+    - label: "SwitchBot — vertical blinds and roller shades excluded"
+      url: "https://support.switch-bot.com/hc/en-us/articles/11642036286359-Does-Blind-Tilt-support-vertical-blinds"
+      accessedAt: "2026-09-12"
+    - label: "SwitchBot US — Blind Tilt app control, hub and solar conditions"
+      url: "https://us.switch-bot.com/pages/switchbot-blind-tilt"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "SwitchBot Blind Tilt"
   asin: B0B4D95FZW

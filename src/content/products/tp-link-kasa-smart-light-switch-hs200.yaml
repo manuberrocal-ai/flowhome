@@ -13,10 +13,19 @@ ownerRatingCount: 47000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "HS200"
+decisionSummary:
+  model: "HS200"
+  market: US
+  useCase: "Adding app-based on/off control and schedules to a suitable existing lighting circuit while keeping a wall control. HS200 needs a neutral wire and 2.4 GHz Wi-Fi; its role is switching, not adjusting brightness."
+  reconsiderIf: "Compare a different control if you need dimming or cannot confirm the circuit's wiring and load against the manufacturer's requirements. This replaces an in-wall switch, not a bulb or plug-in adapter. Have a qualified installer assess uncertain wiring; app guidance does not verify your installation."
+  sources:
+    - label: "Kasa US — HS200 switching, neutral and load requirements"
+      url: "https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "HS200"
   asin: B01EZV35QU

@@ -3,7 +3,7 @@ import { getCategoryLabel, getProductImageSourceLabel, getProductImage, getProdu
 import { getCommerceData } from '../lib/commerce-data';
 import CommerceObservation from './CommerceObservation.astro';
 import { getProductThumbnailSet } from '../lib/product-thumbnails';
-import { getInstallationEvidence } from '../lib/product-installation';
+import { getInstallationEvidence, getInstallationSummary } from '../lib/product-installation';
 
 interface Props { product: any; compact?: boolean; editorialReason?: string; commerceSlots?: boolean; }
 const { product, compact = false, editorialReason, commerceSlots = false } = Astro.props;
@@ -58,7 +58,13 @@ const stars = Array.from({ length: 5 }, (_, index) => {
 
     {!compact && installation && <div class="product-card-setup border-t border-slate-200 pt-3 text-sm leading-6 text-slate-700" data-product-setup-preview>
       <p class="font-bold text-slate-950">First setup check</p>
-      <p class="mt-1">{installation.requirements[0]}</p>
+      <p class="mt-1">{getInstallationSummary(installation)}</p>
+      {installation.summary && installation.requirements.length > 1 && <details class="mt-2" data-product-setup-details>
+        <summary class="min-h-11 cursor-pointer rounded-sm py-2 font-bold text-slate-950 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Full setup checklist</summary>
+        <ul class="mt-2 list-disc space-y-3 pl-5">
+          {installation.requirements.map((requirement) => <li>{requirement}</li>)}
+        </ul>
+      </details>}
       <a href={`/product/${slug}/#installation-checks`} class="mt-1 inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900" aria-label={`All setup checks and sources for ${data.name}`}>All setup checks &amp; sources</a>
     </div>}
 

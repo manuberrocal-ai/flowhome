@@ -13,10 +13,22 @@ ownerRatingCount: 9200
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "MSG100"
+decisionSummary:
+  model: "MSG100"
+  market: US
+  useCase: "Adding app control and open/closed status to an existing garage-door motor that passes Meross's exact-model compatibility check. Plan for power, a wired door sensor and 2.4 GHz Wi-Fi at the motor. MSG100 is an add-on controller, not a replacement motor."
+  reconsiderIf: "Resolve any required accessory and the exact regional kit before buying. If the wall-button terminals are unclear, do not attempt a terminal-bridging test; consult Meross or a qualified installer. Wi-Fi pairing alone cannot establish safe unattended operation or verify the seller's advertised HomeKit variant."
+  sources:
+    - label: "Meross — motor compatibility checker and terminal-test caution"
+      url: "https://www.meross.com/en-gc/compatibility-check/garage-door-opener"
+      accessedAt: "2026-09-12"
+    - label: "Meross official store — MSG100 controller, sensor and network requirements"
+      url: "https://shop.meross.com/products/smart-wifi-garage-door-opener"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "MSG100"
   asin: B084Z5QZR2

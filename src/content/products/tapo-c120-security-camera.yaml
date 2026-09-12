@@ -13,10 +13,22 @@ ownerRatingCount: 9800
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-29"
 catalogActive: true
-dateUpdated: "2026-06-29"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-29"
 priceSource: "manual"
 model: "Tapo C120"
+decisionSummary:
+  model: "Tapo C120"
+  market: US
+  useCase: "Monitoring a spot with an available power route and 2.4 GHz Wi-Fi, with the option of recording to a separately purchased microSD card. Tapo documents both indoor and outdoor camera placement; choose the position around the power and mounting requirements, not only the view."
+  reconsiderIf: "This is not a battery-powered camera. The linked US guide requires the adapter to be used indoors, even when the camera is outside. Budget for a suitable card or check Tapo Care subscription terms; local recording does not establish free cloud storage or verify every alert and service feature."
+  sources:
+    - label: "TP-Link US — Tapo C120 power, placement and storage options"
+      url: "https://www.tp-link.com/us/home-networking/cloud-camera/tapo-c120/"
+      accessedAt: "2026-09-12"
+    - label: "Tapo — C120 US guide: indoor adapter and separate recording card"
+      url: "https://static.tp-link.com/upload/manual/2024/202410/20241030/7106511094_Tapo%20C120(US)1.0_QIG_V1.pdf"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "Tapo C120"
   asin: B0CH45HPZT

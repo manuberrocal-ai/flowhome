@@ -13,10 +13,19 @@ ownerRatingCount: 48000
 ratingSource: "Amazon customer ratings"
 ratingLastChecked: "2026-06-28"
 catalogActive: true
-dateUpdated: "2026-06-28"
+dateUpdated: "2026-09-12"
 priceLastChecked: "2026-06-28"
 priceSource: "manual"
 model: "H617C"
+decisionSummary:
+  model: "H617C"
+  market: US
+  useCase: "Adding decorative RGBIC lighting along a route that fits the complete 10 m H617C strip, with nearby Bluetooth control. This is the H617C, not the Wi-Fi H618C."
+  reconsiderIf: "Choose another model if you need a cut-to-length strip, Alexa or native Matter: Govee lists none for H617C. The model matrix does not verify the seller's package or approve an outdoor installation; check the exact kit and its instructions."
+  sources:
+    - label: "Govee — H617C model matrix: length, control and exclusions"
+      url: "https://community.govee.com/support/faqs/specs"
+      accessedAt: "2026-09-12"
 identityEvidence:
   model: "H617C"
   asin: B099S9DXT7

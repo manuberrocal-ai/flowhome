@@ -2,7 +2,7 @@
 title: "iRobot Roomba j7+ Review: Smart Mapping, Compatibility, and Tradeoffs"
 description: "A cautious iRobot Roomba j7+ review covering PrecisionVision obstacle avoidance, Imprint Smart Mapping, app control, smart-home compatibility, setup questions, and tradeoffs."
 pubDate: 2026-06-28
-updatedDate: 2026-07-18
+updatedDate: 2026-09-12
 productSlug: irobot-roomba-j7-plus
 category: robot-vacuum
 tags: ["smart home", "review", "robot-vacuum", "irobot"]
