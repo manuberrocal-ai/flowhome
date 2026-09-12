@@ -157,17 +157,22 @@ html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-b
       })();
     </script>
       <script>
-      import { setupAnalytics } from '../lib/analytics';
-      import { setupExperiments } from '../lib/experiments';
+      import { publicConfig } from '../lib/public-config';
+      import { initializeOptionalRuntime } from '../lib/optional-runtime.js';
       import { setupImageFallbacks } from '../lib/image-fallback.js';
 
       setupImageFallbacks();
 
-      setupAnalytics({
-        gtmId: document.body.dataset.gtmId || '',
-        clarityId: document.body.dataset.clarityId || '',
+      void initializeOptionalRuntime({
+        analyticsEnabled: publicConfig.analyticsEnabled,
+        gtmId: publicConfig.gtmId,
+        clarityId: publicConfig.clarityId,
+        experimentsEnabled: document.body.dataset.funnelExperimentV1 === 'on'
+          && document.body.dataset.homePrimaryCtaV1 === 'on',
+      }, {
+        analytics: () => import('../lib/analytics'),
+        experiments: () => import('../lib/experiments'),
       });
-      setupExperiments();
     </script>
     <script>
       import { setupCartDock } from '../lib/cart-client.js';

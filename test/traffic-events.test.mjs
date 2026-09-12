@@ -11,7 +11,8 @@ test('BaseLayout emits no analytics loader, queue, or noscript fallback before c
   assert.match(layout, /const GTM_ID = publicConfig\.gtmId;/);
   assert.match(layout, /const CLARITY_ID = publicConfig\.clarityId;/);
   assert.doesNotMatch(layout, /GTM-KX37WSZQ|xdyay13jq0/);
-  assert.match(layout, /setupAnalytics/);
+  assert.match(layout, /initializeOptionalRuntime/);
+  assert.match(layout, /analyticsEnabled: publicConfig\.analyticsEnabled/);
   assert.match(layout, /data-gtm-id/);
 });
 
