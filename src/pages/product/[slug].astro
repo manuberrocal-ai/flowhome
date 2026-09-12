@@ -11,6 +11,7 @@ import { getCommerceData } from '../../lib/commerce-data';
 import { getProductFeatures, getEcosystemFeatures } from '../../lib/product-specs';
 import { getInstallationEvidence, INSTALLATION_LABELS } from '../../lib/product-installation';
 import { getProductDecision } from '../../lib/product-decision';
+import { comparisonConfigs } from '../../lib/comparison-content';
 import { getIdentityRows } from '../../lib/product-identity';
 import { getEditorialMetadata, EDITORIAL_TEAM } from '../../lib/editorial';
 import { prepareVerifiedProductCompatibility } from '../../lib/blocks/block9/compatibility-adapter.ts';
@@ -28,6 +29,8 @@ const data = product.data;
 const allProducts = await getCollection('products');
 const productReviews = (await getCollection('reviews')).filter((review) => review.data.productSlug === data.slug);
 const productGuides = (await getCollection('best-of')).filter((guide) => guide.data.productSlugs.includes(data.slug));
+const productComparisons = comparisonConfigs.filter((comparison) => comparison.slugs.includes(data.slug)
+  && comparison.slugs.every((slug) => allProducts.some((entry) => entry.data.slug === slug && entry.data.catalogActive)));
 const compatibilityEnv = getCompatibilityEnvironment(import.meta.env);
 const related = selectVerifiedDirectAlternatives(data, allProducts, forCompatibilitySurface(compatibilityEnv, 'alternatives', data.slug), 4);
 const productImage = getProductImage(data);
@@ -66,21 +69,25 @@ const ecosystemFields = new Set(ecosystemFeatures.map((feature) => feature.sourc
 const specifications = categoryFeatures.filter((feature) => !ecosystemFeatures.some((entry) => entry.label === feature.label));
 const verifiedNotices = verifiedCompatibility.notices;
 ---
-<ProductLayout product={data}>
+<ProductLayout product={data} compactPurchasePanel>
   <article class="space-y-8" data-compatibility-product={data.slug}>
     <AffiliateDisclosure />
 
-    <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-      <div class="grid gap-0 md:grid-cols-[0.95fr_1.05fr] md:items-stretch">
-        <div class="relative flex min-h-96 flex-col justify-center bg-gradient-to-br from-white via-blue-50 to-orange-50 p-6 md:justify-start md:pt-16" data-image-fallback-scope>
+    <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm" aria-labelledby="product-profile-name">
+      <header class="border-b border-slate-200 px-6 py-5 md:px-8 md:py-6">
+        <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-700">{data.brand} - {categoryLabel}</p>
+        <h1 id="product-profile-name" class="mt-2 text-3xl font-black leading-tight text-slate-950 sm:text-4xl">{data.name}</h1>
+      </header>
+      <div class="grid gap-0 md:grid-cols-[0.8fr_1.2fr] md:items-start">
+        <div class="relative flex flex-col justify-center bg-slate-50 p-5 pt-14 md:pt-16" data-image-fallback-scope>
           <span class="absolute left-5 top-5 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200">{categoryLabel}</span>
-          <div class="flex min-h-80 items-center justify-center rounded-3xl bg-white/75 p-5 shadow-inner shadow-slate-100">
+          <div class="flex h-44 items-center justify-center md:h-64">
             <img
               src={productImage}
               srcset={getProductDetailSet(data)}
               sizes="320px"
               alt={productImageAlt}
-              class="max-h-80 w-full object-contain drop-shadow-sm"
+              class="max-h-full w-full object-contain"
               width="500"
               height="500"
               loading="eager"
@@ -92,26 +99,53 @@ const verifiedNotices = verifiedCompatibility.notices;
           <p class:list={["mt-3 text-center text-xs font-semibold", productImageKind === 'fallback' ? 'text-slate-500' : 'text-emerald-700']} data-image-source-caption>{sourceLabel}</p>
         </div>
         <div class="flex flex-col justify-center p-6 md:p-8">
-          <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-700">{data.brand} - {categoryLabel}</p>
-          <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{data.name}</h1>
+          <section id="buying-context" class="scroll-mt-24 text-sm leading-6 text-slate-700" aria-labelledby="buying-context-title" data-product-buying-context>
+            <h2 id="buying-context-title" class="font-bold text-slate-950">{decision ? 'Is it right for your home?' : 'Before you shortlist this model'}</h2>
+            {decision ? <>
+              <p class="mt-2" data-product-use-case>{decision.useCase}</p>
+              <details class="mt-2">
+                <summary class="min-h-11 cursor-pointer rounded-sm py-2 font-bold text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Before you choose: conditions &amp; sources</summary>
+                <h3 class="mt-2 font-bold text-slate-950">When to compare another option</h3>
+                <p class="mt-2" data-product-reconsider>{decision.reconsiderIf}</p>
+                <p class="mt-3 text-xs leading-5 text-slate-600">FlowHome interpretation of the documentation below, not hands-on testing or a guarantee for your setup. Source dates are documentation checks, not confirmation of today's firmware or seller package.</p>
+                <ul class="mt-3 space-y-2 text-xs leading-5">{decision.sources.map(source => <li><a href={source.url} rel="noopener noreferrer" class="text-blue-700 underline">{source.label}</a> — consulted {source.accessedAt}</li>)}</ul>
+                <a href="#installation-checks" class="inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Check installation requirements &amp; sources</a>
+                {(productReviews.length > 0 || productGuides.length > 0) && <p><a href="#product-reading-title" class="inline-flex min-h-11 items-center rounded-sm text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Read the model research</a></p>}
+              </details>
+            </> : <p class="mt-2">A model-specific buyer-fit summary is not yet available for {data.name}. Use the installation requirements and evidence below to check your intended setup; a category label alone does not establish a fit.</p>}
+          </section>
           {installation ? <div class="mt-4 border-l-2 border-blue-200 pl-4 text-sm leading-6 text-slate-700" data-product-setup-preview>
             <p class="font-bold text-slate-950">First setup check</p>
             <p class="mt-1">{installation.requirements[0]}</p>
             <a href="#installation-checks" class="mt-1 inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900">All setup checks &amp; sources</a>
             <p class="text-xs leading-5 text-slate-600">From model-specific documentation, not a hands-on test. This is one check, not a complete installation guide.</p>
           </div> : <p class="mt-4 text-lg leading-relaxed text-slate-600">A FlowHome buying profile with catalog specifications, setup checks and a direct link to the Amazon listing.</p>}
-          <div class="mt-5 flex flex-wrap gap-2">
+          <details class="mt-4">
+            <summary class="min-h-11 cursor-pointer rounded-sm py-2 text-sm font-bold text-slate-700">Catalog features and verification status</summary>
+            <div class="mt-2 flex flex-wrap gap-2">
             {featureList.map((feature) => <span class="product-detail-chip product-detail-chip--neutral max-w-full !leading-5" data-product-feature>{feature.label}: <span data-compatibility-value={ecosystemFields.has(feature.sourceField) ? feature.sourceField : undefined}>{feature.value}</span></span>)}
             {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{commerce.displayDiscountPct}% deal</span>}
             {featureList.length === 0 && <span class="product-detail-chip product-detail-chip--neutral">Core smart-home profile</span>}
-          </div>
-          <div class="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
+            </div>
+          </details>
+          {(commerce.isPriceFresh || commerce.isRatingFresh) && <div class="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
              <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">{commerce.priceLabel}</p>{commerce.displayPrice !== undefined && <p class="mt-1 text-2xl font-black text-slate-950">${commerce.displayPrice}</p>}{hasDeal && <p class="mt-1 text-sm font-bold text-slate-400 line-through">${commerce.displayOriginalPrice}</p>}{commerce.isPriceFresh && <p class="mt-1 text-xs text-slate-500">Price last checked {commerce.priceLastCheckedLabel}</p>}</div>
              <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon customer rating</p>{commerce.isRatingFresh ? <><div class="product-detail-stars mt-1" aria-label={`Amazon customer rating ${commerce.displayRating} out of 5`}><span aria-hidden="true">{starStates.map((state) => <span class:list={["product-detail-star", `product-detail-star--${state}`]}>{'\u2605'}</span>)}</span><strong>{commerce.displayRating}</strong></div><p class="mt-1 text-xs text-slate-500">Checked {commerce.ratingLastCheckedLabel}</p></> : <p class="mt-1 text-sm text-slate-600">Check current ratings on Amazon.</p>}</div>
              <div><p class="text-xs font-bold uppercase tracking-wide text-slate-500">Amazon rating count</p><p class="mt-1 text-sm font-semibold text-slate-600">{commerce.displayRatingCount?.toLocaleString() ?? 'Not currently verified'}</p></div>
-          </div>
+          </div>}
 <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="premium-action mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-center text-base font-black text-white transition focus:outline-none focus:ring-4 focus:ring-orange-300/50 sm:w-auto" aria-label={`Check on Amazon: ${data.name}`} data-fh-amazon-cta data-product-slug={data.slug} data-category={data.category} data-discount={commerce.displayDiscountPct ?? 0} data-cta-position="product_profile"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
            <p class="mt-2 text-xs font-medium text-slate-500">Sponsored affiliate link - price and availability may change.</p>
+           <button type="button" class="mt-3 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50"
+             data-flow-cart-add data-asin={data.asin} data-slug={data.slug} data-product-slug={data.slug}
+             data-category={data.category} data-cta-position="product_profile_list" data-fh-track="list_add"
+             data-name={data.name} data-image={productImage} data-url={`/product/${data.slug}/`}
+             aria-label={`Add to list: ${data.name}`} aria-pressed="false" title="Add to list">
+             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z" /></svg>
+             <span class="product-card-side-action-label">Add to list</span>
+           </button>
+           {productComparisons.length > 0 && <nav class="mt-3" aria-label="Compare this model" data-product-comparison-links>
+             {productComparisons.map((comparison) => <a href={`/compare/${comparison.slugs.join('-vs-')}/`} class="inline-flex min-h-11 items-center rounded-sm py-2 text-sm font-bold text-blue-700 underline underline-offset-4" data-fh-track="compare_open" data-cta-position="product_profile_compare">Compare: {comparison.slugs.filter(slug => slug !== data.slug).map(slug => allProducts.find(entry => entry.data.slug === slug)!.data.name).join(' / ')} →</a>)}
+           </nav>}
            <p class="mt-3 text-sm text-slate-600"><strong>By:</strong> <a href={editorial.author.profileUrl} class="text-blue-700 underline">{editorial.author.name}</a> ({editorial.author.role})</p>
            <p class="mt-1 text-xs text-slate-500">Product data updated {data.dateUpdated}. This is not a human review.</p>
         </div>
@@ -119,19 +153,6 @@ const verifiedNotices = verifiedCompatibility.notices;
     </section>
 
     <section class="prose prose-lg max-w-none rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <section id="buying-context" class="scroll-mt-24" aria-labelledby="buying-context-title" data-product-buying-context>
-        <h2 id="buying-context-title">{decision ? 'Is it right for your home?' : 'Before you shortlist this model'}</h2>
-        {decision ? <>
-          <h3>When to consider it</h3>
-          <p data-product-use-case>{decision.useCase}</p>
-          <h3>When to compare another option</h3>
-          <p data-product-reconsider>{decision.reconsiderIf}</p>
-          <p class="text-sm text-slate-600">FlowHome interpretation of the documentation below, not hands-on testing or a guarantee for your setup. Source dates are documentation checks, not confirmation of today's firmware or seller package.</p>
-          <ul class="text-sm">{decision.sources.map(source => <li><a href={source.url} rel="noopener noreferrer">{source.label}</a> — consulted {source.accessedAt}</li>)}</ul>
-        </> : <p>A model-specific buyer-fit summary is not yet available for {data.name}. Use the installation requirements and evidence below to check your intended setup; a category label alone does not establish a fit.</p>}
-        <a href="#installation-checks" class="inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Check installation requirements &amp; sources</a>
-        {(productReviews.length > 0 || productGuides.length > 0) && <p><a href="#product-reading-title" class="inline-flex min-h-11 items-center rounded-sm text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Read the model research</a></p>}
-      </section>
       <h2 id="product-specifications" class="scroll-mt-24">Key specifications</h2>
       <p class="text-sm text-slate-600">These are category-relevant catalog entries, not independent verification of each feature. Check the model-specific sources and limitations below; missing information remains unverified.</p>
       <ul class="mt-2">

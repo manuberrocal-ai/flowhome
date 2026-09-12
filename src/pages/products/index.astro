@@ -3,46 +3,71 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { getCategoryLabel } from '../../lib/product-art';
+import { getInstallationEvidence } from '../../lib/product-installation';
 
 const products = (await getCollection('products'))
   .filter((product) => product.data.catalogActive)
   .sort((a, b) => a.data.name.localeCompare(b.data.name, 'en') || a.id.localeCompare(b.id, 'en'));
 const categories = [...new Set(products.map((product) => product.data.category))].sort();
+const quickCategories = (['smart-lighting', 'security-camera', 'smart-plug', 'robot-vacuum', 'smart-hub'] as const).filter(category => categories.includes(category));
 ---
 <BaseLayout title="Smart Home Products, Research & Buying Guides | FlowHome" description="Research smart-home products and buying guides by category, documented requirements, and practical setup considerations." canonicalURL="https://flowhome.dev/products/">
-  <section aria-label="Product directory">
-    <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Product directory</p>
-    <h1 class="mt-2 text-3xl sm:text-4xl font-black text-slate-950">Smart home products worth researching</h1>
-    <p class="mt-3 max-w-3xl text-base text-slate-600">Find a device, check its setup requirements, and save a list to research.</p>
-    <div class="mt-5 grid gap-3 sm:grid-cols-2" data-catalog-controls hidden>
+  <section aria-label="Product directory" class="catalog-intro">
+    <div class="catalog-heading">
+      <div>
+        <p class="catalog-eyebrow">Find your next smart-home device</p>
+        <h1>Choose for <span>your home.</span></h1>
+        <p class="catalog-description">Explore {products.length} devices. Understand the setup. Save the ones worth a closer look.</p>
+      </div>
+      <nav class="catalog-tools" aria-label="Shopping tools">
+        <a href="/quiz/"><span>Not sure where to start?</span><strong>Find my setup <span aria-hidden="true">↗</span></strong></a>
+        <a href="/compare/">Compare models <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+    <div class="catalog-filter-bar" data-catalog-controls hidden>
       <label class="text-sm font-bold">Search products
-        <input id="catalog-search" type="search" placeholder="Name, brand or model" class="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal" />
+        <input id="catalog-search" type="search" maxlength="120" placeholder="Try Kasa, a model, or smart lighting" class="catalog-field" />
       </label>
       <label class="text-sm font-bold">Category
-        <select id="catalog-category" class="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal">
+        <select id="catalog-category" class="catalog-field">
           <option value="">All categories</option>
           {categories.map(category => <option value={category}>{getCategoryLabel(category)}</option>)}
         </select>
       </label>
-      <button id="catalog-reset" type="button" class="min-h-11 justify-self-start rounded-xl border border-slate-300 px-4 text-sm font-bold">Clear filters</button>
+      <label class="text-sm font-bold">Setup effort
+        <select id="catalog-installation" class="catalog-field">
+          <option value="">Any setup</option>
+          <option value="plug-and-play">Power and app setup</option>
+          <option value="light-setup">Mounting or guided setup</option>
+          <option value="advanced">Wiring / detailed checks</option>
+        </select>
+      </label>
+      <button id="catalog-reset" type="button" class="catalog-reset" disabled>Clear filters</button>
     </div>
-    <details class="mt-3">
-      <summary class="min-h-11 cursor-pointer py-3 text-sm font-bold text-blue-800">Browse {categories.length} category guides</summary>
-      <nav aria-label="Product categories" class="flex flex-wrap gap-2">
-        {categories.map(category => <a href={'/category/' + category + '/'} class="inline-flex min-h-11 items-center rounded-xl bg-blue-50 px-3 py-2 text-sm font-bold text-blue-800">{getCategoryLabel(category)}</a>)}
-      </nav>
-    </details>
+    <div class="catalog-quick-filters" aria-label="Quick category filters" data-catalog-quick-filters hidden>
+      <button type="button" data-catalog-category="" aria-pressed="true">All categories</button>
+      {quickCategories.map(category => <button type="button" data-catalog-category={category} aria-pressed="false">{getCategoryLabel(category)}</button>)}
+    </div>
   </section>
   <section class="mt-5" aria-label="Product results" data-commerce-catalog>
-    <p id="catalog-count" role="status" class="mb-2 text-sm font-bold">{products.length} products</p>
-    <p class="mb-4 text-sm text-slate-600">Products are listed alphabetically, not ranked by customer ratings.</p>
+    <div class="catalog-result-heading">
+      <p id="catalog-count" role="status" class="text-sm font-bold">{products.length} products</p>
+      <p class="text-sm text-slate-600">A–Z · Not a rating-based ranking</p>
+    </div>
+    <p class="catalog-commerce-note">Current prices are on Amazon. Setup labels are editorial assessments, not compatibility guarantees.</p>
+    <a id="catalog-category-guide" class="catalog-category-guide" hidden>Read this category’s buying guide <span aria-hidden="true">→</span></a>
     <div data-commerce-catalog-controls hidden class="mb-4 rounded-2xl border border-slate-200 bg-white p-4">
       <p data-commerce-status role="status" class="text-sm text-slate-600"></p>
       <button data-commerce-refresh type="button" class="mt-3 min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-blue-100">Refresh catalog prices</button>
     </div>
-    <p id="catalog-empty" hidden class="rounded-xl border border-slate-200 bg-white p-6">No products match. Try a different name or clear the filters.</p>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {products.map(product => <div data-catalog-item data-name={product.data.name} data-brand={product.data.brand} data-model={product.data.model} data-category={product.data.category}><ProductCard product={product} commerceSlots /></div>)}
+    <div id="catalog-empty" hidden class="catalog-empty">
+      <h2 class="text-xl font-bold">No products match these filters.</h2>
+      <p class="mt-2">Try a different model, category or setup effort.</p>
+      <button type="button" id="catalog-empty-reset" class="catalog-reset mt-4">Clear filters and start again</button>
+      <a href="/quiz/" class="ml-3 inline-flex min-h-11 items-center font-bold text-teal-800 underline">Help me choose</a>
+    </div>
+    <div class="catalog-results-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map(product => <div data-catalog-item data-name={product.data.name} data-brand={product.data.brand} data-model={product.data.model} data-category={product.data.category} data-installation={getInstallationEvidence(product.data)?.assessment ?? ''}><ProductCard product={product} commerceSlots /></div>)}
     </div>
   </section>
   <section class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="research-paths">
@@ -56,39 +81,141 @@ const categories = [...new Set(products.map((product) => product.data.category))
       <a class="inline-flex min-h-11 items-center rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-sm hover:underline" href="/compare/roborock-q5-plus-vs-irobot-roomba-j7-plus/">Roborock Q5+ vs Roomba j7+ comparison →</a>
     </nav>
   </section>
+  <details class="catalog-guide-directory mt-5">
+    <summary class="min-h-11 cursor-pointer py-3 text-sm font-bold text-teal-800">Browse {categories.length} category guides</summary>
+    <nav aria-label="Product categories" class="flex flex-wrap gap-2">
+      {categories.map(category => <a href={'/category/' + category + '/'} class="inline-flex min-h-11 items-center rounded-xl bg-blue-50 px-3 py-2 text-sm font-bold text-blue-800">{getCategoryLabel(category)}</a>)}
+    </nav>
+  </details>
 
   <script>
-    import { matchesCatalogQuery } from '../../lib/catalog-filter.js';
+    import { matchesCatalogQuery, readCatalogFilters, writeCatalogFilters } from '../../lib/catalog-filter.js';
     const search = document.querySelector<HTMLInputElement>('#catalog-search');
     const category = document.querySelector<HTMLSelectElement>('#catalog-category');
+    const installation = document.querySelector<HTMLSelectElement>('#catalog-installation');
     const reset = document.querySelector<HTMLButtonElement>('#catalog-reset');
     const count = document.querySelector<HTMLElement>('#catalog-count');
     const empty = document.querySelector<HTMLElement>('#catalog-empty');
     const controls = document.querySelector<HTMLElement>('[data-catalog-controls]');
+    const quickFilters = document.querySelector<HTMLElement>('[data-catalog-quick-filters]');
+    const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-catalog-category]')];
+    const guide = document.querySelector<HTMLAnchorElement>('#catalog-category-guide');
     const items = [...document.querySelectorAll<HTMLElement>('[data-catalog-item]')];
-    if (search && category && reset && count && empty && controls) {
+    if (search && category && installation && reset && count && empty && controls) {
+      const allowedCategories = [...category.options].map(option => option.value);
+      const restore = () => {
+        const filters = readCatalogFilters(location.search, allowedCategories);
+        search.value = filters.query;
+        category.value = filters.category;
+        installation.value = filters.installation;
+      };
       const update = () => {
         let visible = 0;
         for (const item of items) {
-          item.hidden = !matchesCatalogQuery(item.dataset, search.value, category.value);
+          item.hidden = !matchesCatalogQuery(item.dataset, search.value, category.value, installation.value);
           if (!item.hidden) visible += 1;
         }
         count.textContent = visible + (visible === 1 ? ' product' : ' products') + ' of ' + items.length;
         empty.hidden = visible !== 0;
+        reset.disabled = !search.value && !category.value && !installation.value;
+        chips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.catalogCategory === category.value)));
+        if (guide) {
+          guide.hidden = !category.value;
+          if (category.value) guide.href = '/category/' + category.value + '/';
+          else guide.removeAttribute('href');
+        }
       };
-      search.addEventListener('input', update);
-      category.addEventListener('change', update);
-      reset.addEventListener('click', () => {
+      const sync = (push = false) => {
+        update();
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof count.animate === 'function') {
+          count.getAnimations().forEach(animation => animation.cancel());
+          count.animate([{ opacity: .5 }, { opacity: 1 }], { duration: 150 });
+        }
+        const query = writeCatalogFilters(location.search, { query: search.value, category: category.value, installation: installation.value });
+        const url = location.pathname + (query ? '?' + query : '') + location.hash;
+        try {
+          if (push) history.pushState(null, '', url);
+          else history.replaceState(history.state, '', url);
+        } catch { /* Filtering remains usable if browser history is unavailable. */ }
+      };
+      const clear = () => {
         search.value = '';
         category.value = '';
-        update();
+        installation.value = '';
+        sync(true);
         search.focus();
+      };
+      search.addEventListener('input', () => sync());
+      category.addEventListener('change', () => sync(true));
+      installation.addEventListener('change', () => sync(true));
+      chips.forEach(chip => chip.addEventListener('click', () => {
+        category.value = chip.dataset.catalogCategory ?? '';
+        sync(true);
+      }));
+      reset.addEventListener('click', clear);
+      document.querySelector('#catalog-empty-reset')?.addEventListener('click', clear);
+      window.addEventListener('popstate', () => {
+        restore();
+        update();
       });
       controls.hidden = false;
+      if (quickFilters) quickFilters.hidden = false;
+      restore();
       update();
     }
   </script>
   <style>
-    [data-catalog-controls][hidden] { display: none; }
+    [hidden] { display: none; }
+    .catalog-intro { border-bottom: 1px solid #cbd5e1; padding-bottom: .5rem; }
+    .catalog-heading { display: grid; gap: 1.5rem; align-items: center; grid-template-columns: minmax(0, 1fr) 16rem; }
+    .catalog-eyebrow { color: #0f766e; font-size: .8rem; font-weight: 700; }
+    h1 { margin-top: .5rem; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.12; letter-spacing: -.035em; color: #0f2a52; }
+    h1 span { color: #0f766e; }
+    .catalog-description { margin-top: .75rem; max-width: 40rem; color: #475569; }
+    .catalog-tools { display: grid; border-left: 2px solid #99d5cf; padding-left: 1.25rem; }
+    .catalog-tools a { display: flex; align-items: center; justify-content: space-between; gap: .5rem; min-height: 2.75rem; color: #0f2a52; font-size: .875rem; }
+    .catalog-tools a:first-child { display: grid; padding-bottom: .5rem; }
+    .catalog-tools a:first-child > span { color: #475569; font-size: .8rem; }
+    .catalog-tools strong { display: flex; justify-content: space-between; color: #0f766e; }
+    .catalog-tools a:hover { text-decoration: underline; text-underline-offset: .25rem; }
+    .catalog-tools a > span[aria-hidden], .catalog-tools strong span { transition: transform 150ms ease; }
+    .catalog-tools a:hover > span[aria-hidden], .catalog-tools a:hover strong span { transform: translate(2px, -2px); }
+    .catalog-filter-bar { display: grid; gap: .75rem; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) auto; align-items: end; margin-top: 1.5rem; }
+    .catalog-filter-bar label { min-width: 0; }
+    .catalog-field { display: block; width: 100%; min-width: 0; min-height: 2.875rem; margin-top: .375rem; border: 1px solid #94a3b8; border-radius: .625rem; background: white; padding: .625rem .75rem; font-size: 1rem; font-weight: 400; }
+    .catalog-field::placeholder { color: #64748b; }
+    .catalog-reset { min-height: 2.875rem; padding: .625rem .875rem; border: 1px solid #94a3b8; border-radius: .625rem; color: #0f2a52; background: white; font-size: .875rem; font-weight: 700; }
+    .catalog-reset:hover:not(:disabled) { background: #e2e8f0; }
+    .catalog-quick-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+    .catalog-quick-filters button { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .75rem; border: 1px solid #cbd5e1; border-radius: 999px; color: #334155; background: white; font-size: .8rem; font-weight: 600; transition: background-color 150ms ease, border-color 150ms ease; }
+    .catalog-quick-filters button[aria-pressed="true"] { border-color: #0f766e; color: white; background: #0f766e; }
+    .catalog-quick-filters button:hover:not([aria-pressed="true"]) { border-color: #0f766e; background: #f0fdfa; }
+    .catalog-quick-filters button span { font-size: .75rem; font-weight: 400; }
+    .catalog-result-heading { display: flex; justify-content: space-between; gap: .75rem; flex-wrap: wrap; }
+    .catalog-commerce-note { margin: .375rem 0 1rem; color: #475569; font-size: .8rem; }
+    .catalog-category-guide { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; margin-bottom: 1rem; color: #0f766e; font-weight: 700; text-decoration: underline; text-underline-offset: .25rem; }
+    .catalog-empty { padding: 2rem; border: 1px dashed #94a3b8; border-radius: 1rem; background: white; }
+    @media (max-width: 900px) {
+      .catalog-filter-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .catalog-filter-bar label:first-child { grid-column: 1 / -1; }
+      .catalog-reset { justify-self: start; }
+    }
+    @media (max-width: 600px) {
+      .catalog-heading { grid-template-columns: 1fr; gap: 1rem; }
+      .catalog-tools { display: flex; flex-wrap: wrap; gap: 0 1rem; border-left: 0; padding-left: 0; }
+      .catalog-tools a:first-child { display: flex; padding: 0; }
+      .catalog-tools a:first-child > span { display: none; }
+      .catalog-filter-bar { margin-top: 1rem; gap: .5rem; }
+      .catalog-filter-bar label { font-size: .8rem; }
+      .catalog-field { padding-inline: .5rem; }
+      .catalog-quick-filters { display: none; }
+      .catalog-commerce-note { font-size: .8rem; }
+    }
+    @media (max-width: 380px) {
+      .catalog-filter-bar { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .catalog-tools a:hover > span[aria-hidden], .catalog-tools a:hover strong span { transform: none; }
+    }
   </style>
 </BaseLayout>

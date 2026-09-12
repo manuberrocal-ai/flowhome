@@ -27,12 +27,18 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
   <Breadcrumbs items={breadcrumbItems.map(({ name, href }) => ({ name, href }))} />
   <section class="space-y-6" data-comparison-presentation>
     <script is:inline type="application/json" data-comparison-base set:html={serializeJsonLd(products.map(({ slug, asin, name, category, formFactor }) => ({ slug, asin, name, category, formFactor })))} />
-    <div class="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-8 text-white">
+    <div class="rounded-3xl bg-gradient-to-br from-blue-950 via-blue-800 to-cyan-700 p-5 text-white sm:p-8">
       <p class="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-100">FlowHome Compare</p>
-      <h1 class="mt-3 text-4xl font-extrabold md:text-5xl">{title}</h1>
+      <h1 class="mt-3 break-words text-3xl font-extrabold sm:text-4xl md:text-5xl">{title}</h1>
       <p class="mt-4 max-w-3xl text-lg text-blue-50">{description}</p>
     </div>
-    <section class="rounded-3xl border border-blue-100 bg-blue-50/70 p-6" aria-labelledby="comparison-angle">
+    <nav class="comparison-page-links flex flex-wrap gap-x-5 gap-y-1 border-b border-slate-200 pb-3" aria-label="On this comparison">
+      <a href="#comparison-table">Task &amp; setup</a>
+      <a href="#quick-decision">Decision guidance</a>
+      <a href="#evidence-limits">Evidence limits</a>
+      <a href="#comparison-methodology">Methodology</a>
+    </nav>
+    <section class="py-2" aria-labelledby="comparison-angle">
       <h2 id="comparison-angle" class="text-2xl font-black text-slate-950">What this comparison helps you decide</h2>
       <p class="mt-3 text-lg leading-8 text-slate-700">{angle}</p>
        <p class="mt-3 text-sm font-semibold text-slate-600">Prices and Amazon customer ratings are shown only when current authorized data is available. Otherwise they remain unverified{updatedThrough ? `. Catalog record dates: ${updatedThrough}` : ''}; listings can change.</p>
@@ -42,13 +48,15 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
       <p data-comparison-status role="status" class="text-sm text-slate-600"></p>
       <button data-comparison-refresh type="button" class="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-base font-semibold text-slate-900 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Refresh evidence</button>
     </div>
-    <section class="grid gap-6 md:grid-cols-2" aria-label="Comparison insights">
+    <details class="rounded-2xl border border-slate-200 bg-white">
+      <summary class="min-h-11 cursor-pointer rounded-2xl px-5 py-4 font-bold text-slate-950">Supporting comparison notes</summary>
+    <section class="grid gap-5 p-4 pt-0 md:grid-cols-2" aria-label="Comparison insights">
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-black text-slate-950">Key tradeoffs</h2>
         <ul data-comparison-tradeoffs class="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-700">{insights.tradeoffs.map((item) => <li>{item}</li>)}</ul>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-2xl font-black text-slate-950">Who should buy each option</h2>
+        <h2 class="text-2xl font-black text-slate-950">What is recorded for each option</h2>
         {insights.buyerFits.map((fit) => <div class="mt-4"><h3 class="font-bold text-slate-950">{products.find((product) => product.slug === fit.slug)?.name ?? fit.slug}</h3><ul data-comparison-buyer={fit.slug} class="list-disc pl-5 text-sm leading-6 text-slate-700">{fit.reasons.map((reason) => <li>{reason}</li>)}</ul></div>)}
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -61,6 +69,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
         <p data-comparison-final class="mt-3 leading-7 text-slate-700">{insights.finalRecommendation}</p>
       </div>
     </section>
+    </details>
     <section class="rounded-3xl border border-amber-200 bg-amber-50 p-6" aria-labelledby="evidence-limits">
       <h2 id="evidence-limits" class="text-2xl font-black text-slate-950">Evidence limits</h2>
       <ul data-comparison-limits class="mt-3 list-disc space-y-2 pl-5 leading-7 text-amber-950">{insights.evidenceLimits.map((item) => <li>{item}</li>)}</ul>
@@ -110,4 +119,11 @@ const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems.map(({ name, u
       </div>
     </nav>
   </section>
+  <style>
+    .comparison-page-links a { display: inline-flex; min-height: 2.75rem; align-items: center; color: #12304f; font-weight: 700; text-decoration: underline; text-underline-offset: .25em; }
+    .comparison-page-links a:hover { color: #0f766e; }
+    :is(.comparison-page-links a, summary):focus-visible { outline: 3px solid #12304f; outline-offset: 3px; }
+    :is(#quick-decision, #evidence-limits, #comparison-methodology) { scroll-margin-top: 6rem; }
+    @media print { details::details-content { display: block; content-visibility: visible; } }
+  </style>
 </BaseLayout>

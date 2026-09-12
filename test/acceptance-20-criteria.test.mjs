@@ -268,7 +268,8 @@ test('C15 - Style system keeps 44px touch targets on hero carousel + mobile menu
   const css = read(src('styles/global.css'));
   assert.match(css, /min-h-11|min-height:\s*2\.75rem|44px/);
   const home = read(src('pages/index.astro'));
-  assert.match(home, /grid min-w-0 grid-cols-\[minmax\(0,1fr\)\]/);
+  assert.match(home, /grid min-w-0 home-hero-layout/);
+  assert.match(home, /\.home-hero-layout \{ grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(home, /hero-dot-controls flex min-w-0 max-w-full flex-wrap gap-0/);
   const consent = read(src('components/ConsentBanner.astro'));
   assert.doesNotMatch(consent, /class="fixed/);
