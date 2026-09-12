@@ -45,8 +45,8 @@ export const comparisonConfigs = [
     slugs: ['aqara-hub-m2', 'switchbot-hub-2', 'aeotec-smartthings-hub'],
     title: 'Aqara Hub M2 vs SwitchBot Hub 2 vs Aeotec SmartThings Hub',
     description: 'Compare hub bridge and controller roles, accessory scope, power, and regional model requirements.',
-    angle: 'Aqara and SwitchBot bridge paths differ from the Aeotec SmartThings controller role; Matter labels do not make them interchangeable.',
-    guidance: 'List exact accessories and actions first. Check bridge or controller requirements, firmware, power accessories and regional hardware using the linked profiles and hub guide. Protocol flags do not certify an accessory pairing.',
+    angle: 'Start with the devices you need to control: Aqara Hub M2 documents bridging for supported Aqara Zigbee accessories; SwitchBot Hub 2 documents bridging for supported SwitchBot and infrared devices; Aeotec documents a SmartThings controller. These are different roles, shown side by side rather than ranked. Matter labels do not make them interchangeable.',
+    guidance: 'List exact accessories, desired actions and the receiving app first. If a required device or action is not documented, pause the purchase rather than treating a protocol logo as approval. Check controller, firmware, power and regional-model requirements in the linked profiles and hub guide. Protocol flags do not certify an accessory pairing.',
   },
   {
     slugs: ['philips-hue-white-color-starter-kit', 'govee-rgbic-led-strip-lights', 'wyze-bulb-color'],

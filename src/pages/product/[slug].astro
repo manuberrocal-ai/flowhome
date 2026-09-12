@@ -25,6 +25,8 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const data = product.data;
 const allProducts = await getCollection('products');
+const productReviews = (await getCollection('reviews')).filter((review) => review.data.productSlug === data.slug);
+const productGuides = (await getCollection('best-of')).filter((guide) => guide.data.productSlugs.includes(data.slug));
 const compatibilityEnv = getCompatibilityEnvironment(import.meta.env);
 const related = selectVerifiedDirectAlternatives(data, allProducts, forCompatibilitySurface(compatibilityEnv, 'alternatives', data.slug), 4);
 const productImage = getProductImage(data);
@@ -90,7 +92,12 @@ const verifiedNotices = verifiedCompatibility.notices;
         <div class="flex flex-col justify-center p-6 md:p-8">
           <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-700">{data.brand} - {categoryLabel}</p>
           <h1 class="mt-3 text-4xl font-black leading-tight text-slate-950 md:text-5xl">{data.name}</h1>
-          <p class="mt-4 text-lg leading-relaxed text-slate-600">A FlowHome buying profile with catalog specifications, setup checks and a direct link to the Amazon listing.</p>
+          {installation ? <div class="mt-4 border-l-2 border-blue-200 pl-4 text-sm leading-6 text-slate-700" data-product-setup-preview>
+            <p class="font-bold text-slate-950">First setup check</p>
+            <p class="mt-1">{installation.requirements[0]}</p>
+            <a href="#installation-checks" class="mt-1 inline-flex min-h-11 items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900">All setup checks &amp; sources</a>
+            <p class="text-xs leading-5 text-slate-600">From model-specific documentation, not a hands-on test. This is one check, not a complete installation guide.</p>
+          </div> : <p class="mt-4 text-lg leading-relaxed text-slate-600">A FlowHome buying profile with catalog specifications, setup checks and a direct link to the Amazon listing.</p>}
           <div class="mt-5 flex flex-wrap gap-2">
             {featureList.map((feature) => <span class="product-detail-chip product-detail-chip--neutral max-w-full !leading-5" data-product-feature>{feature.label}: <span data-compatibility-value={ecosystemFields.has(feature.sourceField) ? feature.sourceField : undefined}>{feature.value}</span></span>)}
             {hasDeal && <span class:list={["product-detail-chip product-detail-chip--deal", isHotDeal && "product-detail-chip--hot-deal"]}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3.25 4.75A1.75 1.75 0 0 1 5 3h4.05c.46 0 .9.18 1.23.5l6.22 6.22a1.75 1.75 0 0 1 0 2.48l-4.3 4.3a1.75 1.75 0 0 1-2.48 0L3.5 10.28A1.75 1.75 0 0 1 3 9.05V5c0-.08.01-.17.02-.25h.23Zm3 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" /></svg>-{commerce.displayDiscountPct}% deal</span>}
@@ -190,6 +197,14 @@ const verifiedNotices = verifiedCompatibility.notices;
       </div>
     </section>
 
+    {(productReviews.length > 0 || productGuides.length > 0) && <nav aria-labelledby="product-reading-title" class="rounded-3xl border border-slate-200 bg-white p-6" data-product-editorial-navigation>
+      <h2 id="product-reading-title" class="scroll-mt-24 text-2xl font-bold text-slate-950">Read the research before choosing</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-600">These articles cover this model. Inclusion in a guide is not a compatibility guarantee or a hands-on test.</p>
+      <ul class="mt-4 space-y-2">
+        {productReviews.map((review) => <li><a href={`/review/${review.id}/`} class="inline-flex min-h-11 items-center rounded-sm text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">{review.data.title}</a></li>)}
+        {productGuides.map((guide) => <li><a href={`/best/${guide.data.slug}/`} class="inline-flex min-h-11 items-center rounded-sm text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">{guide.data.title}</a></li>)}
+      </ul>
+    </nav>}
     <PriceHistory product={data} />
     <RelatedProducts products={related} title="Direct alternatives" />
     <section data-relationship-product={data.slug} class="rounded-2xl border border-slate-200 bg-white p-6" hidden aria-labelledby="relationship-title">

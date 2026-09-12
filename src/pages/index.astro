@@ -21,9 +21,9 @@ const deals = allDeals.filter((d) => {
 });
 const reviews = (await getCollection('reviews')).sort((a, b) => b.data.qualityScore - a.data.qualityScore || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const featuredProducts = selectHomeShortlist(products);
-const showcaseProducts = featuredProducts.slice(0, 6);
+const showcaseProducts = featuredProducts.slice(0, 4);
+const additionalProducts = featuredProducts.slice(4);
 const dealProducts = products.filter((p) => getCommerceData(p.data, now).showPromotion).slice(0, 4);
-const categories = [...new Set(products.map((p) => p.data.category))].slice(0, 7);
 const reviewCards = reviews.slice(0, 3);
 const editorialChecks: Record<string, string> = {
   'smart-plug': 'Check the outlet type, appliance load and voice-platform compatibility.',
@@ -54,12 +54,13 @@ const heroProducts = showcaseProducts.map((product) => {
     <div class="relative z-10 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:p-10">
       <div class="min-w-0">
         <p class="inline-flex max-w-full whitespace-normal break-words rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
-        <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Buy smart home gear that actually fits your home.</h1>
-        <p class="mt-5 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">Explore product profiles, compare setup requirements, and save a shortlist. Check current prices and customer feedback on Amazon before you buy.</p>
+        <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Find smart home gear for the way you live.</h1>
+        <p class="mt-5 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">Start with one useful routine. Compare device requirements, check what else you need, and save a shortlist before checking current prices on Amazon.</p>
         <div class="mt-7 flex flex-wrap gap-3">
            <a href="/quiz/" data-fh-home-primary-cta class="brand-sheen inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
-          <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Shop picks</a>
+          <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Explore products</a>
         </div>
+        <p class="mt-5 max-w-xl text-sm leading-6 text-blue-100">Research-based guidance, not hands-on testing. <a href="/about/#editorial-team" class="inline-flex min-h-11 items-center rounded-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">How we evaluate products</a></p>
       </div>
 
       <div class="relative min-w-0" aria-label="Featured smart home product showcase">
@@ -137,6 +138,20 @@ const heroProducts = showcaseProducts.map((product) => {
     </div>
   </section>
 
+  <section class="mt-10" aria-labelledby="home-start-heading" data-home-guide-paths>
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Plan before you buy</p><h2 id="home-start-heading" class="mt-1 text-2xl font-black text-slate-950 md:text-3xl">What are you trying to set up?</h2></div>
+      <a href="/best/" class="inline-flex min-h-11 items-center rounded-sm text-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900">All buying guides</a>
+    </div>
+    <nav aria-label="Buying guides by setup need" class="mt-4">
+      <ul class="grid divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white md:grid-cols-3 md:divide-x md:divide-y-0">
+        <li class="min-w-0"><a href="/best/best-smart-home-starter-kit/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">My first room routine</h3><p class="mt-2 text-sm leading-6 text-slate-600">Choose a useful task, then check controls, accessories, and total setup cost.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Plan a starter setup <span aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="min-w-0"><a href="/best/best-smart-home-devices-for-renters/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">A setup for my rental</h3><p class="mt-2 text-sm leading-6 text-slate-600">Check mounting, removal, and property permissions before choosing devices.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Review rental checks <span aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="min-w-0"><a href="/best/best-smart-hubs-for-matter-zigbee/" class="block h-full rounded-2xl p-5 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">Devices that need a hub</h3><p class="mt-2 text-sm leading-6 text-slate-600">Compare hub roles and exact-device requirements beyond ecosystem logos.</p><span class="mt-3 inline-block text-sm font-bold text-blue-700">Understand hub choices <span aria-hidden="true">&rarr;</span></span></a></li>
+      </ul>
+    </nav>
+  </section>
+
   {dealProducts.length > 0 && <section class="home-surface brand-aurora-surface mt-8 rounded-[1.75rem] text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
        <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
       <div><p class="text-xs font-black uppercase tracking-[0.2em] text-orange-400">Deal radar</p><h2 class="mt-1 text-2xl font-black">Discounts that deserve attention</h2></div>
@@ -152,11 +167,11 @@ const heroProducts = showcaseProducts.map((product) => {
 
   <section class="featured-products mt-10 rounded-[2rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/70 p-4 ring-1 ring-slate-200/80 md:p-5">
     <div class="mb-5 flex flex-wrap items-end justify-between gap-4">
-      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Featured</p><h2 class="text-3xl font-black text-slate-950">Smart home picks worth your shortlist</h2></div>
-      <div class="flex flex-wrap gap-2">{categories.map((category) => <a href={`/category/${category}/`} class="rounded-full bg-white px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm ring-1 ring-slate-200 hover:text-blue-700">{getCategoryLabel(category)}</a>)}</div>
+      <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">More to explore</p><h2 class="text-3xl font-black text-slate-950">Different devices for different tasks</h2></div>
+      <a href="/products/" class="inline-flex min-h-11 items-center rounded-full bg-white px-4 py-2 text-sm font-bold text-blue-700 underline underline-offset-4 ring-1 ring-slate-200 hover:text-blue-900">Explore all categories</a>
     </div>
     <p class="mb-4 max-w-3xl text-sm text-slate-600">Selected to explore different smart-home tasks, not ranked by ratings or hands-on testing. Check each profile for requirements and limitations.</p>
-    <div class="product-flow-field relative grid gap-5 overflow-hidden rounded-[1.55rem] sm:grid-cols-2 lg:grid-cols-4">{featuredProducts.map((product) => <ProductCard product={product} editorialReason={product.editorialReason} />)}</div>
+    <div class="product-flow-field relative grid gap-5 overflow-hidden rounded-[1.55rem] sm:grid-cols-2 lg:grid-cols-4">{additionalProducts.map((product) => <ProductCard product={product} editorialReason={product.editorialReason} />)}</div>
   </section>
 
 
@@ -170,7 +185,7 @@ const heroProducts = showcaseProducts.map((product) => {
         <p class="mt-3 text-sm leading-6 text-slate-300">Compare setup requirements and feature records, save your picks, and check current buying details on Amazon.</p>
         <div class="mt-5 grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1">
           <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">{products.length}</strong><span class="text-slate-300">curated products</span></div>
-          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">{reviews.length}</strong><span class="text-slate-300">practical reviews</span></div>
+          <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">{reviews.length}</strong><span class="text-slate-300">research-based reviews</span></div>
           <div class="rounded-2xl bg-white/8 p-3 ring-1 ring-white/10"><strong class="block text-xl text-cyan-100">No account</strong><span class="text-slate-300">needed to save locally</span></div>
         </div>
       </div>
@@ -178,7 +193,7 @@ const heroProducts = showcaseProducts.map((product) => {
 
     <div class="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6 shadow-sm">
       <div class="flex flex-wrap items-end justify-between gap-3">
-        <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Review notes</p><h2 class="text-3xl font-black text-slate-950">What readers check before buying</h2></div>
+        <div><p class="text-sm font-bold uppercase tracking-wide text-blue-700">Review notes</p><h2 class="text-3xl font-black text-slate-950">What to check before buying</h2></div>
         <a href="/reviews/" class="rounded-full bg-slate-950 px-4 py-2 text-sm font-black text-white hover:bg-slate-800">All reviews</a>
       </div>
       <div class="mt-5 grid gap-4 md:grid-cols-3">

@@ -93,41 +93,34 @@ export function validateRows(rows) {
 const number = (value) => value === '' ? null : Number(value.trim());
 const format = (value) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
-function aggregateNumeric(records, column) {
-  const values = records.map((record) => number(record[column])).filter((value) => value !== null);
-  return values.length > 0 ? values.reduce((total, value) => total + value, 0) : null;
-}
-
 export function summarize(records) {
-  const groups = new Map();
-  for (const record of records) {
-    const key = `${record.source}\u0000${record.cluster}`;
-    if (!groups.has(key)) groups.set(key, { source: record.source, cluster: record.cluster, records: [] });
-    groups.get(key).records.push(record);
-  }
-  return [...groups.values()].map((group) => {
-    const impressions = aggregateNumeric(group.records, 'impressions');
-    const clicks = aggregateNumeric(group.records, 'clicks');
-    const positions = group.records.map((record) => number(record.avg_position)).filter((value) => value !== null);
+  // A CSV row can be a page total, a query slice or a rolling window. The
+  // schema cannot prove those populations are disjoint, so never add rows.
+  return records.map((record) => {
+    const impressions = number(record.impressions);
+    const clicks = number(record.clicks);
     return {
-      ...group,
-      observations: group.records.length,
+      source: record.source,
+      cluster: record.cluster,
+      records: [record],
+      observations: 1,
       impressions,
       clicks,
       ctr: impressions !== null && impressions > 0 && clicks !== null ? clicks / impressions * 100 : null,
-      avgPosition: positions.length > 0 ? positions.reduce((total, value) => total + value, 0) / positions.length : null,
-      sessions: aggregateNumeric(group.records, 'sessions'),
-      engagedSessions: aggregateNumeric(group.records, 'engaged_sessions'),
-      affiliateClicks: aggregateNumeric(group.records, 'affiliate_clicks'),
+      avgPosition: number(record.avg_position),
+      sessions: number(record.sessions),
+      engagedSessions: number(record.engaged_sessions),
+      affiliateClicks: number(record.affiliate_clicks),
     };
   });
 }
 
 export function renderReport(records) {
   if (records.length === 0) return 'Organic growth report: no observations recorded.\nTracker is valid and header-only; no conclusions are available.\n';
-  const lines = [`Organic growth report: ${records.length} observation(s).`, 'Summaries are kept within each source + cluster; source metrics are not combined.'];
+  const lines = [`Organic growth report: ${records.length} observation(s).`, 'Each row is reported separately; windows, page totals, query slices and source metrics are not combined. No aggregate traffic or revenue is inferred.'];
   for (const group of summarize(records)) {
-    const metrics = [`observations=${group.observations}`];
+    const record = group.records[0];
+    const metrics = [`observations=${group.observations}`, `recorded_at=${JSON.stringify(record.recorded_at)}`, `window_days=${JSON.stringify(record.window_days)}`, `page=${JSON.stringify(record.page_url)}`, `query=${JSON.stringify(record.query)}`];
     if (group.impressions !== null) metrics.push(`impressions=${format(group.impressions)}`);
     if (group.clicks !== null) metrics.push(`clicks=${format(group.clicks)}`);
     if (group.ctr !== null) metrics.push(`ctr=${group.ctr.toFixed(2)}%`);
@@ -135,6 +128,7 @@ export function renderReport(records) {
     if (group.sessions !== null) metrics.push(`sessions=${format(group.sessions)}`);
     if (group.engagedSessions !== null) metrics.push(`engaged_sessions=${format(group.engagedSessions)}`);
     if (group.affiliateClicks !== null) metrics.push(`affiliate_clicks=${format(group.affiliateClicks)}`);
+    metrics.push(`notes=${JSON.stringify(record.notes)}`);
     lines.push(`${group.source} | ${group.cluster} | ${metrics.join(' ')}`);
   }
   return `${lines.join('\n')}\n`;

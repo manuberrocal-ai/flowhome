@@ -1,6 +1,6 @@
 ---
 title: "Aqara Hub M2 Review: Zigbee Devices and Matter Bridging"
-description: "A structured FlowHome review of Aqara Hub M2 covering Zigbee, ecosystem support, app control, tradeoffs, and buyer fit."
+description: "Document-based Aqara Hub M2 review: Matter bridging for supported Zigbee accessories, power requirements, and firmware limits."
 pubDate: 2026-07-15
 updatedDate: 2026-09-06
 productSlug: aqara-hub-m2

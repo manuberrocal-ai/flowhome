@@ -1,6 +1,6 @@
 ---
 title: "SwitchBot Hub 2 Review: Matter Bridging and Device Limits"
-description: "A structured FlowHome review of SwitchBot Hub 2 covering Matter, ecosystem support, app control, tradeoffs, and buyer fit."
+description: "Document-based SwitchBot Hub 2 review: Matter bridge roles, supported actions, and the sensor-equipped cable required for setup."
 pubDate: 2026-07-15
 updatedDate: 2026-09-06
 productSlug: switchbot-hub-2

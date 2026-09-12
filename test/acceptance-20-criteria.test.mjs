@@ -29,7 +29,7 @@ test('C1 - Hero carousel swaps products atomically with single article, not stac
   assert.match(index, /data-hero-slide/);
   assert.equal((index.match(/<article[^>]*data-hero-slide/g) ?? []).length, 1, 'only one hero article rendered SSR');
   assert.match(index, /data-hero-dot=\{index\}/, 'hero dots generated dynamically via Astro map');
-  assert.match(index, /showcaseProducts = featuredProducts\.slice\(0,\s*6\)/, 'six showcase products come from featuredProducts.slice(0, 6)');
+  assert.match(index, /showcaseProducts = featuredProducts\.slice\(0,\s*4\)/, 'four showcase products leave distinct entries for the grid');
 });
 
 test('C1b - Hero respects reduced motion, pausing setInterval on interaction and respecting visibilitychange', () => {
@@ -329,4 +329,3 @@ test('C20 - JSON-LD never declares InStock/aggregateRating from retailer owner d
   // Offer only emitted when commerce.hasOffer
   assert.match(seo, /commerce\.hasOffer/);
 });
-

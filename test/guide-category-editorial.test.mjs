@@ -26,7 +26,7 @@ async function preparePage(kind, props, collections = {}) {
   return new AsyncFunction(...keys, `${script}\nreturn ${returned};`)(...values);
 }
 
-const product = (slug, overrides = {}) => ({ data: { slug, name: `Product ${slug}`, category: 'smart-hub', catalogActive: true, ownerRating: 4, ownerRatingCount: 100, ...overrides } });
+const product = (slug, overrides = {}) => ({ id: slug, data: { slug, name: `Product ${slug}`, category: 'smart-hub', catalogActive: true, ownerRating: 4, ownerRatingCount: 100, ...overrides } });
 const guide = (overrides = {}) => ({ list: { data: { slug: 'test-guide', title: 'Test buying guide', category: 'smart-hub', productSlugs: ['beta', 'alpha'], pubDate: new Date('2026-06-28T00:00:00Z'), ...overrides } } });
 
 test('guide breadcrumbs and ItemList preserve visible selection order and canonical destinations', async () => {
@@ -73,7 +73,8 @@ test('category structured list contains only rendered active category products',
   assert.equal(result.canonicalURL, 'https://flowhome.dev/category/smart-hub/');
   assert.deepEqual(result.breadcrumbItems.map((item) => item.href), ['/', '/products/', undefined]);
   assert.deepEqual(result.breadcrumbSchema.itemListElement.map((item) => item.item), result.breadcrumbItems.map((item) => item.url));
-  assert.deepEqual(result.itemListSchema.itemListElement.map((item) => item.name), ['Product beta', 'Product alpha']);
+  assert.deepEqual(result.itemListSchema.itemListElement.map((item) => item.name), ['Product alpha', 'Product beta']);
+  assert.deepEqual(result.itemListSchema.itemListElement.map((item) => item.name), result.products.map((entry) => entry.data.name));
 });
 
 test('both templates render shared breadcrumb data and serialize only visible product lists', () => {

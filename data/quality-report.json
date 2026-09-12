@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T17:33:50.771Z",
+  "generatedAt": "2026-09-12T11:27:57.251Z",
   "results": [
     {
       "file": "src\\content\\reviews\\aeotec-smartthings-hub-review.md",
@@ -10,12 +10,12 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "449 words"
+          "detail": "549 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "6 H2 sections"
         },
         {
           "name": "specifications",
@@ -53,7 +53,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "476 words"
+          "detail": "493 words"
         },
         {
           "name": "h2Structure",
@@ -96,12 +96,12 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "433 words"
+          "detail": "523 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "6 H2 sections"
         },
         {
           "name": "specifications",
@@ -139,7 +139,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "484 words"
+          "detail": "486 words"
         },
         {
           "name": "h2Structure",
@@ -182,7 +182,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "473 words"
+          "detail": "488 words"
         },
         {
           "name": "h2Structure",
@@ -218,14 +218,14 @@
     },
     {
       "file": "src\\content\\reviews\\echo-dot-5th-gen-review.md",
-      "title": "Echo Dot 5th Gen Review: Smart Home Value, Setup, and Tradeoffs",
+      "title": "Echo Dot 5th Gen Review: Alexa Controls and Matter Requirements",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "534 words"
+          "detail": "519 words"
         },
         {
           "name": "h2Structure",
@@ -261,14 +261,14 @@
     },
     {
       "file": "src\\content\\reviews\\ecobee-smart-thermostat-premium-review.md",
-      "title": "ecobee Smart Thermostat Premium Review: Smart Home Value, Setup, and Tradeoffs",
+      "title": "ecobee Smart Thermostat Premium Review: Room Sensors and HVAC Checks",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "454 words"
+          "detail": "452 words"
         },
         {
           "name": "h2Structure",
@@ -311,7 +311,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "493 words"
+          "detail": "479 words"
         },
         {
           "name": "h2Structure",
@@ -354,7 +354,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "538 words"
+          "detail": "558 words"
         },
         {
           "name": "h2Structure",
@@ -433,14 +433,14 @@
     },
     {
       "file": "src\\content\\reviews\\philips-hue-white-color-starter-kit-review.md",
-      "title": "Philips Hue White and Color Starter Kit Review: Smart Home Value, Setup, and Tradeoffs",
+      "title": "Philips Hue Starter Kit 562918 Review: Two E26 Bulbs and Bridge Setup",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "498 words"
+          "detail": "480 words"
         },
         {
           "name": "h2Structure",
@@ -483,7 +483,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "474 words"
+          "detail": "528 words"
         },
         {
           "name": "h2Structure",
@@ -526,7 +526,7 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "801 words"
+          "detail": "744 words"
         },
         {
           "name": "h2Structure",
@@ -569,12 +569,12 @@
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "435 words"
+          "detail": "533 words"
         },
         {
           "name": "h2Structure",
           "passed": true,
-          "detail": "5 H2 sections"
+          "detail": "6 H2 sections"
         },
         {
           "name": "specifications",
@@ -605,14 +605,14 @@
     },
     {
       "file": "src\\content\\reviews\\tp-link-kasa-smart-plug-mini-review.md",
-      "title": "TP-Link Kasa Smart Plug Mini Review: Smart Home Value, Setup, and Tradeoffs",
+      "title": "Kasa EP10P2 Review: Two-Pack Identity and On/Off Control Checks",
       "passed": true,
       "score": 7,
       "checks": [
         {
           "name": "wordCount",
           "passed": true,
-          "detail": "457 words"
+          "detail": "555 words"
         },
         {
           "name": "h2Structure",

@@ -1,4 +1,43 @@
 const instances = new WeakMap();
+const imageTransitions = new WeakMap();
+
+// Browsers may keep painting the previous bitmap while a new src/srcset loads.
+// Preserve its layout box, but never pair that old bitmap with new product data.
+function prepareProductImage(image, root) {
+  imageTransitions.get(image)?.();
+  let cancelled = false;
+  image.style.visibility = 'hidden';
+  image.setAttribute('aria-busy', 'true');
+  const reveal = async () => {
+    if (!image.complete || !image.naturalWidth) return;
+    const source = image.src;
+    const candidates = image.srcset;
+    try {
+      if (typeof image.decode === 'function') await image.decode();
+      if (cancelled || image.src !== source || image.srcset !== candidates || !image.complete || !image.naturalWidth) return;
+      image.style.visibility = '';
+      image.removeAttribute('aria-busy');
+    } catch {
+      // Keep an undecodable bitmap hidden. The shared fallback owns recovery.
+      if (!cancelled && image.src === source && image.srcset === candidates) unavailable();
+    }
+  };
+  const unavailable = () => {
+    if (cancelled) return;
+    image.style.visibility = 'hidden';
+    image.removeAttribute('aria-busy');
+    setText(root, 'image-caption', 'Product image unavailable');
+  };
+  image.addEventListener('load', reveal);
+  image.addEventListener('error', unavailable);
+  const cleanup = () => {
+    cancelled = true;
+    image.removeEventListener('load', reveal);
+    image.removeEventListener('error', unavailable);
+  };
+  imageTransitions.set(image, cleanup);
+  return reveal;
+}
 
 export function normalizeProduct(product) {
   return {
@@ -38,7 +77,9 @@ function setText(root, name, value) {
 export function applyProduct(root, product, index = 0) {
   const item = normalizeProduct(product);
   const image = root.querySelector('[data-hero-image]');
+  let revealImage;
   if (image) {
+    revealImage = prepareProductImage(image, root);
     image.sizes = item.imageSizes;
     image.srcset = item.imageSrcset;
     image.src = item.image;
@@ -92,6 +133,8 @@ export function applyProduct(root, product, index = 0) {
   }
   const indicator = root.querySelector('[data-hero-indicator]');
   if (indicator) indicator.textContent = `${index + 1}`;
+  // Cached images may not emit another load event after assigning the same URL.
+  revealImage?.();
   return item;
 }
 
@@ -110,14 +153,15 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
   const media = windowRef.matchMedia('(prefers-reduced-motion: reduce)');
   let active = 0;
   let timer = null;
-  let interacted = false;
+  let interacted = true;
+  let hasPlayed = false;
   let inViewport = true;
   let observer = null;
   const syncPlayback = () => {
     if (!playback) return;
     playback.hidden = items.length < 2;
     playback.disabled = media.matches;
-    playback.textContent = media.matches ? 'Autoplay off' : timer ? 'Pause rotation' : 'Resume rotation';
+    playback.textContent = media.matches ? 'Autoplay off' : timer ? 'Pause rotation' : hasPlayed ? 'Resume rotation' : 'Start rotation';
     playback.setAttribute('aria-label', media.matches ? 'Autoplay off: reduced motion preference' : playback.textContent);
   };
 
@@ -153,6 +197,7 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
   const start = () => {
     if (!interacted && !media.matches && documentRef.visibilityState !== 'hidden' && inViewport && items.length > 1 && !timer) {
       timer = windowRef.setInterval(() => render(active + 1), 4300);
+      hasPlayed = true;
     }
     syncPlayback();
   };
@@ -193,7 +238,7 @@ export function setupHeroCarousel({ root, products, windowRef = globalThis.windo
   root.dataset.reducedMotion = String(media.matches);
   start();
 
-  const cleanup = () => { if (timer) windowRef.clearInterval(timer); observer?.disconnect(); listeners.splice(0).forEach((remove) => remove()); instances.delete(root); };
+  const cleanup = () => { if (timer) windowRef.clearInterval(timer); observer?.disconnect(); listeners.splice(0).forEach((remove) => remove()); imageTransitions.get(root.querySelector('[data-hero-image]'))?.(); instances.delete(root); };
   instances.set(root, cleanup);
   return cleanup;
 }

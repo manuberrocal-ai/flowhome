@@ -15,7 +15,23 @@ Record one row per source, cluster, page/query, and reporting window in `data/or
 
 `recorded_at,window_days,source,cluster,page_url,query,impressions,clicks,ctr,avg_position,sessions,engaged_sessions,affiliate_clicks,notes`
 
-Use `source` values such as `GSC`, `GA4`, `Bing`, or `Amazon`; keep metrics native to their source. `impressions` and `clicks` are search exposure/actions; `ctr = clicks / impressions * 100`; `avg_position` is the source-reported mean position; `sessions` and `engaged_sessions` are GA4; `affiliate_clicks` are tracked outbound affiliate CTA clicks or Amazon-reported clicks when available. Never merge unlike source metrics. A report groups by `source + cluster` and derives CTR only from same-group clicks/impressions.
+Use `source` values such as `GSC`, `GA4`, `Bing`, or `Amazon`; keep metrics native to their source. `impressions` and `clicks` are search exposure/actions; `ctr = clicks / impressions * 100`; `avg_position` is the source-reported mean position; `sessions` and `engaged_sessions` are GA4; `affiliate_clicks` are tracked outbound affiliate CTA clicks or Amazon-reported clicks when available. Never merge unlike source metrics. The report preserves each observation separately and derives CTR only from that row. It does not sum overlapping rolling windows, page totals and query slices, or repeated imports; the schema cannot prove those populations are disjoint. Mean positions are not averaged across rows. Dates, windows, page/query and notes remain visible so the reviewer can select comparable exports.
+
+## Competitive research adoption — 2026-09-12
+
+Keep guides and comparison tools on the existing FlowHome domain and hosting.
+The originating video demonstrates a prototype, not verified revenue. Do not
+use its assumed traffic, click rate or commissions as our baseline. Preserve
+product identity, source permissions and unknown fields; importing more fields
+with AI does not establish their accuracy. Never copy Amazon customer reviews
+or stale commercial data into editorial content as a shortcut.
+
+Select one existing cluster only after mapping its actual questions and gaps.
+Local dossiers and useful navigation fixes can proceed while accounts are
+unavailable. Evaluate net confirmed commissions against editorial and operating
+costs separately from the traffic tracker; blank data is not zero revenue.
+Keep AI citations separate from clicks and purchases. No new domain, social
+publishing, paid channel or email capture is activated by this local work.
 
 ### Data entry
 

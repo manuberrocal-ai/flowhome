@@ -1,23 +1,156 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { applyProduct, normalizeProduct, setupHeroCarousel } from '../src/lib/hero-carousel.js';
+import { setupImageFallbacks } from '../src/lib/image-fallback.js';
 
 class Node {
-  constructor() { this.attrs = {}; this.dataset = {}; this.children = []; this.listeners = {}; this.classList = { values: new Set(), toggle: (name, on) => on ? this.classList.values.add(name) : this.classList.values.delete(name) }; }
+  constructor() { this.attrs = {}; this.dataset = {}; this.style = {}; this.complete = true; this.naturalWidth = 100; this.children = []; this.listeners = {}; this.classList = { values: new Set(), toggle: (name, on) => on ? this.classList.values.add(name) : this.classList.values.delete(name) }; }
   setAttribute(name, value) { this.attrs[name] = String(value); }
   getAttribute(name) { return this.attrs[name]; }
+  removeAttribute(name) { delete this.attrs[name]; }
   toggleAttribute(name, value) { this.attrs[name] = value ? '' : undefined; }
   append(node) { this.children.push(node); }
   get firstChild() { return this.children[0]; }
   removeChild() { this.children.shift(); }
   addEventListener(name, fn) { (this.listeners[name] ||= []).push(fn); }
-  removeEventListener() {}
+  removeEventListener(name, fn) { this.listeners[name] = (this.listeners[name] || []).filter((listener) => listener !== fn); }
   dispatch(name, event = {}) { this.listeners[name]?.forEach((fn) => fn(event)); }
   querySelector(selector) { return this.map?.[selector] || null; }
   querySelectorAll(selector) { return this.map?.[selector] || []; }
 }
 
 const product = (slug, title) => ({ id: slug, slug, title, image: `/${slug}.jpg`, alt: `${title} alt`, priceLabel: slug === 'one' ? '$10' : '$20', priceContext: slug === 'one' ? 'Price snapshot' : 'Historical price snapshot', originalPrice: slug === 'one' ? 20 : 40, ownerRating: slug === 'one' ? 4.5 : 2, ownerRatingCount: slug === 'one' ? 12 : 34, ratingSource: 'Amazon customer rating', badges: [slug === 'one' ? 'Save 50%' : 'New'], detailsUrl: `/product/${slug}/`, amazonUrl: `https://amazon.test/${slug}`, affiliateDisclosure: `Disclosure ${slug}`, category: slug === 'one' ? 'Smart home' : 'Lighting', discountPct: slug === 'one' ? 50 : 0, quote: `${title} quote` });
+
+const settle = () => new Promise((resolve) => setImmediate(resolve));
+
+test('slow image never paints a previous bitmap beside the next product destination', async () => {
+  const root = fixture();
+  const image = root.map['[data-hero-image]'];
+  applyProduct(root, product('one', 'First'));
+  assert.equal(image.style.visibility, '');
+  image.complete = false; // Browser retains old pixels during the next request.
+  applyProduct(root, product('two', 'Second'));
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(image.attrs['aria-busy'], 'true');
+  assert.equal(root.map['[data-hero-field="title"]'].textContent, 'Second');
+  assert.equal(root.map['[data-hero-amazon]'].href, 'https://amazon.test/two');
+  image.dispatch('load'); // A stale notification while the new request is pending.
+  assert.equal(image.style.visibility, 'hidden');
+  image.complete = true;
+  image.decode = () => Promise.resolve();
+  image.dispatch('load');
+  await settle();
+  assert.equal(image.style.visibility, '');
+  assert.equal(image.attrs['aria-busy'], undefined);
+});
+
+test('rapid selection cancels an older decode before it can reveal old pixels', async () => {
+  const root = fixture();
+  const image = root.map['[data-hero-image]'];
+  let resolveOld;
+  image.decode = () => new Promise((resolve) => { resolveOld = resolve; });
+  applyProduct(root, product('one', 'First'));
+  image.complete = false;
+  applyProduct(root, product('two', 'Second'));
+  resolveOld();
+  await settle();
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(image.src, '/two.jpg');
+  assert.equal(image.alt, 'Second alt');
+  assert.equal(root.map['[data-hero-photo-link]'].href, '/product/two/');
+  image.decode = () => Promise.resolve();
+  image.complete = true;
+  image.dispatch('load');
+  await settle();
+  assert.equal(image.style.visibility, '');
+  assert.equal(image.listeners.load.length, 1, 'only the current transition can reveal');
+});
+
+test('shared capture listeners restore the fallback caption before the hero reveals it', async () => {
+  const root = fixture();
+  const image = root.map['[data-hero-image]'];
+  const caption = root.map['[data-hero-field="image-caption"]'];
+  const pageUrl = 'https://flowhome.test/';
+  let source = '';
+  Object.defineProperty(image, 'src', {
+    get: () => source,
+    set: (value) => { source = new URL(value, pageUrl).href; image.complete = false; image.naturalWidth = 0; },
+  });
+  image.getAttribute = (name) => name === 'srcset' ? image.srcset : image.attrs[name];
+  image.removeAttribute = (name) => { if (name === 'srcset') image.srcset = ''; else delete image.attrs[name]; };
+  image.closest = () => ({ querySelector: () => caption });
+  const doc = new Node();
+  doc.querySelectorAll = () => [image];
+  applyProduct(root, product('two', 'Second'));
+  const cleanup = setupImageFallbacks({ documentRef: doc, windowRef: { HTMLImageElement: Node, location: { href: pageUrl } } });
+  const dispatchImage = (type) => {
+    // Real DOM ordering: document capture listeners run before target listeners.
+    doc.dispatch(type, { target: image });
+    image.dispatch(type, { target: image });
+  };
+  image.complete = true;
+  image.naturalWidth = 0;
+  dispatchImage('error');
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(caption.textContent, 'Product image unavailable');
+  assert.equal(image.src, 'https://flowhome.test/images/product-placeholder.svg');
+  assert.equal(root.map['[data-hero-details]'].href, '/product/two/');
+  image.complete = true;
+  image.naturalWidth = 100;
+  dispatchImage('load');
+  await settle();
+  assert.equal(image.style.visibility, '');
+  assert.equal(caption.textContent, 'Category illustration — not a product photo');
+  assert.equal(image.alt, 'Representative category illustration; not a product photo');
+  assert.equal(image.attrs['aria-busy'], undefined);
+  assert.equal(root.map['[data-hero-amazon]'].href, 'https://amazon.test/two');
+
+  // Failure of the fallback remains hidden and exposes an honest visible label.
+  image.naturalWidth = 0;
+  dispatchImage('error');
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(caption.textContent, 'Product image unavailable');
+  assert.equal(image.alt, 'Product image unavailable');
+
+  // Selecting a different product restores its identity, not the previous caption.
+  applyProduct(root, { ...product('one', 'First'), imageCaption: 'First model illustration — not a photo' });
+  image.complete = true;
+  image.naturalWidth = 100;
+  dispatchImage('load');
+  await settle();
+  assert.equal(image.style.visibility, '');
+  assert.equal(caption.textContent, 'First model illustration — not a photo');
+  assert.equal(image.alt, 'First alt');
+  assert.equal(root.map['[data-hero-amazon]'].href, 'https://amazon.test/one');
+  cleanup();
+});
+
+test('a rejected decode cannot display an undecodable image or create an unhandled rejection', async () => {
+  const root = fixture();
+  const image = root.map['[data-hero-image]'];
+  image.decode = () => Promise.reject(new Error('decode failed'));
+  applyProduct(root, product('one', 'First'));
+  await settle();
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(image.attrs['aria-busy'], undefined);
+  assert.equal(root.map['[data-hero-field="image-caption"]'].textContent, 'Product image unavailable');
+});
+
+test('cleanup prevents a pending decode from revealing after teardown', async () => {
+  const root = fixture();
+  const image = root.map['[data-hero-image]'];
+  let resolveDecode;
+  image.decode = () => new Promise((resolve) => { resolveDecode = resolve; });
+  const doc = new Node();
+  const media = new Node();
+  media.matches = false;
+  const cleanup = setupHeroCarousel({ root, products: [product('one', 'First')], documentRef: doc, windowRef: { matchMedia: () => media } });
+  cleanup();
+  resolveDecode();
+  await settle();
+  assert.equal(image.style.visibility, 'hidden');
+  assert.equal(image.listeners.load.length, 0);
+});
 
 function fixture() {
   const root = new Node();
@@ -63,6 +196,9 @@ test('visible playback control pauses, resumes and respects reduced motion', () 
   let stops = 0;
   const win = { matchMedia: () => media, setInterval: () => ++starts, clearInterval: () => stops++ };
   const cleanup = setupHeroCarousel({ root, products: [product('one', 'First'), product('two', 'Second')], windowRef: win, documentRef: doc });
+  assert.equal(playback.textContent, 'Start rotation');
+  assert.equal(starts, 0, 'rotation must require an explicit choice');
+  playback.dispatch('click');
   assert.equal(playback.textContent, 'Pause rotation');
   playback.dispatch('click');
   assert.equal(playback.textContent, 'Resume rotation');
@@ -89,6 +225,7 @@ test('product normalization preserves the same complete product on repeated pass
 
 test('carousel initialization and rotation keep rating, image, price, and destination together', () => {
   const root = fixture();
+  root.map['[data-hero-playback]'] = new Node();
   const doc = new Node();
   doc.visibilityState = 'visible';
   doc.querySelectorAll = () => [];
@@ -112,6 +249,8 @@ test('carousel initialization and rotation keep rating, image, price, and destin
   };
 
   assertSlide('one', 'First', 4.5, 12, '$10');
+  assert.equal(tick, undefined);
+  root.map['[data-hero-playback]'].dispatch('click');
   tick();
   assertSlide('two', 'Second', 2, 34, '$20');
   root.map['[data-hero-slide]'].dispatch('keydown', { key: 'ArrowLeft', preventDefault() {} });
@@ -161,6 +300,7 @@ test('applying a product updates every field without mixing products', () => {
 
 test('setup respects reduced motion, interaction, and visibility', () => {
   const root = fixture();
+  root.map['[data-hero-playback]'] = new Node();
   const dot = new Node();
   const secondDot = new Node();
   const doc = new Node();
@@ -175,6 +315,8 @@ test('setup respects reduced motion, interaction, and visibility', () => {
   assert.equal(starts, 0);
   media.matches = false;
   media.dispatch('change');
+  assert.equal(starts, 0, 'changing motion preference must not opt into autoplay');
+  root.map['[data-hero-playback]'].dispatch('click');
   assert.equal(starts, 1);
   doc.visibilityState = 'hidden';
   doc.dispatch('visibilitychange');

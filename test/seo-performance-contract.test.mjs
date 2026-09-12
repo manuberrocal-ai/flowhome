@@ -165,11 +165,12 @@ test('prepaint consent, deferred authenticated sync, and approved PNG wordmarks 
   assert.match(footer, /width="1076" height="250"/);
 });
 
-test('home caps initial featured-card DOM as an LCP performance budget while preserving the six-product hero', async () => {
+test('home caps initial card DOM with a four-product hero and a distinct continuation grid', async () => {
   const home = await read('src/pages/index.astro');
   assert.match(home, /const featuredProducts = selectHomeShortlist\(products\);/);
-  assert.match(home, /const showcaseProducts = featuredProducts\.slice\(0, 6\);/);
-  assert.match(home, /featuredProducts\.map\(\(product\) => <ProductCard product=\{product\} editorialReason=\{product.editorialReason\} \/>\)/);
+  assert.match(home, /const showcaseProducts = featuredProducts\.slice\(0, 4\);/);
+  assert.match(home, /const additionalProducts = featuredProducts\.slice\(4\);/);
+  assert.match(home, /additionalProducts\.map\(\(product\) => <ProductCard product=\{product\} editorialReason=\{product.editorialReason\} \/>\)/);
   assert.match(home, /<style is:inline>/);
 });
 
