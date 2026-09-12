@@ -106,7 +106,7 @@ const stars = Array.from({ length: 5 }, (_, index) => {
            data-asin={data.asin}
            data-product-slug={slug}
            data-category={data.category}
-           data-discount={commerce.displayDiscountPct ?? 0}
+           data-discount={commerce.displayDiscountPct}
            data-cta-position="product_card"
           class="amazon-cta-button product-card-amazon-action inline-flex min-h-11 items-center justify-center rounded-2xl px-4 py-2.5 text-center text-sm font-black text-white transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300/50"
             aria-label={`Check on Amazon: ${data.name}`} data-fh-amazon-cta

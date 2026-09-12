@@ -47,7 +47,7 @@ const showOriginal = showPromotion ? commerce.displayOriginalPrice : undefined;
         <span data-deal-price class:list={["font-black", showPrice === undefined ? "text-sm text-slate-600" : "text-2xl text-orange-600"]}>{showPrice === undefined ? 'Check price on Amazon' : `$${showPrice}`}</span>
         <span data-deal-original hidden={!showOriginal} class="text-slate-400 line-through">{showOriginal && `$${showOriginal}`}</span>
       </div>
-      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="brand-sheen premium-action mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white" data-deal-cta data-fh-amazon-cta data-product-slug={productSlug} data-category={category} data-discount={showPromotion ? commerce.displayDiscountPct : 0} data-cta-position="deal_card"><span class="amazon-cta-label"><span data-deal-cta-copy>{isExpired ? 'Check current' : 'Check on'}</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href={data.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="brand-sheen premium-action mt-4 inline-flex min-h-11 items-center rounded-xl px-4 py-2 text-sm font-black text-white" data-deal-cta data-fh-amazon-cta data-product-slug={productSlug} data-category={category} data-discount={showPromotion ? commerce.displayDiscountPct : undefined} data-cta-position="deal_card"><span class="amazon-cta-label"><span data-deal-cta-copy>{isExpired ? 'Check current' : 'Check on'}</span> <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
   </div>
 </article>
@@ -74,6 +74,6 @@ const showOriginal = showPromotion ? commerce.displayOriginalPrice : undefined;
     const ctaCopy = card.querySelector<HTMLElement>('[data-deal-cta-copy]');
     if (ctaCopy) ctaCopy.textContent = 'Check current';
     const cta = card.querySelector<HTMLElement>('[data-deal-cta]');
-    if (cta) cta.dataset.discount = '0';
+    if (cta) delete cta.dataset.discount;
   }
 </script>

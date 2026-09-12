@@ -307,7 +307,7 @@ function pageParameters(element: HTMLElement) {
     page_type: body.dataset.pageType || 'page',
     cta_position: element.dataset.ctaPosition || 'content',
   };
-  if (element.dataset.discount !== undefined) parameters.discount = Number(element.dataset.discount);
+  if (element.dataset.discount?.trim()) parameters.discount = Number(element.dataset.discount);
   if (element.dataset.productSlug) parameters.product_slug = element.dataset.productSlug;
   if (element.dataset.category) parameters.category = element.dataset.category;
   if (element.dataset.campaign) parameters.campaign = element.dataset.campaign;

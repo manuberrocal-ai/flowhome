@@ -194,6 +194,33 @@ test('real delegated CTAs omit absent discount fields and shortlist tracking req
   assert.equal(isolated.sanitizeEvent('compare_open', { discount: undefined }), null, 'raw API still rejects unknown keys');
 });
 
+test('affiliate DOM adapter omits unknown discounts without converting blanks to zero', async () => {
+  const browser = installBrowser({ search: '' });
+  const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#discount-presence`);
+  const pending = [];
+  globalThis.window.setTimeout = callback => pending.push(callback);
+  isolated.setupAnalytics();
+  const click = browser.listeners.find(entry => entry.name === 'click').listener;
+  const element = { dataset: { productSlug: 'sample', ctaPosition: 'product_card' }, hasAttribute: name => name === 'data-fh-amazon-cta' };
+  for (const value of [undefined, '', '   ', '0', '25']) {
+    if (value === undefined) delete element.dataset.discount;
+    else element.dataset.discount = value;
+    click({ target: { closest: () => element } });
+    assert.equal(pending.length, 1);
+    pending.shift()();
+    const event = browser.dataLayer.at(-1);
+    assert.equal(event.event, 'affiliate_click');
+    assert.equal(event.discount, value?.trim() ? Number(value) : undefined);
+    if (!value?.trim()) assert.doesNotMatch(JSON.stringify(event), /"discount"/);
+  }
+  for (const value of ['invalid', '-1', '101']) {
+    element.dataset.discount = value;
+    click({ target: { closest: () => element } });
+    assert.equal(pending.length, 0, value);
+  }
+  assert.equal(browser.dataLayer.length, 5);
+});
+
 test('provider startup is consent-gated and receives safe context before GTM initialization', async () => {
   const browser = installBrowser({ consent: false, search: '?email=private%40example.test#secret' });
   const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#provider-startup`);
