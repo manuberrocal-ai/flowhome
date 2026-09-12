@@ -43,62 +43,47 @@ const heroProducts = showcaseProducts.map((product) => {
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(249,115,22,0.38),transparent_24%),radial-gradient(circle_at_12%_0%,rgba(37,99,235,0.82),transparent_36%),linear-gradient(135deg,#020617_0%,#172554_43%,#0369a1_100%)]"></div>
     <div class="absolute right-0 top-0 -z-10 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08))]"></div>
 
-    <div class="relative z-10 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:p-10">
-      <div class="min-w-0">
-        <p class="inline-flex max-w-full whitespace-normal break-words rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-cyan-100 ring-1 ring-white/15">Smart buys, not smart-home noise</p>
-        <h1 class="mt-5 max-w-4xl break-words text-4xl font-black leading-[1.02] tracking-tight md:text-6xl">Find smart home gear for the way you live.</h1>
-        <p class="mt-5 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">Start with one useful routine. Compare device requirements, check what else you need, and save a shortlist before checking current prices on Amazon.</p>
-        <div class="mt-7 flex flex-wrap gap-3">
-           <a href="/quiz/" data-fh-home-primary-cta class="brand-sheen inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-6 py-3 font-black text-white shadow-lg shadow-orange-950/25 transition hover:-translate-y-0.5 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500 focus:outline-none focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
+    <div class="relative z-10 grid min-w-0 home-hero-layout lg:items-start">
+      <div class="home-hero-intro min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.15em] text-cyan-100">Smart buys, not smart-home noise</p>
+        <h1 class="home-hero-title mt-4 max-w-4xl break-words font-black tracking-tight">Find smart home gear for the way you live.</h1>
+        <p class="mt-4 max-w-2xl break-words text-base leading-7 text-blue-50 md:text-lg">Start with one useful routine. Compare device requirements, check what else you need, and save a shortlist before checking current prices on Amazon.</p>
+        <div class="home-hero-actions mt-5 flex flex-wrap gap-3">
+           <a href="/quiz/" data-fh-home-primary-cta class="brand-sheen premium-action inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 font-bold text-white transition focus:ring-4 focus:ring-orange-300/40">Find my setup</a>
           <a href="/products/" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-3 font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-white/30">Explore products</a>
         </div>
-        <p class="mt-5 max-w-xl text-sm leading-6 text-blue-100">Research-based guidance, not hands-on testing. <a href="/about/#editorial-team" class="inline-flex min-h-11 items-center rounded-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">How we evaluate products</a></p>
-
-        <section class="mt-8" aria-labelledby="home-start-heading" data-home-guide-paths>
-          <div class="flex flex-wrap items-end justify-between gap-3">
-            <div><p class="text-sm font-bold uppercase tracking-wide text-cyan-100">Plan before you buy</p><h2 id="home-start-heading" class="mt-1 text-2xl font-black text-white md:text-3xl">What are you trying to set up?</h2></div>
-            <a href="/best/" class="inline-flex min-h-11 items-center rounded-sm text-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">All buying guides</a>
-          </div>
-          <nav aria-label="Buying guides by setup need" class="mt-4">
-            <ul class="grid divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
-              <li class="min-w-0"><a href="/best/best-smart-home-starter-kit/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">My first room routine</h3><p class="mt-1 text-sm leading-6 text-slate-600">Choose a useful task, then check controls, accessories, and total setup cost.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Plan a starter setup <span aria-hidden="true">&rarr;</span></span></a></li>
-              <li class="min-w-0"><a href="/best/best-smart-home-devices-for-renters/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">A setup for my rental</h3><p class="mt-1 text-sm leading-6 text-slate-600">Check mounting, removal, and property permissions before choosing devices.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Review rental checks <span aria-hidden="true">&rarr;</span></span></a></li>
-              <li class="min-w-0"><a href="/best/best-smart-hubs-for-matter-zigbee/" class="block h-full rounded-2xl p-4 hover:bg-blue-50"><h3 class="text-lg font-bold text-slate-950">Devices that need a hub</h3><p class="mt-1 text-sm leading-6 text-slate-600">Compare hub roles and exact-device requirements beyond ecosystem logos.</p><span class="mt-2 inline-block text-sm font-bold text-blue-700">Understand hub choices <span aria-hidden="true">&rarr;</span></span></a></li>
-            </ul>
-          </nav>
-        </section>
+        <p class="mt-4 max-w-xl text-sm leading-6 text-blue-100">Research-based guidance, not hands-on testing. <a href="/about/#editorial-team" class="inline-flex min-h-11 items-center rounded-sm font-bold text-white underline decoration-cyan-200 underline-offset-4 hover:decoration-white">How we evaluate products</a></p>
       </div>
 
       <div class="relative min-w-0" aria-label="Featured smart home product showcase">
-        <div class="relative min-w-0 overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-100 p-3 text-slate-950" data-hero-showcase>
+        <div class="home-hero-showcase relative min-w-0 overflow-hidden bg-white text-slate-950" data-hero-showcase>
           <div class="flex items-center justify-between gap-3 px-2 pb-3">
             <div>
               <p class="text-[11px] font-black uppercase tracking-[0.2em] text-orange-600">Editorial shortlist</p>
               <h2 class="text-lg font-black">Featured products</h2>
             </div>
-             <a href="/deals/" class="rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-sm shadow-orange-300/50 hover:from-orange-800 hover:via-orange-700 hover:to-amber-500">Deals</a>
+             <a href="/deals/" class="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-bold text-teal-800 underline underline-offset-4 hover:bg-teal-50">Deals</a>
           </div>
 
-           <div class="hero-showcase relative min-h-[462px]">
-             {heroProducts[0] && <article class="hero-slide relative grid grid-rows-[auto_1fr_auto] gap-2 rounded-[1.35rem] bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50/80 px-3 pb-2 pt-3 ring-1 ring-slate-200/80 transition duration-200" data-hero-slide data-image-fallback-scope tabindex="0">
+           <div class="hero-showcase relative">
+             {heroProducts[0] && <article class="hero-slide relative grid gap-3" data-hero-slide data-image-fallback-scope tabindex="0">
                 <div class="min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
                     <p data-hero-field="category" class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-blue-700">{heroProducts[0].category}</p>
-                    <div data-hero-field="badges" class="flex flex-wrap gap-2">{heroProducts[0].badges.map((badge) => <span>{badge}</span>)}</div>
+                    <div data-hero-field="badges" class="sr-only">{heroProducts[0].badges.map((badge) => <span>{badge}</span>)}</div>
                   </div>
                   <h3 data-hero-field="title" class="mt-1.5 max-w-full text-[1.36rem] font-black leading-[1.02] tracking-tight text-slate-950 md:text-[1.52rem]">{heroProducts[0].title}</h3>
                 </div>
 
-                <div class="hero-product-stage hero-sync-wave relative min-h-[20.25rem] overflow-hidden rounded-[1.25rem] bg-[#f8fafc] p-0 ring-1 ring-slate-200/70 md:min-h-[22rem]">
-                   <a data-hero-photo-link href={heroProducts[0].detailsUrl} class="hero-product-photo flex min-h-[20.25rem] items-center justify-start rounded-[1.25rem] bg-white md:min-h-[22rem]" aria-label={`View ${heroProducts[0].title}`}>
-                     <img data-hero-image src={heroProducts[0].image} srcset={heroProducts[0].imageSrcset} sizes={heroProducts[0].imageSizes} alt={heroProducts[0].alt} class="hero-product-image max-h-[20.25rem] w-[92%] object-contain object-left md:max-h-[22rem]" width="760" height="760" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={heroProducts[0].fallbackImage} />
+                <div class="hero-product-stage">
+                   <a data-hero-photo-link href={heroProducts[0].detailsUrl} class="hero-product-photo" aria-label={`View ${heroProducts[0].title}`}>
+                     <img data-hero-image src={heroProducts[0].image} srcset={heroProducts[0].imageSrcset} sizes={heroProducts[0].imageSizes} alt={heroProducts[0].alt} class="hero-product-image" width="760" height="760" loading="eager" decoding="async" fetchpriority="high" data-fallback-src={heroProducts[0].fallbackImage} />
                   </a>
-                  <p class="px-3 py-2 text-xs text-slate-600" data-image-source-caption data-hero-field="image-caption">{heroProducts[0].imageCaption}</p>
+                  <p class="mt-2 text-xs text-slate-600" data-image-source-caption data-hero-field="image-caption">{heroProducts[0].imageCaption}</p>
+                </div>
 
-
-                    <div data-hero-field="discount" class="absolute right-4 top-[2.35rem] z-50 rounded-[1.35rem] bg-blue-950 px-3 py-2 text-white" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</div>
-
-                    <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="brand-sheen absolute right-3 top-[6.8rem] z-30 w-[12.25rem] rounded-2xl bg-slate-950 p-3 text-white ring-1 ring-slate-800" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
+                    <a data-hero-amazon href={heroProducts[0].amazonUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="brand-sheen home-hero-commerce bg-slate-950 p-4 text-white" aria-label={`Check ${heroProducts[0].title} price on Amazon`} data-fh-amazon-cta data-product-slug={heroProducts[0].slug} data-category={heroProducts[0].category} data-discount={heroProducts[0].discountPct} data-cta-position="home_hero">
+                    <div class="home-hero-price">
                     <p data-hero-field="price-context" class="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-300">{heroProducts[0].priceContext}</p>
                     <div class="mt-1 flex flex-wrap items-end gap-x-2 gap-y-1">
                        <p data-hero-field="price" class="text-[1.52rem] font-black leading-none tracking-tight text-white">{heroProducts[0].priceLabel}</p>
@@ -114,13 +99,16 @@ const heroProducts = showcaseProducts.map((product) => {
                       </div>
                             <span data-hero-field="rating" class="text-[11px] font-black text-amber-200">{heroProducts[0].ownerRating}</span>
                              <span data-hero-field="rating-count" class="text-[11px] text-slate-300">{heroProducts[0].hasRating ? `(${heroProducts[0].ownerRatingCount})` : ''}</span>
-                     </div><p data-hero-field="rating-source" class="mt-2 text-[11px] text-slate-300">{heroProducts[0].ratingSource}</p>
-                         <span class="amazon-cta-button mt-2.5 block rounded-xl px-3 py-2 text-center text-xs font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+                     </div><p data-hero-field="rating-source" class="mt-2 text-xs text-slate-300">{heroProducts[0].ratingSource}</p>
+                     </div>
+                     <div class="home-hero-buy">
+                       <span data-hero-field="discount" class="home-hero-discount" hidden={heroProducts[0].discountPct <= 0}>{heroProducts[0].discountPct > 0 && `Save ${heroProducts[0].discountPct}%`}</span>
+                         <span class="amazon-cta-button inline-flex min-h-11 w-full items-center justify-center rounded-xl px-3 py-2 text-center text-sm font-black text-white"><span class="amazon-cta-label">Check on <span class="amazon-cta-word">Amazon<svg class="amazon-cta-smile" viewBox="0 0 64 18" aria-hidden="true"><path d="M9 5c12 9 31 10 46 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M50 3l7 2-4 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+                     </div>
                   </a>
-                </div>
 
                 <div class="grid gap-1.5">
-                  <p class="rounded-2xl border border-sky-100 bg-sky-50/80 px-3.5 py-2 text-sm leading-5 text-sky-900">
+                  <p class="home-hero-check border-t border-slate-200 pt-3 text-sm leading-5 text-slate-700">
                      <strong class="block font-bold text-slate-950">Before you choose</strong><span data-hero-field="quote">{heroProducts[0].quote}</span>
                      <a data-hero-checks href={`${heroProducts[0].detailsUrl}#installation-checks`} class="mt-1 flex min-h-11 w-fit items-center rounded-sm font-bold text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" aria-label={`Setup checks and sources for ${heroProducts[0].title}`}>Setup checks &amp; sources</a>
                   </p>
@@ -145,6 +133,19 @@ const heroProducts = showcaseProducts.map((product) => {
     </div>
   </section>
 
+  <section class="home-guide-paths mt-8" aria-labelledby="home-start-heading" data-home-guide-paths>
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div><p class="text-sm font-bold uppercase tracking-wide text-teal-800">Plan before you buy</p><h2 id="home-start-heading" class="mt-1 text-2xl font-black text-slate-950">What are you trying to set up?</h2></div>
+      <a href="/best/" class="inline-flex min-h-11 items-center rounded-sm text-sm font-bold text-blue-800 underline underline-offset-4">All buying guides</a>
+    </div>
+    <nav aria-label="Buying guides by setup need" class="mt-4">
+      <ul class="home-guide-grid">
+        <li><a href="/best/best-smart-home-starter-kit/"><h3>My first room routine</h3><p>Choose a useful task, then check controls, accessories, and total setup cost.</p><span>Plan a starter setup <span aria-hidden="true">&rarr;</span></span></a></li>
+        <li><a href="/best/best-smart-home-devices-for-renters/"><h3>A setup for my rental</h3><p>Check mounting, removal, and property permissions before choosing devices.</p><span>Review rental checks <span aria-hidden="true">&rarr;</span></span></a></li>
+        <li><a href="/best/best-smart-hubs-for-matter-zigbee/"><h3>Devices that need a hub</h3><p>Compare hub roles and exact-device requirements beyond ecosystem logos.</p><span>Understand hub choices <span aria-hidden="true">&rarr;</span></span></a></li>
+      </ul>
+    </nav>
+  </section>
 
   {dealProducts.length > 0 && <section class="home-surface brand-aurora-surface mt-8 rounded-[1.75rem] text-white shadow-xl shadow-slate-950/30 ring-1 ring-white/5 overflow-hidden">
        <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 p-5 md:p-7">
@@ -254,14 +255,9 @@ const heroProducts = showcaseProducts.map((product) => {
       .featured-products .product-card, .home-review-notes { content-visibility: visible; }
     }
 
-    body {
-      background: #f1f5f9;
-    }
+  </style>
 
-    .flowhome-home-page {
-      background: radial-gradient(circle at 50% 0%, rgba(219,234,254,0.55), transparent 34%), #f1f5f9;
-    }
-
+  <style>
     .hero-surface {
       background-image:
         radial-gradient(circle at 80% 18%, rgba(20,184,166,0.24), transparent 24%),
@@ -273,91 +269,55 @@ const heroProducts = showcaseProducts.map((product) => {
 
 
 
-    .hero-showcase .hero-product-stage,
-    .hero-showcase .hero-product-photo {
-      background-color: #ffffff !important;
-      box-shadow: none !important;
-    }
+    .home-hero-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.25rem; }
+    .home-hero-title { font-size: clamp(1.875rem, 4.2vw, 3.5rem); line-height: 1.08; }
+    .home-hero-showcase { padding: 1rem; border-radius: 1.25rem; }
+    .hero-product-stage { min-width: 0; }
+    .hero-product-photo { display: flex; align-items: center; justify-content: center; height: 12rem; background: #fff; }
+    .hero-product-image { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+    .home-hero-commerce { position: relative; display: grid; gap: 1rem; min-width: 0; border-radius: .875rem; }
+    .home-hero-price, .home-hero-buy { min-width: 0; }
+    .home-hero-buy { display: grid; align-content: center; gap: .5rem; }
+    .home-hero-discount { color: #fdba74; font-size: .875rem; font-weight: 800; }
+    .home-hero-discount[hidden] { display: none; }
+    .home-guide-grid { display: grid; gap: 0; padding: 0; list-style: none; }
+    .home-guide-grid li { min-width: 0; border-top: 1px solid #cbd5e1; }
+    .home-guide-grid a { display: block; min-height: 2.75rem; padding: 1.25rem 0; text-decoration: none; }
+    .home-guide-grid h3 { color: #0f2a52; font-size: 1.125rem; font-weight: 800; }
+    .home-guide-grid p { margin-top: .5rem; color: #475569; font-size: .875rem; line-height: 1.6; }
+    .home-guide-grid a > span { display: inline-block; margin-top: .75rem; color: #115e59; font-size: .875rem; font-weight: 750; }
+    .home-guide-grid a:hover > span, .home-guide-grid a:focus-visible > span { text-decoration: underline; text-underline-offset: .2em; }
+    .home-guide-grid a:focus-visible { outline: 3px solid #0e7490; outline-offset: 4px; }
 
-    .hero-showcase .hero-product-image {
-      filter: none !important;
-      mix-blend-mode: normal !important;
-      opacity: 1 !important;
-      box-shadow: none !important;
+    /* The photo and buying action occupy separate rows at every size. */
+    @media (min-width: 640px) {
+      .home-hero-layout { padding: 2rem; gap: 2rem; }
+      .hero-product-photo { height: 20.25rem; }
+      .home-hero-commerce { grid-template-columns: minmax(0, 1fr) minmax(8.5rem, .7fr); align-items: center; }
+      .home-guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
     }
-
+    @media (min-width: 768px) {
+      .hero-product-photo { height: 22rem; }
+    }
+    @media (min-width: 1024px) {
+      .home-hero-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); padding: 2.5rem; gap: 2.5rem; }
+      .home-hero-intro { padding-top: 2rem; }
+    }
+    @media (max-width: 639px) {
+      .home-hero-actions > a { padding-inline: 1rem; }
+      .home-hero-showcase { padding: .875rem; }
+    }
     [data-hero-showcase][data-reduced-motion="true"] .hero-slide,
     [data-hero-showcase][data-reduced-motion="true"] .hero-dot span {
       transition: none !important;
     }
 
-    .hero-showcase .hero-product-photo {
-      overflow: hidden;
-    }
-
-    .hero-showcase .hero-product-image {
-      display: block;
-      width: 92% !important;
-      max-height: 21.75rem !important;
-      transform: none;
-      transform-origin: center center;
-      backdrop-filter: none !important;
-    }
-
-    .hero-showcase .hero-product-image.is-squareish {
-      width: 92% !important;
-      max-height: 22rem !important;
-      transform: none;
-    }
-
-    .hero-showcase .hero-product-image.is-portrait {
-      width: auto !important;
-      max-width: 94% !important;
-      max-height: 24rem !important;
-      transform: scale(1.12);
-      transform-origin: center center;
-    }
-
-    .hero-showcase .hero-product-image.is-wide {
-      width: 96% !important;
-      max-height: 21.75rem !important;
-      transform: none;
-    }
-
-    @media (min-width: 768px) {
-      .hero-showcase .hero-product-image {
-        max-height: 22.75rem !important;
-      }
-
-      .hero-showcase .hero-product-image.is-squareish {
-        max-height: 23rem !important;
-        transform: none;
-      }
-
-      .hero-showcase .hero-product-image.is-portrait {
-        max-height: 25rem !important;
-        transform: scale(1.16);
-      }
-    }
-
     .hero-rating-row:has([data-hero-rating-stars][hidden]) { display: none; }
 
-    /* Stack the action below the photo on narrow screens so neither obscures the other. */
-    @media (max-width: 639px) {
-      .hero-showcase .hero-product-stage { display: grid; gap: .75rem; min-height: 0; padding: .75rem; }
-      .hero-showcase .hero-product-photo { min-height: 12rem; height: 12rem; justify-content: center; }
-      .hero-showcase .hero-product-image { width: 100% !important; height: 12rem; max-height: 12rem !important; object-position: center; transform: none !important; }
-      .hero-showcase [data-hero-amazon] { position: relative; inset: auto; width: 100%; max-width: 100%; transform: none; }
-    }
     @media (max-width: 389px) {
-      .hero-dot-controls { display: grid; grid-template-columns: repeat(3, 2.75rem); }
+      .hero-dot-controls { display: grid; grid-template-columns: repeat(4, 2.75rem); }
     }
 
-
-    .product-card {
-      position: relative;
-      z-index: 1;
-    }
 
     @media (prefers-reduced-motion: reduce) {
       .hero-showcase .hero-slide,

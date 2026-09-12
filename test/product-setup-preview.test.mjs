@@ -24,8 +24,14 @@ test('card and profile reuse the model-evidence gate and preserve access to comp
   }
   assert.match(profile, /\{installation.requirements\[0\]\}/);
   assert.match(card, /\{getInstallationSummary\(installation\)\}/);
-  assert.match(card, /installation.summary && installation.requirements.length > 1 && <details/);
-  assert.match(card, /<summary[^>]*min-h-11[^>]*focus-visible:[^>]*>Full setup checklist<\/summary>/);
+  assert.match(card, /<details data-product-setup-details>/);
+  assert.match(card, /<summary[^>]*min-h-11[^>]*focus-visible:[^>]*>Setup checks &amp; conditions<\/summary>/);
+  assert.match(card, /const cardCheck = getProductCardCheck\(data\)/);
+  assert.match(card, /cardCheck && <p[^>]*data-critical-setup>\{cardCheck\}/);
+  assert.ok(card.indexOf('data-critical-setup') < card.indexOf('<details data-product-setup-details>'));
+  assert.doesNotMatch(card, /installation.assessment === 'advanced'/);
+  assert.match(card, /getIdentityClaim\(data, 'role'\)/);
+  assert.match(card, /\{role.conditions\}/);
   assert.match(card, /installation.requirements.map\(\(requirement\) => <li>\{requirement\}<\/li>\)/);
   assert.doesNotMatch(card, /<details[^>]*\bopen\b/);
   const styles = readFileSync(new URL('../src/styles/global.css', import.meta.url), 'utf8');

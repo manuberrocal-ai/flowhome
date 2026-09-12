@@ -1,5 +1,7 @@
 ﻿---
 
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const currentPage = (href: string) => currentPath === (href.replace(/\/+$/, '') || '/') ? 'page' as const : undefined;
 const navItems = [
   {
     label: 'Products',
@@ -58,7 +60,7 @@ const navItems = [
     <nav class="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
       {navItems.map((item) => item.children.length > 0 ? (
         <div class="nav-dropdown" data-menu={item.label.toLowerCase()}>
-          <a class="nav-link inline-flex items-center gap-1.5" href={item.href} aria-controls={`desktop-submenu-${item.label.toLowerCase()}`}>
+          <a class="nav-link inline-flex items-center gap-1.5" href={item.href} aria-current={currentPage(item.href)} aria-controls={`desktop-submenu-${item.label.toLowerCase()}`}>
             {item.label}
             <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
@@ -70,13 +72,13 @@ const navItems = [
             <div class="my-2 h-px bg-slate-700"></div>
             <div class="grid gap-1">
               {item.children.map((child) => (
-                <a href={child.href} class="nav-menu-link">{child.label}</a>
+                <a href={child.href} class="nav-menu-link" aria-current={currentPage(child.href)}>{child.label}</a>
               ))}
             </div>
           </div>
         </div>
       ) : (
-        <a class="nav-link" href={item.href}>{item.label}</a>
+        <a class="nav-link" href={item.href} aria-current={currentPage(item.href)}>{item.label}</a>
       ))}
     </nav>
 
@@ -89,7 +91,10 @@ const navItems = [
         <img class="data-header-avatar-img absolute inset-0 h-full w-full rounded-full object-cover" alt="" width="44" height="44" loading="lazy" decoding="async" hidden />
         <span class="data-header-avatar-initials text-sm font-black" aria-hidden="true" hidden></span>
       </a>
-      <a href="/deals/" class="today-deals-link hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-2 text-sm font-black text-white shadow-sm shadow-cyan-900/35 transition hover:-translate-y-0.5 hover:from-teal-400 hover:via-cyan-600 hover:to-blue-900 sm:inline-flex">Today's deals</a>
+      <a href="/cart/" class="header-saved-list inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-900 hover:bg-slate-100" aria-current={currentPage('/cart/')}>
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z" /></svg>
+        <span>Saved list</span><span data-header-list-count class="font-black tabular-nums" hidden>0</span>
+      </a>
       <button class="mobile-menu-btn grid h-11 w-11 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg class="menu-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
       </button>
@@ -107,11 +112,11 @@ const navItems = [
             </button>
             <div class="mobile-submenu" id={`mobile-submenu-${item.label.toLowerCase()}`} inert>
               <a href={item.href} class="mobile-submenu-link font-bold text-slate-900">{item.featured}</a>
-              {item.children.map((child) => <a href={child.href} class="mobile-submenu-link">{child.label}</a>)}
+              {item.children.map((child) => <a href={child.href} class="mobile-submenu-link" aria-current={currentPage(child.href)}>{child.label}</a>)}
             </div>
           </div>
         ) : (
-          <a href={item.href} class="mobile-nav-link">{item.label}</a>
+          <a href={item.href} class="mobile-nav-link" aria-current={currentPage(item.href)}>{item.label}</a>
         ))}
       </div>
       <div class="mt-4 grid gap-2 sm:grid-cols-2">
@@ -123,7 +128,7 @@ const navItems = [
           </span>
           Profile
         </a>
-        <a href="/deals/" class="today-deals-link block rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-700 to-blue-950 px-4 py-3 text-center text-sm font-black text-white shadow-sm shadow-cyan-900/35">See today's deals</a>
+        <a href="/cart/" class="flex min-h-12 items-center justify-center rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-center text-sm font-bold text-slate-900" aria-current={currentPage('/cart/')}>Review saved list</a>
         <a href="#language-options" class="mobile-nav-link min-h-12 justify-center sm:col-span-2">Language options</a>
       </div>
     </nav>
@@ -131,6 +136,21 @@ const navItems = [
 </header>
 
 <script>
+  import { getCartStore, getUniqueItemCount } from '../lib/cart-store.js';
+
+  // A separate subscription keeps the header current without stealing the dock's single count hook.
+  const listStore = getCartStore();
+  const renderListCount = () => {
+    const count = getUniqueItemCount(listStore.getItems());
+    document.querySelectorAll<HTMLElement>('[data-header-list-count]').forEach((element) => {
+      element.textContent = String(count);
+      element.hidden = count === 0;
+    });
+  };
+  renderListCount();
+  listStore.subscribe(renderListCount);
+  document.addEventListener('astro:page-load', renderListCount);
+
   (() => {
     // Ordinary navigation links, not an application menu. Enter still follows
     // the parent route; Tab and ArrowDown expose its category links.
@@ -201,6 +221,16 @@ const navItems = [
 </script>
 
 <style is:global>
+  .site-header [aria-current="page"] { text-decoration: underline; text-underline-offset: .3em; }
+  .header-saved-list { white-space: nowrap; }
+  @media (max-width: 404px) {
+    .header-saved-list { gap: .3rem; padding-inline: .5rem; font-size: .75rem; }
+    .header-saved-list svg { display: none; }
+  }
+  @media (max-width: 359px) {
+    .site-header > div:first-child { gap: .5rem; padding-inline: .75rem; }
+    .site-header a[aria-label="FlowHome home"] img { max-width: 8rem; height: auto; }
+  }
   .site-header { transition: box-shadow 180ms ease, border-color 180ms ease; }
   .site-header:hover { box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07); }
   .nav-link {
@@ -271,9 +301,6 @@ const navItems = [
   .nav-dropdown[data-menu="guides"] .nav-menu-feature .nav-menu-kicker { color: #c084fc !important; }
   .nav-dropdown[data-menu="tools"] .nav-menu-feature .nav-menu-kicker { color: #fbbf24 !important; }
   .nav-menu-link { color: #e5e7eb; font-size: 0.9rem; font-weight: 700; }
-  .today-deals-link {
-    transition: filter 180ms ease, transform 180ms ease;
-  }
   .nav-menu-link:hover { background: #1f2937; color: #ffffff; transform: translateX(2px); }
   @media (prefers-reduced-motion: reduce) {
     .nav-menu { transition: opacity 120ms ease; transform: none; }
@@ -314,7 +341,7 @@ const navItems = [
     overflow: hidden;
     border-left: 2px solid #334155;
     padding-left: 0.85rem;
-    transition: max-height 240ms ease, padding-bottom 180ms ease;
+    transition: none;
   }
   .mobile-nav-group.is-open .mobile-submenu { max-height: 42rem; padding-bottom: 0.55rem; }
   .mobile-submenu-link {

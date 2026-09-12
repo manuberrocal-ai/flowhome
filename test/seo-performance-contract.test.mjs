@@ -20,7 +20,8 @@ test('targeted Lighthouse reruns select only unique routes in the full local mat
 test('mobile hero source selection matches its existing 12rem artwork constraint', async () => {
   const home = await read('src/pages/index.astro');
   assert.match(home, /imageSizes: '\(max-width: 639px\) 192px, \(max-width: 767px\) 324px, 352px'/);
-  assert.match(home, /height: 12rem; max-height: 12rem !important/);
+  assert.match(home, /\.hero-product-photo \{[^}]*height: 12rem;/);
+  assert.match(home, /\.hero-product-image \{[^}]*height: 100%; object-fit: contain/);
 });
 
 test('SEO audit normalizes routes, keeps non-content images out of loading noise, and rejects duplicate redirects', () => {

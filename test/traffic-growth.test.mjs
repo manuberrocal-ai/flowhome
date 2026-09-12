@@ -61,7 +61,7 @@ test('comparison pages have unique SEO guidance and substantive safe content con
   assert.equal(new Set(descriptions).size, 8);
   assert.equal(new Set(guidance).size, 8);
   assert.match(layout, /Quick decision framework/);
-  for (const section of ['Key tradeoffs', 'Who should buy each option', 'Compatibility evidence', 'Final recommendation', 'Evidence limits']) assert.match(layout, new RegExp(section));
+  for (const section of ['Key tradeoffs', 'What is recorded for each option', 'Compatibility evidence', 'Final recommendation', 'Evidence limits']) assert.match(layout, new RegExp(section));
   assert.doesNotMatch(layout, /Best fit by verified signal/);
   assert.match(layout, /Catalog record dates/);
   assert.match(layout, /href=\{`\/product\/\$\{product\.slug\}/);

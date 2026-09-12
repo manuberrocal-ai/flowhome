@@ -2,10 +2,15 @@
 import { getCommerceData } from '../lib/commerce-data';
 import type { CommerceProduct } from '../lib/commerce-data';
 import { getComparisonFeatureLabel } from '../lib/comparison-insights';
+import { getProductDecision } from '../lib/product-decision';
+import { getInstallationEvidence, getInstallationSummary } from '../lib/product-installation';
 
 interface ComparisonProduct extends CommerceProduct {
   slug: string;
   name: string;
+  model?: string;
+  decisionSummary?: unknown;
+  installation?: unknown;
   ownerRating?: number;
   ownerRatingCount?: number;
   ratingLastChecked?: string;
@@ -28,7 +33,7 @@ type ComparisonRow = readonly [string, (product: ComparisonProduct) => string, s
 
 const { products } = Astro.props;
 const commerceBySlug = new Map(products.map((p) => [p.slug, getCommerceData(p)]));
-const rows: ComparisonRow[] = [
+const commerceRows: ComparisonRow[] = [
   ['Price', (p) => {
     const c = commerceBySlug.get(p.slug) ?? getCommerceData(p);
     return c.displayPrice === undefined ? 'Check price on Amazon' : `${c.priceLabel}: $${c.displayPrice} (checked ${c.priceLastCheckedLabel})`;
@@ -43,6 +48,8 @@ const rows: ComparisonRow[] = [
   }],
   ['Amazon rating count', (p) => commerceBySlug.get(p.slug)?.displayRatingCount?.toLocaleString() ?? 'Not currently verified'],
   ['Rating checked', (p) => commerceBySlug.get(p.slug)?.isRatingFresh ? commerceBySlug.get(p.slug)!.ratingLastCheckedLabel ?? 'Not currently verified' : 'Not currently verified'],
+];
+const rows: ComparisonRow[] = [
   ['Matter', (p) => getComparisonFeatureLabel(p, 'matter'), 'matter'],
   ['Alexa', (p) => getComparisonFeatureLabel(p, 'alexaCompatible'), 'alexaCompatible'],
   ['Google Home', (p) => getComparisonFeatureLabel(p, 'googleHomeCompatible'), 'googleHomeCompatible'],
@@ -52,19 +59,31 @@ const rows: ComparisonRow[] = [
   ['Energy monitoring', (p) => getComparisonFeatureLabel(p, 'energyMonitoring')],
 ];
 ---
-<div class="space-y-3" data-comparison-table-section>
-  <p id="comparison-table-limits" class="text-sm leading-6 text-slate-600">Unverified yes/no entries are catalog records, not proof of support or incompatibility; check exact-model conditions. On narrow screens, scroll the table horizontally or focus it and use the arrow keys.</p>
+<div id="comparison-table" class="comparison-tables space-y-4" data-comparison-table-section>
+  <h2 class="text-2xl font-black text-slate-950">Compare the task and setup</h2>
+  <p id="comparison-table-limits" class="text-sm leading-6 text-slate-600">Start with the documented use and first setup check. Open each profile for the full requirements and sources. On narrow screens, scroll the table horizontally or focus it and use the arrow keys.</p>
   <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" tabindex="0" role="region" aria-label="Scrollable product comparison" aria-describedby="comparison-table-limits">
   <table class="compare-table min-w-full text-sm" aria-describedby="comparison-table-limits">
     <caption class="sr-only">Side-by-side product catalog comparison</caption>
     <thead>
       <tr>
         <th scope="col">Feature</th>
-        {products.map((product) => <th scope="col" class="min-w-48">{product.name}</th>)}
+        {products.map((product) => <th scope="col" class="comparison-product-heading">
+          <a href={`/product/${product.slug}/`} class="inline-flex min-h-11 items-center font-black text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-blue-700">{product.name}</a>
+          {product.model && <p class="mt-1 text-xs font-normal text-slate-600">Model: {product.model}</p>}
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="comparison-buy mt-3 inline-flex min-h-11 items-center justify-center rounded-xl px-4 py-2 text-sm font-bold" aria-label={`Check on Amazon: ${product.name}`} data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct ?? 0} data-cta-position="compare_table_top">Check on Amazon</a>
+        </th>)}
       </tr>
     </thead>
     <tbody>
-      {rows.map(([label, getter, field]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td><span data-comparison-field={field} data-comparison-commerce={label === 'Price' ? 'price' : label === 'Price source' ? 'source' : undefined} data-comparison-slug={product.slug}>{getter(product)}</span>{field && <span data-comparison-source={field} data-comparison-slug={product.slug} class="mt-1 block text-xs text-slate-600"></span>}</td>)}</tr>)}
+      <tr><th scope="row" class="font-bold text-slate-700">Documented use</th>{products.map((product) => <td>
+        <p>{getProductDecision(product)?.useCase ?? 'A model-specific use summary is not yet available. Check the product profile before choosing.'}</p>
+        <a class="mt-2 inline-flex min-h-11 items-center font-bold text-blue-700 underline underline-offset-4" href={`/product/${product.slug}/#buying-context`}>Use limits &amp; sources</a>
+      </td>)}</tr>
+      <tr><th scope="row" class="font-bold text-slate-700">First setup check</th>{products.map((product) => <td>
+        <p>{getInstallationSummary(getInstallationEvidence(product)) ?? 'Model-specific setup requirements are not yet verified.'}</p>
+        <a class="mt-2 inline-flex min-h-11 items-center font-bold text-blue-700 underline underline-offset-4" href={`/product/${product.slug}/#installation-checks`}>Full setup checklist &amp; sources</a>
+      </td>)}</tr>
       <tr>
         <th scope="row" class="font-bold text-slate-700">Listing link</th>
         {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct ?? 0} data-cta-position="compare_table">Check on Amazon</a></td>)}
@@ -72,4 +91,38 @@ const rows: ComparisonRow[] = [
     </tbody>
   </table>
   </div>
+  <details class="comparison-records rounded-2xl border border-slate-200 bg-white" data-comparison-records>
+    <summary class="min-h-11 cursor-pointer rounded-2xl px-5 py-4 font-bold text-slate-950">Feature records, price and rating details</summary>
+    <div class="space-y-3 px-4 pb-4">
+      <p id="comparison-record-limits" class="text-sm leading-6 text-slate-600">Unverified yes/no entries are catalog records, not proof of support or incompatibility; check exact-model conditions. Prices and ratings appear only when current authorized observations are available.</p>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" tabindex="0" role="region" aria-label="Scrollable feature and commerce records" aria-describedby="comparison-record-limits">
+        <table class="compare-table min-w-full text-sm">
+          <caption class="sr-only">Full feature and commerce records by product</caption>
+          <thead><tr><th scope="col">Feature</th>{products.map((product) => <th scope="col" class="comparison-product-heading">{product.name}</th>)}</tr></thead>
+          <tbody>
+            {rows.map(([label, getter, field]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td><span data-comparison-field={field} data-comparison-slug={product.slug}>{getter(product)}</span>{field && <span data-comparison-source={field} data-comparison-slug={product.slug} class="mt-1 block text-xs text-slate-600"></span>}</td>)}</tr>)}
+            {commerceRows.map(([label, getter]) => <tr><th scope="row" class="font-bold text-slate-700">{label}</th>{products.map((product) => <td><span data-comparison-commerce={label === 'Price' ? 'price' : label === 'Price source' ? 'source' : undefined} data-comparison-slug={product.slug}>{getter(product)}</span></td>)}</tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
 </div>
+<style>
+  .comparison-tables { scroll-margin-top: 6rem; }
+  .comparison-tables .compare-table { table-layout: fixed; }
+  .comparison-tables .comparison-product-heading { min-width: 17rem; width: 22rem; }
+  .comparison-tables :is(th, td) { vertical-align: top; line-height: 1.65; overflow-wrap: anywhere; }
+  .comparison-tables th:first-child { width: 10rem; min-width: 10rem; overflow-wrap: normal; word-break: normal; }
+  .comparison-tables thead th { background: #f1f5f9; }
+  .comparison-buy { background: #9a2e00; color: #fff; text-decoration: none; }
+  .comparison-buy:hover { background: #7c2d12; }
+  .comparison-tables :is(a, summary):focus-visible { outline: 3px solid #12304f; outline-offset: 3px; }
+  @media (max-width: 639px) {
+    .comparison-tables .comparison-product-heading { width: 17rem; min-width: 17rem; }
+  }
+  @media print {
+    .comparison-records::details-content { display: block; content-visibility: visible; }
+    .comparison-tables [role="region"] { overflow: visible; }
+  }
+</style>
