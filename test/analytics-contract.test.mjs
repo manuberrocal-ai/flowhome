@@ -157,11 +157,41 @@ test('analytics setup installs consent and CTA delegation once', () => {
   analytics.setupAnalytics();
   analytics.setupAnalytics();
   assert.equal(browser.listeners.filter((entry) => entry.name === 'click').length, 1);
+  assert.equal(browser.listeners.filter((entry) => entry.name === 'flowhome:list-added').length, 1);
   assert.equal(browser.listeners.filter((entry) => entry.name === 'flowhome:consent-change').length, 1);
   analytics.setupAnalytics({ gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456' });
   analytics.setupAnalytics({ gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456' });
   assert.equal(globalThis.window.dataLayer.filter((entry) => entry.event === 'gtm.js').length, 1);
   assert.equal(globalThis.window.dataLayer.filter((entry) => entry.event === 'page_view').length, 1);
+});
+
+test('real delegated CTAs omit absent discount fields and shortlist tracking requires a confirmed addition', async () => {
+  const browser = installBrowser({ search: '' });
+  const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#delegated-cta-fields`);
+  isolated.setupAnalytics();
+  const click = browser.listeners.find(entry => entry.name === 'click').listener;
+  const added = browser.listeners.find(entry => entry.name === 'flowhome:list-added').listener;
+  const element = { dataset: { ctaPosition: 'home_tools', fhTrack: 'compare_open' }, hasAttribute: () => false };
+  const event = { target: { closest: () => element } };
+  click(event);
+  assert.equal(browser.dataLayer.at(-1).event, 'compare_open');
+  element.dataset = { ctaPosition: 'newsletter_footer', fhTrack: 'feed_follow' };
+  click(event);
+  assert.equal(browser.dataLayer.at(-1).event, 'feed_follow');
+  element.dataset = { ctaPosition: 'product_card_list', fhTrack: 'list_add', productSlug: 'aqara-hub-m2', category: 'Smart Hub' };
+  click(event);
+  assert.equal(browser.dataLayer.length, 2, 'toggle click does not infer a successful addition');
+  added({ detail: { product_slug: 'aqara-hub-m2', category: 'Smart Hub', cta_position: 'product_card_list' } });
+  assert.equal(browser.dataLayer.at(-1).event, 'list_add');
+  assert.equal(browser.dataLayer.at(-1).product_slug, 'aqara-hub-m2');
+  assert.equal(browser.dataLayer.at(-1).discount, undefined);
+  assert.equal(browser.dataLayer.length, 3);
+  added({ detail: { product_slug: 'owner@example.test' } });
+  added({ detail: { product_slug: 'safe-product', email: 'owner@example.test' } });
+  globalThis.__analyticsConsent = false;
+  added({ detail: { product_slug: 'safe-product' } });
+  assert.equal(browser.dataLayer.length, 3, 'unsafe payloads and rejected consent remain suppressed');
+  assert.equal(isolated.sanitizeEvent('compare_open', { discount: undefined }), null, 'raw API still rejects unknown keys');
 });
 
 test('provider startup is consent-gated and receives safe context before GTM initialization', async () => {

@@ -306,8 +306,8 @@ function pageParameters(element: HTMLElement) {
   const parameters: Record<string, unknown> = {
     page_type: body.dataset.pageType || 'page',
     cta_position: element.dataset.ctaPosition || 'content',
-    discount: element.dataset.discount === undefined ? undefined : Number(element.dataset.discount),
   };
+  if (element.dataset.discount !== undefined) parameters.discount = Number(element.dataset.discount);
   if (element.dataset.productSlug) parameters.product_slug = element.dataset.productSlug;
   if (element.dataset.category) parameters.category = element.dataset.category;
   if (element.dataset.campaign) parameters.campaign = element.dataset.campaign;
@@ -323,11 +323,18 @@ function setupEventDelegation() {
     const element = target?.closest<HTMLElement>('[data-fh-amazon-cta], [data-fh-track]');
     if (!element) return;
     const eventName = element.hasAttribute('data-fh-amazon-cta') ? 'affiliate_click' : element.dataset.fhTrack;
+    // Saving is measured from the cart's confirmed transition, never a toggle click.
+    if (eventName === 'list_add') return;
     if (eventName) {
       const parameters = { ...pageParameters(element), dedupe_key: element.dataset.fhDedupeKey || undefined };
       if (element.hasAttribute('data-fh-amazon-cta')) trackOutboundEvent(eventName, parameters);
       else trackEvent(eventName, parameters);
     }
+  });
+  document.addEventListener('flowhome:list-added', (event) => {
+    const detail = (event as CustomEvent).detail;
+    if (!detail || typeof detail !== 'object') return;
+    trackEvent('list_add', { ...detail, page_type: document.body.dataset.pageType || 'page' });
   });
 }
 
