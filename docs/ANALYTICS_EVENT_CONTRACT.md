@@ -2,14 +2,17 @@
 
 ## Consent and provider boundary
 
-FlowHome uses **Basic Consent Mode**. Until a visitor explicitly chooses `accepted`, it loads no optional GTM/Clarity script, creates no analytics session or attribution identifier, and dispatches no measurement event. `rejected` and `unset` are equally non-measuring states. Revocation removes session attribution/ID and optional script state, then reloads once when an optional runtime had loaded. Cookieless pings are not implemented.
+FlowHome uses **Basic Consent Mode**. Until a visitor explicitly chooses `accepted`, it loads no optional GTM/Clarity script, creates no analytics session or attribution identifier, and dispatches no measurement event. `rejected` and `unset` are equally non-measuring states. Revocation first sets Google's `ga-disable-<PUBLIC_GA4_ID>` flag, then removes session attribution/ID and optional script state, and reloads once when an optional runtime had loaded. Reacceptance during a pending reload cannot reactivate that runtime or recreate attribution. Cookieless pings are not implemented; revocation does not issue a consent update that could itself transmit a denied-state ping. Provider cookies and already-dispatched requests require separate verification; this is not a claim that prior network requests can be recalled.
 
-The build projects analytics only when `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, and a valid reviewed `PUBLIC_GTM_ID` are configured; local/staging builds reject enabled analytics. The runtime additionally requires accepted consent. In-page events use best-effort `dataLayer.push`; outbound CTA events defer the push so navigation does not wait for the provider. Queue success proves only local enqueue, not provider receipt. A local `dataLayer` array is the supported memory/mock boundary for tests. GTM/GA4 mapping, provider configuration and actual receipt require external verification; revenue and conversion cannot be inferred from events.
+The build projects analytics only when `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, a valid reviewed `PUBLIC_GTM_ID`, and a matching `PUBLIC_GA4_ID` are configured; local/staging builds reject enabled analytics. The runtime additionally requires accepted consent. ID format validation cannot prove destination ownership or protect additional destinations silently added to GTM. In-page events use best-effort `dataLayer.push`; outbound CTA events defer the push so navigation does not wait for the provider. Queue success proves only local enqueue, not provider receipt. A local `dataLayer` array is the supported memory/mock boundary for tests. GTM/GA4 mapping, provider configuration and actual receipt require external verification; revenue and conversion cannot be inferred from events.
+
+After acceptance, before `gtm.js`, the runtime queues Google's arguments-object `consent default` command (`analytics_storage=granted`; `ad_storage`, `ad_user_data`, `ad_personalization=denied`) and a sanitized context. GTM must explicitly map `page_location`, `page_referrer`, `page_title` and set `send_page_view=false`, `allow_google_signals=false`, `allow_ad_personalization_signals=false` in the Google tag. A dataLayer object alone does not override Google's automatic collection. Disable/review enhanced measurement separately, including history-based page views and outbound links. The runtime enqueues one explicit `page_view` per initialized document, after GTM startup; do not also enable automatic page views. No global debug setting is emitted.
 
 ## Taxonomy
 
 | Event | Allowlisted event-specific fields |
 | --- | --- |
+| `page_view` | `page_type` |
 | `affiliate_click` | `page_type`, `cta_position`, `product_slug`, `category`, `discount` |
 | `list_add` | `page_type`, `cta_position`, `product_slug`, `category` |
 | `quiz_start` | `page_type` |
@@ -20,6 +23,8 @@ The build projects analytics only when `PUBLIC_APP_ENV=production`, `PUBLIC_ANAL
 | `experiment_exposure` | `page_type`, `experiment_id`, `variant_id`, `assignment_version`, `mutual_exclusion_group`, `assignment_bucket` |
 
 Every accepted dispatched event also contains a generated `event_id`, `consent_state=accepted`, privacy-safe session ID, a pathname without query/fragment, device class, market, and first-touch UTM fields when present. Pathnames are decoded for inspection and become `/redacted` when they contain unsafe encoding, URL-like content, PII, secrets, phone/email patterns, or unsafe characters. `campaign` and `experiment` are optional, bounded identifiers. Unknown event names, unknown fields, URL-like values (including arbitrary URI schemes such as `data:`/`javascript:`, protocol-relative, `www.`, mailto, and tel forms), unsafe strings, obvious PII/secrets, query fragments, and unbounded values are rejected rather than emitted. The boundary is intentionally conservative: any dotted value ending in an alphabetic label of two or more characters is treated as a bare domain and rejected; numeric technical version endings such as `zigbee.3.0` remain valid.
+
+The context also includes `page_location=https://flowhome.dev<sanitized pathname>`, `page_referrer=''`, and the fixed `page_title=FlowHome`. It never reads the document title or referrer and never uses the browser's origin/query/fragment for these fields. The canonical origin remains fixed in isolated local verification artifacts; distinguish test traffic by device preview, not by URL. These overrides intentionally sacrifice referrer and page-title reporting to minimize data. Current tests establish local ordering and payloads, not Google's external behavior.
 
 ## Deduplication and attribution
 
@@ -33,10 +38,12 @@ After accepted consent only, FlowHome reads and normalizes first-touch `utm_sour
 
 1. Use the owner's current authorization and verified GTM/GA4 access; do not repeatedly request an already granted approval. Provider conditions and consent requirements still apply.
 2. Review all tags and destinations in the existing container, not only public build variables. A GTM-managed Clarity tag can load even with an empty `PUBLIC_CLARITY_ID`. Review automatic page/referrer/query collection separately from the sanitized custom-event payload.
-3. Configure `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, and the reviewed `PUBLIC_GTM_ID` for the isolated verification artifact; never commit credentials or publish an unverified configuration. Map only this taxonomy in GTM/GA4 and verify one accepted event in DebugView using device-only preview, not a global debug flag.
+3. Configure `PUBLIC_APP_ENV=production`, `PUBLIC_ANALYTICS_ENABLED=true`, the reviewed `PUBLIC_GTM_ID`, and matching `PUBLIC_GA4_ID` for the isolated verification artifact; never commit credentials or publish an unverified configuration. Map only this taxonomy in GTM/GA4, prevent optional parameters from carrying over between different events, and verify one accepted event in DebugView using device-only preview, not a global debug flag. Verify the developer-traffic filter before generating test traffic; debug mode alone does not exclude it from reports.
 4. Verify rejected/unset emit zero measurement events and revocation clears optional runtime state and stops subsequent requests. Preserve the evidence; missing DebugView events alone do not prove zero network requests. Provider cookies require separate inspection.
 5. Site-wide rollback restores the verified disabled artifact or rebuilds/publishes with `PUBLIC_ANALYTICS_ENABLED=false`. Removing `PUBLIC_GTM_ID` while leaving analytics enabled fails the build; changing environment variables alone does not alter an existing artifact. Consent revocation independently stops the current visitor's runtime.
 
 ## Lifecycle boundary (Block 7)
+
+Implementation references: [Google privacy parameters and immediate opt-out](https://developers.google.com/tag-platform/security/guides/privacy), [consent initialization before GTM](https://developers.google.com/tag-platform/security/guides/consent). Consulted 2026-09-12; these describe provider mechanisms, not evidence of FlowHome production activation.
 
 Lifecycle email consent is a separate, explicit preference and is never an analytics event or analytics-consent signal. Lifecycle addresses, unsubscribe tokens, and preference payloads are excluded from analytics, logs, and URLs; one-click tokens live only in a URL fragment and the browser removes it before the request. Delivery, open, click, and conversion values are **Unknown** until an approved provider supplies lawful source evidence.

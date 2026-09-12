@@ -10,13 +10,14 @@ const MAX_SEEN_EVENTS = 200;
 const MAX_VALUE_LENGTH = 120;
 
 type AnalyticsWindow = Window & {
-  dataLayer?: Array<Record<string, unknown>>;
+  dataLayer?: Array<Record<string, unknown> | IArguments>;
   [RUNTIME_LOADED_FLAG]?: boolean;
   [RELOAD_PENDING_FLAG]?: boolean;
   [GTM_INITIALIZED_FLAG]?: boolean;
 };
 
 const EVENT_FIELDS: Record<string, ReadonlySet<string>> = {
+  page_view: new Set(['page_type']),
   affiliate_click: new Set(['page_type', 'cta_position', 'product_slug', 'category', 'discount']),
   list_add: new Set(['page_type', 'cta_position', 'product_slug', 'category']),
   quiz_start: new Set(['page_type']),
@@ -38,7 +39,7 @@ const seenEventKeys = new Set<string>();
 const deferredEventKeys = new Set<string>();
 let delegationInstalled = false;
 let consentListenerInstalled = false;
-let runtimeConfig = { gtmId: '', clarityId: '' };
+let runtimeConfig = { gtmId: '', ga4Id: '', clarityId: '' };
 
 function getSessionStorage() {
   try { return window.sessionStorage; } catch { return null; }
@@ -158,10 +159,15 @@ function deviceClass() {
 
 function pageContext() {
   const body = document.body;
+  const pathname = sanitizePathname(window.location.pathname);
   return {
     consent_state: 'accepted',
     session_id: getSessionId(),
-    pathname: sanitizePathname(window.location.pathname),
+    pathname,
+    // The canonical origin is fixed; never forward location.href, document.title or referrer.
+    page_location: `https://flowhome.dev${pathname}`,
+    page_referrer: '',
+    page_title: 'FlowHome',
     device_class: deviceClass(),
     market: cleanText(body.dataset.market || 'us', 24) || 'us',
     ...captureAttribution(),
@@ -241,17 +247,40 @@ function injectScript(src: string, name: string) {
   document.head.appendChild(script);
 }
 
-function loadOptionalAnalytics(gtmId: string, clarityId: string) {
+// Google commands use the documented arguments-object protocol, not event objects.
+function pushGoogleCommand(..._args: unknown[]) {
+  // eslint-disable-next-line prefer-rest-params -- Google's command queue requires an arguments object.
+  (window as AnalyticsWindow).dataLayer?.push(arguments);
+}
+
+function setGoogleOptOut(disabled: boolean) {
+  if (runtimeConfig.ga4Id) Reflect.set(window, `ga-disable-${runtimeConfig.ga4Id}`, disabled);
+}
+
+function loadOptionalAnalytics() {
   if (!hasAnalyticsConsent()) return;
   const analyticsWindow = window as AnalyticsWindow;
+  if (analyticsWindow[RELOAD_PENDING_FLAG]) return;
+  const { gtmId, clarityId } = runtimeConfig;
+  setGoogleOptOut(false);
   let runtimeLoaded = false;
   if (gtmId && !analyticsWindow[GTM_INITIALIZED_FLAG]) {
     analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
     try {
+      // Ordered before GTM, and only after explicit consent (no denied cookieless pings).
+      pushGoogleCommand('consent', 'default', {
+        analytics_storage: 'granted', ad_storage: 'denied',
+        ad_user_data: 'denied', ad_personalization: 'denied',
+      });
+      analyticsWindow.dataLayer.push({
+        ...pageContext(), send_page_view: false,
+        allow_google_signals: false, allow_ad_personalization_signals: false,
+      });
       analyticsWindow.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
       injectScript(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`, 'gtm');
       analyticsWindow[GTM_INITIALIZED_FLAG] = true;
       runtimeLoaded = true;
+      trackEvent('page_view', { page_type: document.body.dataset.pageType || 'page', dedupe_key: 'initial-page-view' });
     } catch { /* Optional provider setup must not break page behavior. */ }
   }
   if (clarityId) {
@@ -263,6 +292,8 @@ function loadOptionalAnalytics(gtmId: string, clarityId: string) {
 
 function stopOptionalAnalytics() {
   const analyticsWindow = window as AnalyticsWindow;
+  // Stop the reviewed Google destination synchronously, before cleanup or unload callbacks.
+  setGoogleOptOut(true);
   const shouldReload = shouldReloadOptionalAnalytics(Boolean(analyticsWindow[RUNTIME_LOADED_FLAG]), Boolean(analyticsWindow[RELOAD_PENDING_FLAG]));
   clearAnalyticsSession();
   document.querySelectorAll(OPTIONAL_SCRIPT_SELECTOR).forEach((script) => script.remove());
@@ -302,16 +333,19 @@ function setupEventDelegation() {
   });
 }
 
-export function setupAnalytics({ gtmId = '', clarityId = '' } = {}) {
+export function setupAnalytics({ gtmId = '', ga4Id = '', clarityId = '' } = {}) {
   if (typeof window === 'undefined') return;
-  runtimeConfig = { gtmId, clarityId };
-  loadOptionalAnalytics(runtimeConfig.gtmId, runtimeConfig.clarityId);
+  if (gtmId && (!/^G-[A-Z0-9]{10}$/.test(ga4Id) || /^G-X+$/.test(ga4Id))) throw new Error('Analytics requires the reviewed GA4 destination');
+  runtimeConfig = { gtmId, ga4Id, clarityId };
+  if (!hasAnalyticsConsent()) setGoogleOptOut(true);
+  loadOptionalAnalytics();
   if (!consentListenerInstalled) {
     consentListenerInstalled = true;
     window.addEventListener('flowhome:consent-change', () => {
       if (hasAnalyticsConsent()) {
+        if ((window as AnalyticsWindow)[RELOAD_PENDING_FLAG]) return;
         captureAttribution();
-        loadOptionalAnalytics(runtimeConfig.gtmId, runtimeConfig.clarityId);
+        loadOptionalAnalytics();
       } else stopOptionalAnalytics();
     });
   }

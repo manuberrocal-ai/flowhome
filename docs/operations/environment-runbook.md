@@ -31,8 +31,8 @@ Los informes de agosto documentaron staging con migraciones 001–008 y producci
 | `FLOWHOME_SUPABASE_STAGING_REF` | Referencia de staging revisada, sólo para construcción |
 | `FLOWHOME_SUPABASE_PRODUCTION_REF` | Referencia de producción revisada; distinta de staging cuando ambas estén declaradas |
 | `PUBLIC_GOOGLE_CLIENT_ID` | Opcional; si falta no se carga Google Identity |
-| `PUBLIC_ANALYTICS_ENABLED` | false por defecto; true sólo en production y con GTM válido |
-| `PUBLIC_GTM_ID`, `PUBLIC_CLARITY_ID` | Sólo se proyectan con medición habilitada; consentimiento sigue siendo obligatorio |
+| `PUBLIC_ANALYTICS_ENABLED` | false por defecto; true sólo en production y con GTM y GA4 revisados |
+| `PUBLIC_GTM_ID`, `PUBLIC_GA4_ID`, `PUBLIC_CLARITY_ID` | Sólo se proyectan con medición habilitada; consentimiento sigue siendo obligatorio. GA4 debe coincidir con el destino del contenedor para permitir parada inmediata; Clarity es opcional |
 
 Una publishable key es opaca: el formato no prueba pertenencia al proyecto. Decodificar JWT no prueba firma, acceso real ni RLS. Las referencias declaradas necesitan revisión, no prueban propiedad por sí solas. Antes de habilitar cuenta, FH-11 debe comprobar proveedor, redirects, políticas y recorrido con cuenta autorizada. No enviar OTP como diagnóstico automático.
 

@@ -39,6 +39,7 @@ jobs:
       PUBLIC_AUTH_ENABLED: 'false' # Enable only after FH-11 and a reviewed account configuration.
       PUBLIC_ANALYTICS_ENABLED: ${{ vars.PUBLIC_ANALYTICS_ENABLED || 'false' }}
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
       RELEASE_SOURCE_SHA: ${{ github.sha }}
       RELEASE_ROLLBACK_DEPLOYMENT_ID: ${{ inputs.rollback_deployment_id }}
       RELEASE_DEPLOY_PRODUCTION: ${{ inputs.deploy_production }}

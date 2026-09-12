@@ -167,6 +167,7 @@ html[data-flowhome-consent="accepted"] [data-consent-banner]:not([data-consent-b
       void initializeOptionalRuntime({
         analyticsEnabled: publicConfig.analyticsEnabled,
         gtmId: publicConfig.gtmId,
+        ga4Id: publicConfig.ga4Id,
         clarityId: publicConfig.clarityId,
         experimentsEnabled: document.body.dataset.funnelExperimentV1 === 'on'
           && document.body.dataset.homePrimaryCtaV1 === 'on',

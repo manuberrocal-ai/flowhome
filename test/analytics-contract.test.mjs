@@ -139,9 +139,85 @@ test('analytics setup installs consent and CTA delegation once', () => {
   analytics.setupAnalytics();
   assert.equal(browser.listeners.filter((entry) => entry.name === 'click').length, 1);
   assert.equal(browser.listeners.filter((entry) => entry.name === 'flowhome:consent-change').length, 1);
-  analytics.setupAnalytics({ gtmId: 'GTM-TEST' });
-  analytics.setupAnalytics({ gtmId: 'GTM-TEST' });
+  analytics.setupAnalytics({ gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456' });
+  analytics.setupAnalytics({ gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456' });
   assert.equal(globalThis.window.dataLayer.filter((entry) => entry.event === 'gtm.js').length, 1);
+  assert.equal(globalThis.window.dataLayer.filter((entry) => entry.event === 'page_view').length, 1);
+});
+
+test('provider startup is consent-gated and receives safe context before GTM initialization', async () => {
+  const browser = installBrowser({ consent: false, search: '?email=private%40example.test#secret' });
+  const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#provider-startup`);
+  const config = { gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456' };
+  globalThis.document.title = 'private@example.test';
+  globalThis.document.referrer = 'https://private.example.test/?secret=private';
+  isolated.setupAnalytics(config);
+  assert.equal(browser.scripts.length, 0);
+  assert.equal(browser.dataLayer.length, 0);
+  assert.equal(browser.sessionStorage.getItem('flowhome-analytics-session-id'), null);
+  assert.equal(browser.sessionStorage.getItem('flowhome-analytics-attribution-v1'), null);
+  assert.equal(globalThis.window['ga-disable-G-TEST123456'], true);
+  const consentChange = browser.listeners.find(({ name }) => name === 'flowhome:consent-change').listener;
+  consentChange();
+  assert.equal(browser.dataLayer.length, 0, 'rejection sends no denied cookieless command');
+  globalThis.__analyticsConsent = true;
+  consentChange();
+  assert.equal(globalThis.window['ga-disable-G-TEST123456'], false);
+  const acceptedLayer = globalThis.window.dataLayer;
+  assert.deepEqual(Array.from(acceptedLayer[0]), ['consent', 'default', {
+    analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+  }]);
+  assert.equal(acceptedLayer[1].page_location, 'https://flowhome.dev/quiz/');
+  assert.equal(acceptedLayer[1].page_referrer, '');
+  assert.equal(acceptedLayer[1].page_title, 'FlowHome');
+  assert.equal(acceptedLayer[1].send_page_view, false);
+  assert.equal(acceptedLayer[1].allow_google_signals, false);
+  assert.equal(acceptedLayer[1].allow_ad_personalization_signals, false);
+  assert.equal(acceptedLayer[2].event, 'gtm.js');
+  assert.equal(acceptedLayer[3].event, 'page_view');
+  assert.equal(browser.scripts.length, 1);
+  assert.doesNotMatch(JSON.stringify(acceptedLayer), /private|secret|\?|#/);
+  consentChange();
+  assert.equal(acceptedLayer.length, 4, 'repeated consent does not duplicate initialization or page views');
+
+  let reloads = 0;
+  const assertDisabled = () => assert.equal(globalThis.window['ga-disable-G-TEST123456'], true);
+  browser.scripts[0].remove = assertDisabled;
+  globalThis.window.location.reload = () => { assertDisabled(); reloads += 1; };
+  globalThis.__analyticsConsent = false;
+  consentChange();
+  assert.equal(reloads, 1);
+  assert.equal(globalThis.window.dataLayer, undefined);
+  assert.equal(browser.sessionStorage.getItem('flowhome-analytics-session-id'), null);
+  assert.equal(browser.sessionStorage.getItem('flowhome-analytics-attribution-v1'), null);
+  consentChange();
+  assert.equal(reloads, 1);
+  globalThis.__analyticsConsent = true;
+  consentChange();
+  assert.equal(globalThis.window['ga-disable-G-TEST123456'], true, 'pending reload cannot reactivate the provider');
+  assert.equal(browser.scripts.length, 1);
+  assert.equal(browser.sessionStorage.getItem('flowhome-analytics-attribution-v1'), null, 'pending reload cannot recreate attribution');
+});
+
+test('runtime rejects a GTM destination without a valid opt-out ID before any provider load', async () => {
+  const browser = installBrowser();
+  const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#provider-validation`);
+  for (const ga4Id of ['', 'G-XXXXXXXXXX', 'G-TEST123456?secret', 'GTM-TEST']) {
+    assert.throws(() => isolated.setupAnalytics({ gtmId: 'GTM-TEST', ga4Id }), /reviewed GA4 destination/);
+  }
+  assert.equal(browser.scripts.length, 0);
+  assert.equal(browser.dataLayer.length, 0);
+});
+
+test('deferred outbound events are discarded when consent is revoked before delivery', async () => {
+  const browser = installBrowser();
+  const isolated = await import(`data:text/javascript;base64,${Buffer.from(executable).toString('base64')}#outbound-revocation`);
+  const queued = [];
+  globalThis.window.setTimeout = callback => queued.push(callback);
+  assert.equal(isolated.trackOutboundEvent('affiliate_click', { product_slug: 'thermostat' }), true);
+  globalThis.__analyticsConsent = false;
+  queued.shift()();
+  assert.equal(browser.dataLayer.length, 0);
 });
 
 test('outbound CTA defers a slow dataLayer push without preventing retailer navigation', async () => {

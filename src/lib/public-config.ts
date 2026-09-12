@@ -7,6 +7,7 @@ declare const __FLOWHOME_PUBLIC_CONFIG__: Readonly<{
   supabaseProjectRef: string;
   googleClientId: string;
   gtmId: string;
+  ga4Id: string;
   clarityId: string;
 }>;
 

@@ -33,6 +33,7 @@ jobs:
       PUBLIC_AUTH_ENABLED: 'false'
       PUBLIC_ANALYTICS_ENABLED: 'false'
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
       FLOWHOME_TIMEZONE: ${{ vars.FLOWHOME_TIMEZONE || 'America/Argentina/Buenos_Aires' }}
       DAILY_RUN_TIME: ${{ vars.DAILY_RUN_TIME || '10:07' }}
       FLOWHOME_DAILY_KILL_SWITCH: ${{ vars.FLOWHOME_DAILY_KILL_SWITCH || 'false' }}
