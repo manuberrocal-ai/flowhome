@@ -119,7 +119,7 @@ test('batched deploy verifies on push and cron, while production deploy is manua
   assert.match(production, /if:\s*\$\{\{ github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main' && inputs\.deploy_production == true \}\}/);
   assert.match(production, /- uses: actions\/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7\s+with:\s+ref: \$\{\{ needs\.verify\.outputs\.source_sha \}\}/);
   assert.doesNotMatch(production, /ref: main/);
-  assert.match(production, /cloudflare\/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd/);
+  assert.match(production, /cloudflare\/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0/);
   assert.match(production, /needs\.verify\.outputs\.has_urls/);
   assert.match(production, /deployment-urls\/deployed-urls\.txt/);
 
