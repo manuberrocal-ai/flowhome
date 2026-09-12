@@ -4,7 +4,7 @@ import test from 'node:test';
 import ts from 'typescript';
 
 const source = await readFile(new URL('../src/lib/analytics.ts', import.meta.url), 'utf8');
-const executable = ts.transpileModule(source.replace(
+const executable = ts.transpileModule(source.replace('./analytics-fields.js', new URL('../src/lib/analytics-fields.js', import.meta.url).href).replace(
   "import { hasAnalyticsConsent, shouldReloadOptionalAnalytics } from './consent';",
   'const hasAnalyticsConsent = () => Boolean(globalThis.__analyticsConsent); const shouldReloadOptionalAnalytics = (loaded, pending = false) => loaded && !pending;',
 ), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
@@ -101,6 +101,25 @@ test('analytics emits only safe pathnames', () => {
     assert.equal(analytics.trackEvent('quiz_start', { page_type: 'quiz', dedupe_key: `unsafe-path-${index}` }), true);
     assert.equal(globalThis.window.dataLayer.at(-1).pathname, '/redacted');
   }
+});
+
+test('successive events explicitly replace optional field values instead of retaining prior product data', () => {
+  const browser = installBrowser({ search: '' });
+  const model = {};
+  globalThis.window.dataLayer = { push: message => { Object.assign(model, message); browser.dataLayer.push(message); } };
+  assert.equal(analytics.trackEvent('affiliate_click', { product_slug: 'thermostat', category: 'smart-thermostat', discount: 20, campaign: 'spring' }), true);
+  assert.equal(model.discount, 20);
+  assert.equal(analytics.trackEvent('affiliate_click', { product_slug: 'smart-plug' }), true);
+  assert.equal(model.product_slug, 'smart-plug');
+  for (const key of ['category', 'discount', 'campaign']) {
+    assert.equal(Object.hasOwn(browser.dataLayer.at(-1), key), true, `${key} explicitly replaces its previous value`);
+    assert.equal(model[key], undefined);
+  }
+  assert.equal(analytics.trackEvent('quiz_start', { page_type: 'quiz' }), true);
+  assert.equal(model.product_slug, undefined);
+  assert.equal(model.page_type, 'quiz');
+  assert.equal('dedupe_key' in model, false);
+  assert.doesNotMatch(JSON.stringify(browser.dataLayer.at(-1)), /thermostat|smart-plug|spring|discount/);
 });
 
 test('experiment exposure accepts only its exact bounded, non-PII contract and tracks once', () => {
