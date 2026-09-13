@@ -71,7 +71,7 @@ const rows: ComparisonRow[] = [
         {products.map((product) => <th scope="col" class="comparison-product-heading">
           <a href={`/product/${product.slug}/`} class="inline-flex min-h-11 items-center font-black text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-blue-700">{product.name}</a>
           {product.model && <p class="mt-1 text-xs font-normal text-slate-600">Model: {product.model}</p>}
-          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="comparison-buy mt-3 inline-flex min-h-11 items-center justify-center rounded-xl px-4 py-2 text-sm font-bold" aria-label={`Check on Amazon: ${product.name}`} data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct ?? 0} data-cta-position="compare_table_top">Check on Amazon</a>
+          <a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="comparison-buy mt-3 inline-flex min-h-11 items-center justify-center rounded-xl px-4 py-2 text-sm font-bold" aria-label={`Check on Amazon: ${product.name}`} data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct} data-cta-position="compare_table_top">Check on Amazon</a>
         </th>)}
       </tr>
     </thead>
@@ -86,7 +86,7 @@ const rows: ComparisonRow[] = [
       </td>)}</tr>
       <tr>
         <th scope="row" class="font-bold text-slate-700">Listing link</th>
-        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct ?? 0} data-cta-position="compare_table">Check on Amazon</a></td>)}
+        {products.map((product) => <td><a href={product.affiliateUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" class="font-bold text-blue-700 hover:underline" data-fh-amazon-cta data-product-slug={product.slug} data-category={product.category} data-discount={commerceBySlug.get(product.slug)?.displayDiscountPct} data-cta-position="compare_table">Check on Amazon</a></td>)}
       </tr>
     </tbody>
   </table>

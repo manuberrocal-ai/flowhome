@@ -70,7 +70,7 @@ const quickCategories = (['smart-lighting', 'security-camera', 'smart-plug', 'ro
       {products.map(product => <div data-catalog-item data-name={product.data.name} data-brand={product.data.brand} data-model={product.data.model} data-category={product.data.category} data-installation={getInstallationEvidence(product.data)?.assessment ?? ''}><ProductCard product={product} commerceSlots /></div>)}
     </div>
   </section>
-  <section class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="research-paths">
+  <section class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6" aria-labelledby="research-paths" data-catalog-robot-research>
     <p class="text-sm font-bold uppercase tracking-wide text-blue-700">Start with a focused path</p>
     <h2 id="research-paths" class="mt-2 text-2xl font-black text-slate-950">Robot-vacuum research paths</h2>
     <p class="mt-2 max-w-3xl leading-7 text-slate-700">Compare mapped, app-controlled robot vacuums from the guide, then check each profile and the direct comparison before browsing the wider catalog.</p>
@@ -100,6 +100,7 @@ const quickCategories = (['smart-lighting', 'security-camera', 'smart-plug', 'ro
     const quickFilters = document.querySelector<HTMLElement>('[data-catalog-quick-filters]');
     const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-catalog-category]')];
     const guide = document.querySelector<HTMLAnchorElement>('#catalog-category-guide');
+    const robotResearch = document.querySelector<HTMLElement>('[data-catalog-robot-research]');
     const items = [...document.querySelectorAll<HTMLElement>('[data-catalog-item]')];
     if (search && category && installation && reset && count && empty && controls) {
       const allowedCategories = [...category.options].map(option => option.value);
@@ -118,6 +119,10 @@ const quickCategories = (['smart-lighting', 'security-camera', 'smart-plug', 'ro
         count.textContent = visible + (visible === 1 ? ' product' : ' products') + ' of ' + items.length;
         empty.hidden = visible !== 0;
         reset.disabled = !search.value && !category.value && !installation.value;
+        if (robotResearch) {
+          robotResearch.hidden = !reset.disabled && category.value !== 'robot-vacuum'
+            && !items.some(item => !item.hidden && item.dataset.category === 'robot-vacuum');
+        }
         chips.forEach(chip => chip.setAttribute('aria-pressed', String(chip.dataset.catalogCategory === category.value)));
         if (guide) {
           guide.hidden = !category.value;

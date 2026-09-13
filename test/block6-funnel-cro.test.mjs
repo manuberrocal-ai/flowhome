@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import { ANALYTICS_EVENT_FIELDS } from '../src/lib/analytics-fields.js';
 
 const files = {
   doc: await readFile(new URL('../docs/BLOCK6_FUNNEL_CRO.md', import.meta.url), 'utf8'),
@@ -24,6 +25,7 @@ test('home markup keeps the quiz href and accessible stable CTA without dark-pat
 });
 
 test('analytics exposes only the allowlisted experiment fields and bounded bucket', () => {
-  assert.match(files.analytics, /experiment_exposure: new Set\(\['page_type', 'experiment_id', 'variant_id', 'assignment_version', 'mutual_exclusion_group', 'assignment_bucket'\]\)/);
+  assert.deepEqual(ANALYTICS_EVENT_FIELDS.experiment_exposure, ['page_type', 'experiment_id', 'variant_id', 'assignment_version', 'mutual_exclusion_group', 'assignment_bucket']);
+  assert.match(files.analytics, /Object\.entries\(ANALYTICS_EVENT_FIELDS\)/);
   assert.match(files.analytics, /assignment_bucket.*value <= 9999/);
 });

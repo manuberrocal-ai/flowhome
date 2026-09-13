@@ -3,7 +3,7 @@ export async function initializeOptionalRuntime(config, loaders) {
   if (!config.analyticsEnabled) return { analytics: 'disabled', experiments: 'disabled' };
   try {
     const { setupAnalytics } = await loaders.analytics();
-    setupAnalytics({ gtmId: config.gtmId, clarityId: config.clarityId });
+    setupAnalytics({ gtmId: config.gtmId, ga4Id: config.ga4Id, clarityId: config.clarityId });
   } catch {
     return { analytics: 'unavailable', experiments: 'disabled' };
   }

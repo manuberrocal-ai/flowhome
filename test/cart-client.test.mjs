@@ -66,6 +66,8 @@ test('sanitizes HTML and synchronizes shortlist buttons through setup once', () 
   globalThis.window = window;
   let visibilityEvents = 0;
   document.addEventListener('flowhome:cart-dock-visibility', () => { visibilityEvents += 1; });
+  const additions = [];
+  document.addEventListener('flowhome:list-added', event => additions.push(event.detail));
 
   const cleanup = setupCartDock();
   assert.equal(setupCartDock(), cleanup);
@@ -76,12 +78,14 @@ test('sanitizes HTML and synchronizes shortlist buttons through setup once', () 
   assert.equal(document.count.textContent, '0');
   assert.deepEqual(buttons.map((button) => button.attributes.size), [0, 0]);
   buttons[0].click();
+  assert.deepEqual(additions, [{ product_slug: 'same-product', category: undefined, cta_position: 'content' }]);
   assert.equal(visibilityEvents, 1);
   assert.equal(document.body.dataset.flowCartDockVisible, 'true');
   assert.equal(document.dock.hidden, false);
   assert.deepEqual(buttons.map((button) => button.getAttribute('aria-pressed')), ['true', 'true']);
   assert.deepEqual(buttons.map((button) => button.label.textContent), ['Saved', 'Saved']);
   buttons[1].click();
+  assert.equal(additions.length, 1, 'removing the saved product does not emit an addition');
   assert.equal(visibilityEvents, 2);
   assert.equal(document.body.dataset.flowCartDockVisible, undefined);
   assert.equal(document.dock.hidden, true);
@@ -91,6 +95,25 @@ test('sanitizes HTML and synchronizes shortlist buttons through setup once', () 
   cleanup();
   delete globalThis.document;
   delete globalThis.window;
+});
+
+test('invalid and corrupt-state shortlist no-ops emit no addition', () => {
+  const previous = { document: globalThis.document, window: globalThis.window };
+  try {
+    for (const corrupt of [false, true]) {
+      const button = new FakeButton(corrupt ? 'B012345678' : '', corrupt ? 'sample' : '', 'Sample');
+      const document = new FakeDocument([button]);
+      const window = new EventTarget();
+      window.localStorage = { getItem: () => corrupt ? '{broken' : null, setItem() {} };
+      Object.assign(globalThis, { document, window });
+      const events = [];
+      document.addEventListener('flowhome:list-added', event => events.push(event.detail));
+      const cleanup = setupCartDock();
+      button.click();
+      assert.equal(events.length, 0, corrupt ? 'corrupt saved state' : 'invalid identity');
+      cleanup();
+    }
+  } finally { Object.assign(globalThis, previous); }
 });
 
 test('saved legacy prices never become a current subtotal while selected ASINs still transfer', () => {

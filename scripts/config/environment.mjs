@@ -33,7 +33,7 @@ export function resolveEnvironment(env) {
     }
   }
 
-  const config = { environment, authEnabled, analyticsEnabled, supabaseUrl: '', supabaseAnonKey: '', supabaseProjectRef: '', googleClientId: '', gtmId: '', clarityId: '' };
+  const config = { environment, authEnabled, analyticsEnabled, supabaseUrl: '', supabaseAnonKey: '', supabaseProjectRef: '', googleClientId: '', gtmId: '', ga4Id: '', clarityId: '' };
   if (authEnabled) {
     const urlValue = text(env, 'PUBLIC_SUPABASE_URL');
     let url;
@@ -67,8 +67,10 @@ export function resolveEnvironment(env) {
   }
   if (analyticsEnabled) {
     config.gtmId = text(env, 'PUBLIC_GTM_ID');
+    config.ga4Id = text(env, 'PUBLIC_GA4_ID');
     config.clarityId = text(env, 'PUBLIC_CLARITY_ID');
     if (!/^GTM-[A-Z0-9]+$/.test(config.gtmId) || /^GTM-X+$/.test(config.gtmId)) fail('PUBLIC_GTM_ID', 'requires a real container ID when analytics is enabled');
+    if (!/^G-[A-Z0-9]{10}$/.test(config.ga4Id) || /^G-X+$/.test(config.ga4Id)) fail('PUBLIC_GA4_ID', 'requires the reviewed measurement ID for immediate analytics opt-out');
     if (config.clarityId && !/^[a-z0-9]+$/.test(config.clarityId)) fail('PUBLIC_CLARITY_ID', 'has an invalid format');
   }
   return Object.freeze(config);

@@ -20,6 +20,7 @@ test('workflows configure the audited GTM variable without a Clarity fallback', 
   for (const path of ['.github/workflows/quality-check.yml', '.github/workflows/batched-deploy.yml', '.github/workflows/automation.yml']) {
     const workflow = await read(path);
     assert.match(workflow, /PUBLIC_GTM_ID:\s*\$\{\{ vars\.PUBLIC_GTM_ID \}\}/);
+    assert.match(workflow, /PUBLIC_GA4_ID:\s*\$\{\{ vars\.PUBLIC_GA4_ID \}\}/);
     assert.doesNotMatch(workflow, /vars\.PUBLIC_CLARITY_ID/);
   }
 });

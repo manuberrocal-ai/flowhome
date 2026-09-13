@@ -17,12 +17,12 @@ const staging = () => ({ PUBLIC_APP_ENV: 'staging', PUBLIC_AUTH_ENABLED: 'true',
 const read = (name) => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 
 test('no configuration means local, no account, no Google, no analytics and no project selection', () => {
-  assert.deepEqual(resolveEnvironment({}), { environment: 'local', authEnabled: false, analyticsEnabled: false, supabaseUrl: '', supabaseAnonKey: '', supabaseProjectRef: '', googleClientId: '', gtmId: '', clarityId: '' });
+  assert.deepEqual(resolveEnvironment({}), { environment: 'local', authEnabled: false, analyticsEnabled: false, supabaseUrl: '', supabaseAnonKey: '', supabaseProjectRef: '', googleClientId: '', gtmId: '', ga4Id: '', clarityId: '' });
 });
 
 test('disabled services do not project leftover URL, public keys or measurement IDs', () => {
-  const config = resolveEnvironment({ ...staging(), PUBLIC_AUTH_ENABLED: 'false', PUBLIC_GTM_ID: 'GTM-TEST12', PUBLIC_CLARITY_ID: 'testid', PUBLIC_GOOGLE_CLIENT_ID: '123-test.apps.googleusercontent.com' });
-  for (const field of ['supabaseUrl', 'supabaseAnonKey', 'supabaseProjectRef', 'googleClientId', 'gtmId', 'clarityId']) assert.equal(config[field], '');
+  const config = resolveEnvironment({ ...staging(), PUBLIC_AUTH_ENABLED: 'false', PUBLIC_GTM_ID: 'GTM-TEST12', PUBLIC_GA4_ID: 'G-TEST123456', PUBLIC_CLARITY_ID: 'testid', PUBLIC_GOOGLE_CLIENT_ID: '123-test.apps.googleusercontent.com' });
+  for (const field of ['supabaseUrl', 'supabaseAnonKey', 'supabaseProjectRef', 'googleClientId', 'gtmId', 'ga4Id', 'clarityId']) assert.equal(config[field], '');
 });
 
 test('environment and feature flags are explicit and a production dispatch rejects local defaults', () => {
@@ -71,8 +71,10 @@ test('unsafe, misleading and cross-environment origins are rejected', () => {
 test('Google is optional and measurement requires explicit production enablement', () => {
   assert.equal(resolveEnvironment(staging()).googleClientId, '');
   assert.throws(() => resolveEnvironment({ ...staging(), PUBLIC_GOOGLE_CLIENT_ID: 'fake' }), /Google client ID/);
-  const enabled = { PUBLIC_APP_ENV: 'production', PUBLIC_ANALYTICS_ENABLED: 'true', PUBLIC_GTM_ID: 'GTM-TEST12' };
+  const enabled = { PUBLIC_APP_ENV: 'production', PUBLIC_ANALYTICS_ENABLED: 'true', PUBLIC_GTM_ID: 'GTM-TEST12', PUBLIC_GA4_ID: 'G-TEST123456' };
   assert.equal(resolveEnvironment(enabled).gtmId, 'GTM-TEST12');
+  assert.equal(resolveEnvironment(enabled).ga4Id, 'G-TEST123456');
+  for (const id of ['', 'G-XXXXXXXXXX', 'G-123456', 'GTM-TEST12', 'G-TEST123456?private', 'G-test123456']) assert.throws(() => resolveEnvironment({ ...enabled, PUBLIC_GA4_ID: id }), /reviewed measurement ID/);
   for (const id of ['', 'GTM-XXXXXXX', 'G-123456', 'GTM-<script>']) assert.throws(() => resolveEnvironment({ ...enabled, PUBLIC_GTM_ID: id }), /container ID/);
 });
 

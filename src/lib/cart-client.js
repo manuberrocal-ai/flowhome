@@ -70,13 +70,23 @@ export function setupCartDock() {
   // Toggle is the single state transition for shortlist buttons.
   const onAdd = (event) => {
     const button = event.currentTarget;
-    store.toggle({
+    const itemCountBefore = getUniqueItemCount(store.getItems());
+    const items = store.toggle({
       asin: button.dataset.asin,
       slug: button.dataset.slug,
       name: button.dataset.name,
       image: button.dataset.image,
       url: button.dataset.url,
     });
+    // Local transition only; the optional analytics listener applies consent and sanitization.
+    // Removal, failed validation and corrupt-state no-ops must not count as additions.
+    if (getUniqueItemCount(items) > itemCountBefore) {
+      document.dispatchEvent(new CustomEvent('flowhome:list-added', { detail: {
+        product_slug: button.dataset.productSlug || button.dataset.slug,
+        category: button.dataset.category,
+        cta_position: button.dataset.ctaPosition || 'content',
+      } }));
+    }
   };
   const addButtons = [...document.querySelectorAll('[data-flow-cart-add]')];
   addButtons.forEach((button) => button.addEventListener('click', onAdd));

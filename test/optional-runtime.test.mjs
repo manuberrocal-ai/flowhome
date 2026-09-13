@@ -10,7 +10,7 @@ function fixture(overrides = {}) {
     ...overrides,
   } };
 }
-const config = { analyticsEnabled: true, experimentsEnabled: true, gtmId: 'GTM-TEST', clarityId: '' };
+const config = { analyticsEnabled: true, experimentsEnabled: true, gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456', clarityId: '' };
 
 test('disabled analytics never downloads either optional module, even with experiment flags', async () => {
   const f = fixture();
@@ -20,12 +20,12 @@ test('disabled analytics never downloads either optional module, even with exper
 test('enabled analytics receives approved configuration without loading disabled experiments', async () => {
   const f = fixture();
   assert.deepEqual(await initializeOptionalRuntime({ ...config, experimentsEnabled: false }, f.loaders), { analytics: 'ready', experiments: 'disabled' });
-  assert.deepEqual(f.calls, ['load analytics', { gtmId: 'GTM-TEST', clarityId: '' }]);
+  assert.deepEqual(f.calls, ['load analytics', { gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456', clarityId: '' }]);
 });
 test('enabled experiments initialize only after analytics', async () => {
   const f = fixture();
   assert.deepEqual(await initializeOptionalRuntime(config, f.loaders), { analytics: 'ready', experiments: 'ready' });
-  assert.deepEqual(f.calls, ['load analytics', { gtmId: 'GTM-TEST', clarityId: '' }, 'load experiments', 'start experiments']);
+  assert.deepEqual(f.calls, ['load analytics', { gtmId: 'GTM-TEST', ga4Id: 'G-TEST123456', clarityId: '' }, 'load experiments', 'start experiments']);
 });
 test('failed analytics download does not initialize experiments or reject page setup', async () => {
   const f = fixture({ analytics: async () => { throw new Error('offline'); } });

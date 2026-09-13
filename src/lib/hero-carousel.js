@@ -63,7 +63,10 @@ export function normalizeProduct(product) {
     amazonUrl: String(product.amazonUrl ?? ''),
     affiliateDisclosure: String(product.affiliateDisclosure ?? ''),
     category: String(product.category ?? ''),
-    discountPct: product.discountPct ?? 0,
+    categorySlug: typeof product.categorySlug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(product.categorySlug)
+      ? product.categorySlug : undefined,
+    discountPct: typeof product.discountPct === 'number' && Number.isFinite(product.discountPct)
+      && product.discountPct >= 0 && product.discountPct <= 100 ? product.discountPct : undefined,
     quote: String(product.quote ?? ''),
   };
 }
@@ -107,7 +110,7 @@ export function applyProduct(root, product, index = 0) {
     star.classList.toggle('text-slate-600', !active);
   });
   const discount = setText(root, 'discount', item.discountPct > 0 ? `Save ${item.discountPct}%` : '');
-  discount?.toggleAttribute('hidden', item.discountPct <= 0);
+  discount?.toggleAttribute('hidden', !(item.discountPct > 0));
   setText(root, 'quote', item.quote);
 
   const badges = root.querySelector('[data-hero-field="badges"]');
@@ -132,8 +135,10 @@ export function applyProduct(root, product, index = 0) {
     amazon.href = item.amazonUrl;
     amazon.setAttribute('aria-label', `Check ${item.title} price on Amazon`);
     amazon.dataset.productSlug = item.slug;
-    amazon.dataset.category = item.category;
-    amazon.dataset.discount = String(item.discountPct);
+    if (item.categorySlug === undefined) delete amazon.dataset.category;
+    else amazon.dataset.category = item.categorySlug;
+    if (item.discountPct === undefined) delete amazon.dataset.discount;
+    else amazon.dataset.discount = String(item.discountPct);
     amazon.dataset.affiliateDisclosure = item.affiliateDisclosure;
   }
   const indicator = root.querySelector('[data-hero-indicator]');

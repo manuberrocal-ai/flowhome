@@ -231,11 +231,42 @@ test('visible playback control pauses, resumes and respects reduced motion', () 
   cleanup();
 });
 
+test('hero analytics uses canonical category slugs while preserving the visible label', () => {
+  const root = fixture();
+  for (const [slug, label] of [['smart-speaker', 'Smart Speaker'], ['smart-plug', 'Smart Plug']]) {
+    const normalized = applyProduct(root, { ...product(slug, label), category: label, categorySlug: slug });
+    assert.equal(root.map['[data-hero-amazon]'].dataset.category, slug);
+    assert.equal(root.map['[data-hero-field="category"]'].textContent, label);
+    assert.deepEqual(normalizeProduct(normalized), normalized);
+  }
+  for (const categorySlug of [undefined, null, '', 'Smart Speaker', 'https://example.test', 3]) {
+    applyProduct(root, { ...product('one', 'First'), categorySlug: 'smart-speaker' });
+    applyProduct(root, { ...product('two', 'Second'), categorySlug });
+    assert.equal(Object.hasOwn(root.map['[data-hero-amazon]'].dataset, 'category'), false);
+  }
+});
+
 test('product normalization preserves the same complete product on repeated passes', () => {
   const normalized = normalizeProduct(product('one', 'First'));
   assert.deepEqual(normalizeProduct(normalized), normalized);
   assert.equal(normalized.ownerRating, 4.5);
   assert.equal(normalized.ownerRatingCount, 12);
+});
+
+test('rotating to an unknown discount removes the previous attribute instead of manufacturing zero', () => {
+  const root = fixture();
+  for (const unknown of [undefined, null, '', '25', NaN, Infinity, -1, 101]) {
+    applyProduct(root, { ...product('one', 'First'), discountPct: 25 });
+    assert.equal(root.map['[data-hero-amazon]'].dataset.discount, '25');
+    const normalized = applyProduct(root, { ...product('two', 'Second'), discountPct: unknown });
+    assert.equal(normalized.discountPct, undefined);
+    assert.deepEqual(normalizeProduct(normalized), normalized);
+    assert.equal(Object.hasOwn(root.map['[data-hero-amazon]'].dataset, 'discount'), false);
+    assert.equal(root.map['[data-hero-field="discount"]'].attrs.hidden, '');
+    assert.equal(root.map['[data-hero-field="discount"]'].textContent, '');
+  }
+  applyProduct(root, { ...product('two', 'Second'), discountPct: 0 });
+  assert.equal(root.map['[data-hero-amazon]'].dataset.discount, '0', 'an explicit validated numeric zero is distinct from absence');
 });
 
 test('carousel initialization and rotation keep rating, image, price, and destination together', () => {
@@ -297,7 +328,7 @@ test('applying a product updates every field without mixing products', () => {
   assert.equal(root.map['[data-hero-amazon]'].href, 'https://amazon.test/two');
   assert.equal(root.map['[data-hero-amazon]'].attrs['aria-label'], 'Check Second price on Amazon');
   assert.equal(root.map['[data-hero-amazon]'].dataset.productSlug, 'two');
-  assert.equal(root.map['[data-hero-amazon]'].dataset.category, 'Lighting');
+  assert.equal(root.map['[data-hero-amazon]'].dataset.category, undefined, 'legacy labels are not analytics slugs');
   assert.equal(root.map['[data-hero-amazon]'].dataset.discount, '0');
   assert.equal(root.map['[data-hero-amazon]'].dataset.affiliateDisclosure, 'Disclosure two');
   assert.equal(root.map['[data-hero-details]'].href, '/product/two/');

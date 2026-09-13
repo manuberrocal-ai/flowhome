@@ -5,6 +5,12 @@ import test from 'node:test';
 const home = await readFile(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 const renderedSource = home.slice(home.indexOf('<BaseLayout'));
 
+test('hero SSR uses catalog category keys without changing the visible label', () => {
+  assert.match(home, /categorySlug: showcaseProducts\[index\]\.data\.category/);
+  assert.match(home, /data-category=\{heroProducts\[0\]\.categorySlug\}/);
+  assert.match(home, /data-hero-field="category"[^>]*>\{heroProducts\[0\]\.category\}/);
+});
+
 test('home presents the product before the three editorial paths in DOM and focus order', () => {
   const showcase = renderedSource.indexOf('data-hero-showcase');
   const controls = renderedSource.indexOf('data-hero-controls');
@@ -40,7 +46,7 @@ test('recomposed hero retains source, fallback, price gates, and accessible caro
   assert.match(home, /getInstallationSummary\(getInstallationEvidence\(data, now\)\)/);
   assert.match(home, /preloadImageSizes=\{heroProducts\[0\]\?\.imageSizes\}/);
   assert.match(home, /sizes=\{heroProducts\[0\]\.imageSizes\}/);
-  assert.match(home, /hidden=\{heroProducts\[0\]\.discountPct <= 0\}/);
+  assert.match(home, /hidden=\{heroProducts\[0\]\.discountPct === undefined \|\| heroProducts\[0\]\.discountPct <= 0\}/);
   assert.match(home, /data-fallback-src=\{heroProducts\[0\]\.fallbackImage\}/);
   assert.match(home, /aria-live="polite"/);
   assert.match(home, /prefers-reduced-motion: reduce/);

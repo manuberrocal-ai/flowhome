@@ -1,4 +1,5 @@
 import { hasAnalyticsConsent, shouldReloadOptionalAnalytics } from './consent';
+import { ANALYTICS_EVENT_FIELDS } from './analytics-fields.js';
 
 const OPTIONAL_SCRIPT_SELECTOR = '[data-flowhome-optional-analytics]';
 const RUNTIME_LOADED_FLAG = '__flowhomeOptionalAnalyticsLoaded';
@@ -10,22 +11,15 @@ const MAX_SEEN_EVENTS = 200;
 const MAX_VALUE_LENGTH = 120;
 
 type AnalyticsWindow = Window & {
-  dataLayer?: Array<Record<string, unknown>>;
+  dataLayer?: Array<Record<string, unknown> | IArguments>;
   [RUNTIME_LOADED_FLAG]?: boolean;
   [RELOAD_PENDING_FLAG]?: boolean;
   [GTM_INITIALIZED_FLAG]?: boolean;
 };
 
-const EVENT_FIELDS: Record<string, ReadonlySet<string>> = {
-  affiliate_click: new Set(['page_type', 'cta_position', 'product_slug', 'category', 'discount']),
-  list_add: new Set(['page_type', 'cta_position', 'product_slug', 'category']),
-  quiz_start: new Set(['page_type']),
-  quiz_complete: new Set(['page_type', 'goal', 'ecosystem', 'budget', 'installation', 'extra', 'result_count']),
-  calculator_used: new Set(['page_type', 'device_type', 'estimated_savings']),
-  compare_open: new Set(['page_type', 'cta_position']),
-  feed_follow: new Set(['page_type', 'cta_position']),
-  experiment_exposure: new Set(['page_type', 'experiment_id', 'variant_id', 'assignment_version', 'mutual_exclusion_group', 'assignment_bucket']),
-};
+const EVENT_FIELDS: Record<string, ReadonlySet<string>> = Object.fromEntries(
+  Object.entries(ANALYTICS_EVENT_FIELDS).map(([event, fields]) => [event, new Set(fields)]),
+);
 
 const COMMON_FIELDS = new Set(['event_id', 'dedupe_key', 'campaign', 'experiment']);
 const PII_OR_SECRET_PATTERN = /(?:\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|\b(?:\+?\d[ .()-]?){7,}\d\b|\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b|\b(?:sk|pk|ghp|github_pat|AIza|xox[baprs])[_-][A-Za-z0-9_-]{12,}\b|\b(?:email|e-mail|phone|name|address|token|secret|password|authorization|bearer|session|cookie|referrer)\b|https?:\/\/|[?&](?:utm_|gclid|fbclid|msclkid))/i;
@@ -34,11 +28,16 @@ const SAFE_TEXT_PATTERN = /^[A-Za-z0-9._:/ -]+$/;
 const SAFE_PATHNAME_PATTERN = /^\/[A-Za-z0-9._~/-]*$/;
 const SAFE_CAMPAIGN_PATTERN = /^[A-Za-z0-9_-]+$/;
 const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const;
+// GTM retains prior values: explicitly clear absent optional fields in the same event message.
+const EVENT_FIELD_RESETS = Object.fromEntries(
+  [...new Set([...Object.values(EVENT_FIELDS).flatMap((fields) => [...fields]), 'campaign', 'experiment', ...UTM_FIELDS])]
+    .map((field) => [field, undefined]),
+);
 const seenEventKeys = new Set<string>();
 const deferredEventKeys = new Set<string>();
 let delegationInstalled = false;
 let consentListenerInstalled = false;
-let runtimeConfig = { gtmId: '', clarityId: '' };
+let runtimeConfig = { gtmId: '', ga4Id: '', clarityId: '' };
 
 function getSessionStorage() {
   try { return window.sessionStorage; } catch { return null; }
@@ -158,10 +157,15 @@ function deviceClass() {
 
 function pageContext() {
   const body = document.body;
+  const pathname = sanitizePathname(window.location.pathname);
   return {
     consent_state: 'accepted',
     session_id: getSessionId(),
-    pathname: sanitizePathname(window.location.pathname),
+    pathname,
+    // The canonical origin is fixed; never forward location.href, document.title or referrer.
+    page_location: `https://flowhome.dev${pathname}`,
+    page_referrer: '',
+    page_title: 'FlowHome',
     device_class: deviceClass(),
     market: cleanText(body.dataset.market || 'us', 24) || 'us',
     ...captureAttribution(),
@@ -182,7 +186,7 @@ function pushEvent(name: string, clean: Record<string, string | number>, eventId
   const seenKey = `${name}:${dedupeKey}`;
   if (deferredEventKeys.has(seenKey) || !rememberEvent(seenKey)) return false;
   try {
-    dataLayer.push({ event: name, ...clean, event_id: eventId, ...pageContext() });
+    dataLayer.push({ ...EVENT_FIELD_RESETS, event: name, ...clean, event_id: eventId, ...pageContext() });
     return true;
   } catch {
     seenEventKeys.delete(seenKey);
@@ -241,17 +245,40 @@ function injectScript(src: string, name: string) {
   document.head.appendChild(script);
 }
 
-function loadOptionalAnalytics(gtmId: string, clarityId: string) {
+// Google commands use the documented arguments-object protocol, not event objects.
+function pushGoogleCommand(..._args: unknown[]) {
+  // eslint-disable-next-line prefer-rest-params -- Google's command queue requires an arguments object.
+  (window as AnalyticsWindow).dataLayer?.push(arguments);
+}
+
+function setGoogleOptOut(disabled: boolean) {
+  if (runtimeConfig.ga4Id) Reflect.set(window, `ga-disable-${runtimeConfig.ga4Id}`, disabled);
+}
+
+function loadOptionalAnalytics() {
   if (!hasAnalyticsConsent()) return;
   const analyticsWindow = window as AnalyticsWindow;
+  if (analyticsWindow[RELOAD_PENDING_FLAG]) return;
+  const { gtmId, clarityId } = runtimeConfig;
+  setGoogleOptOut(false);
   let runtimeLoaded = false;
   if (gtmId && !analyticsWindow[GTM_INITIALIZED_FLAG]) {
     analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
     try {
+      // Ordered before GTM, and only after explicit consent (no denied cookieless pings).
+      pushGoogleCommand('consent', 'default', {
+        analytics_storage: 'granted', ad_storage: 'denied',
+        ad_user_data: 'denied', ad_personalization: 'denied',
+      });
+      analyticsWindow.dataLayer.push({
+        ...pageContext(), send_page_view: false,
+        allow_google_signals: false, allow_ad_personalization_signals: false,
+      });
       analyticsWindow.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
       injectScript(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`, 'gtm');
       analyticsWindow[GTM_INITIALIZED_FLAG] = true;
       runtimeLoaded = true;
+      trackEvent('page_view', { page_type: document.body.dataset.pageType || 'page', dedupe_key: 'initial-page-view' });
     } catch { /* Optional provider setup must not break page behavior. */ }
   }
   if (clarityId) {
@@ -263,6 +290,8 @@ function loadOptionalAnalytics(gtmId: string, clarityId: string) {
 
 function stopOptionalAnalytics() {
   const analyticsWindow = window as AnalyticsWindow;
+  // Stop the reviewed Google destination synchronously, before cleanup or unload callbacks.
+  setGoogleOptOut(true);
   const shouldReload = shouldReloadOptionalAnalytics(Boolean(analyticsWindow[RUNTIME_LOADED_FLAG]), Boolean(analyticsWindow[RELOAD_PENDING_FLAG]));
   clearAnalyticsSession();
   document.querySelectorAll(OPTIONAL_SCRIPT_SELECTOR).forEach((script) => script.remove());
@@ -277,8 +306,8 @@ function pageParameters(element: HTMLElement) {
   const parameters: Record<string, unknown> = {
     page_type: body.dataset.pageType || 'page',
     cta_position: element.dataset.ctaPosition || 'content',
-    discount: element.dataset.discount === undefined ? undefined : Number(element.dataset.discount),
   };
+  if (element.dataset.discount?.trim()) parameters.discount = Number(element.dataset.discount);
   if (element.dataset.productSlug) parameters.product_slug = element.dataset.productSlug;
   if (element.dataset.category) parameters.category = element.dataset.category;
   if (element.dataset.campaign) parameters.campaign = element.dataset.campaign;
@@ -294,24 +323,34 @@ function setupEventDelegation() {
     const element = target?.closest<HTMLElement>('[data-fh-amazon-cta], [data-fh-track]');
     if (!element) return;
     const eventName = element.hasAttribute('data-fh-amazon-cta') ? 'affiliate_click' : element.dataset.fhTrack;
+    // Saving is measured from the cart's confirmed transition, never a toggle click.
+    if (eventName === 'list_add') return;
     if (eventName) {
       const parameters = { ...pageParameters(element), dedupe_key: element.dataset.fhDedupeKey || undefined };
       if (element.hasAttribute('data-fh-amazon-cta')) trackOutboundEvent(eventName, parameters);
       else trackEvent(eventName, parameters);
     }
   });
+  document.addEventListener('flowhome:list-added', (event) => {
+    const detail = (event as CustomEvent).detail;
+    if (!detail || typeof detail !== 'object') return;
+    trackEvent('list_add', { ...detail, page_type: document.body.dataset.pageType || 'page' });
+  });
 }
 
-export function setupAnalytics({ gtmId = '', clarityId = '' } = {}) {
+export function setupAnalytics({ gtmId = '', ga4Id = '', clarityId = '' } = {}) {
   if (typeof window === 'undefined') return;
-  runtimeConfig = { gtmId, clarityId };
-  loadOptionalAnalytics(runtimeConfig.gtmId, runtimeConfig.clarityId);
+  if (gtmId && (!/^G-[A-Z0-9]{10}$/.test(ga4Id) || /^G-X+$/.test(ga4Id))) throw new Error('Analytics requires the reviewed GA4 destination');
+  runtimeConfig = { gtmId, ga4Id, clarityId };
+  if (!hasAnalyticsConsent()) setGoogleOptOut(true);
+  loadOptionalAnalytics();
   if (!consentListenerInstalled) {
     consentListenerInstalled = true;
     window.addEventListener('flowhome:consent-change', () => {
       if (hasAnalyticsConsent()) {
+        if ((window as AnalyticsWindow)[RELOAD_PENDING_FLAG]) return;
         captureAttribution();
-        loadOptionalAnalytics(runtimeConfig.gtmId, runtimeConfig.clarityId);
+        loadOptionalAnalytics();
       } else stopOptionalAnalytics();
     });
   }
