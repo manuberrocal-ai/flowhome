@@ -5,6 +5,12 @@ import test from 'node:test';
 const home = await readFile(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 const renderedSource = home.slice(home.indexOf('<BaseLayout'));
 
+test('hero SSR uses catalog category keys without changing the visible label', () => {
+  assert.match(home, /categorySlug: showcaseProducts\[index\]\.data\.category/);
+  assert.match(home, /data-category=\{heroProducts\[0\]\.categorySlug\}/);
+  assert.match(home, /data-hero-field="category"[^>]*>\{heroProducts\[0\]\.category\}/);
+});
+
 test('home presents the product before the three editorial paths in DOM and focus order', () => {
   const showcase = renderedSource.indexOf('data-hero-showcase');
   const controls = renderedSource.indexOf('data-hero-controls');

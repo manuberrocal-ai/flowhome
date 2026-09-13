@@ -231,6 +231,21 @@ test('visible playback control pauses, resumes and respects reduced motion', () 
   cleanup();
 });
 
+test('hero analytics uses canonical category slugs while preserving the visible label', () => {
+  const root = fixture();
+  for (const [slug, label] of [['smart-speaker', 'Smart Speaker'], ['smart-plug', 'Smart Plug']]) {
+    const normalized = applyProduct(root, { ...product(slug, label), category: label, categorySlug: slug });
+    assert.equal(root.map['[data-hero-amazon]'].dataset.category, slug);
+    assert.equal(root.map['[data-hero-field="category"]'].textContent, label);
+    assert.deepEqual(normalizeProduct(normalized), normalized);
+  }
+  for (const categorySlug of [undefined, null, '', 'Smart Speaker', 'https://example.test', 3]) {
+    applyProduct(root, { ...product('one', 'First'), categorySlug: 'smart-speaker' });
+    applyProduct(root, { ...product('two', 'Second'), categorySlug });
+    assert.equal(Object.hasOwn(root.map['[data-hero-amazon]'].dataset, 'category'), false);
+  }
+});
+
 test('product normalization preserves the same complete product on repeated passes', () => {
   const normalized = normalizeProduct(product('one', 'First'));
   assert.deepEqual(normalizeProduct(normalized), normalized);
@@ -313,7 +328,7 @@ test('applying a product updates every field without mixing products', () => {
   assert.equal(root.map['[data-hero-amazon]'].href, 'https://amazon.test/two');
   assert.equal(root.map['[data-hero-amazon]'].attrs['aria-label'], 'Check Second price on Amazon');
   assert.equal(root.map['[data-hero-amazon]'].dataset.productSlug, 'two');
-  assert.equal(root.map['[data-hero-amazon]'].dataset.category, 'Lighting');
+  assert.equal(root.map['[data-hero-amazon]'].dataset.category, undefined, 'legacy labels are not analytics slugs');
   assert.equal(root.map['[data-hero-amazon]'].dataset.discount, '0');
   assert.equal(root.map['[data-hero-amazon]'].dataset.affiliateDisclosure, 'Disclosure two');
   assert.equal(root.map['[data-hero-details]'].href, '/product/two/');

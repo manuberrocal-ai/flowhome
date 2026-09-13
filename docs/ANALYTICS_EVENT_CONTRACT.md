@@ -28,6 +28,8 @@ The context also includes `page_location=https://flowhome.dev<sanitized pathname
 
 ## Deduplication and attribution
 
+The home hero uses the catalog category slug for analytics, separately from its human-readable category label. Initial HTML and every carousel selection use the same key; a missing or malformed key removes the previous category instead of falling back to display text. This keeps hero and catalog attribution comparable without changing visible copy.
+
 Unknown discounts are omitted, not sent as zero. Templates project only `displayDiscountPct` from the authorized commerce boundary; absent evidence and expired deals remove the attribute, and quiz results have no discount field. Carousel updates remove the previous product's discount when the next product has none. Empty/whitespace DOM attributes are also omitted. The raw dispatcher still accepts a valid explicit numeric zero, which is distinct from missing evidence; no source adapter supplies zero as a fallback.
 
 `setupAnalytics()` and delegated CTA binding are idempotent. An explicit `event_id` or `dedupe_key` is accepted once per event name; distinct clicks without either remain distinct. In-page dispatch is synchronous; outbound CTA dispatch is deferred and rechecks consent before enqueue. Neither calls `preventDefault`, awaits a provider, or changes an Amazon URL.
