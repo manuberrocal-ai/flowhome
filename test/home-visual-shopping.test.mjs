@@ -40,7 +40,7 @@ test('recomposed hero retains source, fallback, price gates, and accessible caro
   assert.match(home, /getInstallationSummary\(getInstallationEvidence\(data, now\)\)/);
   assert.match(home, /preloadImageSizes=\{heroProducts\[0\]\?\.imageSizes\}/);
   assert.match(home, /sizes=\{heroProducts\[0\]\.imageSizes\}/);
-  assert.match(home, /hidden=\{heroProducts\[0\]\.discountPct <= 0\}/);
+  assert.match(home, /hidden=\{heroProducts\[0\]\.discountPct === undefined \|\| heroProducts\[0\]\.discountPct <= 0\}/);
   assert.match(home, /data-fallback-src=\{heroProducts\[0\]\.fallbackImage\}/);
   assert.match(home, /aria-live="polite"/);
   assert.match(home, /prefers-reduced-motion: reduce/);
